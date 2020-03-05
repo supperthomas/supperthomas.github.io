@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>second</title>
-    <url>/posts/3055489385/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>first</title>
-    <url>/posts/2456940119/</url>
-    <content><![CDATA[<p>hello<br>1.</p>
-<h2 id="this-is-the-first-blog"><a href="#this-is-the-first-blog" class="headerlink" title="this is the first blog"></a>this is the first blog</h2><p><img src="/images/pasted-0.png" alt="KJK"></p>
-<p>classDiagram<br>Class01 &lt;|– AveryLongClass : Cool<br>Class03 <em>– Class04<br>Class05 o– Class06<br>Class07 .. Class08<br>Class09 –&gt; C2 : Where am i?<br>Class09 –</em> C3<br>Class09 –|&gt; Class07<br>Class07 : equals()<br>Class07 : Object[] elementData<br>Class01 : size()<br>Class01 : int chimp<br>Class01 : int gorilla<br>Class08 &lt;–&gt; C2: Cool label</p>
+    <title>第一篇博客</title>
+    <url>/posts/4278564287/</url>
+    <content><![CDATA[<h2 id="写在最上面"><a href="#写在最上面" class="headerlink" title="写在最上面"></a>写在最上面</h2><p>生命如此短暂，留点东西在世上也挺好，让世人记住我。</p>
 ]]></content>
-      <categories>
-        <category>life</category>
-      </categories>
-      <tags>
-        <tag>one</tag>
-      </tags>
   </entry>
 </search>

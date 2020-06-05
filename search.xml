@@ -1,6 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>03-29[RTT][ENV][PACKAGE]如何制作软件包</title>
+    <url>/posts/3349906663/</url>
+    <content><![CDATA[<h2 id="1-官方资料"><a href="#1-官方资料" class="headerlink" title="1.官方资料"></a>1.官方资料</h2><p>首先看下官方文档：</p>
+<blockquote>
+<blockquote>
+<p><a href="https://www.rt-thread.org/document/site/development-guide/package/package/" target="_blank" rel="noopener">https://www.rt-thread.org/document/site/development-guide/package/package/</a></p>
+</blockquote>
+</blockquote>
+<ol start="2">
+<li>再看下官方视频：</li>
+</ol>
+<blockquote>
+<blockquote>
+<p><a href="https://www.bilibili.com/video/av79943543?p=1" target="_blank" rel="noopener">https://www.bilibili.com/video/av79943543?p=1</a></p>
+</blockquote>
+</blockquote>
+<hr>
+<p>看完这个，基本上差不多会知道如何做一个软件包了。</p>
+<p><img src="/image/2020_03_29_01_0.png" alt="upload successful"></p>
+<p>pkgs –wizard<br>新版本会让你输入github地址<br>操作完成之后。</p>
+<p>会生成一个文件夹，两个文件</p>
+<p><img src="/image/2020_03_29_01_1.png" alt="filename already exists, renamed"></p>
+<h4 id="Kconfig"><a href="#Kconfig" class="headerlink" title="Kconfig"></a>Kconfig</h4><p>这个主要和平时操作menuconfig中的选项相关</p>
+<h4 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h4><p>这个主要跟你这个软件包的git地址相关。</p>
+<p>简单来说软件包这就算做好了。<br>至于里面内容需要分几个东西来讲：<br>分别是<br><code>pkgs</code><br><code>menuconfig</code><br><code>scons</code></p>
+<h3 id="1-pkgs"><a href="#1-pkgs" class="headerlink" title="1.pkgs"></a>1.pkgs</h3><p>这个工具是专门管理软件包的。<br>有以下几个常用命令：</p>
+<h4 id="pkgs-update"><a href="#pkgs-update" class="headerlink" title="pkgs --update"></a><code>pkgs --update</code></h4><p>这个负责升级，其实本质上就是git clone，从git上下载代码；<br>可以看下package.json文件：</p>
+<p><img src="/image/2020_03_29_01_2.png" alt="filename already exists, renamed"><br>这张图应该很清晰了。<br>就是你的每个版本对应的git 地址填对了<br>你的<code>pkgs --update</code> 的时候，更新就会从这个git地址下载你的package包的文件（如果某个package被选中的话）。</p>
+<h4 id="pkgs-upgrade"><a href="#pkgs-upgrade" class="headerlink" title="pkgs --upgrade"></a><code>pkgs --upgrade</code></h4><p>这个用的比较少，</p>
+<p><img src="/image/2020_03_29_01_3.png" alt="filename already exists, renamed"></p>
+<p>从两个地址，</p>
+<p><code>package:
+https://github.com/RT-Thread/packages</code></p>
+<p>这个下载到哪里了呢？<br>我们打开env目录：</p>
+<p><code>env_released_1.2.0\env\packages\packages</code></p>
+<p>就是这里，其实本质上，就是更新packages的目录</p>
+<p><code>env:
+https://github.com/RT-Thread/env</code></p>
+<p>本质上也是从git上下载，只是路径不一样。</p>
+<p>这个稍微找一会也能找到：</p>
+<p><code>env_released_1.2.0\env\tools\scripts</code></p>
+<p>大家可以打开github和文件夹目录比较下，<br>应该都是相同的。</p>
+<p><img src="/image/2020_03_29_01_4.png" alt="filename already exists, renamed"></p>
+<p><img src="/image/2020_03_29_01_5.png" alt="filename already exists, renamed"></p>
+<h3 id="2-menuconfig"><a href="#2-menuconfig" class="headerlink" title="2. menuconfig"></a>2. menuconfig</h3><p>这个是linux里面常用的配置界面，嵌入式RTOS能用上menuconfig的,我只见过RTT这样用过，其他的还么见过：</p>
+<p><img src="/image/2020_03_29_01_7.png" alt="filename already exists, renamed"></p>
+<p>不知道有没有人稍微了解下这几行命令是如何来显示的。</p>
+<p>其实就是目录下面的<code>Kconfig</code> 文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mainmenu &quot;RT-Thread Configuration&quot;</span><br><span class="line"></span><br><span class="line">config BSP_DIR</span><br><span class="line">    string</span><br><span class="line">    option env&#x3D;&quot;BSP_ROOT&quot;</span><br><span class="line">    default &quot;.&quot;</span><br><span class="line"></span><br><span class="line">config RTT_DIR</span><br><span class="line">    string</span><br><span class="line">    option env&#x3D;&quot;RTT_ROOT&quot;</span><br><span class="line">    default &quot;..&#x2F;..&#x2F;..&quot;</span><br><span class="line"></span><br><span class="line">config PKGS_DIR</span><br><span class="line">    string</span><br><span class="line">    option env&#x3D;&quot;PKGS_ROOT&quot;</span><br><span class="line">    default &quot;packages&quot;</span><br><span class="line"> </span><br><span class="line">source &quot;$RTT_DIR&#x2F;Kconfig&quot;</span><br><span class="line">source &quot;$PKGS_DIR&#x2F;Kconfig&quot;</span><br><span class="line">source &quot;..&#x2F;libraries&#x2F;Kconfig&quot;</span><br><span class="line">source &quot;board&#x2F;Kconfig&quot;</span><br></pre></td></tr></table></figure>
+
+<p>其实这个里面内容比较多，就不展开了，我们现在要做的是软件包，可以选择在某个package中menuconfig。<br>比如你可以进到目录<code>env_released_1.2.0\env\packages\packages\peripherals\sensors\dht11</code></p>
+<p>menuconfig一下：</p>
+<p><img src="/image/2020_03_29_01_8.png" alt="filename already exists, renamed"></p>
+<p>看到这个应该能明白大概意思了。<br>bool类型，只能选y(yes) 和n（no）<br>后面跟的是显示的内容</p>
+<p>menuconfig代表是一个menu配置 后面跟的是<code>PKG_USING_DHT11</code><br>这个是什么呢？这个其实和下一讲的scons相关，<br>你可以暂且认为这个就代表这个选项的一个变量，就是敲<code>y</code>之后，这个变量值PKG_USING_DHT11就变成y了（可以理解成bool类型中的true）。</p>
+<p>子菜单：</p>
+<p><img src="/image/2020_03_29_01_9.png" alt="filename already exists, renamed"></p>
+<p>仔细想下刚才的操作，是不是只能点y之后才能进入到子菜单。<br>其实就是前面有个</p>
+<p><code>if PKG_USING_DHT11</code><br>判断<br>后面<br>Kconfig语法可以看：</p>
+<blockquote>
+<blockquote>
+<p><a href="https://www.jianshu.com/p/aba588d380c2" target="_blank" rel="noopener">kconfig语法整理</a></p>
+</blockquote>
+</blockquote>
+<p>基本上会Kconfig语法，你就知道menuconfig该怎么改了，唯一要记住的是刚才那个变量。</p>
+<p>配置完之后，系统都会保存到.config文件：<br>这个是最重要的，前面无论你怎么配置，最后都影响的是.config文件。<br>你也可以直接改.config文件。</p>
+<p><img src="/image/2020_03_29_01_10.png" alt="filename already exists, renamed"></p>
+<p>这里你可以看到配置改了，所以有时候，编译linux内核的时候，只要.config文件就可以编译成功了，就是这个道理。<br>保存之后，<br>我们用命令pkgs –update，就会看到package中会多出来一个文件，就是你的软件包。</p>
+<p>//小测问：<br>github 我们国内clone的时候，都很慢，为啥env下载的时候很快？</p>
+<h3 id="3-scons"><a href="#3-scons" class="headerlink" title="3.scons"></a>3.scons</h3><p>在做软件包前面基本已经差不多了。接下来讲的scons，其实是和编译相关的，你可以理解为，scons就是make， scons里面的<code>SConscript</code> <code>SConstruct</code>就是里面的makefile文件，你软件包需要写好写对Scons的脚本，才能编译进去，或者生成的project生成进去。</p>
+<p>这个时候就看官方文档：</p>
+<p><a href="https://www.rt-thread.org/document/site/programming-manual/scons/scons/" target="_blank" rel="noopener">Scons 构建工具</a></p>
+<p>官方文档已经很详细很详细了。学完，你就会用你自己的软件包。</p>
+<p>理解这些，基本上你应该知道自己接下来该怎么做了：<br>基本思路是这样的：</p>
+<ol>
+<li>先做一个软件包，把名字起好，对应到相应的目录，比如tools。</li>
+<li>github上搞一个仓库（gitee也可以，只要路径填对即可），将你的软件包中要放的.c .h等代码放入到git上。</li>
+<li>将github地址放到你的package.json中</li>
+<li>把这个软件包放到env中package对应的目录中，（暂时）</li>
+<li>这个时候你在你的bsp里面敲menuconfig，会发现，你的软件包并没有出现在目录中。</li>
+<li>根据Kconfig语法，知道是在你的tools目录下面也有个Kconfig，需要把目录加进去。</li>
+<li>menuconfig里面配置选好，pkgs –update</li>
+<li>这个时候，检查你的包里面的东西的完整性就好。</li>
+<li>根据scons语法和Kconfig语法，写你的软件包中的scons语法，如果是配置的话，要放到env中的package   Kconfig修改。</li>
+<li>基本上把你的目录提交到官方的package收入即可。</li>
+</ol>
+<p>`</p>
+]]></content>
+      <categories>
+        <category>RTOS</category>
+      </categories>
+      <tags>
+        <tag>RT-THREAD</tag>
+        <tag>ENV</tag>
+        <tag>PACKAGE</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>03-14 [github][快速clone代码]代码优化神器</title>
     <url>/posts/3349866602/</url>
     <content><![CDATA[<ol>

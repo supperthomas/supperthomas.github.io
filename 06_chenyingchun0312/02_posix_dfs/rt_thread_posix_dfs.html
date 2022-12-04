@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2. POSIX 介绍 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="3. 程序员的自我修养" href="../elf_introduce.html" />
+    <link rel="prev" title="1. 简单自我介绍" href="../01_introduce/01_intruduce.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">NORDIC:chenyingchun0312</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. POSIX 介绍</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">2.1. 参考资料</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">2.2. 简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#faq">2.3. FAQ</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#posix-posix-1">什么是POSIX？什么是 POSIX.1？</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#posix-1"><strong>POSIX.1 的最新版本是什么？</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3"><strong>我可以从哪里下载 1003.1 标准？</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#osposix">2.4. 如何为OS适配POSIX接口</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rt-thread-osposix">2.5. RT-Thread OS中POSIX支持情况</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rt-threaddfs">2.6. RT-Thread中DFS介绍</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">框架介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">相关资源</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../elf_introduce.html">3. 程序员的自我修养</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nrf52832_rtthread_dlmodule.html">4. nRF52832 RT-Thread dmodule适配</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../stm32l496.html">5. STM32L496 USB CDC适配</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usb.html">6. USB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../i2s.html">7. I2S总线介绍</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">NORDIC:chenyingchun0312</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2. </span>POSIX 介绍</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/06_chenyingchun0312/02_posix_dfs/rt_thread_posix_dfs.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="posix">
+<h1><span class="section-number">2. </span>POSIX 介绍<a class="headerlink" href="#posix" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">2.1. </span>参考资料<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://book.douban.com/subject/25900403">《UNIX环境高级编程（中文第三版）–高清版.pdf》</a></p></li>
+<li><p><a class="reference external" href="https://linuxhint.com/posix-standard/">Posix Standard</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/POSIX">Posix WIKI</a></p></li>
+<li><p><a class="reference external" href="https://www.rt-thread.org/document/site/#/rt-thread-version/rt-thread-standard/programming-manual/libc/posix/introduction">RT-Thread 文档中心-POSIX介绍</a></p></li>
+<li><p><a class="reference external" href="https://www.rt-thread.org/document/site/#/rt-thread-version/rt-thread-standard/programming-manual/libc/introduction?id=isoansi-c">RT-Thread LIBC</a></p></li>
+<li><p><a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9699919799/toc.htm">IEEE 官方关于POSIX标准的说明</a></p></li>
+</ul>
+</section>
+<section id="id2">
+<h2><span class="section-number">2.2. </span>简介<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">POSIX</span></code> 全称 <code class="docutils literal notranslate"><span class="pre">Portable</span> <span class="pre">Operating</span> <span class="pre">System</span> <span class="pre">Interface</span> </code>，即可移植操作系统接口，这些接口是IEEE组织定义的，这些接口，在不同的操作系统中，应当都被支持，从理论上来说，使用<code class="docutils literal notranslate"><span class="pre">POSIX</span></code>接口编写的应用程序，运行在不同，但是都支持POSIX标准的操作系统中，是不需要做任何修改就能运行起来的。</p>
+<p>目前支持<code class="docutils literal notranslate"><span class="pre">POSIX</span></code>标准的系统有哪些呢？ 目前主流的linux系统，比如ubuntu, centos等，都支持POSIX标准API接口；</p>
+<p>对于Windows系统，posix支持情况，可以查看<a class="reference external" href="https://social.technet.microsoft.com/wiki/contents/articles/10224.posix-and-unix-support-in-windows.aspx">链接</a>，总得来说，windows本身的API接口是不支持posix接口的，但是通过扩展的方式，支持了posix，比如，win10中，通过开启WSL，来支持posix接口</p>
+<p>POSIX 为了提供不同层级的RTOS能力，划定了 PSE51, PSE52, PSE53, PSE54 共四个级别；分别对应了四种操作系统。</p>
+<ol class="simple">
+<li><p>Minimal Real-time System Profile IEEE Std 1003.13 PSE51，基础 RTOS</p></li>
+<li><p>Real-time Controller Profile IEEE Std 1003.13 PSE52，带有简单的文件系统…等</p></li>
+<li><p>Dedicated Real-time Profile IEEE Std 1003.13 PSE53，拥有网络功能…等</p></li>
+<li><p>Multi-Purpose Real-time Profile IEEE Std 1003.13 PSE54，完整的文件系统，带有 Shell 组件…等</p></li>
+</ol>
+<p><img alt="img" src="../../_images/51_52_53_54.png" /></p>
+<p><img alt="image-20220710223735830" src="../../_images/image-20220710223735830.png" /></p>
+</section>
+<section id="faq">
+<h2><span class="section-number">2.3. </span>FAQ<a class="headerlink" href="#faq" title="此标题的永久链接"></a></h2>
+<p><a class="reference external" href="https://www.opengroup.org/austin/papers/posix_faq.html">参考链接</a></p>
+<section id="posix-posix-1">
+<h3>什么是POSIX？什么是 POSIX.1？<a class="headerlink" href="#posix-posix-1" title="此标题的永久链接"></a></h3>
+<p>POSIX 是 IEEE 的商标。</p>
+<p><strong>POSIX</strong> 是可移植操作系统<strong>接口</strong>的**首字母 **缩写。</p>
+<p>POSIX.1是某一个具体的标准，这里指IEEE Std 1003.1-1988，这保持了符号“POSIX”的可读性优势，而不会与 POSIX 系列标准产生歧义。</p>
+</section>
+<section id="posix-1">
+<h3><strong>POSIX.1 的最新版本是什么？</strong><a class="headerlink" href="#posix-1" title="此标题的永久链接"></a></h3>
+<p>1003.1-2017标准于2018年3月发布。该标准正式名称为：</p>
+<p>IEEE Std 1003.1-2017 The Open Group Technical Standard Base Specifications，第 7 期，2018 年版，<a class="reference external" href="https://www.opengroup.org/austin/papers/backgrounder.html">该标准的简单介绍</a></p>
+</section>
+<section id="id3">
+<h3><strong>我可以从哪里下载 1003.1 标准？</strong><a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>该标准最新版本的 html 版本（包含技术勘误 1）相关资料可从以下网址免费阅读和下载</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">unix</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">version4</span><span class="o">/</span> 
+</pre></div>
+</div>
+<p>下载POSIX.1标准的连接：https://publications.opengroup.org/t101</p>
+<blockquote>
+<div><p>自己下载的话，需要注册，登陆</p>
+</div></blockquote>
+<p><img alt="image-20220710185611615" src="../../_images/image-20220710185611615.png" /></p>
+</section>
+</section>
+<section id="osposix">
+<h2><span class="section-number">2.4. </span>如何为OS适配POSIX接口<a class="headerlink" href="#osposix" title="此标题的永久链接"></a></h2>
+<ul>
+<li><p><a class="reference external" href="https://publications.opengroup.org/t101">下载POSIX.1标准文档</a></p>
+<p><img alt="image-20220710190637417" src="../../_images/image-20220710190637417.png" /></p>
+</li>
+<li><p>阅读每一个头文件中的描述，该头文件中，说明了，需要定义那些类型，宏，枚举，以及接口等</p></li>
+</ul>
+</section>
+<section id="rt-thread-osposix">
+<h2><span class="section-number">2.5. </span>RT-Thread OS中POSIX支持情况<a class="headerlink" href="#rt-thread-osposix" title="此标题的永久链接"></a></h2>
+<p><img alt="img" src="../../_images/menuconfig_info.png" /></p>
+<ul class="simple">
+<li><p>POSIX FILE 相关接口，包含了文件系统的内容，接口比较丰富；标准 I/O 接口，Poll / Select 等较复杂的功能也已经支持</p></li>
+<li><p>Delay 相关接口</p></li>
+<li><p>Clock 相关接口，对拥有 RTC 硬件，或者没有使用 RTC 硬件的设备都有对应的功能实现</p></li>
+<li><p>Timer 相关接口，已经对接到 RT-Thread 的定时器接口，实现对应的函数</p></li>
+<li><p>Pthread 相关接口，在多任务编程中使用很广泛</p></li>
+<li><p>Dynamic 动态模块</p></li>
+<li><p>POSIX 的 标准 IPC 接口 ：pipe ，message，semaphore 等函数</p></li>
+<li><p>Socket接口：Enable BSD Socket I/O &lt;sys/socket.h&gt; &lt;netdb.h&gt;后就可以使用BSD Socket接口</p></li>
+</ul>
+</section>
+<section id="rt-threaddfs">
+<h2><span class="section-number">2.6. </span>RT-Thread中DFS介绍<a class="headerlink" href="#rt-threaddfs" title="此标题的永久链接"></a></h2>
+<section id="id4">
+<h3>框架介绍<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<p><img alt="image-20220710192420281" src="../../_images/image-20220710192420281.png" /></p>
+</section>
+<section id="id5">
+<h3>相关资源<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
+<p><a class="reference external" href="https://www.bilibili.com/video/BV1A3411F7Zs/?vd_source=a25fe9d1f3d93c851d172c22091e3512">视频链接</a></p>
+<p>[文档连接-可以使用draw.io网址在线打开](./RT-Thread DFS数据结构分析.drawio)</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../01_introduce/01_intruduce.html" class="btn btn-neutral float-left" title="1. 简单自我介绍" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../elf_introduce.html" class="btn btn-neutral float-right" title="3. 程序员的自我修养" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

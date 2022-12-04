@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11. RTTHREAD移植BSP驱动 SPI篇 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="12. rt-thread 移植BSP驱动 uart篇" href="04_rtthread_bsp_porting_uart.html" />
+    <link rel="prev" title="10. RTTHREAD移植BSP驱动 GPIO篇" href="02_rtthread_bsp_porting_gpio.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">RTTHRED: RT-Thread</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. RTTHREAD贡献TODO目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/02_RTTHREAD_introduce.html">2. RT-THREAD —-国产开源之光</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/01_software_package.html">3. RTTHREAD软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/02_software_introduce.html">4. RTTHREAD软件包目录自分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/03_sensor_list.html">5. RT-Thread 传感器软件包归类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/04_rtthread_auto_update.html">6. RTTHREAD 软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/05_rtthread_bsp_board.html">7. RTTHREAD BSP board支持目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/06_rtthread_softpackage_build_guide.html">8. 软件包制作小计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_rtthread_bsp_porting.html">9. RTTHREAD移植新的BSP开发板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_rtthread_bsp_porting_gpio.html">10. RTTHREAD移植BSP驱动 GPIO篇</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11. RTTHREAD移植BSP驱动 SPI篇</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">11.1. 简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spi">11.2. SPI简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">11.3. 移植前准备</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spi-sample">11.4. 添加spi_sample</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">开始实现代码</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rt-hw-spi-init">rt_hw_spi_init</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rt-hw-spi-device-attach">rt_hw_spi_device_attach</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rt-spi-configure">rt_spi_configure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#spixfer">spixfer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04_rtthread_bsp_porting_uart.html">12. rt-thread 移植BSP驱动 uart篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_docker/01_docker_images.html">13. 如何用docker来学习rtthread-qemu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_llsync/01_llsync_Environment.html">14. LLSYNC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_llsync/02_llsync_struct_code.html">15. LLSYNC 移植指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_simular/01_keil_simulator.html">16. 如何在keil中STM32L496 跑simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_onchip/01_on_chip_file.html">17. STM32如何将文件放到内部flash里面</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">RTTHRED: RT-Thread</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">11. </span>RTTHREAD移植BSP驱动 SPI篇</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/RTTHREAD/03_bsp_porting/03_rtthread_bsp_porting_spi.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="rtthreadbsp-spi">
+<h1><span class="section-number">11. </span>RTTHREAD移植BSP驱动 SPI篇<a class="headerlink" href="#rtthreadbsp-spi" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">11.1. </span>简介<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>本文介绍SPI设备驱动，drv_spi.c如何编写的，SPI驱动稍微复杂一些。</p>
+<p>本文参考RTTHREAD官方文档<a class="reference external" href="https://www.rt-thread.org/document/site/programming-manual/device/spi/spi/">SPI 设备</a></p>
+<p>一些基本知识，官方文档已经写的很详细了，大家如果不是很了解可以仔细看下官方文档，这边简单讲解下移植的时候遇到的一些问题，以及如何能快速上手的解决方案。</p>
+</section>
+<section id="spi">
+<h2><span class="section-number">11.2. </span>SPI简介<a class="headerlink" href="#spi" title="此标题的永久链接"></a></h2>
+<p>4根线，MOSI ,MISO , SCLK  CS</p>
+</section>
+<section id="id2">
+<h2><span class="section-number">11.3. </span>移植前准备<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p>先要熟悉官方的SPI的demo如何运行的。</p>
+<p>先准备一个drv_spi.c 这边提供一个模板，基本第一次稍微修改就可以编译通过，license大家可以改成自己的，这个随意。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/*</span>
+ <span class="o">*</span> <span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2006</span><span class="o">-</span><span class="mi">2018</span><span class="p">,</span> <span class="n">RT</span><span class="o">-</span><span class="n">Thread</span> <span class="n">Development</span> <span class="n">Team</span>
+ <span class="o">*</span>
+ <span class="o">*</span> <span class="n">SPDX</span><span class="o">-</span><span class="n">License</span><span class="o">-</span><span class="n">Identifier</span><span class="p">:</span> <span class="n">Apache</span><span class="o">-</span><span class="mf">2.0</span>
+ <span class="o">*</span>
+ <span class="o">*</span> <span class="n">Change</span> <span class="n">Logs</span><span class="p">:</span>
+ <span class="o">*</span> <span class="n">Date</span>             <span class="n">Author</span>          <span class="n">Notes</span>
+ <span class="o">*</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">14</span>       <span class="n">supperthomas</span>    <span class="n">first</span> <span class="n">version</span>
+ <span class="o">*/</span>
+
+<span class="c1">#include &lt;stdint.h&gt;</span>
+<span class="c1">#include &lt;string.h&gt;</span>
+<span class="c1">#include &quot;board.h&quot;</span>
+<span class="c1">#include &quot;drv_spi.h&quot;</span>
+
+<span class="c1">#define DBG_LEVEL   DBG_LOG</span>
+<span class="c1">#include &lt;rtdbg.h&gt;</span>
+<span class="c1">#define LOG_TAG                &quot;drv.spi&quot;</span>
+
+<span class="c1">#ifdef BSP_USING_SPI</span>
+
+<span class="c1">#if defined(BSP_USING_SPI0) || defined(BSP_USING_SPI1) || defined(BSP_USING_SPI2)</span>
+<span class="n">static</span> <span class="n">struct</span> <span class="n">mcu_drv_spi_config</span> <span class="n">spi_config</span><span class="p">[]</span> <span class="o">=</span>
+<span class="p">{</span>
+<span class="c1">#ifdef BSP_USING_SPI0</span>
+    <span class="n">MCU_SPI0_CONFIG</span><span class="p">,</span>
+<span class="c1">#endif</span>
+<span class="c1">#ifdef BSP_USING_SPI1</span>
+    <span class="n">MCU_SPI1_CONFIG</span><span class="p">,</span>
+<span class="c1">#endif</span>
+
+<span class="p">};</span>
+
+<span class="n">static</span> <span class="n">struct</span> <span class="n">mcu_drv_spi</span> <span class="n">spi_bus_obj</span><span class="p">[</span><span class="n">sizeof</span><span class="p">(</span><span class="n">spi_config</span><span class="p">)</span> <span class="o">/</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">spi_config</span><span class="p">[</span><span class="mi">0</span><span class="p">])];</span>
+
+
+<span class="n">static</span> <span class="n">rt_err_t</span> <span class="n">spi_configure</span><span class="p">(</span><span class="n">struct</span> <span class="n">rt_spi_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span>
+                              <span class="n">struct</span> <span class="n">rt_spi_configuration</span> <span class="o">*</span><span class="n">configuration</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">//</span><span class="n">init</span>
+    <span class="k">return</span> <span class="n">RT_EOK</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">static</span> <span class="n">rt_uint32_t</span> <span class="n">spixfer</span><span class="p">(</span><span class="n">struct</span> <span class="n">rt_spi_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">struct</span> <span class="n">rt_spi_message</span> <span class="o">*</span><span class="n">message</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="o">/*</span> <span class="n">spi</span> <span class="n">bus</span> <span class="n">callback</span> <span class="n">function</span>  <span class="o">*/</span>
+<span class="n">static</span> <span class="n">const</span> <span class="n">struct</span> <span class="n">rt_spi_ops</span> <span class="n">nrfx_spi_ops</span> <span class="o">=</span>
+<span class="p">{</span>
+    <span class="o">.</span><span class="n">configure</span> <span class="o">=</span> <span class="n">spi_configure</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">xfer</span> <span class="o">=</span> <span class="n">spixfer</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="o">/*</span><span class="n">spi</span> <span class="n">bus</span> <span class="n">init</span><span class="o">*/</span>
+<span class="n">static</span> <span class="nb">int</span> <span class="n">rt_hw_spi_bus_init</span><span class="p">(</span><span class="n">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">rt_err_t</span> <span class="n">result</span> <span class="o">=</span> <span class="n">RT_ERROR</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">spi_config</span><span class="p">)</span> <span class="o">/</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">spi_config</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">spi_bus_obj</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">spi_instance</span> <span class="o">=</span> <span class="n">spi_config</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">spi_instance</span><span class="p">;</span>
+        <span class="n">spi_bus_obj</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">spi_bus</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">user_data</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">spi_config</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>   <span class="o">//</span><span class="n">SPI</span> <span class="n">INSTANCE</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">rt_spi_bus_register</span><span class="p">(</span><span class="o">&amp;</span><span class="n">spi_bus_obj</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">spi_bus</span><span class="p">,</span> <span class="n">spi_config</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">bus_name</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">nrfx_spi_ops</span><span class="p">);</span>
+        <span class="n">RT_ASSERT</span><span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">RT_EOK</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">int</span> <span class="n">rt_hw_spi_init</span><span class="p">(</span><span class="n">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">rt_hw_spi_bus_init</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="n">INIT_BOARD_EXPORT</span><span class="p">(</span><span class="n">rt_hw_spi_init</span><span class="p">);</span>
+
+<span class="o">/**</span>
+  <span class="o">*</span> <span class="n">Attach</span> <span class="n">the</span> <span class="n">spi</span> <span class="n">device</span> <span class="n">to</span> <span class="n">SPI</span> <span class="n">bus</span><span class="p">,</span> <span class="n">this</span> <span class="n">function</span> <span class="n">must</span> <span class="n">be</span> <span class="n">used</span> <span class="n">after</span> <span class="n">initialization</span><span class="o">.</span>
+  <span class="o">*/</span>
+<span class="n">rt_err_t</span> <span class="n">rt_hw_spi_device_attach</span><span class="p">(</span><span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">bus_name</span><span class="p">,</span> <span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">device_name</span><span class="p">,</span> <span class="n">rt_uint32_t</span> <span class="n">cs_pin</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">RT_EOK</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">#endif /* BSP_USING_SPI0 || BSP_USING_SPI1 || BSP_USING_SPI2 */</span>
+<span class="c1">#endif /*BSP_USING_SPI*/</span>
+
+
+</pre></div>
+</div>
+<p>再加一个drv_spi.h即可</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/*</span>
+ <span class="o">*</span> <span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2006</span><span class="o">-</span><span class="mi">2018</span><span class="p">,</span> <span class="n">RT</span><span class="o">-</span><span class="n">Thread</span> <span class="n">Development</span> <span class="n">Team</span>
+ <span class="o">*</span>
+ <span class="o">*</span> <span class="n">SPDX</span><span class="o">-</span><span class="n">License</span><span class="o">-</span><span class="n">Identifier</span><span class="p">:</span> <span class="n">Apache</span><span class="o">-</span><span class="mf">2.0</span>
+ <span class="o">*</span>
+ <span class="o">*</span> <span class="n">Change</span> <span class="n">Logs</span><span class="p">:</span>
+ <span class="o">*</span> <span class="n">Date</span>             <span class="n">Author</span>          <span class="n">Notes</span>
+ <span class="o">*</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">14</span>       <span class="n">supperthomas</span>    <span class="n">first</span> <span class="n">version</span>
+ <span class="o">*/</span>
+
+<span class="c1">#include &lt;rtthread.h&gt;</span>
+<span class="c1">#include &lt;rtdevice.h&gt;</span>
+<span class="c1">#include &lt;rthw.h&gt;</span>
+
+<span class="c1">#include &quot;spi.h&quot;</span>
+
+<span class="c1">#ifndef __DRV_SPI_H_</span>
+<span class="c1">#define __DRV_SPI_H_</span>
+
+<span class="n">rt_err_t</span> <span class="n">rt_hw_spi_device_attach</span><span class="p">(</span><span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">bus_name</span><span class="p">,</span> <span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">device_name</span><span class="p">,</span> <span class="n">rt_uint32_t</span> <span class="n">ss_pin</span><span class="p">);</span>
+
+<span class="o">//</span><span class="n">SPI</span> <span class="n">bus</span> <span class="n">config</span>
+<span class="c1">#ifdef BSP_USING_SPI0</span>
+<span class="c1">#define MCU_SPI0_CONFIG          \</span>
+<span class="p">{</span>                                \
+    <span class="o">.</span><span class="n">bus_name</span> <span class="o">=</span> <span class="s2">&quot;spi0&quot;</span><span class="p">,</span>          \
+    <span class="o">.</span><span class="n">spi_instance</span> <span class="o">=</span> <span class="n">SPI0A</span><span class="p">,</span>       \
+<span class="p">}</span>
+<span class="c1">#endif</span>
+<span class="c1">#ifdef BSP_USING_SPI1</span>
+<span class="c1">#ifdef BSP_USING_SPI1A  //The SPI1A is conflit with UART1 TX RX P0.10 P0.11</span>
+<span class="c1">#define MCU_SPI1_CONFIG          \</span>
+<span class="p">{</span>                                \
+    <span class="o">.</span><span class="n">bus_name</span> <span class="o">=</span> <span class="s2">&quot;spi1&quot;</span><span class="p">,</span>          \
+    <span class="o">.</span><span class="n">spi_instance</span> <span class="o">=</span> <span class="n">SPI1A</span>        \
+<span class="p">}</span>
+<span class="c1">#else</span>
+<span class="c1">#define MCU_SPI1_CONFIG          \</span>
+<span class="p">{</span>                                \
+    <span class="o">.</span><span class="n">bus_name</span> <span class="o">=</span> <span class="s2">&quot;spi1&quot;</span><span class="p">,</span>          \
+    <span class="o">.</span><span class="n">spi_instance</span> <span class="o">=</span> <span class="n">SPI1B</span>        \
+<span class="p">}</span>
+<span class="c1">#endif</span>
+<span class="c1">#endif</span>
+
+<span class="n">struct</span> <span class="n">mcu_drv_spi_config</span>
+<span class="p">{</span>
+    <span class="n">char</span> <span class="o">*</span><span class="n">bus_name</span><span class="p">;</span>
+    <span class="n">spi_type</span> <span class="n">spi_instance</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">struct</span> <span class="n">mcu_drv_spi</span>
+<span class="p">{</span>
+    <span class="n">spi_type</span> <span class="n">spi_instance</span><span class="p">;</span>
+    <span class="n">spi_req_t</span> <span class="n">spixfer_req</span><span class="p">;</span>
+    <span class="n">struct</span> <span class="n">rt_spi_configuration</span> <span class="o">*</span><span class="n">cfg</span><span class="p">;</span>
+    <span class="n">struct</span> <span class="n">rt_spi_bus</span> <span class="n">spi_bus</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">#endif  /*__DRV_SPI_H_*/</span>
+
+</pre></div>
+</div>
+<p>spi驱动主要是要提交这两个，还需要添加Kconfig</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">config</span> <span class="n">BSP_USING_SPI</span>
+        <span class="nb">bool</span> <span class="s2">&quot;Enable SPI&quot;</span>
+        <span class="n">select</span> <span class="n">RT_USING_SPI</span>
+        <span class="n">default</span> <span class="n">n</span>
+</pre></div>
+</div>
+<p>这边主要添加<code class="docutils literal notranslate"><span class="pre">RT_USING_SPI</span></code> 和<code class="docutils literal notranslate"><span class="pre">BSP_USING_SPI</span></code>宏定义。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</section>
+<section id="spi-sample">
+<h2><span class="section-number">11.4. </span>添加spi_sample<a class="headerlink" href="#spi-sample" title="此标题的永久链接"></a></h2>
+<p>spi_sample 方便测试，先把spi_sample放好，这个sample是将MOSI和MISO对接，采用loopback的方式进行测试，这样的话，可以不依赖硬件来测试SPI，发送数据和接收数据比对能够正确即可。或者收到数据即可。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#define SPI_DEVICE_BUS      &quot;spi0&quot;
+#define SPI_DEVICE_NAME     &quot;spi01&quot;
+
+#define TEST_LEN        10
+uint8_t rx_data[TEST_LEN];
+uint8_t tx_data[TEST_LEN];
+
+static void spi_sample(int argc, char *argv[])
+{
+    struct rt_spi_device *spi_dev;
+    char name[RT_NAME_MAX];
+
+
+    spi_dev = (struct rt_spi_device *)rt_device_find(SPI_DEVICE_NAME);
+    if (RT_NULL == spi_dev)
+    {
+        rt_hw_spi_device_attach(SPI_DEVICE_BUS, SPI_DEVICE_NAME, PIN_0);
+        spi_dev = (struct rt_spi_device *)rt_device_find(SPI_DEVICE_NAME);
+    }
+
+    struct rt_spi_configuration spi_cfg =
+    {
+        .mode = 0,
+        .data_width = 8,
+        .max_hz = 1000000,
+    };
+    rt_spi_configure(spi_dev, &amp;spi_cfg);
+
+    rt_kprintf(&quot;\n************** SPI Loopback Demo ****************\n&quot;);
+    rt_kprintf(&quot;This example configures the SPI to send data between the MISO (P0.4) and\n&quot;);
+    rt_kprintf(&quot;MOSI (P0.5) pins.  Connect these two pins together. \n&quot;);
+
+    for (int j = 0; j &lt; TEST_LEN; j++)
+    {
+        tx_data[j] = j ;
+    }
+    if (argc == 2)
+    {
+        rt_strncpy(name, argv[1], RT_NAME_MAX);
+    }
+    else
+    {
+        rt_strncpy(name, SPI_DEVICE_NAME, RT_NAME_MAX);
+    }
+
+    spi_dev = (struct rt_spi_device *)rt_device_find(name);
+    if (!spi_dev)
+    {
+        rt_kprintf(&quot;spi sample run failed! can&#39;t find %s device!\n&quot;, name);
+    }
+    else
+    {
+        rt_spi_transfer(spi_dev, tx_data, rx_data, TEST_LEN);
+        for (int i = 0; i &lt; TEST_LEN; i++)
+        {
+            rt_kprintf(&quot; 0x%02x, &quot;, rx_data[i]);
+        }
+    }
+}
+MSH_CMD_EXPORT(spi_sample, spi sample);
+</pre></div>
+</div>
+<p>这个sample随便放到main.c里面随便放到哪里都可以，</p>
+<p>测试的时候在console里面输入spi_sample即可。</p>
+<p>这边测试sample里面调用函数关系</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rt_hw_spi_device_attach</span>  <span class="o">--&gt;</span> <span class="n">rt_hw_spi_device_attach</span>
+<span class="n">rt_spi_configure</span> <span class="o">--&gt;</span> <span class="n">spi_configure</span>
+<span class="n">rt_spi_transfer</span>  <span class="o">--&gt;</span> <span class="n">spixfer</span>
+</pre></div>
+</div>
+<section id="id3">
+<h3>开始实现代码<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>这边根据一般厂商的SPI sample来</p>
+</section>
+<section id="rt-hw-spi-init">
+<h3>rt_hw_spi_init<a class="headerlink" href="#rt-hw-spi-init" title="此标题的永久链接"></a></h3>
+<p>这个函数主要设置一些和SPI不相干的一些时钟和注册一个spi0的spi bus。</p>
+<p>这边需要注意的是：</p>
+<p>mcu_drv_spi_config： 这个是配置spi bus的名称和存放一个控制SPI的handle值，这个需要根据厂商的接口来定义</p>
+<p>mcu_drv_spi： 这个存放的是结构体，存放当前spi的cfg（速率以及其他）， 存放一个控制SPI的handle值</p>
+<p>这边多放了一个传输的结构体，这个根据厂商来，这边是MAX32660的参考例程。</p>
+<p>这边完成的内容不多，只要这个device注册上去即可。</p>
+</section>
+<section id="rt-hw-spi-device-attach">
+<h3>rt_hw_spi_device_attach<a class="headerlink" href="#rt-hw-spi-device-attach" title="此标题的永久链接"></a></h3>
+<p>这个函数是用来选择CS片选的，SPI是一个通信总线，总线上可以有多个设备，根据SPI协议，一个CS片选对应一个device设备，调用这个设备代表该设备被选中，CS选中，对于一个MASTER而言可以有多个CS。每注册一个设备需要上拉一个cs pin脚。</p>
+<p>cs脚可以先不实现，根据应用再实现，最后调rt_spi_bus_attach_device来实现设备的挂载在bus总线上，根据RTTHREAD官方文档，对于总线名称是spi0， 对于设备名称是spi01</p>
+<p>所以这边主要添加一个device，需要实现的代码不多，cs可以暂时不实现。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rt_err_t</span> <span class="n">rt_hw_spi_device_attach</span><span class="p">(</span><span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">bus_name</span><span class="p">,</span> <span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">device_name</span><span class="p">,</span> <span class="n">rt_uint32_t</span> <span class="n">cs_pin</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">RT_ASSERT</span><span class="p">(</span><span class="n">bus_name</span> <span class="o">!=</span> <span class="n">RT_NULL</span><span class="p">);</span>
+    <span class="n">RT_ASSERT</span><span class="p">(</span><span class="n">device_name</span> <span class="o">!=</span> <span class="n">RT_NULL</span><span class="p">);</span>
+    <span class="n">RT_ASSERT</span><span class="p">(</span><span class="n">cs_pin</span> <span class="o">!=</span> <span class="n">RT_NULL</span><span class="p">);</span>
+
+    <span class="n">rt_err_t</span> <span class="n">result</span><span class="p">;</span>
+    <span class="n">struct</span> <span class="n">rt_spi_device</span> <span class="o">*</span><span class="n">spi_device</span><span class="p">;</span>
+    <span class="o">/*</span> <span class="n">attach</span> <span class="n">the</span> <span class="n">device</span> <span class="n">to</span> <span class="n">spi</span> <span class="n">bus</span><span class="o">*/</span>
+    <span class="n">spi_device</span> <span class="o">=</span> <span class="p">(</span><span class="n">struct</span> <span class="n">rt_spi_device</span> <span class="o">*</span><span class="p">)</span><span class="n">rt_malloc</span><span class="p">(</span><span class="n">sizeof</span><span class="p">(</span><span class="n">struct</span> <span class="n">rt_spi_device</span><span class="p">));</span>
+    <span class="n">RT_ASSERT</span><span class="p">(</span><span class="n">spi_device</span> <span class="o">!=</span> <span class="n">RT_NULL</span><span class="p">);</span>
+    <span class="o">/*</span> <span class="n">initialize</span> <span class="n">the</span> <span class="n">cs</span> <span class="n">pin</span> <span class="o">*/</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">rt_spi_bus_attach_device</span><span class="p">(</span><span class="n">spi_device</span><span class="p">,</span> <span class="n">device_name</span><span class="p">,</span> <span class="n">bus_name</span><span class="p">,</span> <span class="p">(</span><span class="n">void</span> <span class="o">*</span><span class="p">)</span><span class="n">cs_pin</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">!=</span> <span class="n">RT_EOK</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">LOG_E</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> attach to </span><span class="si">%s</span><span class="s2"> faild, </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">device_name</span><span class="p">,</span> <span class="n">bus_name</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">RT_ERROR</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="o">/*</span> <span class="n">TODO</span><span class="p">:</span> <span class="n">SET</span> <span class="n">THE</span> <span class="n">GPIO</span> <span class="o">*/</span>
+
+    <span class="n">RT_ASSERT</span><span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">RT_EOK</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="rt-spi-configure">
+<h3>rt_spi_configure<a class="headerlink" href="#rt-spi-configure" title="此标题的永久链接"></a></h3>
+<p>这个是用来配置spi bus的速率的，这边比较重要，需要根据configuration-&gt;mode的模式进行调整，</p>
+<p>前期可以直接将官方的demo的初始化配置放这里，</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">rt_err_t</span> <span class="n">spi_configure</span><span class="p">(</span><span class="n">struct</span> <span class="n">rt_spi_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span>
+                              <span class="n">struct</span> <span class="n">rt_spi_configuration</span> <span class="o">*</span><span class="n">configuration</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">RT_ASSERT</span><span class="p">(</span><span class="n">device</span> <span class="o">!=</span> <span class="n">RT_NULL</span><span class="p">);</span>
+    <span class="n">RT_ASSERT</span><span class="p">(</span><span class="n">device</span><span class="o">-&gt;</span><span class="n">bus</span> <span class="o">!=</span> <span class="n">RT_NULL</span><span class="p">);</span>
+    <span class="n">RT_ASSERT</span><span class="p">(</span><span class="n">device</span><span class="o">-&gt;</span><span class="n">bus</span><span class="o">-&gt;</span><span class="n">parent</span><span class="o">.</span><span class="n">user_data</span> <span class="o">!=</span> <span class="n">RT_NULL</span><span class="p">);</span>
+    <span class="n">RT_ASSERT</span><span class="p">(</span><span class="n">configuration</span> <span class="o">!=</span> <span class="n">RT_NULL</span><span class="p">);</span>
+    <span class="n">struct</span> <span class="n">mcu_drv_spi</span> <span class="o">*</span><span class="n">tmp_spi</span><span class="p">;</span>
+    <span class="n">tmp_spi</span> <span class="o">=</span> <span class="n">rt_container_of</span><span class="p">(</span><span class="n">device</span><span class="o">-&gt;</span><span class="n">bus</span><span class="p">,</span> <span class="n">struct</span> <span class="n">mcu_drv_spi</span><span class="p">,</span> <span class="n">spi_bus</span><span class="p">);</span>
+    <span class="nb">int</span> <span class="n">mode</span><span class="p">;</span>
+
+    <span class="o">///</span><span class="n">init</span>
+
+    <span class="n">switch</span> <span class="p">(</span><span class="n">configuration</span><span class="o">-&gt;</span><span class="n">mode</span> <span class="o">&amp;</span> <span class="n">RT_SPI_MODE_3</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="k">case</span> <span class="n">RT_SPI_MODE_0</span><span class="o">/*</span> <span class="n">RT_SPI_CPOL</span><span class="p">:</span><span class="mi">0</span> <span class="p">,</span> <span class="n">RT_SPI_CPHA</span><span class="p">:</span><span class="mi">0</span> <span class="o">*/</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">RT_SPI_MODE_1</span><span class="o">/*</span> <span class="n">RT_SPI_CPOL</span><span class="p">:</span><span class="mi">0</span> <span class="p">,</span> <span class="n">RT_SPI_CPHA</span><span class="p">:</span><span class="mi">1</span> <span class="o">*/</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">RT_SPI_MODE_2</span><span class="o">/*</span> <span class="n">RT_SPI_CPOL</span><span class="p">:</span><span class="mi">1</span> <span class="p">,</span> <span class="n">RT_SPI_CPHA</span><span class="p">:</span><span class="mi">0</span> <span class="o">*/</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">RT_SPI_MODE_3</span><span class="o">/*</span> <span class="n">RT_SPI_CPOL</span><span class="p">:</span><span class="mi">1</span> <span class="p">,</span> <span class="n">RT_SPI_CPHA</span><span class="p">:</span><span class="mi">1</span> <span class="o">*/</span><span class="p">:</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">-&gt;</span><span class="n">mode</span> <span class="o">&amp;</span> <span class="n">RT_SPI_MODE_3</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="n">default</span><span class="p">:</span>
+        <span class="n">LOG_E</span><span class="p">(</span><span class="s2">&quot;spi_configure mode error </span><span class="si">%x</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">configuration</span><span class="o">-&gt;</span><span class="n">mode</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">RT_ERROR</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">tmp_spi</span><span class="o">-&gt;</span><span class="n">spixfer_req</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">SPI17Y_WIDTH_1</span><span class="p">;</span>
+    <span class="n">tmp_spi</span><span class="o">-&gt;</span><span class="n">spixfer_req</span><span class="o">.</span><span class="n">bits</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">-&gt;</span><span class="n">data_width</span><span class="p">;</span>
+    <span class="n">tmp_spi</span><span class="o">-&gt;</span><span class="n">spixfer_req</span><span class="o">.</span><span class="n">ssel</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">tmp_spi</span><span class="o">-&gt;</span><span class="n">spixfer_req</span><span class="o">.</span><span class="n">deass</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">tmp_spi</span><span class="o">-&gt;</span><span class="n">spixfer_req</span><span class="o">.</span><span class="n">tx_num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">tmp_spi</span><span class="o">-&gt;</span><span class="n">spixfer_req</span><span class="o">.</span><span class="n">rx_num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">tmp_spi</span><span class="o">-&gt;</span><span class="n">spixfer_req</span><span class="o">.</span><span class="n">callback</span> <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
+    <span class="n">LOG_D</span><span class="p">(</span><span class="s2">&quot;spi init mode:</span><span class="si">%d</span><span class="s2">, rate:</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">configuration</span><span class="o">-&gt;</span><span class="n">max_hz</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">SPI_Init</span><span class="p">(</span><span class="n">tmp_spi</span><span class="o">-&gt;</span><span class="n">spi_instance</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">configuration</span><span class="o">-&gt;</span><span class="n">max_hz</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">LOG_E</span><span class="p">(</span><span class="s2">&quot;Error configuring SPI</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+        <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{}</span>
+    <span class="p">}</span>
+    <span class="o">//</span><span class="n">init</span>
+    <span class="k">return</span> <span class="n">RT_EOK</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="spixfer">
+<h3>spixfer<a class="headerlink" href="#spixfer" title="此标题的永久链接"></a></h3>
+<p>这个函数是主要的传输函数：</p>
+<p>这个是主要的传输函数：</p>
+<p>参考sample</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">rt_uint32_t</span> <span class="n">spixfer</span><span class="p">(</span><span class="n">struct</span> <span class="n">rt_spi_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">struct</span> <span class="n">rt_spi_message</span> <span class="o">*</span><span class="n">message</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">RT_ASSERT</span><span class="p">(</span><span class="n">device</span> <span class="o">!=</span> <span class="n">RT_NULL</span><span class="p">);</span>
+    <span class="n">RT_ASSERT</span><span class="p">(</span><span class="n">device</span><span class="o">-&gt;</span><span class="n">bus</span> <span class="o">!=</span> <span class="n">RT_NULL</span><span class="p">);</span>
+    <span class="n">RT_ASSERT</span><span class="p">(</span><span class="n">device</span><span class="o">-&gt;</span><span class="n">bus</span><span class="o">-&gt;</span><span class="n">parent</span><span class="o">.</span><span class="n">user_data</span> <span class="o">!=</span> <span class="n">RT_NULL</span><span class="p">);</span>
+
+    <span class="nb">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">struct</span> <span class="n">mcu_drv_spi</span> <span class="o">*</span><span class="n">tmp_spi</span><span class="p">;</span>
+    <span class="n">tmp_spi</span> <span class="o">=</span> <span class="n">rt_container_of</span><span class="p">(</span><span class="n">device</span><span class="o">-&gt;</span><span class="n">bus</span><span class="p">,</span> <span class="n">struct</span> <span class="n">mcu_drv_spi</span><span class="p">,</span> <span class="n">spi_bus</span><span class="p">);</span>
+
+
+    <span class="n">tmp_spi</span><span class="o">-&gt;</span><span class="n">spixfer_req</span><span class="o">.</span><span class="n">tx_data</span> <span class="o">=</span> <span class="n">message</span><span class="o">-&gt;</span><span class="n">send_buf</span><span class="p">;</span>
+    <span class="n">tmp_spi</span><span class="o">-&gt;</span><span class="n">spixfer_req</span><span class="o">.</span><span class="n">rx_data</span> <span class="o">=</span> <span class="n">message</span><span class="o">-&gt;</span><span class="n">recv_buf</span><span class="p">;</span>
+    <span class="n">tmp_spi</span><span class="o">-&gt;</span><span class="n">spixfer_req</span><span class="o">.</span><span class="n">len</span> <span class="o">=</span> <span class="n">message</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">SPI_MasterTrans</span><span class="p">(</span><span class="n">tmp_spi</span><span class="o">-&gt;</span><span class="n">spi_instance</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tmp_spi</span><span class="o">-&gt;</span><span class="n">spixfer_req</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="n">E_NO_ERROR</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">message</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">LOG_E</span><span class="p">(</span><span class="s2">&quot;spixfer faild, ret </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="02_rtthread_bsp_porting_gpio.html" class="btn btn-neutral float-left" title="10. RTTHREAD移植BSP驱动 GPIO篇" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="04_rtthread_bsp_porting_uart.html" class="btn btn-neutral float-right" title="12. rt-thread 移植BSP驱动 uart篇" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

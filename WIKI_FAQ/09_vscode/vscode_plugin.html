@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>12. VSCode 常用插件 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="13. VSCODE 快捷键" href="vscode_shortkey.html" />
+    <link rel="prev" title="11. VSCode 小技巧" href="vscode_faq.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">WIKI FAQ 篇</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01/01_introduce.html">1. WIKI FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02/01_introduce.html">2. ReadtheDocs从懵逼到入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03/markdown_faq.html">3. Markdown 写作技巧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04/wiki_rule.html">4. WIKI  RULE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05/markdown_flow.html">5. 如何用markdown 画流程图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_git_flow/git_flow.html">6. GIT 技巧总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_python_skill/pip_install_china_source.html">7. PIP 如何添加国内源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_uml/plantUML%E5%AE%89%E8%A3%85.html">8. plantUML 安装教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_uml/plantUML%E7%BB%98%E5%9B%BE%E7%AE%80%E4%BB%8B.html">9. plantUML 绘图简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vscode_debug.html">10. VSCode 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vscode_faq.html">11. VSCode 小技巧</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">12. VSCode 常用插件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">12.1. 快捷键</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#files-exclude-search-exclude">12.2. files.exclude 和 search.exclude</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">12.3. 插件</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#git-graph-gitgit-gui">12.3.1. git graph  git图形化工具类似于git gui</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#git-commit-plugin-for-vscode">12.3.2. Git-commit-plugin For Vscode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#indent-rainbow">12.3.3. indent-rainbow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bracket-pair-colorizer">12.3.4. Bracket Pair Colorizer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#markdown-all-in-one">12.3.5. Markdown All in One</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#intel-hex-format">12.3.6. Intel Hex format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#korofileheader">12.3.7. koroFileHeader</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#better-comments">12.3.8. Better Comments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#highlight-words">12.3.9. highlight-words</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#doxygen-documentation-generator">12.3.10. Doxygen Documentation Generator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#code-spell-checker">12.3.11. Code Spell Checker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#draw-io-integration">12.3.12. Draw.io Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#github-pull-requests-and-issues">12.3.13. GitHub Pull Requests and Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#github-remote-tool-container-ssh-wsl">12.3.14. github remote tool （container，ssh，wsl）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wavedrom">12.3.15. WaveDrom</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#power-mode">12.3.16. Power Mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#change-case">12.3.17. change-case</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="vscode_shortkey.html">13. VSCODE 快捷键</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">WIKI FAQ 篇</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">12. </span>VSCode 常用插件</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/WIKI_FAQ/09_vscode/vscode_plugin.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="vscode">
+<h1><span class="section-number">12. </span>VSCode 常用插件<a class="headerlink" href="#vscode" title="此标题的永久链接"></a></h1>
+<p>更全面的信息可以参考官方 <a class="reference external" href="https://code.visualstudio.com/docs/editor/debugging#_launch-configurations">调试手册</a> ，</p>
+<section id="id1">
+<h2><span class="section-number">12.1. </span>快捷键<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<ul class="simple">
+<li><p>ctrl + shift + p  显示命令</p></li>
+<li><p>ctrl + alt + F 格式化文件</p></li>
+</ul>
+</section>
+<section id="files-exclude-search-exclude">
+<h2><span class="section-number">12.2. </span>files.exclude 和 search.exclude<a class="headerlink" href="#files-exclude-search-exclude" title="此标题的永久链接"></a></h2>
+<ul class="simple">
+<li><p>files.exclude 用于从当前工作区排除一些文件，也就是不在左侧的工作区间显示。</p></li>
+<li><p>search.exclude 用于从搜索路径里排除一些文件，当我们全局搜索某个变量、函数名或字符串时，不会搜索这些文件里的内容。</p></li>
+</ul>
+<p>上述两个配置项我一般都是成对使用，对于不想显示的文件，自然也不想搜索。</p>
+<p>官方介绍链接：https://code.visualstudio.com/docs/getstarted/userinterface</p>
+<p>files.exclude 和 search.exclude 配置项都是在 .vscode/settings 文件里，下面列出一些常用的点：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">**</span></code> 代码当前工作区目录，<code class="docutils literal notranslate"><span class="pre">**/.git</span></code> 即当前工作区下的 .git 目录。</p></li>
+<li><p>配置的路径支持<a class="reference external" href="https://m.linuxidc.com/Linux/2017-08/146463.htm">通配符</a>，<code class="docutils literal notranslate"><span class="pre">[]</span></code> 代表可选，例如 [1234] 代表可选 1,2,3,4，当然也可以写成 [1-4]；<code class="docutils literal notranslate"><span class="pre">*</span></code> 代表可匹配任意个字。例如 <code class="docutils literal notranslate"><span class="pre">[**/bsp/[a-y]*]</span></code> 代表匹配工作目录 bsp 目录下，从 a 到 y 字母开头的目录。</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2><span class="section-number">12.3. </span>插件<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<section id="git-graph-gitgit-gui">
+<h3><span class="section-number">12.3.1. </span>git graph  git图形化工具类似于git gui<a class="headerlink" href="#git-graph-gitgit-gui" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>Git Graph extension for Visual Studio Code</p></li>
+</ul>
+</section>
+<section id="git-commit-plugin-for-vscode">
+<h3><span class="section-number">12.3.2. </span>Git-commit-plugin For Vscode<a class="headerlink" href="#git-commit-plugin-for-vscode" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>git commit 图形化工具</p></li>
+</ul>
+</section>
+<section id="indent-rainbow">
+<h3><span class="section-number">12.3.3. </span>indent-rainbow<a class="headerlink" href="#indent-rainbow" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>代码格式对齐</p></li>
+<li><p>代码块着色，使得代码整齐美观</p></li>
+</ul>
+</section>
+<section id="bracket-pair-colorizer">
+<h3><span class="section-number">12.3.4. </span>Bracket Pair Colorizer<a class="headerlink" href="#bracket-pair-colorizer" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>括号成对带颜色，非常方便</p></li>
+</ul>
+</section>
+<section id="markdown-all-in-one">
+<h3><span class="section-number">12.3.5. </span>Markdown All in One<a class="headerlink" href="#markdown-all-in-one" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>markdown写作利器，可以预览，可以直接转成pdf</p></li>
+</ul>
+</section>
+<section id="intel-hex-format">
+<h3><span class="section-number">12.3.6. </span>Intel Hex format<a class="headerlink" href="#intel-hex-format" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>能看hex文件和bin文件</p></li>
+</ul>
+</section>
+<section id="korofileheader">
+<h3><span class="section-number">12.3.7. </span>koroFileHeader<a class="headerlink" href="#korofileheader" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>用于生成文件头部和函数的注释</p></li>
+</ul>
+</section>
+<section id="better-comments">
+<h3><span class="section-number">12.3.8. </span>Better Comments<a class="headerlink" href="#better-comments" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>代码注释高亮，具体使用如下:</p>
+<ul>
+<li><p>！红色注释</p></li>
+<li><p>? 蓝色注释</p></li>
+<li><p>// 灰色删除线注释</p></li>
+<li><p>todo 橘红色注释</p></li>
+<li><ul>
+<li><p>浅绿色注释</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="c1">//  正常注释</span><span class="w"></span>
+<span class="c1">//* 浅绿色</span><span class="w"></span>
+<span class="c1">//! 红色</span><span class="w"></span>
+<span class="c1">//? 蓝色</span><span class="w"></span>
+<span class="c1">//// 灰色</span><span class="w"></span>
+<span class="c1">//todo 橘红色</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="highlight-words">
+<h3><span class="section-number">12.3.9. </span>highlight-words<a class="headerlink" href="#highlight-words" title="此标题的永久链接"></a></h3>
+<p><a class="reference external" href="https://blog.csdn.net/palmer_kai/article/details/79548164">参考链接</a></p>
+<ul class="simple">
+<li><p>可以达到类似于SourceInsight高亮的效果</p></li>
+</ul>
+<section id="id3">
+<h4>安装配置步骤<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h4>
+<ul class="simple">
+<li><p>安装插件</p></li>
+<li><p>进行快捷键绑定，只需要绑定Highlight Toggle Current，比如F8，注意，可能需要解绑其他的F8快捷键</p></li>
+<li><p>在setting.json中加入配置选项： “highlightwords.defaultMode”: 1</p></li>
+</ul>
+</section>
+</section>
+<section id="doxygen-documentation-generator">
+<h3><span class="section-number">12.3.10. </span>Doxygen Documentation Generator<a class="headerlink" href="#doxygen-documentation-generator" title="此标题的永久链接"></a></h3>
+<p><a class="reference external" href="https://blog.csdn.net/lblmlms/article/details/113662339">Doxygen Documentation Generator</a></p>
+<p>可以达到如下效果</p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora/test11112.gif" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora/test11112.gif" /></p>
+<p>Doxygen Documentation Generator插件可以方便地生成规范的注释。使用方式：</p>
+<ol class="simple">
+<li><p>当在文件头部输入 “/**” 后回车,自动生成模板文件注释。</p></li>
+<li><p>在函数上面 “/**” 后回车,自动生成模板函数注释。</p></li>
+<li><p>如果上面两种方式无效果（可能和其他插件冲突），在输入<code class="docutils literal notranslate"><span class="pre">/***/</span></code>后，将光标移动至第二个<code class="docutils literal notranslate"><span class="pre">*</span></code>后，按下enter回车</p></li>
+</ol>
+<p><strong>在settings.json中配置如下（也可以使用默认值，看需要）：</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">	</span><span class="c1">// /**回车后最多向下多少行去找函数声明</span><span class="w"></span>
+<span class="w"> 	</span><span class="nt">&quot;doxdocgen.generic.linesToGet&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"></span>
+<span class="w">	</span><span class="c1">// 作者名和邮箱</span><span class="w"></span>
+<span class="w">	</span><span class="nt">&quot;doxdocgen.generic.authorName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;name&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;doxdocgen.generic.authorEmail&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;xx@foxmail.com&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;doxdocgen.generic.authorTag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@Author : {author} ({email})&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">	</span><span class="c1">// 日期格式</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;doxdocgen.generic.dateFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;YYYY-MM-DD&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;doxdocgen.generic.dateTemplate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@Creat Date : {date}&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">	</span><span class="c1">// 简介格式</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;doxdocgen.generic.briefTemplate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@Brief : {text}&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span>
+<span class="w">    </span><span class="c1">// 文件注释的格式</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;doxdocgen.file.fileTemplate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@File Name: {name}&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;doxdocgen.file.versionTag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@Version : 1.0&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;doxdocgen.file.copyrightTag&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;@copyright Copyright (c) {year} XXXX技术有限公司&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// 自定义文件注释格式</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;doxdocgen.file.customTag&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;modification history :&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Date:       Version:      Author:     &quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Changes: &quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 文件注释组成及顺序</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;doxdocgen.file.fileOrder&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;file&quot;</span><span class="p">,</span><span class="w">		</span><span class="c1">// @file</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;brief&quot;</span><span class="p">,</span><span class="w">	</span><span class="c1">// @brief 简介</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;author&quot;</span><span class="p">,</span><span class="w">	</span><span class="c1">// 作者</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;version&quot;</span><span class="p">,</span><span class="w">	</span><span class="c1">// 版本</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;date&quot;</span><span class="p">,</span><span class="w">		</span><span class="c1">// 日期</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;empty&quot;</span><span class="p">,</span><span class="w">	</span><span class="c1">// 空行</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// &quot;copyright&quot;,// 版权</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// &quot;custom&quot;	// 自定义</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+
+<span class="w">	</span><span class="c1">// 参数注释和返回注释的格式</span><span class="w"></span>
+<span class="w">	</span><span class="nt">&quot;doxdocgen.generic.paramTemplate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@param{indent:8}{param}{indent:25}&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;doxdocgen.generic.returnTemplate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@return{indent:8}{type}{indent:25}&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 函数注释组成及顺序</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;doxdocgen.generic.order&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;brief&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;tparam&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;param&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;return&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="code-spell-checker">
+<h3><span class="section-number">12.3.11. </span>Code Spell Checker<a class="headerlink" href="#code-spell-checker" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>检查单词拼写，以及单词纠正</p></li>
+</ul>
+</section>
+<section id="draw-io-integration">
+<h3><span class="section-number">12.3.12. </span>Draw.io Integration<a class="headerlink" href="#draw-io-integration" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>draw io 画流程图</p></li>
+<li></li>
+</ul>
+<p>https://github.com/supperthomas/vscode-plugin-drawio</p>
+</section>
+<section id="github-pull-requests-and-issues">
+<h3><span class="section-number">12.3.13. </span>GitHub Pull Requests and Issues<a class="headerlink" href="#github-pull-requests-and-issues" title="此标题的永久链接"></a></h3>
+<p>处理pull request 和issue的工具</p>
+</section>
+<section id="github-remote-tool-container-ssh-wsl">
+<h3><span class="section-number">12.3.14. </span>github remote tool （container，ssh，wsl）<a class="headerlink" href="#github-remote-tool-container-ssh-wsl" title="此标题的永久链接"></a></h3>
+<p>remote- Container
+remote - ssh
+remote - wsl</p>
+</section>
+<section id="wavedrom">
+<h3><span class="section-number">12.3.15. </span>WaveDrom<a class="headerlink" href="#wavedrom" title="此标题的永久链接"></a></h3>
+<p>画时序图
+https://mp.weixin.qq.com/s/XUQcsaFhyfEQZ25Gc0p-nQ</p>
+</section>
+<section id="power-mode">
+<h3><span class="section-number">12.3.16. </span>Power Mode<a class="headerlink" href="#power-mode" title="此标题的永久链接"></a></h3>
+<p>Vscode 里面一款炫酷的代码编辑插件，打字时可根据自己的设置展现出非常炫酷的动画效果；</p>
+<p>使用步骤：</p>
+<ol class="simple">
+<li><p>在商店里面扩展-&gt;搜索Power Mode,点击安装;</p></li>
+<li><p>打开vscode左下角设置图标，选择设置；</p></li>
+<li><p>选择右上角的三个点展开-&gt;点击类似油壶的图标（setting.json);</p></li>
+<li><p>Copy下面代码点击保存即可；</p></li>
+</ol>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">//是否开启</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;powermode.enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//效果样式  “水花-particles”, “烟花-fireworks”, “火焰-flames”, “雪花-magic”, “幽灵-clippy”, “激光-simple-rift”, “大激光-exploding-rift”</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;powermode.presets&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;flames&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//时间间隔</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;powermode.combo.timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//是否抖动</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;powermode.shake.enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+</pre></div>
+</div>
+<p>说明：可根据自己喜欢的样式根据语法更改</p>
+</section>
+<section id="change-case">
+<h3><span class="section-number">12.3.17. </span>change-case<a class="headerlink" href="#change-case" title="此标题的永久链接"></a></h3>
+<p>Vscode 里面一款可以修改变量名为小驼峰的插件；</p>
+<p>使用步骤：</p>
+<ol class="simple">
+<li><p>在商店里面扩展-&gt;搜索change-case,点击安装;</p></li>
+<li><p>选中变量；</p></li>
+<li><p>按F1 输入camel（小驼峰）;</p></li>
+</ol>
+<p>也可以点击后面的设置快捷键</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="vscode_faq.html" class="btn btn-neutral float-left" title="11. VSCode 小技巧" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="vscode_shortkey.html" class="btn btn-neutral float-right" title="13. VSCODE 快捷键" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

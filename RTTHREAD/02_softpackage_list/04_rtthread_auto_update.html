@@ -1,0 +1,2229 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6. RTTHREAD 软件包目录 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="7. RTTHREAD BSP board支持目录" href="05_rtthread_bsp_board.html" />
+    <link rel="prev" title="5. RT-Thread 传感器软件包归类" href="03_sensor_list.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">RTTHRED: RT-Thread</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. RTTHREAD贡献TODO目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/02_RTTHREAD_introduce.html">2. RT-THREAD —-国产开源之光</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_software_package.html">3. RTTHREAD软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_software_introduce.html">4. RTTHREAD软件包目录自分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_sensor_list.html">5. RT-Thread 传感器软件包归类</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. RTTHREAD 软件包目录</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ai">6.1. ai</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iot">6.2. iot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#language">6.3. language</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#misc">6.4. misc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multimedia">6.5. multimedia</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#peripherals">6.6. peripherals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#security">6.7. security</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#system">6.8. system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tools">6.9. tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">6.10. 如何生成RTTHREAD软件包列表目录</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05_rtthread_bsp_board.html">7. RTTHREAD BSP board支持目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_rtthread_softpackage_build_guide.html">8. 软件包制作小计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/01_rtthread_bsp_porting.html">9. RTTHREAD移植新的BSP开发板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/02_rtthread_bsp_porting_gpio.html">10. RTTHREAD移植BSP驱动 GPIO篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/03_rtthread_bsp_porting_spi.html">11. RTTHREAD移植BSP驱动 SPI篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/04_rtthread_bsp_porting_uart.html">12. rt-thread 移植BSP驱动 uart篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_docker/01_docker_images.html">13. 如何用docker来学习rtthread-qemu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_llsync/01_llsync_Environment.html">14. LLSYNC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_llsync/02_llsync_struct_code.html">15. LLSYNC 移植指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_simular/01_keil_simulator.html">16. 如何在keil中STM32L496 跑simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_onchip/01_on_chip_file.html">17. STM32如何将文件放到内部flash里面</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">RTTHRED: RT-Thread</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">6. </span>RTTHREAD 软件包目录</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/RTTHREAD/02_softpackage_list/04_rtthread_auto_update.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="rtthread">
+<h1><span class="section-number">6. </span>RTTHREAD 软件包目录<a class="headerlink" href="#rtthread" title="此标题的永久链接"></a></h1>
+<section id="ai">
+<h2><span class="section-number">6.1. </span>ai<a class="headerlink" href="#ai" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>包名</th>
+<th>作者</th>
+<th>license</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/wuhanstudio/elapack">elapack</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>嵌入式线性代数库，兼容 matlab</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/rt-libann">libann</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>轻量级 ANN 库，可以训练，保存和导入模型</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/naxos">naxos</a></td>
+<td>wuhanstudio</td>
+<td>LGPL-3.0</td>
+<td>C++ Constraint Programming 库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/majianjia/nnom">nnom</a></td>
+<td>Jianjia Ma</td>
+<td>Apache-2.0</td>
+<td>轻量级的神经网络框架, 模型一键转换, 让MCU也神经一把</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/onnx-backend">onnx-backend</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>开源神经网络模型 onnx 后端，支持几乎所有主流机器学习模型</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/rt-onnx-parser">onnx-parser</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>开源神经网络模型 onnx 解析库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/QuEST">quest</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>嵌入式系统上的量子计算机模拟器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/QingChuanWS/TensorflowLiteMicro">TensorflowLiteMicro</a></td>
+<td>QingChuanWS</td>
+<td>LGPLv2.1</td>
+<td>用于rt-thread操作系统的轻量级深度学习端侧推理框架Tensorflow Lite软件包。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/ulapack">ulapack</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>嵌入式线性代数库</td>
+</tr>
+</tbody>
+</table></section>
+<section id="iot">
+<h2><span class="section-number">6.2. </span>iot<a class="headerlink" href="#iot" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>包名</th>
+<th>作者</th>
+<th>license</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/RayShen1018/Abup">abup_fota</a></td>
+<td>RayShen1018</td>
+<td>Apache-2.0</td>
+<td>基于 abup FOTA 组件的 固件下载器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/loogg/agile_ftp">agile_ftp</a></td>
+<td>loogg</td>
+<td>LGPL-2.1</td>
+<td>轻量级 ftp 服务器。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/loogg/agile_jsmn">agile_jsmn</a></td>
+<td>loogg</td>
+<td>MIT</td>
+<td>轻量级json解析器。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/loogg/agile_modbus">agile_modbus</a></td>
+<td>loogg</td>
+<td>LGPL-2.1</td>
+<td>轻量级 modbus 协议栈。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/loogg/agile_telnet">agile_telnet</a></td>
+<td>loogg</td>
+<td>LGPL-2.1</td>
+<td>以太网TCP调试。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/heyuanjie87/airkissOpen">airkissOpen</a></td>
+<td>heyuanjie87</td>
+<td>Apache-2.0</td>
+<td>腾讯airkiss协议解析库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/atsrv_socket">atsrv_socket</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>socket 相关指令的 AT 服务端</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/at_device">at_device</a></td>
+<td>RealThread</td>
+<td>LGPL-2.1</td>
+<td>AT 组件在不同设备上的移植或示例</td>
+</tr>
+<tr>
+<td><a href="https://github.com/luhuadong/rtt-bc28-mqtt">bc28_mqtt</a></td>
+<td>luhuadong</td>
+<td>Apache-2.0</td>
+<td>BC28 MQTT: 使用移远BC28模块连接阿里云IoT平台</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/bsal">bsal</a></td>
+<td>supperthomas</td>
+<td>Apache-2.0</td>
+<td>蓝牙协议栈抽象层。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/supperthomas/RTT_PACKAGE_BTSTACK.git">btstack</a></td>
+<td>supperthomas</td>
+<td>Apache-2.0</td>
+<td>软件包 btstack 用于BTSTACK在RT-THREAD中的使用</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/capnp">capnp</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>Cap'n 串行化协议，比 protobuf 更高效，更轻量级。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/cJSON">cJSON</a></td>
+<td>RealThread</td>
+<td>MIT</td>
+<td>超轻量级的 C 语言 json 解析库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/cmux">cmux</a></td>
+<td>xiangxistu</td>
+<td>Apache-2.0</td>
+<td>在 RT_Thread 上实现的串口多路复用协议, 支持 GSM0710</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/coap">coap</a></td>
+<td>RealThread</td>
+<td>BSD-2-Clause</td>
+<td>一种 C 语言实现的 CoAP 协议</td>
+</tr>
+<tr>
+<td><a href="https://github.com/WKJay/DLT645">dlt645</a></td>
+<td>WKJay</td>
+<td>LGPL-2.1</td>
+<td>基于DLT645协议的主机采集软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/EmbeddedProto">EmbeddedProto</a></td>
+<td>wuhanstudio</td>
+<td>GPL-3.0</td>
+<td>EmbeddedProto: 嵌入式 C++ protobuf 针对 ARM Cortex-M 优化</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/ezXML">ezXML</a></td>
+<td>RealThread</td>
+<td>MIT</td>
+<td>一个用 C 语言描述的 XML 解析库，并且简单易用</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/freemodbus">freemodbus</a></td>
+<td>flybreak</td>
+<td>BSD</td>
+<td>FreeModbus: 开源的 Modbus 主从协议栈</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/ali-iotkit">ali-iotkit</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>连接阿里 IoT 云平台的软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/azure-iot-sdk">azure-iot-sdk</a></td>
+<td>RealThread</td>
+<td>MIT</td>
+<td>微软 azure 云软件包，支持 MQTT 协议和 HTTP 协议，使用该软件包可轻松将设备连接至 azure 云平台</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/GAgent">GAgent</a></td>
+<td>RealThread</td>
+<td>LGPL-2.1</td>
+<td>连接机智云的软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jpush/JIoT-rtthread-package.git">jiot-c-sdk</a></td>
+<td>ouyangshengduo</td>
+<td>MIT</td>
+<td>连接极光IoT云的客户端软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/joylink">joylink</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>连接京东小京鱼 IOT 云平台的软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/onenet">onenet</a></td>
+<td>RealThread</td>
+<td>LGPL-2.1</td>
+<td>连接中国移动 OneNet 云的软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tencentyun/tencent-cloud-iot-package-for-rtthread">tencent-iot-sdk</a></td>
+<td>yougaliu</td>
+<td>MIT</td>
+<td>连接腾讯物联网开发平台的软件包。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ucloud/ucloud-iot-rtthread-package.git">ucloud_iot_sdk</a></td>
+<td>ucloud</td>
+<td>Apache-2.0</td>
+<td>用于快速连接优刻得物联网平台的软件包。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/heyuanjie87/ipmsg">ipmsg</a></td>
+<td>heyuanjie87</td>
+<td>Apache-2.0</td>
+<td>在 RT-Thread 上实现的 飞鸽传书</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/jsmn">jsmn</a></td>
+<td>RealThread</td>
+<td>MIT</td>
+<td>世界上最快 JSON 解析器或标记器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jiejieTop/kawaii-mqtt">kawaii-mqtt</a></td>
+<td>jiejie</td>
+<td>GPL-2.0</td>
+<td>一个基于socket API之上的跨平台MQTT客户端，拥有非常简洁的API接口，以极少的资源实现QOS2的服务质量，并且无缝衔接了mbedtls加密库。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/liu2guang/libcurl2rtt">libcurl2rtt</a></td>
+<td>liu2guang</td>
+<td>Apache-2.0</td>
+<td>基于 RT-Thread 移植的 curl 库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/loogg/libmodbus">libmodbus</a></td>
+<td>malongwei</td>
+<td>LGPL-2.1</td>
+<td>libmodbus在RT-Thread上的移植</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/librws">librws</a></td>
+<td>RealThread</td>
+<td>MIT</td>
+<td>小型、跨平台websocket客户端C库。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/qiaoqidui/ljson">ljson</a></td>
+<td>qiaoqidui</td>
+<td>unknown</td>
+<td>ANSI-C 标准的 JSON 解析器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zyk6271/LoRaWAN_Driver">lorawan_driver</a></td>
+<td>zyk6271</td>
+<td>Apache-2.0</td>
+<td>将LoRaWAN协议栈运行在RT-THREAD系统上</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Forest-Rain/lorawan-ed-stack">lorawan_ed_stack</a></td>
+<td>Forest-Rain</td>
+<td>Apache-2.0</td>
+<td>lorawan_ed_stack是LoRaWAN终端设备协议栈的实现.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/lssdp.git">lssdp</a></td>
+<td>RealThread</td>
+<td>MIT</td>
+<td>在 RT-Thread 上实现的 lssdp 协议，可以用于局域网设备自动发现</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sogwms/mavlink">mavlink</a></td>
+<td>sogwms</td>
+<td>Apache-2.0</td>
+<td>一非常轻量级的消息传输协议</td>
+</tr>
+<tr>
+<td><a href="https://github.com/armink-rtt-pkgs/mongoose">mongoose</a></td>
+<td>armink</td>
+<td>GPL-2.0</td>
+<td>一款嵌入式 Web 服务器库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hichard/mymqtt">mymqtt</a></td>
+<td>hichard</td>
+<td>EPL-1.0</td>
+<td>Eclipse 开源的 MQTT C/C++ 客户端的一种高效、稳定的实现。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/nanopb">nanopb</a></td>
+<td>RealThread</td>
+<td>Zlib</td>
+<td>Protocol Buffers 解析器在嵌入式上的实现</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/netutils">netutils</a></td>
+<td>RealThread</td>
+<td>GPL-2.0</td>
+<td>RT-Thread 网络网络小工具集</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/nimble">NimBLE</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>Apache 开源蓝牙 5.0 协议栈在 RT-Thread 的移植</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ShineRoyal/nmealib">nmealib</a></td>
+<td>ShineRoyal</td>
+<td>LGPL-2.1</td>
+<td>nmealib库在RT-Thread上的移植</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/nopoll">nopoll</a></td>
+<td>RealThread</td>
+<td>LGPL-2.1</td>
+<td>一款 C 实现的开源 WebSocket 软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/ota_downloader">ota_downloader</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>基于 RT-Thread OTA 组件的 固件下载器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/paho-mqtt">pahomqtt</a></td>
+<td>RealThread</td>
+<td>EPL-1.0</td>
+<td>Eclipse 开源的 MQTT C/C++ 客户端</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ShineRoyal/pdulib">pdulib</a></td>
+<td>ShineRoyal</td>
+<td>LGPL-2.1</td>
+<td>一个用于PDU格式的短信文本解析库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/ppp_device.git">ppp_device</a></td>
+<td>xiangxistu</td>
+<td>Apache-2.0</td>
+<td>lwIP PPP 功能针对蜂窝( 2G/3G/4G )模块移植和实现</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/protobuf-c">protobuf-c</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>Google 的 prototol buffer 一种轻便高效的数据存储格式</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/qianxun.git">qxwz</a></td>
+<td>daniel.chen</td>
+<td>Apache-2.0</td>
+<td>qxwz 高精度定位应用</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/rapidjson">rapidjson</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>支持 SAX/DOM 的 C++ JSON 处理库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/maplerian/rt_cjson_tools">rt_cjson_tools</a></td>
+<td>maplerian</td>
+<td>Apache-2.0</td>
+<td>用于 RT-Thread 的 cJSON工具库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/WKJay/SMTP_CLIENT">smtp_client</a></td>
+<td>WKJay</td>
+<td>LGPL-2.1</td>
+<td>SMTP邮件发送软件包，简单易用，支持普通25端口及465/587加密端口</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Guozhanxin/tcpserver.git">tcpserver</a></td>
+<td>flybreak</td>
+<td>Apache-2.0</td>
+<td>一个支持多客户端的 TCP 服务器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/umqtt.git">umqtt</a></td>
+<td>springcity</td>
+<td>Apache-2.0</td>
+<td>一个轻量级、功能强大、可定制、易于使用和可嵌入的RT-Thread mqtt客户端。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wayz-iot/">wayz_iotkit</a></td>
+<td>jianxiong.ye</td>
+<td>GPL-2.0</td>
+<td>wayz iot 定位软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/webclient">webclient</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>RT-Thread 官方开源的 http/https 协议客户端</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/webnet">webnet</a></td>
+<td>RealThread</td>
+<td>GPL-2.0</td>
+<td>RT-Thread 官方开源的、轻量级、可定制嵌入式 Web 服务器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/armink-rtt-pkgs/WebTerminal">WebTerminal</a></td>
+<td>armink</td>
+<td>unknown</td>
+<td>可以在浏览器上运行的终端</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/rw007">rw007</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>RT-Thread 的 RW007 驱动（SPI Wi-Fi 模式）</td>
+</tr>
+<tr>
+<td><a href="https://github.com/JianRuiqian/marvellwifi">wlanmarvell</a></td>
+<td>JianRuiqian</td>
+<td>GPL-2.0</td>
+<td>RT-Thread 的 Marvell wifi 驱动</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/wlan-wiced">wlan_wiced</a></td>
+<td>RealThread</td>
+<td>GPL-2.0</td>
+<td>WICED 的 wlan 驱动</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/wiznet">wiznet</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>WIZNet TCP/IP 芯片（例如： W5500/W5100）的 SAL 框架对接实现</td>
+</tr>
+</tbody>
+</table></section>
+<section id="language">
+<h2><span class="section-number">6.3. </span>language<a class="headerlink" href="#language" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>包名</th>
+<th>作者</th>
+<th>license</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/jerryscript">jerryscript</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>针对 RT-Thread 的 JerryScript 移植</td>
+</tr>
+<tr>
+<td><a href="https://github.com/liu2guang/Lua2RTT">Lua</a></td>
+<td>liu2guang</td>
+<td>MIT</td>
+<td>Lua 库适配 RT-Thread 3.0(基于 lua 5.1.4和 5.3.4 版本)</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/micropython">micropython</a></td>
+<td>armink</td>
+<td>MIT</td>
+<td>MicroPython 在 RT-Thread 上的移植</td>
+</tr>
+</tbody>
+</table></section>
+<section id="misc">
+<h2><span class="section-number">6.4. </span>misc<a class="headerlink" href="#misc" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>包名</th>
+<th>作者</th>
+<th>license</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/sogwms/armv7m_dwt">armv7m_dwt</a></td>
+<td>sogwms</td>
+<td>Apache-2.0</td>
+<td>armv7m_dwt 高精度计时与延时</td>
+</tr>
+<tr>
+<td><a href="https://github.com/gbcwbz/canfestival-rtt">CanFestival</a></td>
+<td>gbcwbz</td>
+<td>LGPL-2.1</td>
+<td>Canfestival (开源的 CANopen 协议栈)在 RT-Thread 系统上的移植</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/cowsay">cowsay</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>linux cowsay 软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/qiyongzhong0/crclib">crclib</a></td>
+<td>qiyongzhong0</td>
+<td>LGPL-2.1</td>
+<td>一个包含8位、16位、32位CRC校验计算的函数库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xuzhuoyi/DigitalCtrl">DigitalCtrl</a></td>
+<td>xuzhuoyi</td>
+<td>MIT</td>
+<td>数字闭环控制算法库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/dstr">dstr</a></td>
+<td>RealThread</td>
+<td>LGPL-2.1</td>
+<td>用 C 编写的动态字符串库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/aclock">aclock</a></td>
+<td>mysterywolf</td>
+<td>Apache-2.0</td>
+<td>终端钟表界面</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/c2048">c2048</a></td>
+<td>mysterywolf</td>
+<td>MIT</td>
+<td>2048是一款益智类游戏，原版游戏运行在苹果手机上</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/donut">donut</a></td>
+<td>mysterywolf</td>
+<td>None</td>
+<td>使用字符渲染的3D旋转甜甜圈</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/snake">snake</a></td>
+<td>mysterywolf</td>
+<td>GPL-2.0</td>
+<td>贪吃蛇游戏</td>
+</tr>
+<tr>
+<td><a href="https://github.com/volatile-static/rtt_tetris">tetris</a></td>
+<td>volatile-static</td>
+<td>MIT</td>
+<td>俄罗斯方块</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/threes">threes</a></td>
+<td>mysterywolf</td>
+<td>MIT</td>
+<td>threes是一款在2014年很火的益智类游戏，原版游戏运行在苹果手机上</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/fastlz">fastlz</a></td>
+<td>RealThread</td>
+<td>unknown</td>
+<td>一款极速的压缩库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/murphyzhao/FlexibleButton">FlexibleButton</a></td>
+<td>MurphyZhao</td>
+<td>Apache License 2.0</td>
+<td>小巧灵活的按键驱动程序（事件驱动、无限按键数量、可用中断模式）</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/hello">hello</a></td>
+<td>RealThread</td>
+<td>LGPL-2.1</td>
+<td>RT-Thread 软件包示例</td>
+</tr>
+<tr>
+<td><a href="https://github.com/BernardXiong/kendryte-demo">kendryte-demo</a></td>
+<td>BernardXiong</td>
+<td>Apache-2.0</td>
+<td>Kendryte k210 demo</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/ki">ki</a></td>
+<td>mysterywolf</td>
+<td>GPL-2.0</td>
+<td>ki是一个带有语法高亮的终端编辑器，支持C/C++ Python Javascript Go语言语法高亮</td>
+</tr>
+<tr>
+<td><a href="https://github.com/liu2guang/libcsv">libcsv</a></td>
+<td>liu2guang</td>
+<td>LGPL-2.1</td>
+<td>libcsv是用纯ANSI C89编写的小型、简单、快速的CSV库，支持读写CSV数据</td>
+</tr>
+<tr>
+<td><a href="https://github.com/orange2348/lwgps2rtt">lwgps</a></td>
+<td>orange2348</td>
+<td>MIT</td>
+<td>轻量级GPS NEMA协议解析器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RiceChen/lzma">lzma</a></td>
+<td>RiceChen</td>
+<td>LGPL-2.1</td>
+<td>高压缩率的压缩库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/mcurses">mcurses</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>轻量级的 ncurses 控制台绘图库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/miniLZO">miniLZO</a></td>
+<td>RealThread</td>
+<td>GPL-2.0</td>
+<td>LZO 是一个实时数据压缩库，而 miniLZO 是 LZO 压缩库的精简版本</td>
+</tr>
+<tr>
+<td><a href="https://github.com/liu2guang/MultiButton">MultiButton</a></td>
+<td>0x1abin</td>
+<td>MIT</td>
+<td>一个小巧易用的事件驱动按钮驱动模块</td>
+</tr>
+<tr>
+<td><a href="https://github.com/liu2guang/optparse">optparse</a></td>
+<td>liu2guang</td>
+<td>Unlicense</td>
+<td>基于 RT-Thread 的 Getopt 命令行解析器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/quicklz">quicklz</a></td>
+<td>RealThread</td>
+<td>GPL-3.0</td>
+<td>世界上速度最快的压缩库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/filesystem-sample">filesystem_samples</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>RT-Thread 文件系统示例</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/kernel-sample">kernel_samples</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>RT-Thread 内核示例</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/network-sample">network_samples</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>RT-Thread 网络示例</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/peripheral-sample">peripheral_samples</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>RT-Thread 外设示例</td>
+</tr>
+<tr>
+<td><a href="https://github.com/redoccheng/state_machine">state_machine</a></td>
+<td>redoccheng</td>
+<td>LGPL-2.1</td>
+<td>一个用C语言实现功能丰富但简单的有限状态机（FSM）。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/XXXXzzzz000/TinyFrame">TinyFrame</a></td>
+<td>XXXXzzzz000</td>
+<td>MIT</td>
+<td>应用于串口设备（如 UART / RS232)的构建或者解析的库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/ukal">ukal</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>卡尔曼滤波算法</td>
+</tr>
+<tr>
+<td><a href="https://github.com/aeo123/upacker.git">upacker</a></td>
+<td>zpw</td>
+<td>MIT</td>
+<td>串行通信链路协议</td>
+</tr>
+<tr>
+<td><a href="https://github.com/aeo123/uparam.git">uparam</a></td>
+<td>zpw</td>
+<td>MIT</td>
+<td>系统参数读写管理和持久化</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/vi">vi</a></td>
+<td>RealThread</td>
+<td>GPL-2.0</td>
+<td>vi 编辑器在 RT-Thread 操作系统上的移植</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/vt100">vt100</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>串口终端绘图库，可以在 msh 下画图</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/zlib">zlib</a></td>
+<td>RealThread</td>
+<td>unknown</td>
+<td>通用数据压缩库</td>
+</tr>
+</tbody>
+</table></section>
+<section id="multimedia">
+<h2><span class="section-number">6.5. </span>multimedia<a class="headerlink" href="#multimedia" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>包名</th>
+<th>作者</th>
+<th>license</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/HelloByeAll/AzureGUIX">AzureGUIX</a></td>
+<td>HelloByeAll</td>
+<td>Apache-2.0</td>
+<td>微软THREADX系统中间件 AzureGUIX</td>
+</tr>
+<tr>
+<td><a href="https://github.com/liuduanfei/helix">helix</a></td>
+<td>liuduanfei</td>
+<td>AGPL-3.0</td>
+<td>Helix,mp3 解码库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rtoslab/mupdf-rtt">mupdf</a></td>
+<td>rtoslab</td>
+<td>AGPL-3.0</td>
+<td>轻量级PDF，XPS和电子书查看器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages-by-SummerGift/openmv">openmv</a></td>
+<td>SummerGift</td>
+<td>MIT</td>
+<td>openmv 在 RT-Thread 上的移植</td>
+</tr>
+<tr>
+<td><a href="https://github.com/loogg/STemWin">STemWin</a></td>
+<td>malongwei</td>
+<td>LGPL-2.1</td>
+<td>STemWin在RT-Thread上的移植</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/TJpgDec">TJpgDec</a></td>
+<td>RealThread</td>
+<td>BSD</td>
+<td>JPEG 解码库</td>
+</tr>
+<tr>
+<td><a href="https://gitee.com/Aladdin-Wang/touchgfx2rtt.git">touchgfx2rtt</a></td>
+<td>kk</td>
+<td>LGPL-2.1</td>
+<td>touchgfx在RT-Thread上的移植。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/wavplayer">wavplayer</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>简洁的wav格式的音乐播放器，提供播放和录音功能</td>
+</tr>
+</tbody>
+</table></section>
+<section id="peripherals">
+<h2><span class="section-number">6.6. </span>peripherals<a class="headerlink" href="#peripherals" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>包名</th>
+<th>作者</th>
+<th>license</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/wuhanstudio/rt-ad7746">ad7746</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>AD7746 高精度电容测量芯片在 RT-Thread 移植库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/loogg/agile_button">agile_button</a></td>
+<td>Longwei Ma</td>
+<td>LGPL-2.1</td>
+<td>一个灵活的button软件包。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/loogg/agile_console">agile_console</a></td>
+<td>loogg</td>
+<td>LGPL-2.1</td>
+<td>一个灵活的console设备软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/loogg/agile_led">agile_led</a></td>
+<td>Longwei Ma</td>
+<td>LGPL-2.1</td>
+<td>一个灵活的led软件包。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/greedyhao/as608.git">as608</a></td>
+<td>greedyhao</td>
+<td>Apache-2.0</td>
+<td>AS608 指纹模块的驱动</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RiceChen/as7341">as7341</a></td>
+<td>RiceChen</td>
+<td>Apache-2.0</td>
+<td>AS7341可见光传感器，可测量8个波长的可见光。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/XiaojieFan/at24cxx">at24cxx</a></td>
+<td>XiaojieFan</td>
+<td>Apache-2.0</td>
+<td>eeprom at24cxx 的驱动库。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Sunwancn/rtt-pkgs-beep">beep</a></td>
+<td>Sunwancn</td>
+<td>Apache-2.0</td>
+<td>基于 rt-thread 的 pin 和 pwm 驱动的蜂鸣器控制软件包，可以容易地驱动有源蜂鸣器或无源蜂鸣器，产生各种间隔长短的鸣叫声。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jiejieTop/rtpkg_button">button</a></td>
+<td>jiejieTop</td>
+<td>GPL-3.0</td>
+<td>C 实现的按键驱动，支持单击和双击，长按，长按释放</td>
+</tr>
+<tr>
+<td><a href="https://github.com/redocCheng/rt_can_ymodem">can_ymodem</a></td>
+<td>redocCheng</td>
+<td>Apache-2.0</td>
+<td>连接can设备和ymodem的驱动包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/aozima/dm9051">dm9051</a></td>
+<td>aozima</td>
+<td>Apache-2.0</td>
+<td>DM9051 SPI 接口以太网芯片驱动库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Sunwancn/rtt-pkgs-easyblink">easyblink</a></td>
+<td>Sunwancn</td>
+<td>Apache-2.0</td>
+<td>小巧轻便的 LED 控制软件包，可以容易地控制 LED 开、关、反转和各种间隔闪烁，占用 RAM 少，支持 RT-Thread 标准版和 Nano 版。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/foss-for-synopsys-dwc-arc-processors/embarc_bsp">embARC_bsp</a></td>
+<td>Watson Zeng</td>
+<td>Apache-2.0</td>
+<td>Synopsys ARC 处理器 板级支持包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/rt-i2c-tools">i2c-tools</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>I2C 调试时可以使用的小工具，可以扫描设备，读写寄存器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/icm20608">icm20608</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>三轴加速度与三轴陀螺仪 icm20608 的传感器驱动库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/infrared_framework.git">infrared</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>基于 rt-thread 的 pin,pwm 和 hwtimer 驱动的红外框架。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/kendryte_sdk">kendryte-sdk</a></td>
+<td>RealThread</td>
+<td>unknown</td>
+<td>勘智 K210 处理器对应的外设驱动包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xqyjlj/ld3320">ld3320</a></td>
+<td>xqyjlj</td>
+<td>Apache-2.0</td>
+<td>LD3320语音识别芯片</td>
+</tr>
+<tr>
+<td><a href="https://github.com/aeo123/LedBlink.git">LedBlink</a></td>
+<td>zpw</td>
+<td>GPL-2.0</td>
+<td>简单易用led闪烁控制软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/libnfc">libnfc</a></td>
+<td>wuhanstudio</td>
+<td>LGPL-3.0</td>
+<td>libnc 软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/luhuadong/rtt-littled">littled</a></td>
+<td>luhuadong</td>
+<td>Apache-2.0</td>
+<td>littled软件包: Littled LED Daemon 服务线程</td>
+</tr>
+<tr>
+<td><a href="https://github.com/guoweilkd/lkdGui">lkdGui</a></td>
+<td>guoweilkd</td>
+<td>GPL-2.0</td>
+<td>lkdGui是一款为单色显示屏制作的图形化界面，用于设计简单漂亮的图形界面。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Forest-Rain/lora-radio-driver">lora_radio_driver</a></td>
+<td>Forest-Rain</td>
+<td>Apache-2.0</td>
+<td>lora芯片(SX126x\SX127x)驱动包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Ghazigq/ly68l6400">ly68l6400</a></td>
+<td>Ghazigq</td>
+<td>LGPL-2.1</td>
+<td>ly68l6400芯片的驱动</td>
+</tr>
+<tr>
+<td><a href="https://github.com/aeo123/MAX17048.git">max17048</a></td>
+<td>zpw</td>
+<td>MIT</td>
+<td>电池监测芯片</td>
+</tr>
+<tr>
+<td><a href="https://github.com/redocCheng/max7219">max7219</a></td>
+<td>redocCheng</td>
+<td>Apache-2.0</td>
+<td>本软件包是在数码管上应用 MAX7219 的驱动包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/mfoc">mfoc</a></td>
+<td>wuhanstudio</td>
+<td>GPL-2.0</td>
+<td>Mifare Classic 离线破解工具。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/greedyhao/MotionDriver2RTT">MotionDriver2RTT</a></td>
+<td>greedyhao</td>
+<td>LGPL-2.1</td>
+<td>移植 MotionDriver 到 RTT 的包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Forest-Rain/multi-rtimer">multi_rtimer</a></td>
+<td>Forest-Rain</td>
+<td>Apache-2.0</td>
+<td>一个实时、低功耗软件定时器模块</td>
+</tr>
+<tr>
+<td><a href="https://gitee.com/Ghazi_gq/nes">nes</a></td>
+<td>Ghazigq</td>
+<td>Apache-2.0</td>
+<td>nes模拟器c库。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sogwms/nrf24l01">nrf24l01</a></td>
+<td>sogwms</td>
+<td>Apache-2.0</td>
+<td>单芯片 2.4GHz 无线收发器。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/supperthomas/nrf5x_sdk">nrf5x_sdk</a></td>
+<td>supperthomas</td>
+<td>unknown</td>
+<td>Nordic SDK软件开发包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xckhmf/nrfx">nrfx</a></td>
+<td>xckhmf</td>
+<td>Unknown</td>
+<td>Nordic SOC的独立外设驱动库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Nuclei-Software/nuclei-sdk">nuclei_sdk</a></td>
+<td>Huaqi Fang</td>
+<td>Apache-2.0</td>
+<td>芯来科技RISC-V处理器软件开发包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/orange2348/paj7620">PAJ7620</a></td>
+<td>orange2348</td>
+<td>Apache-2.0</td>
+<td>手势传感器PAJ7620的驱动包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/greedyhao/pca9685">pca9685</a></td>
+<td>greedyhao</td>
+<td>Apache-2.0</td>
+<td>通过I2C总线控制的16路PWM控制器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/pcf8574">pcf8574</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>针对 I2C 并行口扩展 8 位 I/O 软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/MrpYoung/pms_series">pms_series</a></td>
+<td>MrpYoung</td>
+<td>MIT</td>
+<td>pms 数字式通用颗粒物浓度传感器驱动库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/qiyongzhong0/rt-thread-qkey">qkey</a></td>
+<td>qiyongzhong0</td>
+<td>LGPL-2.1</td>
+<td>一个快捷易用的按键驱动包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/qiyongzhong0/rt-thread-qled">quick_led</a></td>
+<td>qiyongzhong0</td>
+<td>LGPL-2.1</td>
+<td>一个快捷易用的led驱动包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/greedyhao/rc522_rtt">rc522</a></td>
+<td>greedyhao</td>
+<td>Apache-2.0</td>
+<td>rc522 rfid 模块驱动</td>
+</tr>
+<tr>
+<td><a href="https://github.com/apeng2012/rda58xx">rda58xx</a></td>
+<td>apeng2012</td>
+<td>MIT</td>
+<td>RDA5820收音机芯片驱动。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/flyingcys/realtek_ameba">realtek_ameba</a></td>
+<td>flyingcys</td>
+<td>LGPL-2.1</td>
+<td>realtek 的 ameba 软件包在 RT-Thread 上的移植</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/rt-rosserial">rosserial</a></td>
+<td>wuhanstudio</td>
+<td>BSD</td>
+<td>机器人操作系统(ROS) 软件包 rosserial 在 RT-Thread 的移植库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/rplidar">rplidar</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>RPLIDAR: 适用于机器人室内建图的低成本激光雷达</td>
+</tr>
+<tr>
+<td><a href="https://github.com/qiyongzhong0/rt-thread-rs485">rs485</a></td>
+<td>qiyongzhong0</td>
+<td>LGPL-2.1</td>
+<td>rs485驱动包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Prry/rtt-ds3231">ds3231</a></td>
+<td>panrui</td>
+<td>Apache-2.0</td>
+<td>ds3231 外置RTC驱动</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Prry/rtt-rx8900">rx8900</a></td>
+<td>panrui</td>
+<td>Apache-2.0</td>
+<td>rx8900 外置RTC驱动，支持实时时钟和闹钟功能</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/aht10">aht10</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>数字温湿度传感器 aht10 的驱动库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/ap3216c">ap3216c</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>接近和光强传感器 ap3216c 的驱动库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sanjaywu/bh1750_sensor">bh1750</a></td>
+<td>Sanjay_Wu</td>
+<td>Apache-2.0</td>
+<td>bh1750 传感器驱动包，支持：环境光照强度.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/bma400">bma400</a></td>
+<td>flybreak</td>
+<td>other</td>
+<td>这是 BMA400 传感器驱动包，支持：加速度计，记步</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/bme280">bme280</a></td>
+<td>flybreak</td>
+<td>other</td>
+<td>这是 BME280 传感器驱动软件包，支持：气压，湿度</td>
+</tr>
+<tr>
+<td><a href="https://github.com/luhuadong/rtt-bme680">bme680</a></td>
+<td>luhuadong</td>
+<td>Apache-2.0</td>
+<td>BME680 四合一 MEMS 环境传感器驱动软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/gmyFighting/bmi088">bmi088</a></td>
+<td>MYGuo</td>
+<td>Apache-2.0</td>
+<td>bmi088 软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/bmi160_bmx160">bmi160_bmx160</a></td>
+<td>gztss</td>
+<td>other</td>
+<td>BMI160 6 轴传感器以及 BMX160 9 轴传感器的驱动包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Prry/rtt-bmp180">bmp180</a></td>
+<td>panrui</td>
+<td>Apache-2.0</td>
+<td>这是 BMP180 传感器驱动软件包，支持：气压，温度</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nfsq246/RTT_BMP280">bmp280</a></td>
+<td>nfsq246</td>
+<td>other</td>
+<td>bmp280的iic驱动</td>
+</tr>
+<tr>
+<td><a href="https://github.com/luhuadong/rtt-ccs811">ccs811</a></td>
+<td>luhuadong</td>
+<td>Apache-2.0</td>
+<td>CCS811 气体检测传感器，可检测TVOC和CO2浓度</td>
+</tr>
+<tr>
+<td><a href="https://github.com/MiraMEMS-Wonderful/da270-RT-Thread">da270</a></td>
+<td>Zhou DingHua</td>
+<td>GPL-3.0</td>
+<td>本软件包是 MiraMEMS DA270 加速度传感器在 RT-Thread 中的驱动包。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/MiraMEMS-Wonderful/df220-RT-Thread.git">df220</a></td>
+<td>Zhou DingHua</td>
+<td>GPL-3.0</td>
+<td>本软件包是 MiraMEMS df220 力传感器在 RT-Thread 中的驱动包。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/murphyzhao/dht11_rtt">dht11</a></td>
+<td>MurphyZhao</td>
+<td>Apache-2.0</td>
+<td>DHT11 单总线数字温湿度传感器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/luhuadong/rtt-dhtxx">dhtxx</a></td>
+<td>luhuadong</td>
+<td>Apache-2.0</td>
+<td>DHTxx系列单总线数字温湿度传感器驱动</td>
+</tr>
+<tr>
+<td><a href="https://github.com/willianchanlovegithub/ds18b20">ds18b20</a></td>
+<td>WillianChan</td>
+<td>Apache-2.0</td>
+<td>数字温度传感器 ds18b20 的软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/luhuadong/rtt-gp2y10">gp2y10</a></td>
+<td>luhuadong</td>
+<td>Apache-2.0</td>
+<td>GP2Y10 夏普公司的灰尘/空气颗粒物浓度传感器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jch12138/gy271">gy271</a></td>
+<td>jch12138</td>
+<td>Apache-2.0</td>
+<td>gy271驱动库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Forest-Rain/hdc1000">hdc1000</a></td>
+<td>Forest-Rain</td>
+<td>Apache-2.0</td>
+<td>TI温湿度传感器hdc1000软件包(RT-Thread Sensor架构)</td>
+</tr>
+<tr>
+<td><a href="https://github.com/gmyFighting/hmc5883">hmc5883</a></td>
+<td>MYGuo</td>
+<td>Apache-2.0</td>
+<td>hmc5883 软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/lucaslsh/hshcal001.git">hshcal001</a></td>
+<td>lucalsh</td>
+<td>Apache-2.0</td>
+<td>hshcal001 传感器驱动包，支持：温度、湿度计算.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/hts221">hts221</a></td>
+<td>flybreak</td>
+<td>other</td>
+<td>HTS221 传感器驱动包，支持：温度，湿度</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xupenghu/ina226.git">ina226</a></td>
+<td>xph</td>
+<td>Apache-2.0</td>
+<td>ina226 软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xupenghu/ina260.git">ina260</a></td>
+<td>xph</td>
+<td>Apache-2.0</td>
+<td>ina260 软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/StackRyan/lis2dh12.git">lis2dh12</a></td>
+<td>StackRyan</td>
+<td>other</td>
+<td>LIS2DH12 传感器驱动包，支持：加速度计，温度。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/lps22hb">lps22hb</a></td>
+<td>flybreak</td>
+<td>other</td>
+<td>LPS22HB 气压传感器的驱动包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/lsm303agr">lsm303agr</a></td>
+<td>flybreak</td>
+<td>other</td>
+<td>这是 LSM303AGR 传感器驱动包，支持：加速度计，磁力计</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/lsm6dsl">lsm6dsl</a></td>
+<td>flybreak</td>
+<td>other</td>
+<td>这是 LSM6DSL 传感器驱动包，支持：加速度计，陀螺仪，计步</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Jackistang/max30102_rtt">max30102</a></td>
+<td>Jackistang</td>
+<td>Apache-2.0</td>
+<td>[MAX30102]: 心率测量，血氧饱和度测量软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/SimpleInit/max31865">max31865</a></td>
+<td>SimpleInit</td>
+<td>Apache-2.0</td>
+<td>数字温度传感器 max31865 的软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/JonasWen/max6675">max6675</a></td>
+<td>Jonas</td>
+<td>Apache-2.0</td>
+<td>数字温度传感器 max6675 的软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xupenghu/mlx90632.git">mlx90632</a></td>
+<td>xph</td>
+<td>Apache-2.0</td>
+<td>mlx90632 软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/mpu-6xxx">mpu6xxx</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>兼容 mpu6000, mpu6050, mpu6500, mpu9250 等等型号的驱动库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sogwms/ms5611">ms5611</a></td>
+<td>sogwms</td>
+<td>Apache-2.0</td>
+<td>数字气压传感器 MS5611 驱动软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/schuck-wang/RTThread-MS5805">ms5805</a></td>
+<td>schuck-wang</td>
+<td>Apache-2.0</td>
+<td>数字气压传感器 MS5805 驱动软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/luhuadong/rtt-pmsxx">pmsxx</a></td>
+<td>luhuadong</td>
+<td>Apache-2.0</td>
+<td>PMSxx 攀藤pms系列颗粒物浓度传感器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RichtekTechnology/RT3020">rt3020</a></td>
+<td>Tank Wu</td>
+<td>Apache-2.0</td>
+<td>这是 RT3020 加速度传感器的驱动包。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/luhuadong/rtt-sgp30">sgp30</a></td>
+<td>luhuadong</td>
+<td>Apache-2.0</td>
+<td>SGP30 空气检测传感器，可检测TVOC和CO2浓度</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nfsq246/RTT_SHTC1">shtc1</a></td>
+<td>nfsq246</td>
+<td>other</td>
+<td>shtc1传感器驱动包，支持：温度，湿度</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/spl0601">spl0601</a></td>
+<td>gztss</td>
+<td>other</td>
+<td>数字气压传感器 SPL06-01 驱动软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/alec-shan/hc-sr04">sr04</a></td>
+<td>alec-shan</td>
+<td>Apache-2.0</td>
+<td>对接RT-Thread Sensor框架的HC-SR04驱动软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Prry/rtt-tmp1075">tmp1075</a></td>
+<td>panrui</td>
+<td>Apache-2.0</td>
+<td>TMP1075 数字温度传感器驱动软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/JellyYe/tsl4531pkgs.git">tsl4531</a></td>
+<td>ye guodong</td>
+<td>Apache-2.0</td>
+<td>tsl4531 是光感传感器,能读取环境亮度 lux。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Prry/rtt-vl53l0x">vl53l0x</a></td>
+<td>panrui</td>
+<td>Apache-2.0</td>
+<td>VL53L0X 飞行时间(TOF)传感器驱动软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Prry/rtt-sgm706">sgm706</a></td>
+<td>panrui</td>
+<td>Apache-2.0</td>
+<td>SGM706独立看门狗驱动软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/sht2x">sht2x</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>数字湿度和温度传感器 sht2x 驱动软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/donghao2nanjing/sht3x">sht3x</a></td>
+<td>hao.dong</td>
+<td>LGPLv2.1</td>
+<td>数字湿度和温度传感器 sht3x 驱动软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/WKJay/SignalLed">SignalLed</a></td>
+<td>WKJay</td>
+<td>LGPL-2.1</td>
+<td>信号灯软件包，支持自定义闪烁方式、周期，支持随时开启、关闭</td>
+</tr>
+<tr>
+<td><a href="https://github.com/luhuadong/rtt-ssd1306">ssd1306</a></td>
+<td>luhuadong</td>
+<td>Apache-2.0</td>
+<td>基于 SSD1306、SH1106、SH1107 和 SSD1309 的 OLED 驱动，支持 I2C 和 SPI</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xupenghu/stm32wb55_sdk.git">stm32wb55_sdk</a></td>
+<td>xph</td>
+<td>Apache-2.0</td>
+<td>stm32wb55_sdk 软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/stm32_sdio">stm32_sdio</a></td>
+<td>RealThread</td>
+<td>LGPL-2.1</td>
+<td>STM32 平台 SDIO 控制器驱动包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/XiaojieFan/sx12xx">sx12xx</a></td>
+<td>XiaojieFan</td>
+<td>Apache-2.0</td>
+<td>Semtech LoRa RF 芯片驱动库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/apeng2012/tmc51xx">tmc51xx</a></td>
+<td>apeng2012</td>
+<td>MIT</td>
+<td>TMC5160步进电机驱动。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/liuduanfei/ft5426">ft5426</a></td>
+<td>liuduanfei</td>
+<td>Apache-2.0</td>
+<td>这是 FT5426 触摸芯片的驱动包。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/ft6206">ft6206</a></td>
+<td>Willian Chan</td>
+<td>Apache-2.0</td>
+<td>这是 FT6206 触摸芯片的驱动包。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/liuduanfei/ft6236">ft6236</a></td>
+<td>liuduanfei</td>
+<td>Apache-2.0</td>
+<td>这是 FT6236 触摸芯片的驱动包。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Jackistang/GT1151">gt1151</a></td>
+<td>Jackistang</td>
+<td>Apache-2.0</td>
+<td>gt1151 驱动</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RiceChen/gt911">gt911</a></td>
+<td>RiceChen</td>
+<td>Apache-2.0</td>
+<td>gt911 驱动。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/gt9147">gt9147</a></td>
+<td>tyustli</td>
+<td>Apache-2.0</td>
+<td>这是 GT9147 触摸芯片的驱动包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/lilisheng411527/gt917s.git">gt917s</a></td>
+<td>layson.li</td>
+<td>LGPL-2.1</td>
+<td>gt917s 驱动</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/rt-u8g2">u8g2</a></td>
+<td>wuhanstudio</td>
+<td>BSD</td>
+<td>U8g2 不同种类单色屏驱动在 RT-Thread 移植库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/vdevice">vdevice</a></td>
+<td>stackRyan</td>
+<td>Apache-2.0</td>
+<td>适配于rt-thread device框架下的虚拟IO设备。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/vsensor">vsensor</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>虚拟传感器设备</td>
+</tr>
+<tr>
+<td><a href="https://github.com/MrMichael/wk2124">wk2124</a></td>
+<td>YaohongLi</td>
+<td>Apache-2.0</td>
+<td>wk2124 spi转四串口芯片的驱动库。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/WinnerMicro/rtpkg-wm_libraries">wm_libraries</a></td>
+<td>Winner Micro</td>
+<td>Apache-2.0</td>
+<td>WinnerMicro 芯片软件支持包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/maplerian/rt_ws2812b">ws2812b</a></td>
+<td>maplerian</td>
+<td>Apache-2.0</td>
+<td>用于 RT-Thread 的 ws2812b 软件驱动包，使用 SPI + DMA 方式驱动。</td>
+</tr>
+</tbody>
+</table></section>
+<section id="security">
+<h2><span class="section-number">6.7. </span>security<a class="headerlink" href="#security" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>包名</th>
+<th>作者</th>
+<th>license</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/libsodium">libsodium</a></td>
+<td>RealThread</td>
+<td>MIT</td>
+<td>一个现代的、易用的加密库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/mbedtls">mbedtls</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>一个开源的、可移植的、易于使用的、可读的且灵活的 SSL 库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/tinycrypt">tinycrypt</a></td>
+<td>RealThread</td>
+<td>BSD-2-Clause</td>
+<td>一个简小并且可配置的加解密软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/trusted-firmware-m">trusted-firmware-m</a></td>
+<td>Trusted Firmware-M</td>
+<td>BSD-3-Clause</td>
+<td>Cortex M系列架构安全固件</td>
+</tr>
+<tr>
+<td><a href="https://github.com/china-hai/yd_crypto">yd_crypto</a></td>
+<td>china-hai</td>
+<td>Apache-2.0</td>
+<td>用于微控制器的加解密算法库，平台无关、算法独立、易移植、易使用。</td>
+</tr>
+</tbody>
+</table></section>
+<section id="system">
+<h2><span class="section-number">6.8. </span>system<a class="headerlink" href="#system" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>包名</th>
+<th>作者</th>
+<th>license</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/cairo">cairo</a></td>
+<td>RealThread</td>
+<td>LGPL/MPL</td>
+<td>适用于多平台的 2D 图形软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/CMSIS">CMSIS</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>CMSIS 软件包在 RT-Thread 上的移植</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sogwms/EV">EV</a></td>
+<td>sogwms</td>
+<td>Apache-2.0</td>
+<td>高效开发 vehicles(包括无人机) 的框架</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/fal">fal</a></td>
+<td>RealThread</td>
+<td>LGPL-2.1</td>
+<td>Flash 抽象层的实现，负责管理 Flash 设备和 Flash 分区</td>
+</tr>
+<tr>
+<td><a href="https://github.com/armink/FlashDB">FlashDB</a></td>
+<td>armink</td>
+<td>Apache-2.0</td>
+<td>一款支持 KV 数据和时序数据的轻量级数据库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/gui_engine">gui_engine</a></td>
+<td>RealThread</td>
+<td>LGPL-2.1</td>
+<td>来自 RT-Thread 官方的 GUI 引擎</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/jffs2">jffs2</a></td>
+<td>prife</td>
+<td>GPL-2.0</td>
+<td>闪存日志型文件系统第 2 版</td>
+</tr>
+<tr>
+<td><a href="https://github.com/geniusgogo/littlefs">littlefs</a></td>
+<td>geniusgogo</td>
+<td>BSD-3-Clause</td>
+<td>为微控制器设计的一个小型的且掉电安全的文件系统</td>
+</tr>
+<tr>
+<td><a href="https://github.com/liu2guang/LittlevGL2RTT">LittlevGL2RTT</a></td>
+<td>liu2guang</td>
+<td>MIT</td>
+<td>Littlevgl 是基于 RT-Thread 的图形库软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/lpm">lpm</a></td>
+<td>RealThread</td>
+<td>Apache-2.0</td>
+<td>逻辑分区管理，负责存储设备管理和分区管理。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/lwext4">lwext4</a></td>
+<td>mysterywolf</td>
+<td>GPL-2.0</td>
+<td>适合微控制器的 ext2 / 3/4文件系统的实现</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/RT-Thread-wrapper-of-uCOS-III">uCOSIII_Wrapper</a></td>
+<td>Meco Man</td>
+<td>Apache-2.0</td>
+<td>RT-Thread操作系统的uCOS-III兼容层：让基于uC/OS-III开发的应用层无感地迁移到RT-Thread操作系统</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/RT-Thread-wrapper-of-uCOS-II">uCOSII_Wrapper</a></td>
+<td>Meco Man</td>
+<td>Apache-2.0</td>
+<td>RT-Thread操作系统的uCOS-II兼容层：让基于uC/OS-II开发的应用层无感地迁移到RT-Thread操作系统</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/uC-Clk-for-RT-Thread">uC_CLK</a></td>
+<td>mysterywolf</td>
+<td>Apache-2.0</td>
+<td>uC/Clk for RT-Thread</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/uC-Common-for-RT-Thread">uC_Common</a></td>
+<td>mysterywolf</td>
+<td>Apache-2.0</td>
+<td>uC/Common for RT-Thread</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/uC-CRC-for-RT-Thread">uC_CRC</a></td>
+<td>mysterywolf</td>
+<td>Apache-2.0</td>
+<td>uC/CRC for RT-Thread</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/uC-Modbus-for-RT-Thread">uC_Modbus</a></td>
+<td>mysterywolf</td>
+<td>Apache-2.0</td>
+<td>uC/Modbus for RT-Thread</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hichard/minIni">minIni</a></td>
+<td>hichard</td>
+<td>Apache-2.0</td>
+<td>minIni 在 RT-Thread 上移植的软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/bigmagic123/openamp.git">openamp</a></td>
+<td>RealThread</td>
+<td>LGPL-2.1</td>
+<td>RT-Thread OpenAMP软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/partition">partition</a></td>
+<td>RealThread</td>
+<td>LGPL-2.1</td>
+<td>一个基于块设备的分区管理软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/persimmon">persimmon</a></td>
+<td>RealThread</td>
+<td>unknown</td>
+<td>RT-Thread 的柿饼 UI</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/pixman">pixman</a></td>
+<td>RealThread</td>
+<td>MIT</td>
+<td>提供低等级像素控制的库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hyafz/plccore">plccore</a></td>
+<td>hyafz</td>
+<td>LGPL-2.1</td>
+<td>plccore 在 RT-Thread 上移植的软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/Ppool">Ppool</a></td>
+<td>mysterywolf</td>
+<td>LGPL-2.1</td>
+<td>基于pthread的线程池库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/qiyongzhong0/rt-thread-qboot">qboot</a></td>
+<td>qiyongzhong0</td>
+<td>LGPL-2.1</td>
+<td>qboot ：一个用于快速制作bootloader的组件</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/Qfplib-M0-full">Qfplib_M0_full</a></td>
+<td>mysterywolf</td>
+<td>GPL</td>
+<td>Cortex-M0浮点运算汇编加速库(full版)</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/Qfplib-M0-tiny">Qfplib_M0_tiny</a></td>
+<td>mysterywolf</td>
+<td>GPL</td>
+<td>Cortex-M0浮点运算汇编加速库(tiny版)</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/Qfplib-M3">Qfplib_M3</a></td>
+<td>mysterywolf</td>
+<td>GPL</td>
+<td>Cortex-M3浮点运算汇编加速库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/majianjia/ramdisk">ramdisk</a></td>
+<td>majianjia</td>
+<td>Apache-2.0</td>
+<td>内存块设备</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/rt-robot">rt-robot</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>RT-Thread 机器人平台</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/rti">rti</a></td>
+<td>RealThread</td>
+<td>LGPL-2.1</td>
+<td>RT-Thread 展示系统内部运行信息的组件，能够帮助分析系统内部情况</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/rt_kprintf_threadsafe">rt_kprintf_threadsafe</a></td>
+<td>mysterywolf</td>
+<td>Apache-2.0</td>
+<td>线程安全版本的rt_kprintf</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mysterywolf/rt_memcpy_cm">rt_memcpy_cm</a></td>
+<td>mysterywolf</td>
+<td>Apache-2.0</td>
+<td>rt_memcpy函数的Cortex-M内核汇编加速版</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/SQLite">sqlite</a></td>
+<td>RealThread</td>
+<td>unknown</td>
+<td>SQLite 是一个完备、高度可靠、嵌入型、全功能、公共领域的 SQL 数据库引擎</td>
+</tr>
+<tr>
+<td><a href="https://github.com/qiyongzhong0/rt-thread-syswatch">syswatch</a></td>
+<td>qiyongzhong0</td>
+<td>LGPL-2.1</td>
+<td>系统看守：一个用于保障系统长期正常运行的组件</td>
+</tr>
+<tr>
+<td><a href="https://github.com/armink-rtt-pkgs/sys_load_monitor">sys_load_monitor</a></td>
+<td>armink</td>
+<td>Apache-2.0</td>
+<td>一款轻量级的系统负荷监视器</td>
+</tr>
+<tr>
+<td><a href="https://github.com/armink-rtt-pkgs/thread_pool">thread_pool</a></td>
+<td>armink</td>
+<td>MIT</td>
+<td>基于 RT-Thread 的线程池实现</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/tlsf">tlsf</a></td>
+<td>namexx</td>
+<td>Apache-2.0</td>
+<td>TLSF是一个可以预期执行时间、碎片化程度低的动态内存分配算法。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/uffs">uffs</a></td>
+<td>prife</td>
+<td>LGPL-2</td>
+<td>超低功耗的闪存文件系统</td>
+</tr>
+<tr>
+<td><a href="https://github.com/heyuanjie87/yaffs2_rtt_port">yaffs2</a></td>
+<td>heyuanjie87</td>
+<td>GPL-2.0</td>
+<td>yaffs2 移植到RT-Thread</td>
+</tr>
+</tbody>
+</table></section>
+<section id="tools">
+<h2><span class="section-number">6.9. </span>tools<a class="headerlink" href="#tools" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>包名</th>
+<th>作者</th>
+<th>license</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/heyuanjie87/adbd">adbd</a></td>
+<td>heyuanjie87</td>
+<td>Apache-2.0</td>
+<td>在 RT-Thread 上实现的 Android ADB daemon</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/anv_bench">anv_bench</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>函数性能快速测试软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/anv_memleak">anv_memleak</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>检查是否存在内存泄漏</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/anv_testsuit">anv_testsuit</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>单元测试框架</td>
+</tr>
+<tr>
+<td><a href="http://github.com/wuhanstudio/anv_trace">anv_trace</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>帮助跟踪代码执行过程</td>
+</tr>
+<tr>
+<td><a href="https://github.com/illusionlee/bs8116a.git">bs8116a</a></td>
+<td>illusionlee</td>
+<td>MIT</td>
+<td>合泰的bs8116a-3的触摸按键芯片</td>
+</tr>
+<tr>
+<td><a href="https://github.com/lxzzzzzxl/Chinese_font_library">ChineseFontLibrary</a></td>
+<td>lxzzzzzxl</td>
+<td>LGPL-2.1</td>
+<td>rt-thread中文字库软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/armink-rtt-pkgs/CmBacktrace">CmBacktrace</a></td>
+<td>armink</td>
+<td>MIT</td>
+<td>ARM Cortex-M 系列 MCU 错误追踪库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/coremark">CoreMark</a></td>
+<td>wuhanstudio</td>
+<td>apache</td>
+<td>EEMBC 的单片机性能测试小工具</td>
+</tr>
+<tr>
+<td><a href="https://github.com/enkiller/cpu_usage">cpu_usage</a></td>
+<td>enkiller</td>
+<td>Apache-2.0</td>
+<td>CPUU: CPU 使用率统计小工具。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/dhrystone">Dhrystone</a></td>
+<td>wuhanstudio</td>
+<td>apache</td>
+<td>Dhrystone 单片机性能测试小工具</td>
+</tr>
+<tr>
+<td><a href="https://github.com/armink-rtt-pkgs/EasyFlash">EasyFlash</a></td>
+<td>armink</td>
+<td>MIT</td>
+<td>轻量级嵌入式 Flash 存储器库，让 Flash 成为小型 KV 数据库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/armink-rtt-pkgs/EasyLogger">EasyLogger</a></td>
+<td>armink</td>
+<td>MIT</td>
+<td>一款超轻量级(ROM&lt;1.6K, RAM&lt;0.3k)、高性能的 C/C++ 日志库</td>
+</tr>
+<tr>
+<td><a href="https://gitee.com/Ghazi_gq/gbk2utf8">gbk2utf8</a></td>
+<td>Ghazigq</td>
+<td>Apache-2.0</td>
+<td>GBK与UTF8编码之间的转换。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/maplerian/gps_rmc">gps_rmc</a></td>
+<td>maplerian</td>
+<td>Apache-2.0</td>
+<td>用于解析GPS模块的 $XXRMC 类型数据</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/kdb">kdb</a></td>
+<td>enkiller</td>
+<td>Apache-2.0</td>
+<td>内核检测漏洞工具</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/logmgr.git">logmgr</a></td>
+<td>ChenYong</td>
+<td>Apache-2.0</td>
+<td>logmgr: 日志管理系统功能支持</td>
+</tr>
+<tr>
+<td><a href="https://github.com/illusionlee/lunar_calendar.git">lunar_calendar</a></td>
+<td>illusionlee</td>
+<td>MIT</td>
+<td>将阳历日期转换为阴历的工具。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/lwlog">lwlog</a></td>
+<td>wuhanstudio</td>
+<td>MIT</td>
+<td>lwlog:单文件日志打印库</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Jackistang/lwrb2rtt">lwrb2rtt</a></td>
+<td>Jackistang</td>
+<td>MIT</td>
+<td>轻量级的 FIFO 环形缓冲区</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xfan1024/rttpkg-mbedtls_bench">mbedtls_bench</a></td>
+<td>xiaofan</td>
+<td>MIT</td>
+<td>mbedtls 性能测试</td>
+</tr>
+<tr>
+<td><a href="https://github.com/SummerLife/MemoryPerf">MemoryPerf</a></td>
+<td>我夏了夏天</td>
+<td>MIT</td>
+<td>ARM CPU 内存性能测试。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/JcZou/Micro-XRCE-DDS-Client">Micro-XRCE-DDS-Client</a></td>
+<td>JCZou</td>
+<td>Apache-2.0</td>
+<td>micro-ros的中间层组件，提供了ros2消息发布/订阅的能力。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Nrusher/nr_micro_shell">nr_micro_shell</a></td>
+<td>Nrusher</td>
+<td>MIT</td>
+<td>轻量的命令行交互工具。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/qrcode">qrcode</a></td>
+<td>RealThread</td>
+<td>MIT</td>
+<td>一个用于将字符串生成二维码的软件包</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/rdb">rdb</a></td>
+<td>RealThread</td>
+<td>GPL-2.0</td>
+<td>RT-Thread 调试桥</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/SEGGER_SystemView">SystemView</a></td>
+<td>RealThread</td>
+<td>unknown</td>
+<td>SEGGER 的 SystemView 移植</td>
+</tr>
+<tr>
+<td><a href="https://github.com/armink-rtt-pkgs/ulog_easyflash">ulog_easyflash</a></td>
+<td>armink</td>
+<td>MIT</td>
+<td>基于 EasyFlash 的 ulog 插件</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/ulog_file.git">ulog_file</a></td>
+<td>ChenYong</td>
+<td>Apache-2.0</td>
+<td>ulog_file: 基于文件系统的 ulog 后端插件。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/JcZou/uMCN">uMCN</a></td>
+<td>JCZou</td>
+<td>Apache-2.0</td>
+<td>uMCN是一个基于发布者/订阅者模式的轻量级且功能强大的跨进程通信库。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jch12138/UrlEncode.git">UrlEncode</a></td>
+<td>jch12138</td>
+<td>LGPL-2.1</td>
+<td>一个简单易用的Url编解码工具</td>
+</tr>
+<tr>
+<td><a href="https://github.com/enkiller/vconsole">vconsole</a></td>
+<td>enkiller</td>
+<td>Apache-2.0</td>
+<td>一个虚拟控制台软件包。</td>
+</tr>
+<tr>
+<td><a href="https://github.com/bytecodealliance/wasm-micro-runtime.git">wamr</a></td>
+<td>alvkeke</td>
+<td>Apache-2.0</td>
+<td>运行于RT-Thread的WebAssembly Micro Runtime</td>
+</tr>
+</tbody>
+</table></section>
+<section id="id1">
+<h2><span class="section-number">6.10. </span>如何生成RTTHREAD软件包列表目录<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>将下面代码保存为<code class="docutils literal notranslate"><span class="pre">update_softpackage.py</span></code> 然后将该文件放在<a class="reference external" href="https://github.com/RT-Thread/packages">package</a>根目录执行<code class="docutils literal notranslate"> <span class="pre">python</span> <span class="pre">update_softpackage.py</span></code></p>
+<p>如果有优化可以修改提交该python文件，如有更新也可以更新上面的表格</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="c1">#存放的数据列表</span>
+<span class="n">data_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">group_name</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">curren_name</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">package_name</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">github_link</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">package_description</span> <span class="o">=</span><span class="p">[]</span>
+<span class="n">package_json_name</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">package_license</span> <span class="o">=</span><span class="p">[]</span>
+<span class="n">package_cata</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">package_auth</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">package_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;iot&#39;</span><span class="p">,</span> <span class="s1">&#39;ai&#39;</span><span class="p">,</span> <span class="s1">&#39;language&#39;</span><span class="p">,</span><span class="s1">&#39;misc&#39;</span><span class="p">,</span><span class="s1">&#39;multimedia&#39;</span><span class="p">,</span><span class="s1">&#39;peripherals&#39;</span><span class="p">,</span> <span class="s1">&#39;security&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span><span class="s1">&#39;tools&#39;</span><span class="p">]</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;rtthread_softlist.md&#39;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_object</span><span class="p">:</span>
+    <span class="n">file_object</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;# RTTHREAD 软件包目录</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">curren_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span><span class="s2">&quot;..&quot;</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;.json&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">group_name</span> <span class="o">!=</span> <span class="n">curren_name</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">curren_name</span> <span class="ow">in</span>  <span class="n">package_list</span><span class="p">:</span>
+                        <span class="n">group_name</span> <span class="o">=</span> <span class="n">curren_name</span>
+                        <span class="n">file_object</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">file_object</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;## &quot;</span> <span class="o">+</span> <span class="n">group_name</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">file_object</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2"> | 包名| 作者  | license   | 备注      |&quot;</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;| ------------------------------------------------------------ | ------------------- | -------------------- | ------------------------------------------------------------ |&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">package_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">))</span>
+                <span class="c1">#print(os.path.basename(os.path.join(root)))      ##package name </span>
+                <span class="n">json_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+                <span class="k">with</span>  <span class="nb">open</span><span class="p">(</span><span class="n">json_path</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+                    <span class="n">json_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="nb">dict</span> <span class="ow">in</span> <span class="n">json_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="nb">dict</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;description_zh&quot;</span><span class="p">:</span>
+                            <span class="c1">#json_list.append(dict[1])</span>
+                            <span class="c1">#print(dict[1])</span>
+                            <span class="n">package_description</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="nb">dict</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;author&quot;</span><span class="p">:</span>
+                            <span class="k">for</span> <span class="n">dict_sub</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                            <span class="c1">#json_list.append(dict[1])</span>
+                                <span class="k">if</span> <span class="n">dict_sub</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span>
+                                    <span class="n">package_json_name</span> <span class="o">=</span> <span class="n">dict_sub</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                                    <span class="c1">#print(dict_sub)</span>
+                            
+                        <span class="k">if</span> <span class="nb">dict</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;license&quot;</span><span class="p">:</span>
+                            <span class="c1">#json_list.append(dict[1])</span>
+                            <span class="c1">#print(dict[1])</span>
+                            <span class="n">package_license</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="nb">dict</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;repository&quot;</span><span class="p">:</span>
+                            <span class="c1">#print(dict[1])</span>
+                            <span class="n">github_link</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                            <span class="c1">#json_list.append(dict[1])</span>
+                <span class="n">file_object</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;| [&quot;</span><span class="o">+</span><span class="n">package_name</span> <span class="o">+</span> <span class="s2">&quot;](&quot;</span> <span class="o">+</span><span class="n">github_link</span> <span class="o">+</span> <span class="s2">&quot;) |&quot;</span><span class="o">+</span><span class="n">package_json_name</span><span class="o">+</span><span class="s2">&quot;  | &quot;</span><span class="o">+</span><span class="n">package_license</span><span class="o">+</span><span class="s2">&quot; |&quot;</span><span class="o">+</span><span class="n">package_description</span> <span class="o">+</span> <span class="s2">&quot;|</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="03_sensor_list.html" class="btn btn-neutral float-left" title="5. RT-Thread 传感器软件包归类" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="05_rtthread_bsp_board.html" class="btn btn-neutral float-right" title="7. RTTHREAD BSP board支持目录" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. Typora+图床（PicGo+腾讯云） &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="05_compile" href="../05_compile/index.html" />
+    <link rel="prev" title="2. sphinx-autobuild OSError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。" href="02_sphinx-autobuild_error.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">NORDIC:bobwenstudy</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/index.html">01_introduce</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_zephyr_polling/index.html">02_zephyr_polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bluetooth/index.html">03_bluetooth</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">04_markdown</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01_Read_The_Docs_FAQ_for_sphinx_markdown_tables.html">1. Read The Docs上架加入sphinx_markdown_tables后的问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02_sphinx-autobuild_error.html">2. sphinx-autobuild OSError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3. Typora+图床（PicGo+腾讯云）</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">3.1. 引言</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#typora">3.2. Typora安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cos-1">3.3. 腾讯云COS（新人免费1年）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#picgo">3.4. PicGo安装&amp;配置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../05_compile/index.html">05_compile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">NORDIC:bobwenstudy</a></li>
+          <li class="breadcrumb-item"><a href="index.html">04_markdown</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3. </span>Typora+图床（PicGo+腾讯云）</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/14_bobwenstudy/04_markdown/03_Typora_PicGo_Tencent.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="typora-picgo">
+<h1><span class="section-number">3. </span>Typora+图床（PicGo+腾讯云）<a class="headerlink" href="#typora-picgo" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">3.1. </span>引言<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>最近想开始在网上公开一些自己的想法/知识，以前一直都是从别人身上吸取知识（Ctrl+C\Ctrl+V），也工作这么多年了，也该为大家贡献一些自己的想法/知识。</p>
+<p>知识要传播就需要载体，之前自己记录一些知识都是通过《有道云笔记》来弄的，非常方便。但是传播知识就可能面对需要将其传播给各大平台了，单单只发布一个平台很容易就受限了。</p>
+<p>作为一个开发人员，做一件事情多少要明确好自己的<strong>需求</strong>，不一定要这个东西好，满足自己需要的才是最好的。所需的编辑器需要满足如下需求：</p>
+<ol class="simple">
+<li><p>能在各大平台发布，不受限于平台的文档格式。知识是我自己创造的，平台只是提供一个传播渠道。</p></li>
+<li><p>对code预览需要很好的支持，如代码高亮等。毕竟是个程序员，分享的知识主要和代码相关。</p></li>
+<li><p>能在github等开源平台上，关联readme之类。</p></li>
+<li><p>能支持图片上传，不需要支持视频之类的在线预览（传个gif就行）。</p></li>
+<li><p>能在Windows、MacOS、linux上使用，毕竟程序员啥平台都有。</p></li>
+</ol>
+<p>综上所述，markdown能够满足我所有需求。markdown是很适合做文档记录的文档格式，市面上有很多markdown编辑器，总体来说我更喜欢Typora（<a class="reference external" href="https://www.typora.io/">Typora — a markdown editor, markdown reader.</a>）。</p>
+<p>说到markdown不得不面对一个问题，就是图片上传的问题。markdown本身是一个文本文件，并不像word那么强大（同样它也不像word那么“重”），可以内部嵌入图片或者视频等。所以如何让文本文件携带图片信息呢？</p>
+<p>一个办法是相对路径，本地放一个文件夹，图片放在这里，但是这样文档发布到网上的时候就无法显示图片了。</p>
+<p>另一个办法是图床，现在介绍图床的方法比较多，就不再赘述了，其结合Typora能完美达到所需要的功能。之前一直用腾讯云，所以就继续用腾讯云了。</p>
+</section>
+<section id="typora">
+<h2><span class="section-number">3.2. </span>Typora安装<a class="headerlink" href="#typora" title="此标题的永久链接"></a></h2>
+<p>官网是：<a class="reference external" href="https://www.typora.io/">Typora — a markdown editor, markdown reader.</a>。下载路径是：<a class="reference external" href="https://www.typora.io/releases/all">Typora — macOS release channel</a>。</p>
+<p><img alt="image-20220725210152746" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725210152746.png" /></p>
+<p>现在需要收费了，<strong>14.99</strong>美金，支持3台终端，目前查下来的资料是只需要这个钱，能支持就支持下，毕竟只有这样行业才能有更多好用的软件可以用。</p>
+<p>上手还提供15天免费，可以15天试用下，好用就用，反正我个人觉得不错（写这个文档的时候也是用的试用版本）。</p>
+<p>当然也可以下载Dev/Beta版本，这些还是<strong>免费</strong>的。</p>
+<p><img alt="image-20220725205545697" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725205545697.png" /></p>
+</section>
+<section id="cos-1">
+<h2><span class="section-number">3.3. </span>腾讯云COS（新人免费1年）<a class="headerlink" href="#cos-1" title="此标题的永久链接"></a></h2>
+<section id="id2">
+<h3>免费的打开方式<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h3>
+<p>大家如果是刚开始注册，新人是可以免费使用1年的，别傻乎乎的付钱。</p>
+<p><img alt="image-20220725213246464" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725213246464.png" /></p>
+<p>进去后，直接点击这里。新人开通先给了半年的免费使用（50GB的额度），之后有需要可以买1元的秒杀活动，直接1年的使用权。</p>
+<p><img alt="image-20220725213424469" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725213424469.png" /></p>
+<p><img alt="image-20220725213629108" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725213629108.png" /></p>
+</section>
+<section id="id3">
+<h3>千万别一开始进这个页面付费<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>千万别一开始就傻乎乎的在这个页面付钱了。</p>
+<p><img alt="image-20220725213651695" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725213651695.png" /></p>
+<p><img alt="image-20220725213721561" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725213721561.png" /></p>
+</section>
+<section id="id4">
+<h3>创建储存桶<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<p>注意红框选中的配置。</p>
+<p><img alt="image-20220725213926616" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725213926616.png" /></p>
+<p><img alt="image-20220725213953179" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725213953179.png" /></p>
+<p><img alt="image-20220725214011959" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725214011959.png" /></p>
+</section>
+</section>
+<section id="picgo">
+<h2><span class="section-number">3.4. </span>PicGo安装&amp;配置<a class="headerlink" href="#picgo" title="此标题的永久链接"></a></h2>
+<p>安装完Typora之后，直接运行，选择<strong>偏好设置</strong>，到<strong>图像</strong>选项卡，安装图片操作即可，下面对一些重点步骤进行说明。</p>
+<p><img alt="image-20220725210725966" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725210725966.png" /></p>
+<section id="picgo-core-command-line">
+<h3>PicGo-Core(command line)<a class="headerlink" href="#picgo-core-command-line" title="此标题的永久链接"></a></h3>
+<p>选择command line模式，可以直接用Typora来安装PicGo-Core，app那个好像是要先下载PicGo-Core，为了省事，我们直接通过Typora来。</p>
+</section>
+<section id="id5">
+<h3>配置腾讯云服务<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
+<p>点击按钮就是让编辑一个config.json文件，点击旁边的说明，会跳转到Typora官网，阅读一下就能看到会让你调整到PicGo的说明文档，直接看软件的配置参数就行。<a class="reference external" href="https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">配置文件 | PicGo-Core</a></p>
+<p><img alt="image-20220725212124094" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725212124094.png" /></p>
+<p>腾讯云COS的配置安装其实官方也是有教程的，<a class="reference external" href="https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E8%85%BE%E8%AE%AF%E4%BA%91cos">配置手册 | PicGo</a>，下面讲下我这边的配置结果，方便大家做一个对照。</p>
+<p><img alt="image-20220725212232907" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725212232907.png" /></p>
+<p>我最终配置的结果是这个。</p>
+<p><img alt="image-20220725211857862" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725211857862.png" /></p>
+<p><strong>1.</strong> 获取你的APPID、SecretId和SecretKey</p>
+<p>访问：https://console.cloud.tencent.com/cam/capi，红框里面的3个参数就是了。</p>
+<p><img alt="image-20220725212626067" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725212626067.png" /></p>
+<p><strong>2.</strong> 获取bucket名以及存储区域代号</p>
+<p>访问：https://console.cloud.tencent.com/cos5/bucket</p>
+<p>创建一个存储桶。然后找到你的存储桶名和存储区域代号，红框里2个参数就是了。</p>
+<p><img alt="image-20220725212822537" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725212822537.png" /></p>
+</section>
+<section id="id6">
+<h3>验证<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h3>
+<p>上述参数配置好了后，验证一下，看到如图的提示说明好了，之后就可以愉快的玩耍了。</p>
+<p><img alt="image-20220725213145945" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220725213145945.png" /></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="02_sphinx-autobuild_error.html" class="btn btn-neutral float-left" title="2. sphinx-autobuild OSError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../05_compile/index.html" class="btn btn-neutral float-right" title="05_compile" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

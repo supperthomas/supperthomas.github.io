@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7. stm32wb55 基于rtt的ble sample制作过程 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="8. RT-Thread 软件包制作及发布流程" href="../08_rt-thread_packages/08_rt-thread_packages.html" />
+    <link rel="prev" title="6. STM32WB55 蓝牙协议栈运行流程解析" href="../06_stm32wb55_ble_start/stm32wb55_ble_start.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">WB55:xupenghu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/STM32WB%E7%A1%AC%E4%BB%B6%E4%BB%8B%E7%BB%8D.html">2. STM32WB 硬件介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_nrf_sniffer/nrf_ble_sniffer.html">3. 使用NRF52xx sniffer抓取BLE包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_btsnoop_hci/android_hci.html">4. 使用Android手机抓取蓝牙HCI包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_art-pi_ble_netin/art-pi_net_connect_with_ble.html">5. ART-PI开发板蓝牙配网流程分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_stm32wb55_ble_start/stm32wb55_ble_start.html">6. STM32WB55 蓝牙协议栈运行流程解析</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">7. stm32wb55 基于rtt的ble sample制作过程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">7.1. 准备活动</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">硬件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">软件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">开发环境</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">7.2. 概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">7.3. 移植前准备</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rttstm32wb55">生成基于rtt的stm32wb55的最小工程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#st">st官方固件包删除不相关代码</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">移植</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">7.4. 备注</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id13">名词解释</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../08_rt-thread_packages/08_rt-thread_packages.html">8. RT-Thread 软件包制作及发布流程</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">WB55:xupenghu</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">7. </span>stm32wb55 基于rtt的ble sample制作过程</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/03_xupenghu/07_stm32wb55_ble_ibeacon/stm32wb55_ble_ibeacon.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="stm32wb55-rttble-sample">
+<h1><span class="section-number">7. </span>stm32wb55 基于rtt的ble sample制作过程<a class="headerlink" href="#stm32wb55-rttble-sample" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">7.1. </span>准备活动<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<section id="id2">
+<h3>硬件<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>stm32wb55 nucleo开发板</p></li>
+<li><p>stm32wb55 dangle</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>软件<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>rtthread <a class="reference external" href="https://gitee.com/rtthread/rt-thread/tree/gitee_master/bsp/stm32/stm32wb55-st-nucleo">stm32wb55 bsp</a></p></li>
+<li><p>st官方 <a class="reference external" href="https://github.com/STMicroelectronics/STM32CubeWB">stm32wb固件包</a></p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>开发环境<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>keil MDK</p></li>
+<li><p>vscode</p></li>
+<li><p>rtthread env</p></li>
+</ul>
+</section>
+</section>
+<section id="id5">
+<h2><span class="section-number">7.2. </span>概述<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h2>
+<p>本文的目的是将ST官方的STM32WB55 固件包里的BLE sample移植到RT-Thread，最终变为rtt生态的一个软件包，让更多开发者都可以直接做基于rtt开箱即用。</p>
+</section>
+<section id="id6">
+<h2><span class="section-number">7.3. </span>移植前准备<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h2>
+<section id="rttstm32wb55">
+<h3>生成基于rtt的stm32wb55的最小工程<a class="headerlink" href="#rttstm32wb55" title="此标题的永久链接"></a></h3>
+<p>首先需要clone rtthread的stm32wb55的bsp，然后创建基本的工程，这一步很简单，从官方github仓库clone最新的代码，然后定位到stm32wb55的bsp，使用env <code class="docutils literal notranslate"><span class="pre">scons</span> <span class="pre">--dist</span></code>生成wb55最小工程。如下所示：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>                                                                    
+xph@XPHPC D:/GitHub/rt-thread/bsp/stm32/stm32wb55-st-nucleo         
+&gt; scons --dist                                                      
+scons: Reading SConscript files ...                                 
+make distribution....                                               
+=&gt; stm32wb55-st-nucleo                                              
+=&gt; start dist handle                                                
+=&gt; copy stm32 bsp library                                           
+=&gt; copy bsp drivers                                                 
+=&gt; components                                                       
+=&gt; include                                                          
+=&gt; libcpu                                                           
+=&gt; src                                                              
+=&gt; tools                                                            
+update mdk5 project                                                 
+update iar project                                                  
+done!                                                               
+</pre></div>
+</div>
+<p>然后用keil打开，编译烧录到nucleo开发板中验证。当开发板LED1蓝灯开始闪烁，同时串口有打印信息输出，则表示基于rtthread的最小工程生成成功。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">/</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="n">RT</span><span class="w"> </span><span class="o">-</span><span class="w">     </span><span class="n">Thread</span><span class="w"> </span><span class="n">Operating</span><span class="w"> </span><span class="n">System</span><span class="w"></span>
+<span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">/</span><span class="w">     </span><span class="mf">4.0.3</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="n">Jan</span><span class="w">  </span><span class="mi">7</span><span class="w"> </span><span class="mi">2021</span><span class="w"></span>
+<span class="w"> </span><span class="mi">2006</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2020</span><span class="w"> </span><span class="n">Copyright</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">rt</span><span class="o">-</span><span class="kr">thread</span><span class="w"> </span><span class="n">team</span><span class="w"></span>
+<span class="n">msh</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="st">
+<h3>st官方固件包删除不相关代码<a class="headerlink" href="#st" title="此标题的永久链接"></a></h3>
+<p>我们从最基础的beacon工程开始移植，删除其他不必要的工程文件和文件夹，方便代码分析工具分析和定位。如果工程文件夹太多，诸如vscode source insight这类代码工具就很难做到精确跳转。
+如下图所示，我只保留基于keil mdk的beacon工程，其他的不相干的工程全部删除。
+<img alt="../../_images/20210107110931172.png" src="../../_images/20210107110931172.png" />
+检查的方法也很简单，在固件包中搜索一下main.c函数，看一下有没有多余的就行了。
+然后打开这个beacon工程，编译一下，没有错误，没有警告，那么准备工作就做好了。</p>
+</section>
+<section id="id7">
+<h3>移植<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h3>
+<p>我的移植思路是，将ST官方的sample当作rtt中的一个线程，这样子即不影响其他线程的使用移植起来也比较方便。</p>
+<section id="id8">
+<h4>工程创建<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h4>
+<ol class="simple">
+<li><p>创建ibeacon线程</p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">ibeacon_thread_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">rt_thread_t</span><span class="w"> </span><span class="n">ibeacon_thread</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">ibeacon_thread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rt_thread_create</span><span class="p">(</span><span class="s">&quot;ibeacon&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">ibeacon_thread_entry</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">RT_NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="mi">1024</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ibeacon_thread</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">RT_NULL</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">rt_thread_startup</span><span class="p">(</span><span class="n">ibeacon_thread</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">RT_EOK</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="n">INIT_APP_EXPORT</span><span class="p">(</span><span class="n">ibeacon_thread_init</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>将st官方sample中的main函数移植过来，放在ibeacon线程的入口函数中</p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">ibeacon_thread_entry</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">parameter</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">LOG_D</span><span class="p">(</span><span class="s">&quot;ibeacon thread entry...&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * The OPTVERR flag is wrongly set at power on</span>
+<span class="cm">   * It shall be cleared before using any HAL_FLASH_xxx() api</span>
+<span class="cm">   */</span><span class="w"></span>
+<span class="w">  </span><span class="n">__HAL_FLASH_CLEAR_FLAG</span><span class="p">(</span><span class="n">FLASH_FLAG_OPTVERR</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">HAL_Init</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">Reset_Device</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">Init_Exti</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">MX_GPIO_Init</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">MX_RTC_Init</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Init code for STM32_WPAN */</span><span class="w"></span>
+<span class="w">  </span><span class="n">APPE_Init</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">UTIL_SEQ_Run</span><span class="p">(</span><span class="n">UTIL_SEQ_DEFAULT</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">rt_thread_mdelay</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>将STM32_WPAN中间件整体复制过来，然后根据st的sample工程将BLE相关文件都加进去
+<img alt="../../_images/20210224190740243.png" src="../../_images/20210224190740243.png" /></p></li>
+<li><p>编译，根据编译错误将缺失的文件加入到工程中去，直到编译完成</p></li>
+</ol>
+</section>
+<section id="id9">
+<h4>关于文件的分组<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h4>
+<ol class="simple">
+<li><p>STM32_WPAN这个文件夹里面存放的是ST关于无线协议的中间件，包括BLE、thread、zigbee等等，所以移植的时候直接整体搬过去就好了，至于里面的东西可以暂不做考虑。
+<img alt="../../_images/20210224191057123.png" src="../../_images/20210224191057123.png" /></p></li>
+<li><p>STM32WB特有的低功耗管理组件和列表单独做通用分组</p></li>
+</ol>
+<p><img alt="../../_images/20210224191458404.png" src="../../_images/20210224191458404.png" /></p>
+<ol class="simple">
+<li><p>其他需要用到的文件统一放到ibeacon分组中</p></li>
+</ol>
+<p><img alt="../../_images/20210224191605859.png" src="../../_images/20210224191605859.png" /></p>
+</section>
+<section id="id10">
+<h4>移植注意事项<a class="headerlink" href="#id10" title="此标题的永久链接"></a></h4>
+<p>以上工作全部完成后，编译运行后程序运行正常，但是通过nrf connect是无法扫描到beacon的，对比分析后发现两部分地方需要修改。</p>
+<section id="id11">
+<h5>中断处理函数需要移植<a class="headerlink" href="#id11" title="此标题的永久链接"></a></h5>
+<p>之前的固有印象是STM32的HAL库中断处理函数全都是虚函数方式然后通过注册回调函数来最终执行用户自己的中断服务函数。这也是忽略该步骤的重要原因之一，因为之前的STD或者寄存器版本没有写中断服务函数是会编译报错的。</p>
+<p>将以下三个中断服务函数放在ibeacon线程<code class="docutils literal notranslate"><span class="pre">.c</span></code>文件中。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * ! RTC timeserver处理中断服务函数</span>
+<span class="cm">*/</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">RTC_WKUP_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">HW_TS_RTC_Wakeup_Handler</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="cm">/**</span>
+<span class="cm"> * ! IPCC 通讯收发中断处理函数</span>
+<span class="cm">*/</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">IPCC_C1_TX_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">HW_IPCC_Tx_Handler</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">IPCC_C1_RX_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">HW_IPCC_Rx_Handler</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>这三个中断服务函数主要是用来处理CPU1和CPU2之间的通讯的，这部分内容后面再介绍。</p>
+</section>
+<section id="link">
+<h5>link文件需要更改<a class="headerlink" href="#link" title="此标题的永久链接"></a></h5>
+<p>STM32WB是一颗双核MCU，他们共享了部分flash和RAM，所以不能像传统的单核M4内核那样定义link文件，需要将部分flash和RAM资源留出来给协处理器使用。具体的更改直接参考ST的sample工程中的link文件。</p>
+<p><img alt="https://img-blog.csdnimg.cn/20210224192927461.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MjE1MjA=,size_16,color_FFFFFF,t_70" src="https://img-blog.csdnimg.cn/20210224192927461.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MjE1MjA=,size_16,color_FFFFFF,t_70" /></p>
+<p>经过以上两步的修改，编译烧录后就可以正常使用了。</p>
+</section>
+</section>
+</section>
+</section>
+<section id="id12">
+<h2><span class="section-number">7.4. </span>备注<a class="headerlink" href="#id12" title="此标题的永久链接"></a></h2>
+<section id="id13">
+<h3>名词解释<a class="headerlink" href="#id13" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>ACI: Application command interface 应用层命令接口</p></li>
+<li><p>CLI:  Command line interface 命令行接口</p></li>
+<li><p>CPU1: STM32WB55开放给用户的CPU，M4内核</p></li>
+<li><p>CPU2:STM32WB55跑协议栈的CPU，用户无权访问，可以通过信号量和共享内存访问</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../06_stm32wb55_ble_start/stm32wb55_ble_start.html" class="btn btn-neutral float-left" title="6. STM32WB55 蓝牙协议栈运行流程解析" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../08_rt-thread_packages/08_rt-thread_packages.html" class="btn btn-neutral float-right" title="8. RT-Thread 软件包制作及发布流程" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

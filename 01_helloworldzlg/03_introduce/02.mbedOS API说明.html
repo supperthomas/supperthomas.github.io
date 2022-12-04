@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6. mbedOS API说明 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="7. mbedOS BLE相关示例" href="03.mbedOS%20BLE%E7%9B%B8%E5%85%B3%E7%A4%BA%E4%BE%8B.html" />
+    <link rel="prev" title="5. mbedOS介绍" href="01.mbedOS%E4%BB%8B%E7%BB%8D.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">WB55:helloworldzlg</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/01-%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E6%95%B4%E4%BD%93%E6%A1%86%E6%9E%B6.html">2. 蓝牙协议栈整体框架</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/02-%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AEGAP%E5%B1%82%E4%BB%8B%E7%BB%8D.html">3. 蓝牙协议GAP层介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/03-%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AEATT%E3%80%81GATT%E5%B1%82%E4%BB%8B%E7%BB%8D.html">4. 蓝牙协议ATT、GATT层介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.mbedOS%E4%BB%8B%E7%BB%8D.html">5. mbedOS介绍</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. mbedOS API说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.mbedOS%20BLE%E7%9B%B8%E5%85%B3%E7%A4%BA%E4%BE%8B.html">7. mbedOS BLE相关示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.mbedOS%E7%A7%BB%E6%A4%8D%E5%88%B0STM32L4R5ZI%E5%BC%80%E5%8F%91%E6%9D%BF.html">8. mbedOS移植到STM32L4R5ZI开发板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.mbedOS%E7%A7%BB%E6%A4%8D%E5%88%B0ART-PI%E5%BC%80%E5%8F%91%E6%9D%BF.html">9. mbedOS移植到ART-PI开发板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.mbedOS%20BLE%E4%BE%8B%E7%A8%8BSTM32WB55%E5%BC%80%E5%8F%91%E6%9D%BF%E5%AE%9E%E8%B7%B5.html">10. mbedOS BLE例程STM32WB55开发板实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.mbedOS%20Cordio%E5%8D%8F%E8%AE%AE%E6%A0%88%E4%BB%8B%E7%BB%8D.html">11. mbedOS Cordio协议栈介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.mbedOS%E4%BE%8B%E7%A8%8Bmbed-os-example-blinky%E8%A7%A3%E8%AF%BB.html">12. mbedOS例程mbed-os-example-blinky解读</a></li>
+<li class="toctree-l2"><a class="reference internal" href="99.mbedOS%E4%BC%98%E5%8C%96%E4%BB%A3%E7%A0%81%E5%90%8C%E6%AD%A5%E9%80%9F%E5%BA%A6%E7%9A%84%E5%87%A0%E4%B8%AA%E5%B0%8F%E6%8A%80%E5%B7%A7.html">13. mbedOS优化代码同步速度的小技巧</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">WB55:helloworldzlg</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">6. </span>mbedOS API说明</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/01_helloworldzlg/03_introduce/02.mbedOS API说明.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mbedos-api">
+<h1><span class="section-number">6. </span>mbedOS API说明<a class="headerlink" href="#mbedos-api" title="此标题的永久链接"></a></h1>
+<p>mbedOS的中间层接口都是以C++的接口形式实现，也就是说对于某一类对象或者操作都会封装成类。所以API都是以类函数和静态函数提供。当然重载的操作符Operator，例如=，()，+/-都是很常见的，它可以非常直观的操作设备和对象。</p>
+<p>前面我们介绍了mbedOS的整体框架：<br /><img alt="../../_images/1-01.png" src="../../_images/1-01.png" /></p>
+<p>下面我们自顶向下介绍这个框架图每一部分提供的类：</p>
+<ul class="simple">
+<li><p>RTOS</p>
+<ul>
+<li><p>Kernel</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/kernel-interface-functions.html">Kernel interface functions</a></p></li>
+</ul>
+</li>
+<li><p>任务管理</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/thread.html">Thread</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/thisthread.html">ThisThread</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/idle-loop.html">Idle loop</a></p></li>
+</ul>
+</li>
+<li><p>事件管理</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/event-handling-apis.html">Event</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/eventflags.html">EventFlags</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/userallocatedevent.html">UserAllocatedEvent</a></p></li>
+</ul>
+</li>
+<li><p>Thread间通信</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/mail.html">Mail</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/queue.html">Queue</a></p></li>
+</ul>
+</li>
+<li><p>Thread间同步</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/mutex.html">Mutex</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/semaphore.html">Semaphore</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/eventqueue.html">EventQueue</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Security</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/security-apis.html">DeviceKey</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/mbed-crypto.html">Mbed Crypto</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/psa-initial-attestation.html">PSA initial attestation</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/psa-lifecycle.html">PSA lifecycle</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/tls.html">TLS</a></p></li>
+</ul>
+</li>
+<li><p>Connectivity</p>
+<ul>
+<li><p>Network Socket</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/network-socket-apis.html">Non-IP cellular socket</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/socket.html">Socket</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/socketaddress.html">SocketAddress</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/socketstats.html">SocketStats</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/tcpsocket.html">TCPSocket</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/udpsocket.html">UDPSocket</a></p></li>
+</ul>
+</li>
+<li><p>NetWork Interface</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/network-interface-apis.html">Cellular</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/ethernet.html">Ethernet</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/mesh-api.html">Mesh</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/network-status.html">Network status</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/wi-fi.html">Wi-Fi</a></p></li>
+</ul>
+</li>
+<li><p>Secure Socket</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/secure-socket-apis.html">DTLSSocket</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/tlssocket.html">TLSSocket</a></p></li>
+</ul>
+</li>
+<li><p>DNS</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/dns-apis.html">DNS Resolver</a></p></li>
+</ul>
+</li>
+<li><p>Bluetooth(BLE)</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/bluetooth-apis.html">BatteryService</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/ble.html">BLE</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/gap.html">GAP</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/gattclient.html">GattClient</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/gattserver.html">GattServer</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/heartrateservice.html">HeartRateService</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/securitymanager.html">SecurityManager</a></p></li>
+</ul>
+</li>
+<li><p>NFC</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/nfc-apis.html">MessageBuilder</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/messageparser.html">MessageParser</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/nfccontroller.html">NFCController</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/nfc-eeprom.html">NFC EEPROM</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/simplemessageparser.html">SimpleMessageParser</a></p></li>
+</ul>
+</li>
+<li><p>LoRaWAN</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/lorawan-apis.html">LoRaWANInterface</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/loraradio.html">LoRaRadio</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Data Storage</p>
+<ul>
+<li><p>File System API</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/file-system-apis.html">Dir</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/fatfilesystem.html">FATFileSystem</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/file.html">File</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/filesystem.html">FileSystem</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/kvstore.html">KVStore</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/static-global-api.html">kvstore_global_api</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/littlefilesystem.html">LittleFileStstem</a></p></li>
+</ul>
+</li>
+<li><p>BlockDevice API</p></li>
+</ul>
+</li>
+<li><p>Platfrom</p>
+<ul>
+<li><p>Time</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/time-apis.html">RTC</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/ticker.html">Ticker</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/time.html">Time</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/timeout.html">Timeout</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/timer.html">Timer</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/wait">Wait</a></p></li>
+</ul>
+</li>
+<li><p>Power</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/power-apis.html">DeepSleepLock</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/lowpowerticker.html">LowerPowerTicker</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/lowpowertimeout.html">LowerPowerTimeout</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/lowpowertimer.html">LowerPowerTimer</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/power-management-sleep.html">PowerManagement</a></p></li>
+</ul>
+</li>
+<li><p>Memory</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/memory-apis.html">mbed_mem_trace</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/mpu-management.html">mpug_mgmt</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/memorypool.html">MemoryPool</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/mbed-statistics.html">mbed_stats</a></p></li>
+</ul>
+</li>
+<li><p>Other Platform APIS</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/other-platform-apis.html">Assert</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/atcmdparser.html">ATCmdParser</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/callback.html">Callback</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/circularbuffer.html">CircularBuffer</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/criticalsectionlock.html">CriticalSectionLock</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/debug.html">Debug</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/error-handling.html">ErrorHandling</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/filehandle.html">FileHandle</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/noncopyable.html">NonCopyable</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/platformmutex.html">PlatformMutex</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/poll.html">Poll</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/scopedramexecutionlock.html">ScopedRomExecutionLock</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/scopedromwritelock.html">ScopedRomWriteLock</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/shared-pointer.html">SharedPtr</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/span.html">Span</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Drivers</p>
+<ul>
+<li><p>Serial UART</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/serial-uart-apis.html">BufferedSerial</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/unbufferedserial.html">UnbufferedSerial</a></p></li>
+</ul>
+</li>
+<li><p>SPI Drivers</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/spi-apis.html">QuadSPI</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/spi.html">SPI</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/spislave.html">SPISlave</a></p></li>
+</ul>
+</li>
+<li><p>Input/Output Drivers</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/i-o-apis.html">AnalogIn</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/analogout.html">AnalogOut</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/busin.html">BusIn</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/busout.html">BusOut</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/businout.html">BusInOut</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/digitalin.html">DigitalIn</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/digitalout.html">DigitalOut</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/digitalinout.html">DigitalInOut</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/interruptin.html">InterruptIn</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/portin.html">PortIn</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/portout.html">PortOut</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/portinout.html">PortInOut</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/pwmout.html">PwmOut</a></p></li>
+</ul>
+</li>
+<li><p>USB Drivers</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/usb-apis.html">USBAudio</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/usbcdc.html">USBCDC</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/usbcdc-ecm.html">USBCDC_ECM</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/usbhid.html">USBHID</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/usbkeyboard.html">USBKeyboard</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/usbmidi.html">USBMIDI</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/usbmouse.html">USBMouse</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/usbmousekeyboard.html">USBMouseKeyboard</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/usbmsd.html">USBMSD</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/usbserial.html">USBSerial</a></p></li>
+</ul>
+</li>
+<li><p>Other Drivers</p>
+<ul>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/other-driver-apis.html">CAN</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/flash-iap.html">FlashIAP</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/i2c.html">I2C</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/i2cslave.html">I2CSlave</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/mbedcrc.html">MbedCRC</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/resetreason.html">ResetReason</a></p></li>
+<li><p><a class="reference external" href="https://os.mbed.com/docs/mbed-os/v6.4/apis/watchdog.html">WatchDog</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="01.mbedOS%E4%BB%8B%E7%BB%8D.html" class="btn btn-neutral float-left" title="5. mbedOS介绍" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="03.mbedOS%20BLE%E7%9B%B8%E5%85%B3%E7%A4%BA%E4%BE%8B.html" class="btn btn-neutral float-right" title="7. mbedOS BLE相关示例" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

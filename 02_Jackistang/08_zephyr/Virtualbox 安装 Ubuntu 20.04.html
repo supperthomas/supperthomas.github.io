@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10. VirtualBox 安装 Ubuntu 20.04 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="11. Zephyr 环境搭建" href="Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html" />
+    <link rel="prev" title="9. Callback" href="../06_mbedos/Callback.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">WB55:Jackistang</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/01_intruduce.html">2. CubeMX生成BLE应用(二)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_heart_rate_att_gatt/01_intruduce.html">3. GATT Service 定义总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_mbedos_advertising/readme.html">4. BLE_Advertising</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_mbedos_example_ble_led/readme.html">5. mbed-os LEDDemo 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_mbedos_gatt_client/GattClient.html">6. mbed os GattClient 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/DigitalOut.html">7. DigitalOut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/InterruptIn.html">8. InterruptIn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/Callback.html">9. Callback</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">10. VirtualBox 安装 Ubuntu 20.04</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">10.1. 前置条件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">10.2. 安装流程</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ubuntu">创建 Ubuntu 虚拟机</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">安装 Ubuntu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">更换国内源</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#virtualbox">10.3. 安装 VirtualBox 增强功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#virtualbox-usb">10.4. VirtualBox USB 设备使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">10.5. VirtualBox 共享文件夹设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">10.6. VirtualBox 设置共享粘贴板</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">10.7. Ubuntu 常用配置</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id8">增加鼠标滚轮的速度</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">10.8. VirtualBox 常见错误</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#vmware-verr-ssm-load-config-mismatch">vmware 启动失败 VERR_SSM_LOAD_CONFIG_MISMATCH</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html">11. Zephyr 环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20ESP32%20%E7%AF%87.html">12. Zephyr 环境搭建 - ESP32 篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20-%20Bluetooth%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20QEMU%20%E7%AF%87.html">13. Zephyr - Bluetooth 环境搭建 - QEMU 篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20-%20Shell.html">14. Zephyr - Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20-%20BLE%20%E5%88%9D%E5%A7%8B%E5%8C%96.html">15. BLE 协议栈初始化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20-%20BLE%20%E5%B9%BF%E6%92%AD.html">16. Zephyr - BLE 广播</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20-%20BLE%20%E6%89%AB%E6%8F%8F.html">17. Zephyr - BLE 扫描</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09_esp32/problem.html">18. 掉坑汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_rtthread/workqueue.html">19. RT-Thread workqueue 详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_rtthread/jerryscript.html">20. Jerryscript 简介</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">WB55:Jackistang</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">10. </span>VirtualBox 安装 Ubuntu 20.04</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/02_Jackistang/08_zephyr/Virtualbox 安装 Ubuntu 20.04.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="virtualbox-ubuntu-20-04">
+<h1><span class="section-number">10. </span>VirtualBox 安装 Ubuntu 20.04<a class="headerlink" href="#virtualbox-ubuntu-20-04" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">10.1. </span>前置条件<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<ul class="simple">
+<li><p>VirtualBox 6.1</p></li>
+<li><p><a class="reference external" href="https://developer.aliyun.com/mirror/">Ubuntu 20.04 ISO 镜像</a>（PC 版）</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2><span class="section-number">10.2. </span>安装流程<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<section id="ubuntu">
+<h3>创建 Ubuntu 虚拟机<a class="headerlink" href="#ubuntu" title="此标题的永久链接"></a></h3>
+<p>在“工具”条目选择“新建”，在弹出的对话框里输入“虚拟机名称”，以及虚拟机安装的“文件夹”，然后“类型”选择 Linux，“版本”选择 Ubuntu (64-bit)，点击下一步。</p>
+<p><img alt="../../_images/image-20210126144738482.png" src="../../_images/image-20210126144738482.png" /></p>
+<p>将虚拟机的内存大小设置为 2048MB，点击下一步。</p>
+<p><img alt="../../_images/image-20210126145001736.png" src="../../_images/image-20210126145001736.png" /></p>
+<p>选择“现在创建虚拟硬盘”，点击“创建”。</p>
+<p><img alt="../../_images/image-20210126145051708.png" src="../../_images/image-20210126145051708.png" /></p>
+<p>选择“VDI”类型，点击“下一步”。</p>
+<p><img alt="../../_images/image-20210126145115772.png" src="../../_images/image-20210126145115772.png" /></p>
+<p>选择“动态分配”，点击“下一步”。</p>
+<p><img alt="../../_images/image-20210126145144199.png" src="../../_images/image-20210126145144199.png" /></p>
+<p>这里将虚拟硬盘的大小调节为 30GB，然后点击“创建”即可。</p>
+<p><img alt="../../_images/image-20210126145328554.png" src="../../_images/image-20210126145328554.png" /></p>
+</section>
+<section id="id3">
+<h3>安装 Ubuntu<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>安装 Ubuntu 之前<strong>需要将虚拟机的网断掉</strong>，否则在安装过程中会试图使用 apt 安装软件，国内会特别慢。在“设置 - 网络”里。</p>
+<p><img alt="../../_images/image-20210126145441037.png" src="../../_images/image-20210126145441037.png" /></p>
+<p>然后点击启动，选择启动盘为我们自己的镜像文件，点击启动。</p>
+<p><img alt="../../_images/image-20210126145536625.png" src="../../_images/image-20210126145536625.png" /></p>
+<p>直接点击“Install Ubuntu”，</p>
+<p><img alt="../../_images/image-20210126145727628.png" src="../../_images/image-20210126145727628.png" /></p>
+<p>然后继续点击“Continue”，</p>
+<p><img alt="../../_images/image-20210126145746861.png" src="../../_images/image-20210126145746861.png" /></p>
+<p>由于我们虚拟机内主要是跑程序，不需要 office, games, media players 这些工具，因此选择 “Minimal installation”，然后点击 “Continue”。</p>
+<p><img alt="../../_images/image-20210126145939287.png" src="../../_images/image-20210126145939287.png" /></p>
+<p>点击 “Install Now”。</p>
+<p><img alt="../../_images/image-20210126150004904.png" src="../../_images/image-20210126150004904.png" /></p>
+<p>在弹出的对话框里选择 “Continue” 开始安装，</p>
+<p><img alt="../../_images/image-20210126150034525.png" src="../../_images/image-20210126150034525.png" /></p>
+<p>选择时区为 “Shanghai”，点击 “Continue”。</p>
+<p><img alt="../../_images/image-20210126150111903.png" src="../../_images/image-20210126150111903.png" /></p>
+<p>输入用户名和密码，点击 “Continue”，开始安装。</p>
+<p><img alt="../../_images/image-20210126150228737.png" src="../../_images/image-20210126150228737.png" /></p>
+<p>安装完后选择重启，并按 “Enter” 即可。</p>
+</section>
+<section id="id4">
+<h3>更换国内源<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<p>退出虚拟机，打开虚拟机的网络开关，这里由于我的路由器能够自主分配 IP，因此选择 NAT 模式。</p>
+<p><img alt="../../_images/image-20210126150708164.png" src="../../_images/image-20210126150708164.png" /></p>
+<p>启动 Ubuntu 虚拟机，在“开始中心”里找到 “Software &amp; Updates”，紫色的那一个。</p>
+<p><img alt="../../_images/image-20210126150925442.png" src="../../_images/image-20210126150925442.png" /></p>
+<p>然后在 “Ubuntu Software” 选项下的 “Download from” 处，点击 “Server for China”，</p>
+<p><img alt="../../_images/image-20210126151105785.png" src="../../_images/image-20210126151105785.png" /></p>
+<p>在弹出的菜单项里选择 “Other…”，</p>
+<p><img alt="image-20210126151131595" src="../../_images/image-20210126151131595.png" /></p>
+<p>在弹出的 “Choose a Download Server” 里找到 China，选择阿里云源，点击 “Choose Server”。</p>
+<p><img alt="../../_images/image-20210126151232640.png" src="../../_images/image-20210126151232640.png" /></p>
+<p>输入用户名密码，</p>
+<p><img alt="../../_images/image-20210126151328862.png" src="../../_images/image-20210126151328862.png" /></p>
+<p>打开终端，输入 <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">update</span></code> 更新源即可。</p>
+</section>
+</section>
+<section id="virtualbox">
+<h2><span class="section-number">10.3. </span>安装 VirtualBox 增强功能<a class="headerlink" href="#virtualbox" title="此标题的永久链接"></a></h2>
+<p>首先安装依赖环境，</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt-get install build-essential gcc make perl dkms
+</pre></div>
+</div>
+<p>然后选择 “设备 - 安装增强功能“，</p>
+<p><img alt="../../_images/image-20210126151933129.png" src="../../_images/image-20210126151933129.png" /></p>
+<p>在弹出的界面里选择 “Run” ，然后输入密码。</p>
+<p><img alt="image-20210126152255552" src="../../_images/image-20210126152255552.png" /></p>
+<p>等待安装完成后重启虚拟机。</p>
+<p><img alt="../../_images/image-20210126152402275.png" src="../../_images/image-20210126152402275.png" /></p>
+</section>
+<section id="virtualbox-usb">
+<h2><span class="section-number">10.4. </span>VirtualBox USB 设备使用<a class="headerlink" href="#virtualbox-usb" title="此标题的永久链接"></a></h2>
+<p>在进行嵌入式开发时，不可避免要使用串口与设备通信，使用调试器调试设备，这些设备目前都是通过 USB 接入物理机的，虚拟机可以配置后直接使用物理机的 USB 设备。</p>
+<p>这里我接入一个 STM32 的 ST-Link 调试器，可以选择 ”设备 - USB - STMicroelectronics STM32 STLink [01000]“ 里直接将 ST-Link 接入到虚拟机，虚拟机里的工具链就可以下载调试该 STM32 了。</p>
+<p><img alt="../../_images/image-20210126152747339.png" src="../../_images/image-20210126152747339.png" /></p>
+</section>
+<section id="id5">
+<h2><span class="section-number">10.5. </span>VirtualBox 共享文件夹设置<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h2>
+<p><strong>前提</strong>：必须成功安装 VirtualBox 增强功能。</p>
+<p>点击 “设备 - 共享文件夹 - 共享文件夹”，</p>
+<p><img alt="../../_images/image-20210126153056839.png" src="../../_images/image-20210126153056839.png" /></p>
+<p>点击右上角的 <code class="docutils literal notranslate"><span class="pre">+</span></code> 号，</p>
+<p><img alt="../../_images/image-20210126153143669.png" src="../../_images/image-20210126153143669.png" /></p>
+<p>在弹出的对话框里输入下述信息，点击 OK 。</p>
+<p><img alt="image-20210126153300172" src="../../_images/image-20210126153300172.png" /></p>
+<ul class="simple">
+<li><p>共享文件夹路径：这个是 Windows（物理机）上的文件夹路径（绝对路径）。</p></li>
+<li><p>共享文件夹名称：这个也是 Windows 上的文件夹名称。</p></li>
+<li><p>挂载点：这个是 Ubuntu 里的目录（与 Windows 共享）。</p></li>
+</ul>
+<p>也就是说，VirtualBox 将物理机的 “共享文件夹路径” 与虚拟机的 “挂载点” 联系起来了，两者之间的文件都是共享的。</p>
+<p>这是在 /home/jackis 目录下就能够看到 shared 共享目录了。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>jackis@jackis-VirtualBox:~$ <span class="nb">pwd</span>
+/home/jackis
+jackis@jackis-VirtualBox:~$ ls -l <span class="p">|</span> grep <span class="s2">&quot;shared&quot;</span>
+drwxrwx--- <span class="m">1</span> root   vboxsf    <span class="m">0</span> 1月  <span class="m">26</span> <span class="m">15</span>:39 shared
+</pre></div>
+</div>
+<p>可以看出 shared 目录属性如下：</p>
+<ul class="simple">
+<li><p>所有者：root，权限：7</p></li>
+<li><p>所属组：vboxsf，权限：7</p></li>
+<li><p>其他人权限：0</p></li>
+</ul>
+<p>这个时候是不能够进入 shared 目录的，因为当前普通用户没有权限，需要将当前用户加入 vboxsf 组内。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo gpasswd -a <span class="si">${</span><span class="nv">USER</span><span class="si">}</span> vboxsf
+newgrp - vboxsf
+</pre></div>
+</div>
+<p>这样就能够进入 /home/jackis/shared 目录了，也能够操纵共享的文件。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>jackis@jackis-VirtualBox:~/shared$ ls
+tmp.txt
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2><span class="section-number">10.6. </span>VirtualBox 设置共享粘贴板<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h2>
+<p><strong>前提</strong>：必须成功安装 VirtualBox 增强功能。</p>
+<p>我们在使用虚拟机时，难免会需要虚拟机与物理机相互复制粘贴，这时就需要共享粘贴板了。</p>
+<p>选择 “设备 - 共享粘贴板 - 双向” 即可。</p>
+<p><img alt="../../_images/image-20210126155248655.png" src="../../_images/image-20210126155248655.png" /></p>
+</section>
+<section id="id7">
+<h2><span class="section-number">10.7. </span>Ubuntu 常用配置<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h2>
+<section id="id8">
+<h3>增加鼠标滚轮的速度<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h3>
+<p>Ubuntu 里鼠标滚轮的默认速度太慢了，浏览代码简直不能忍受，因此在网上找了种方法增加 Ubuntu 里滚轮滑动的速度。</p>
+<p>安装 imwheel：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">imwheel</span>
+</pre></div>
+</div>
+<p>然后编辑文件 <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">vim</span> <span class="pre">~/.imwheelrc</span></code>，添加内容如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;.*&quot;</span>
+<span class="kc">None</span><span class="p">,</span>      <span class="n">Up</span><span class="p">,</span>   <span class="n">Button4</span><span class="p">,</span> <span class="mi">5</span>
+<span class="kc">None</span><span class="p">,</span>      <span class="n">Down</span><span class="p">,</span> <span class="n">Button5</span><span class="p">,</span> <span class="mi">5</span>
+<span class="n">Control_L</span><span class="p">,</span> <span class="n">Up</span><span class="p">,</span>   <span class="n">Control_L</span><span class="o">|</span><span class="n">Button4</span>
+<span class="n">Control_L</span><span class="p">,</span> <span class="n">Down</span><span class="p">,</span> <span class="n">Control_L</span><span class="o">|</span><span class="n">Button5</span>
+<span class="n">Shift_L</span><span class="p">,</span>   <span class="n">Up</span><span class="p">,</span>   <span class="n">Shift_L</span><span class="o">|</span><span class="n">Button4</span>
+<span class="n">Shift_L</span><span class="p">,</span>   <span class="n">Down</span><span class="p">,</span> <span class="n">Shift_L</span><span class="o">|</span><span class="n">Button5</span>
+</pre></div>
+</div>
+<p>前两行就分别对应滚轮上滚和下滚的速度，设置为 5 比较合适。</p>
+<p>启动 imwheel，</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">killall</span> <span class="n">imwheel</span>
+<span class="n">imwheel</span>
+</pre></div>
+</div>
+<p>鼠标侧键与 VSCode 绑定。</p>
+<p>https://blog.csdn.net/zhanghm1995/article/details/88876092</p>
+</section>
+</section>
+<section id="id9">
+<h2><span class="section-number">10.8. </span>VirtualBox 常见错误<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h2>
+<section id="vmware-verr-ssm-load-config-mismatch">
+<h3>vmware 启动失败 VERR_SSM_LOAD_CONFIG_MISMATCH<a class="headerlink" href="#vmware-verr-ssm-load-config-mismatch" title="此标题的永久链接"></a></h3>
+<p>打开虚拟机时报错：</p>
+<p><img alt="../../_images/336252-20210115144014778-1583596993.png" src="../../_images/336252-20210115144014778-1583596993.png" /></p>
+<p>此时虚拟机处于休眠状态，点击清除虚拟机状态。重启就好。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../06_mbedos/Callback.html" class="btn btn-neutral float-left" title="9. Callback" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html" class="btn btn-neutral float-right" title="11. Zephyr 环境搭建" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

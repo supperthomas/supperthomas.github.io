@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6. STM32WB55 蓝牙协议栈运行流程解析 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="7. stm32wb55 基于rtt的ble sample制作过程" href="../07_stm32wb55_ble_ibeacon/stm32wb55_ble_ibeacon.html" />
+    <link rel="prev" title="5. ART-PI开发板蓝牙配网流程分析" href="../05_art-pi_ble_netin/art-pi_net_connect_with_ble.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">WB55:xupenghu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/STM32WB%E7%A1%AC%E4%BB%B6%E4%BB%8B%E7%BB%8D.html">2. STM32WB 硬件介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_nrf_sniffer/nrf_ble_sniffer.html">3. 使用NRF52xx sniffer抓取BLE包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_btsnoop_hci/android_hci.html">4. 使用Android手机抓取蓝牙HCI包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_art-pi_ble_netin/art-pi_net_connect_with_ble.html">5. ART-PI开发板蓝牙配网流程分析</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. STM32WB55 蓝牙协议栈运行流程解析</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">6.1. 简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ibeaconstsample">6.2. 以ibeacon为例分析ST官方sample的运行流程</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#main">main初始化流程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ble">BLE初始化</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cpu1cpu2">系统通道CPU1和CPU2交互</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#blecpu1cpu2">BLE通道CPU1和CPU2交互</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../07_stm32wb55_ble_ibeacon/stm32wb55_ble_ibeacon.html">7. stm32wb55 基于rtt的ble sample制作过程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_rt-thread_packages/08_rt-thread_packages.html">8. RT-Thread 软件包制作及发布流程</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">WB55:xupenghu</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">6. </span>STM32WB55 蓝牙协议栈运行流程解析</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/03_xupenghu/06_stm32wb55_ble_start/stm32wb55_ble_start.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="stm32wb55">
+<h1><span class="section-number">6. </span>STM32WB55 蓝牙协议栈运行流程解析<a class="headerlink" href="#stm32wb55" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">6.1. </span>简介<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>STM32WB55是ST公司近期推出的一颗双核(M0+M4)无线MCU，主要应用在BLE领域，同时也可以运行thread和zigbee等无线协议栈。</p>
+<p>协议支持及两颗MCU的关系如下图所示：</p>
+<p><img alt="../../_images/20210224195922289.png" src="../../_images/20210224195922289.png" />
+CPU2负责无线协议栈的处理，CPU1负责用户程序的实现和其他常规片内外设的操作。本文主要分析BLE协议栈的实现过程。BLE固件的实现有两种方式，一种是全部协议栈都由CPU2来跑，对应固件是：<code class="docutils literal notranslate"><span class="pre">stm32wb5x_BLE_Stack_fw.bin</span></code>；CPU1只负责profile和用户app，另一种实现方式是CPU2只实现到HCI层，具体的蓝牙协议栈由CPU1来实现，对应的固件是：<code class="docutils literal notranslate"><span class="pre">stm32wb5x_BLE_HCILayer_fw.bin</span></code>；用户可以移植开源的蓝牙协议栈到CPU1。如下图所示，红框部分的实现可以由CPU1来完成，也可以由CPU2来完成。</p>
+<p><img alt="../../_images/2021022420045241.png" src="../../_images/2021022420045241.png" /></p>
+</section>
+<section id="ibeaconstsample">
+<h2><span class="section-number">6.2. </span>以ibeacon为例分析ST官方sample的运行流程<a class="headerlink" href="#ibeaconstsample" title="此标题的永久链接"></a></h2>
+<section id="main">
+<h3>main初始化流程<a class="headerlink" href="#main" title="此标题的永久链接"></a></h3>
+<p>程序从main入口到蓝牙协议栈的初始化流程如下图所示：</p>
+<p><img alt="../../_images/20210227165145263.png" src="../../_images/20210227165145263.png" />
+上电后，CPU1会首先运行起来。然后会初始化邮箱（system channel）、共享内存以及启动CPU2.当CPU2启动后，会通过之前初始化的邮箱回调函数来使能CPU2，并且初始化协议栈的APP层。具体流程如下图所示：
+<img alt="../../_images/20210227170347978.png" src="../../_images/20210227170347978.png" /></p>
+</section>
+<section id="ble">
+<h3>BLE初始化<a class="headerlink" href="#ble" title="此标题的永久链接"></a></h3>
+<p>BLE初始化的流程如下图所示，BLE中会初始化BLE channel。
+<img alt="../../_images/20210227170626540.png" src="../../_images/20210227170626540.png" /></p>
+</section>
+<section id="cpu1cpu2">
+<h3>系统通道CPU1和CPU2交互<a class="headerlink" href="#cpu1cpu2" title="此标题的永久链接"></a></h3>
+<section id="id2">
+<h4>初始化<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h4>
+<p><img alt="../../_images/image-20210228190227765.png" src="../../_images/image-20210228190227765.png" /></p>
+</section>
+<section id="id3">
+<h4>发送流程<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h4>
+<p><img alt="../../_images/image-20210228190913023.png" src="../../_images/image-20210228190913023.png" /></p>
+</section>
+<section id="id4">
+<h4>接收流程<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h4>
+<p><img alt="../../_images/image-20210228190941932.png" src="../../_images/image-20210228190941932.png" /></p>
+</section>
+</section>
+<section id="blecpu1cpu2">
+<h3>BLE通道CPU1和CPU2交互<a class="headerlink" href="#blecpu1cpu2" title="此标题的永久链接"></a></h3>
+<section id="id5">
+<h4>初始化<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h4>
+<p><img alt="../../_images/image-20210228190339491.png" src="../../_images/image-20210228190339491.png" /></p>
+</section>
+<section id="id6">
+<h4>发送流程<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h4>
+<p><img alt="../../_images/image-20210228191026147.png" src="../../_images/image-20210228191026147.png" /></p>
+</section>
+<section id="id7">
+<h4>接收流程<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h4>
+<p><img alt="../../_images/image-20210228191054542.png" src="../../_images/image-20210228191054542.png" /></p>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../05_art-pi_ble_netin/art-pi_net_connect_with_ble.html" class="btn btn-neutral float-left" title="5. ART-PI开发板蓝牙配网流程分析" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../07_stm32wb55_ble_ibeacon/stm32wb55_ble_ibeacon.html" class="btn btn-neutral float-right" title="7. stm32wb55 基于rtt的ble sample制作过程" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

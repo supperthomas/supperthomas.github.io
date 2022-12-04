@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2. BLE 相关资料 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="3. mbed OS quick start" href="../03_mbed/01_mbed_quick_syart.html" />
+    <link rel="prev" title="1. 简单自我介绍" href="../01_introduce/01_intruduce.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">MASTER:supperthomas</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. BLE 相关资料</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#android-apk">2.1. 1. android APK</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03_mbed/01_mbed_quick_syart.html">3. mbed OS  quick start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_AI/01_intruduce.html">4. 深度学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_embeded_debug/jlink.html">5. 嵌入式调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_mcuboot/mcuboot.html">6. MCUBOOT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_MPU/01_MPU.html">7. ARM-MPU 详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09_doxygen/doxygen.html">8. 玩转doxygen 之RT-THREAD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_lvgl/lvgl_app.html">9. LVGL 学习小计 –（一） 应用层</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">MASTER:supperthomas</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2. </span>BLE 相关资料</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/00_supperthomas/02_introduce/01_intruduce.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ble">
+<h1><span class="section-number">2. </span>BLE 相关资料<a class="headerlink" href="#ble" title="此标题的永久链接"></a></h1>
+<section id="android-apk">
+<h2><span class="section-number">2.1. </span>1. android APK<a class="headerlink" href="#android-apk" title="此标题的永久链接"></a></h2>
+<p>Name:</p>
+<p>skill:</p>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>graph LR
+    start[开始] --&gt; input[输入A,B,C]
+    input --&gt; conditionA{A是否大于B}
+    conditionA -- YES --&gt; conditionC{A是否大于C}
+    conditionA -- NO --&gt; conditionB{B是否大于C}
+    conditionC -- YES --&gt; printA[输出A]
+    conditionC -- NO --&gt; printC[输出C]
+    conditionB -- YES --&gt; printB[输出B]
+    conditionB -- NO --&gt; printC[输出C]
+    printA --&gt; stop[结束]
+    printC --&gt; stop
+    printB --&gt; stop
+</pre></div>
+</div>
+<div class="highlight-flow notranslate"><div class="highlight"><pre><span></span>st=&gt;start: Start|past:&gt;http://www.google.com[blank]
+e=&gt;end: End:&gt;http://www.google.com
+op1=&gt;operation: My Operation|past
+op2=&gt;operation: Stuff|current
+sub1=&gt;subroutine: My Subroutine|invalid
+cond=&gt;condition: Yes 
+or No?|approved:&gt;http://www.baidu.com
+c2=&gt;condition: Good idea|rejected
+io=&gt;inputoutput: catch something...|request
+
+st-&gt;op1(right)-&gt;cond
+cond(yes, right)-&gt;c2
+cond(no)-&gt;sub1(left)-&gt;op1
+c2(yes)-&gt;io-&gt;e
+c2(no)-&gt;op2-&gt;e
+</pre></div>
+</div>
+<div class="highlight-sequence notranslate"><div class="highlight"><pre><span></span>Title:连接建立的过程
+客户主机-&gt;服务器主机: 连接请求（SYN=1,seq=client_isn） 
+服务器主机-&gt;客户主机: 授予连接（SYN=1,seq=client_isn）\n ack=client_isn+1
+客户主机-&gt;服务器主机: 确认（SYN=0,seq=client_isn+1）\nack=server_isn+1
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../01_introduce/01_intruduce.html" class="btn btn-neutral float-left" title="1. 简单自我介绍" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../03_mbed/01_mbed_quick_syart.html" class="btn btn-neutral float-right" title="3. mbed OS quick start" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

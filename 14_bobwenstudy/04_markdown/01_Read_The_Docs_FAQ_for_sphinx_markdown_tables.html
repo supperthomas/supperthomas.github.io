@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. Read The Docs上架加入sphinx_markdown_tables后的问题 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="2. sphinx-autobuild OSError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。" href="02_sphinx-autobuild_error.html" />
+    <link rel="prev" title="04_markdown" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">NORDIC:bobwenstudy</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/index.html">01_introduce</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_zephyr_polling/index.html">02_zephyr_polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bluetooth/index.html">03_bluetooth</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">04_markdown</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1. Read The Docs上架加入sphinx_markdown_tables后的问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02_sphinx-autobuild_error.html">2. sphinx-autobuild OSError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_Typora_PicGo_Tencent.html">3. Typora+图床（PicGo+腾讯云）</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../05_compile/index.html">05_compile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">NORDIC:bobwenstudy</a></li>
+          <li class="breadcrumb-item"><a href="index.html">04_markdown</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">1. </span>Read The Docs上架加入sphinx_markdown_tables后的问题</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/14_bobwenstudy/04_markdown/01_Read_The_Docs_FAQ_for_sphinx_markdown_tables.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="read-the-docssphinx-markdown-tables">
+<h1><span class="section-number">1. </span>Read The Docs上架加入sphinx_markdown_tables后的问题<a class="headerlink" href="#read-the-docssphinx-markdown-tables" title="此标题的永久链接"></a></h1>
+<p>部署好GitHub后，在Read the Docs官网上构建，提示《<strong>ModuleNotFoundError: No module named ‘sphinx_markdown_tables’</strong>》</p>
+<p><img alt="image-20220804090054937" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220804090054937.png" /></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>Running Sphinx v5.1.1
+
+Traceback (most recent call last):
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/registry.py&quot;, line 442, in load_extension
+    mod = import_module(extname)
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/importlib/__init__.py&quot;, line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File &quot;&lt;frozen importlib._bootstrap&gt;&quot;, line 1006, in _gcd_import
+  File &quot;&lt;frozen importlib._bootstrap&gt;&quot;, line 983, in _find_and_load
+  File &quot;&lt;frozen importlib._bootstrap&gt;&quot;, line 965, in _find_and_load_unlocked
+ModuleNotFoundError: No module named &#39;sphinx_markdown_tables&#39;
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/cmd/build.py&quot;, line 276, in build_main
+    args.pdb)
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/application.py&quot;, line 222, in __init__
+    self.setup_extension(extension)
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/application.py&quot;, line 400, in setup_extension
+    self.registry.load_extension(self, extname)
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/registry.py&quot;, line 446, in load_extension
+    err) from err
+sphinx.errors.ExtensionError: Could not import extension sphinx_markdown_tables (exception: No module named &#39;sphinx_markdown_tables&#39;)
+
+Extension error:
+Could not import extension sphinx_markdown_tables (exception: No module named &#39;sphinx_markdown_tables&#39;)
+命令耗时： 0s 返回: 2
+Stay Up
+</pre></div>
+</div>
+<p>按照别的博客分享的建议，新建了：《<strong>requirements.txt</strong>》在里面加入了《<strong>sphinx-markdown-tables==0.0.15</strong>》。</p>
+<p><img alt="image-20220804092059266" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220804092059266.png" /></p>
+<p>本来以为就好了，再次构建，依然提示有问题。提示《<code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">__init__()</span> <span class="pre">missing</span> <span class="pre">1</span> <span class="pre">required</span> <span class="pre">positional</span> <span class="pre">argument:</span> <span class="pre">'config'</span></code>》。</p>
+<p><img alt="image-20220804091342518" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220804091342518.png" /></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>Running Sphinx v5.1.1
+making output directory... done
+building [mo]: targets for 0 po files that are out of date
+building [html]: targets for 4 source files that are out of date
+updating environment: [new config] 4 added, 0 changed, 0 removed
+reading sources... [ 25%] index
+
+Traceback (most recent call last):
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/events.py&quot;, line 94, in emit
+    results.append(listener.handler(self.app, *args))
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx_markdown_tables/__init__.py&quot;, line 24, in process_tables
+    table_processor = markdown.extensions.tables.TableProcessor(md.parser)
+TypeError: __init__() missing 1 required positional argument: &#39;config&#39;
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/cmd/build.py&quot;, line 277, in build_main
+    app.build(args.force_all, filenames)
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/application.py&quot;, line 349, in build
+    self.builder.build_update()
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/builders/__init__.py&quot;, line 303, in build_update
+    len(to_build))
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/builders/__init__.py&quot;, line 317, in build
+    updated_docnames = set(self.read())
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/builders/__init__.py&quot;, line 424, in read
+    self._read_serial(docnames)
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/builders/__init__.py&quot;, line 445, in _read_serial
+    self.read_doc(docname)
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/builders/__init__.py&quot;, line 498, in read_doc
+    publisher.publish()
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/docutils/core.py&quot;, line 218, in publish
+    self.settings)
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/io.py&quot;, line 103, in read
+    self.input = self.read_source(settings.env)
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/io.py&quot;, line 113, in read_source
+    env.events.emit(&#39;source-read&#39;, env.docname, arg)
+  File &quot;/home/docs/checkouts/readthedocs.org/user_builds/study-docs/envs/latest/lib/python3.7/site-packages/sphinx/events.py&quot;, line 106, in emit
+    (listener.handler, name), exc, modname=modname) from exc
+sphinx.errors.ExtensionError: Handler &lt;function process_tables at 0x7f7e17408290&gt; for event &#39;source-read&#39; threw an exception (exception: __init__() missing 1 required positional argument: &#39;config&#39;)
+
+Extension error (sphinx_markdown_tables):
+Handler &lt;function process_tables at 0x7f7e17408290&gt; for event &#39;source-read&#39; threw an exception (exception: __init__() missing 1 required positional argument: &#39;config&#39;)
+命令耗时： 0s 返回: 2
+</pre></div>
+</div>
+<p>不用想，肯定是版本有问题，博客上大佬用得是4.x.x的Sphinx版本，我这边都到5.1.1。通过<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">list</span></code>查看本地安装的包依赖。要加入的模块版本是0.0.17，<code class="docutils literal notranslate"><span class="pre">sphinx-markdown-tables</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0.0.17</span></code>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">D</span><span class="p">:</span>\<span class="n">worksplace</span>\<span class="n">github</span>\<span class="n">read_the_doc</span>\<span class="n">zephyr_polling</span>\<span class="n">porting</span>\<span class="n">windows_libusb_win32</span><span class="o">&gt;</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="nb">list</span>
+<span class="n">Package</span>                       <span class="n">Version</span>
+<span class="o">-----------------------------</span> <span class="o">-----------</span>
+<span class="n">alabaster</span>                     <span class="mf">0.7.12</span>
+<span class="n">Babel</span>                         <span class="mf">2.10.3</span>
+<span class="n">certifi</span>                       <span class="mf">2022.6.15</span>
+<span class="n">charset</span><span class="o">-</span><span class="n">normalizer</span>            <span class="mf">2.1.0</span>
+<span class="n">colorama</span>                      <span class="mf">0.4.5</span>
+<span class="n">commonmark</span>                    <span class="mf">0.9.1</span>
+<span class="n">construct</span>                     <span class="mf">2.10.68</span>
+<span class="n">docutils</span>                      <span class="mf">0.17.1</span>
+<span class="n">future</span>                        <span class="mf">0.18.2</span>
+<span class="n">idna</span>                          <span class="mf">3.3</span>
+<span class="n">imagesize</span>                     <span class="mf">1.4.1</span>
+<span class="n">iso8601</span>                       <span class="mf">1.0.2</span>
+<span class="n">Jinja2</span>                        <span class="mf">3.1.2</span>
+<span class="n">livereload</span>                    <span class="mf">2.6.3</span>
+<span class="n">Markdown</span>                      <span class="mf">3.4.1</span>
+<span class="n">MarkupSafe</span>                    <span class="mf">2.1.1</span>
+<span class="n">packaging</span>                     <span class="mf">21.3</span>
+<span class="n">pip</span>                           <span class="mf">22.1.2</span>
+<span class="n">Pygments</span>                      <span class="mf">2.12.0</span>
+<span class="n">pyparsing</span>                     <span class="mf">3.0.9</span>
+<span class="n">pyserial</span>                      <span class="mf">3.5</span>
+<span class="n">pytz</span>                          <span class="mf">2022.1</span>
+<span class="n">pyusb</span>                         <span class="mf">1.2.1</span>
+<span class="n">PyYAML</span>                        <span class="mf">6.0</span>
+<span class="n">recommonmark</span>                  <span class="mf">0.7.1</span>
+<span class="n">requests</span>                      <span class="mf">2.28.1</span>
+<span class="n">SCons</span>                         <span class="mf">4.3.0</span>
+<span class="n">serial</span>                        <span class="mf">0.0.97</span>
+<span class="n">setuptools</span>                    <span class="mf">58.1.0</span>
+<span class="n">six</span>                           <span class="mf">1.16.0</span>
+<span class="n">snowballstemmer</span>               <span class="mf">2.2.0</span>
+<span class="n">Sphinx</span>                        <span class="mf">5.1.1</span>
+<span class="n">sphinx</span><span class="o">-</span><span class="n">autobuild</span>              <span class="mf">2021.3.14</span>
+<span class="n">sphinx</span><span class="o">-</span><span class="n">markdown</span><span class="o">-</span><span class="n">tables</span>        <span class="mf">0.0.17</span>
+<span class="n">sphinx</span><span class="o">-</span><span class="n">rtd</span><span class="o">-</span><span class="n">theme</span>              <span class="mf">1.0.0</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">applehelp</span>       <span class="mf">1.0.2</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">devhelp</span>         <span class="mf">1.0.2</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">htmlhelp</span>        <span class="mf">2.0.0</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">jsmath</span>          <span class="mf">1.0.1</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">qthelp</span>          <span class="mf">1.0.3</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">serializinghtml</span> <span class="mf">1.1.5</span>
+<span class="n">tornado</span>                       <span class="mf">6.2</span>
+<span class="n">urllib3</span>                       <span class="mf">1.26.11</span>
+<span class="n">usb</span>                           <span class="mf">0.0.83</span><span class="o">.</span><span class="n">dev0</span>
+<span class="n">xlrd</span>                          <span class="mf">2.0.1</span>
+
+<span class="p">[</span><span class="n">notice</span><span class="p">]</span> <span class="n">A</span> <span class="n">new</span> <span class="n">release</span> <span class="n">of</span> <span class="n">pip</span> <span class="n">available</span><span class="p">:</span> <span class="mf">22.1.2</span> <span class="o">-&gt;</span> <span class="mf">22.2.1</span>
+<span class="p">[</span><span class="n">notice</span><span class="p">]</span> <span class="n">To</span> <span class="n">update</span><span class="p">,</span> <span class="n">run</span><span class="p">:</span> <span class="n">python</span><span class="o">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">pip</span>
+</pre></div>
+</div>
+<p>既然确定了是版本不一致，直接改《<strong>requirements.txt</strong>》在里面调整为《<strong>sphinx-markdown-tables==0.0.17</strong>》。当然为了避免后续Read The Doc服务器更新版本导致我本地不能用得问题，再把一些我觉得需要的也加入进去。</p>
+<p><img alt="image-20220804092021866" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220804092021866.png" /></p>
+<p>再次到Read The Docs官网查看，已经是构建通过了。项目地址在这<a class="reference external" href="https://study-docs.readthedocs.io/en/latest/">Welcome to study_docs’s documentation! — study_docs 0.0.0 documentation (study-docs.readthedocs.io)</a>，可以直接进去看源码。</p>
+<p><img alt="image-20220804092345128" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220804092345128.png" /></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="index.html" class="btn btn-neutral float-left" title="04_markdown" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="02_sphinx-autobuild_error.html" class="btn btn-neutral float-right" title="2. sphinx-autobuild OSError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

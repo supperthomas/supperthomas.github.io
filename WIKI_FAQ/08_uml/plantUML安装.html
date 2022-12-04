@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8. plantUML 安装教程 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="9. plantUML 绘图简介" href="plantUML%E7%BB%98%E5%9B%BE%E7%AE%80%E4%BB%8B.html" />
+    <link rel="prev" title="7. PIP 如何添加国内源" href="../07_python_skill/pip_install_china_source.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">WIKI FAQ 篇</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01/01_introduce.html">1. WIKI FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02/01_introduce.html">2. ReadtheDocs从懵逼到入门</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03/markdown_faq.html">3. Markdown 写作技巧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04/wiki_rule.html">4. WIKI  RULE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05/markdown_flow.html">5. 如何用markdown 画流程图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_git_flow/git_flow.html">6. GIT 技巧总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_python_skill/pip_install_china_source.html">7. PIP 如何添加国内源</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8. plantUML 安装教程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vscode-plantuml">8.1. VSCode 安装 plantUML 插件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">8.2. plantUML 本地环境安装</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">8.2.1. 快速安装方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">8.2.2. 常规安装方法</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">8.3. VSCode plantUML 插件简单使用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="plantUML%E7%BB%98%E5%9B%BE%E7%AE%80%E4%BB%8B.html">9. plantUML 绘图简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09_vscode/vscode_debug.html">10. VSCode 调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09_vscode/vscode_faq.html">11. VSCode 小技巧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09_vscode/vscode_plugin.html">12. VSCode 常用插件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09_vscode/vscode_shortkey.html">13. VSCODE 快捷键</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">WIKI FAQ 篇</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">8. </span>plantUML 安装教程</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/WIKI_FAQ/08_uml/plantUML安装.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="plantuml">
+<h1><span class="section-number">8. </span>plantUML 安装教程<a class="headerlink" href="#plantuml" title="此标题的永久链接"></a></h1>
+<section id="vscode-plantuml">
+<h2><span class="section-number">8.1. </span>VSCode 安装 plantUML 插件<a class="headerlink" href="#vscode-plantuml" title="此标题的永久链接"></a></h2>
+<p>在 VSCode 的插件商店输入 PlantUML，并点击安装。</p>
+</section>
+<section id="id1">
+<h2><span class="section-number">8.2. </span>plantUML 本地环境安装<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<section id="id2">
+<h3><span class="section-number">8.2.1. </span>快速安装方法<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h3>
+<p>plantUML 依赖 JavaSE 和 graphviz ，因此需要安装相关环境。VSCode 里的 plantUML 插件提供了一种快速安装环境的方法。</p>
+<p><img alt="../../_images/image-20201222203153895.png" src="../../_images/image-20201222203153895.png" /></p>
+<p>首先以管理员身份运行 cmd.exe ，然后运行下述两行命令，会自动完成依赖环境的安装。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">@</span><span class="s2">&quot;%SystemRoot%\System32\WindowsPowerShell</span><span class="se">\v</span><span class="s2">1.0\powershell.exe&quot;</span> <span class="o">-</span><span class="n">NoProfile</span> <span class="o">-</span><span class="n">ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-</span><span class="n">Command</span> <span class="s2">&quot;iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot;</span> <span class="o">&amp;&amp;</span> <span class="n">SET</span> <span class="s2">&quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey</span><span class="se">\b</span><span class="s2">in&quot;</span>
+
+<span class="n">choco</span> <span class="n">install</span> <span class="n">plantuml</span>
+</pre></div>
+</div>
+<p>在运行过程中如果提示需要输入 Y / N 的地方，一律输入 Y 并回车。</p>
+</section>
+<section id="id3">
+<h3><span class="section-number">8.2.2. </span>常规安装方法<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>若上述方法安装成功，则无需进行下述操作。</p>
+<section id="java">
+<h4>安装 Java 环境<a class="headerlink" href="#java" title="此标题的永久链接"></a></h4>
+<p>进入 <a class="reference external" href="https://www.oracle.com/java/technologies/">官方网址</a>，点击 Java SE ，</p>
+<p><img alt="../../_images/image-20201222195459380.png" src="../../_images/image-20201222195459380.png" /></p>
+<p>然后点击 JDK Download ，</p>
+<p><img alt="../../_images/image-20201222195540991.png" src="../../_images/image-20201222195540991.png" /></p>
+<p>在弹出来的界面选择 Windows x64 Installer，</p>
+<p><img alt="../../_images/image-20201222195704596.png" src="../../_images/image-20201222195704596.png" /></p>
+<p>下载完成后点击安装，安装路径可以自己选择，我这里选择的是 D:\Program Files\Java\jdk-15.0.1 。</p>
+<p>然后在需要在系统环境变量里添加 JAVA_HOME 的值为 JDK 安装路径。我这里为 <code class="docutils literal notranslate"><span class="pre">&quot;JAVA_HOME&quot;:</span> <span class="pre">&quot;D:\Program</span> <span class="pre">Files\Java\jdk-15.0.1&quot;</span></code> 。</p>
+<p><img alt="../../_images/image-20201222200505292.png" src="../../_images/image-20201222200505292.png" /></p>
+<p>测试 Java SE 是否安装正确，打开命令行（cmd 或 PowerShell），输入 <code class="docutils literal notranslate"><span class="pre">java</span> <span class="pre">--version</span></code>，会出现如下结果：</p>
+<p><img alt="../../_images/image-20201222200836226.png" src="../../_images/image-20201222200836226.png" /></p>
+</section>
+<section id="graphviz">
+<h4>安装 graphviz 环境<a class="headerlink" href="#graphviz" title="此标题的永久链接"></a></h4>
+</section>
+<section id="id4">
+<h4>下载 plantUML<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h4>
+</section>
+</section>
+</section>
+<section id="id5">
+<h2><span class="section-number">8.3. </span>VSCode plantUML 插件简单使用<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h2>
+<p>该插件支持的文件格式有</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*.</span><span class="n">wsd</span><span class="p">,</span> <span class="o">*.</span><span class="n">pu</span><span class="p">,</span> <span class="o">*.</span><span class="n">puml</span><span class="o">.</span><span class="p">,</span> <span class="o">*.</span><span class="n">plantuml</span><span class="p">,</span> <span class="o">*.</span><span class="n">iuml</span>
+</pre></div>
+</div>
+<p>参考 <a class="reference external" href="https://plantuml.com/zh/sitemap-language-specification">plantUML 文档</a> 写出相应图的代码，然后按 Alt + D 即可在侧栏实时看见所绘图像。如下图所示：</p>
+<p><img alt="../../_images/image-20201222204213135.png" src="../../_images/image-20201222204213135.png" /></p>
+<p>按 Ctrl + Shift + P，然后输入 plantuml，可以在下拉框里选择如何导出图像。</p>
+<p><img alt="../../_images/image-20201222204341628.png" src="../../_images/image-20201222204341628.png" /></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../07_python_skill/pip_install_china_source.html" class="btn btn-neutral float-left" title="7. PIP 如何添加国内源" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="plantUML%E7%BB%98%E5%9B%BE%E7%AE%80%E4%BB%8B.html" class="btn btn-neutral float-right" title="9. plantUML 绘图简介" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10. RTTHREAD移植BSP驱动 GPIO篇 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="11. RTTHREAD移植BSP驱动 SPI篇" href="03_rtthread_bsp_porting_spi.html" />
+    <link rel="prev" title="9. RTTHREAD移植新的BSP开发板" href="01_rtthread_bsp_porting.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">RTTHRED: RT-Thread</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. RTTHREAD贡献TODO目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/02_RTTHREAD_introduce.html">2. RT-THREAD —-国产开源之光</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/01_software_package.html">3. RTTHREAD软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/02_software_introduce.html">4. RTTHREAD软件包目录自分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/03_sensor_list.html">5. RT-Thread 传感器软件包归类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/04_rtthread_auto_update.html">6. RTTHREAD 软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/05_rtthread_bsp_board.html">7. RTTHREAD BSP board支持目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/06_rtthread_softpackage_build_guide.html">8. 软件包制作小计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_rtthread_bsp_porting.html">9. RTTHREAD移植新的BSP开发板</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">10. RTTHREAD移植BSP驱动 GPIO篇</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">10.1. 简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">10.2. 移植前准备</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pin">10.3. PIN引脚</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#led-sample">10.4. 添加led_sample</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">开始实现代码</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rt-hw-pin-init">rt_hw_pin_init</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mcu-pin-mode">mcu_pin_mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mcu-pin-write">mcu_pin_write</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#gpio-sample">10.5. 添加gpio_sample</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">开始实现代码</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mcu-pin-read">mcu_pin_read</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mcu-pin-attach-irq">mcu_pin_attach_irq</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mcu-pin-irq-enable">mcu_pin_irq_enable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mcu-pin-dettach-irq">mcu_pin_dettach_irq</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">中断处理函数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_rtthread_bsp_porting_spi.html">11. RTTHREAD移植BSP驱动 SPI篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_rtthread_bsp_porting_uart.html">12. rt-thread 移植BSP驱动 uart篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_docker/01_docker_images.html">13. 如何用docker来学习rtthread-qemu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_llsync/01_llsync_Environment.html">14. LLSYNC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_llsync/02_llsync_struct_code.html">15. LLSYNC 移植指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_simular/01_keil_simulator.html">16. 如何在keil中STM32L496 跑simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_onchip/01_on_chip_file.html">17. STM32如何将文件放到内部flash里面</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">RTTHRED: RT-Thread</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">10. </span>RTTHREAD移植BSP驱动 GPIO篇</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/RTTHREAD/03_bsp_porting/02_rtthread_bsp_porting_gpio.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="rtthreadbsp-gpio">
+<h1><span class="section-number">10. </span>RTTHREAD移植BSP驱动 GPIO篇<a class="headerlink" href="#rtthreadbsp-gpio" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">10.1. </span>简介<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>本文介绍pin设备驱动，drv_gpio.c如何编写的。</p>
+<p>本文参考RTTHREAD官方文档<a class="reference external" href="https://www.rt-thread.org/document/site/programming-manual/device/pin/pin/">PIN 设备</a></p>
+</section>
+<section id="id2">
+<h2><span class="section-number">10.2. </span>移植前准备<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p>先要熟悉官方的GPIO的demo如何运行的。</p>
+<p>先准备一个drv_gpio.c 这边提供一个模板，基本第一次稍微修改就可以编译通过，license大家可以改成自己的，这个随意。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/*</span>
+ <span class="o">*</span> <span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2006</span><span class="o">-</span><span class="mi">2020</span><span class="p">,</span> <span class="n">RT</span><span class="o">-</span><span class="n">Thread</span> <span class="n">Development</span> <span class="n">Team</span>
+ <span class="o">*</span>
+ <span class="o">*</span> <span class="n">SPDX</span><span class="o">-</span><span class="n">License</span><span class="o">-</span><span class="n">Identifier</span><span class="p">:</span> <span class="n">Apache</span><span class="o">-</span><span class="mf">2.0</span>
+ <span class="o">*</span>
+ <span class="o">*</span> <span class="n">Change</span> <span class="n">Logs</span><span class="p">:</span>
+ <span class="o">*</span> <span class="n">Date</span>           <span class="n">Author</span>       <span class="n">Notes</span>
+ <span class="o">*</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">11</span>     <span class="n">supperthomas</span> <span class="n">first</span> <span class="n">version</span>
+ <span class="o">*</span>
+ <span class="o">*/</span>
+
+<span class="c1">#include &quot;drv_gpio.h&quot;</span>
+<span class="c1">#include &lt;stdbool.h&gt;</span>
+
+<span class="c1">#ifdef RT_USING_PIN</span>
+
+<span class="c1">#define DBG_LEVEL   DBG_LOG</span>
+<span class="c1">#include &lt;rtdbg.h&gt;</span>
+<span class="c1">#define LOG_TAG                &quot;drv.gpio&quot;</span>
+<span class="c1">#define PIN_PORT_OFFSET 4</span>
+
+
+<span class="c1">#define PIN_NUM(port, no) ((((((port) &amp; 0xFu) &lt;&lt; PIN_PORT_OFFSET) | ((no) &amp; 0xFu)))</span>
+<span class="c1">#define PIN_PORT(pin) ((uint8_t)(((pin) &gt;&gt; PIN_PORT_OFFSET) &amp; 0xFu))</span>
+<span class="c1">#define PIN_NO(pin) ((uint8_t)((pin) &amp; 0xFu))</span>
+
+<span class="c1">#ifdef SOC_MAX32660</span>
+<span class="c1">#define PIN_MCU_PORT(pin)  PIN_PORT(pin)</span>
+<span class="c1">#define PIN_MCU_PIN(pin)   ((uint32_t)(1u &lt;&lt; PIN_NO(pin)))</span>
+<span class="c1">#endif</span>
+
+<span class="n">static</span> <span class="n">void</span> <span class="n">mcu_pin_write</span><span class="p">(</span><span class="n">rt_device_t</span> <span class="n">dev</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">pin</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">value</span><span class="p">)</span>
+<span class="p">{</span>
+      <span class="o">/*</span><span class="n">TODO</span><span class="p">:</span><span class="nb">set</span> <span class="n">gpio</span> <span class="n">out</span> <span class="n">put</span> <span class="n">mode</span> <span class="o">*/</span>
+<span class="p">}</span>
+
+<span class="n">static</span> <span class="nb">int</span> <span class="n">mcu_pin_read</span><span class="p">(</span><span class="n">rt_device_t</span> <span class="n">dev</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">pin</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nb">int</span> <span class="n">value</span><span class="p">;</span>
+      <span class="o">/*</span><span class="n">TODO</span><span class="p">:</span><span class="nb">set</span> <span class="n">gpio</span> <span class="n">out</span> <span class="n">put</span> <span class="n">mode</span> <span class="o">*/</span>
+    <span class="k">return</span> <span class="n">value</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">static</span> <span class="n">void</span> <span class="n">mcu_pin_mode</span><span class="p">(</span><span class="n">rt_device_t</span> <span class="n">dev</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">pin</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">mode</span><span class="p">)</span>
+<span class="p">{</span>
+      <span class="o">/*</span><span class="n">TODO</span><span class="p">:</span><span class="nb">set</span> <span class="n">gpio</span> <span class="n">out</span> <span class="n">put</span> <span class="n">mode</span> <span class="o">*/</span>
+<span class="p">}</span>
+
+
+<span class="n">static</span> <span class="n">rt_err_t</span> <span class="n">mcu_pin_attach_irq</span><span class="p">(</span><span class="n">struct</span> <span class="n">rt_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">rt_int32_t</span> <span class="n">pin</span><span class="p">,</span>
+                                   <span class="n">rt_uint32_t</span> <span class="n">irq_mode</span><span class="p">,</span> <span class="n">void</span> <span class="p">(</span><span class="o">*</span><span class="n">hdr</span><span class="p">)(</span><span class="n">void</span> <span class="o">*</span><span class="n">args</span><span class="p">),</span> <span class="n">void</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">/*</span><span class="n">TODO</span><span class="p">:</span> <span class="n">start</span> <span class="n">irq</span> <span class="n">handle</span> <span class="o">*/</span>
+    <span class="k">return</span> <span class="n">RT_EOK</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">static</span> <span class="n">rt_err_t</span> <span class="n">mcu_pin_dettach_irq</span><span class="p">(</span><span class="n">struct</span> <span class="n">rt_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">rt_int32_t</span> <span class="n">pin</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">/*</span><span class="n">TODO</span><span class="p">:</span><span class="n">disable</span> <span class="n">gpio</span> <span class="n">irq</span> <span class="n">handle</span> <span class="o">*/</span>
+    <span class="k">return</span> <span class="n">RT_EOK</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">static</span> <span class="n">rt_err_t</span> <span class="n">mcu_pin_irq_enable</span><span class="p">(</span><span class="n">struct</span> <span class="n">rt_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">pin</span><span class="p">,</span>
+                                   <span class="n">rt_uint32_t</span> <span class="n">enabled</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="o">/*</span><span class="n">TODO</span><span class="p">:</span><span class="n">start</span> <span class="n">irq</span> <span class="n">handle</span> <span class="o">*/</span>
+    <span class="k">return</span> <span class="n">RT_EOK</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">const</span> <span class="n">static</span> <span class="n">struct</span> <span class="n">rt_pin_ops</span> <span class="n">_mcu_pin_ops</span> <span class="o">=</span>
+<span class="p">{</span>
+    <span class="n">mcu_pin_mode</span><span class="p">,</span>
+    <span class="n">mcu_pin_write</span><span class="p">,</span>
+    <span class="n">mcu_pin_read</span><span class="p">,</span>
+    <span class="n">mcu_pin_attach_irq</span><span class="p">,</span>
+    <span class="n">mcu_pin_dettach_irq</span><span class="p">,</span>
+    <span class="n">mcu_pin_irq_enable</span><span class="p">,</span>
+    <span class="n">NULL</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nb">int</span> <span class="n">rt_hw_pin_init</span><span class="p">(</span><span class="n">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">/*</span><span class="n">TODO</span><span class="p">:</span> <span class="n">INIT</span> <span class="n">THE</span> <span class="n">GPIO</span> <span class="n">CLOCK</span> <span class="n">AND</span> <span class="n">OTHER</span> <span class="o">*/</span>
+    <span class="k">return</span> <span class="n">rt_device_pin_register</span><span class="p">(</span><span class="s2">&quot;pin&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_mcu_pin_ops</span><span class="p">,</span> <span class="n">RT_NULL</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">INIT_BOARD_EXPORT</span><span class="p">(</span><span class="n">rt_hw_pin_init</span><span class="p">);</span>
+
+<span class="o">//</span><span class="n">irq</span> <span class="n">handle</span>
+<span class="n">void</span> <span class="n">GPIO0_IRQHandler</span><span class="p">(</span><span class="n">void</span><span class="p">)</span>
+<span class="p">{</span>
+   
+<span class="p">}</span>
+
+<span class="c1">#endif /* RT_USING_PIN */</span>
+</pre></div>
+</div>
+<p>再加一个drv_gpio.h即可</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/*</span>
+ <span class="o">*</span> <span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2006</span><span class="o">-</span><span class="mi">2020</span><span class="p">,</span> <span class="n">RT</span><span class="o">-</span><span class="n">Thread</span> <span class="n">Development</span> <span class="n">Team</span>
+ <span class="o">*</span>
+ <span class="o">*</span> <span class="n">SPDX</span><span class="o">-</span><span class="n">License</span><span class="o">-</span><span class="n">Identifier</span><span class="p">:</span> <span class="n">Apache</span><span class="o">-</span><span class="mf">2.0</span>
+ <span class="o">*</span>
+ <span class="o">*</span> <span class="n">Change</span> <span class="n">Logs</span><span class="p">:</span>
+ <span class="o">*</span> <span class="n">Date</span>           <span class="n">Author</span>       <span class="n">Notes</span>
+ <span class="o">*</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">11</span>     <span class="n">supperthomas</span> <span class="n">first</span> <span class="n">version</span>
+ <span class="o">*</span>
+ <span class="o">*/</span>
+
+<span class="c1">#ifndef __DRV_GPIO_H__</span>
+<span class="c1">#define __DRV_GPIO_H__</span>
+
+<span class="c1">#include &lt;board.h&gt;</span>
+<span class="c1">#include &lt;rtdevice.h&gt;</span>
+
+<span class="nb">int</span> <span class="n">rt_hw_pin_init</span><span class="p">(</span><span class="n">void</span><span class="p">);</span>
+
+<span class="c1">#endif /* __DRV_GPIO_H__ */</span>
+</pre></div>
+</div>
+<p>gpio驱动主要是要提交这两个，还需要添加Kconfig</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">config</span> <span class="n">BSP_USING_GPIO</span>
+        <span class="nb">bool</span> <span class="s2">&quot;Enable GPIO&quot;</span>
+        <span class="n">select</span> <span class="n">RT_USING_PIN</span>
+        <span class="n">default</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>这边主要添加<code class="docutils literal notranslate"><span class="pre">RT_USING_PIN</span></code> 和<code class="docutils literal notranslate"><span class="pre">BSP_USING_GPIO</span></code>宏定义。</p>
+</section>
+<section id="pin">
+<h2><span class="section-number">10.3. </span>PIN引脚<a class="headerlink" href="#pin" title="此标题的永久链接"></a></h2>
+<p>关于引脚，通常引脚分为PORT和PIN脚两个部分</p>
+<p>通过宏定义，我们可以port和pin合成一个uint32 的数字，这样直接控制引脚即可，</p>
+<p>32bit中，低4位是pin脚，高位为port口，可以修改OFFSET改pin脚个数，4bit就是0~15引脚，大家也可以根据自己的mcu特性来改。用其他定义也可以，总之一个原则就是尽量用一个数字来代表一个PIN脚。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define PIN_PORT_OFFSET 4</span>
+
+<span class="c1">#define PIN_NUM(port, no) ((((((port) &amp; 0xFu) &lt;&lt; PIN_PORT_OFFSET) | ((no) &amp; 0xFu)))</span>
+<span class="c1">#define PIN_PORT(pin) ((uint8_t)(((pin) &gt;&gt; PIN_PORT_OFFSET) &amp; 0xFu))</span>
+<span class="c1">#define PIN_NO(pin) ((uint8_t)((pin) &amp; 0xFu))</span>
+
+
+<span class="c1">#define PIN_MCU_PORT(pin)  PIN_PORT(pin)</span>
+<span class="c1">#define PIN_MCU_PIN(pin) ((uint32_t)(1u &lt;&lt; PIN_NO(pin)))</span>
+</pre></div>
+</div>
+</section>
+<section id="led-sample">
+<h2><span class="section-number">10.4. </span>添加led_sample<a class="headerlink" href="#led-sample" title="此标题的永久链接"></a></h2>
+<p>一般GPIO有两块，一块是输出，仅只有控制LED灯的情况，还有一种就是带有GPIO中断的情况，就是带有BUTTON的情况。</p>
+<p>默认一般开发板都会至少有一个按键和一个LED灯，</p>
+<p>这边为了方便快速验证，可以先来验证LED灯，即GPIO口输出功能。</p>
+<p>led_sample</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define GPIO_LED_PIN  13</span>
+
+<span class="n">static</span> <span class="n">void</span> <span class="n">led_sample_thread_entry</span><span class="p">(</span><span class="n">void</span> <span class="o">*</span><span class="n">parameter</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nb">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">rt_pin_mode</span><span class="p">(</span><span class="n">GPIO_LED_PIN</span><span class="p">,</span> <span class="n">PIN_MODE_OUTPUT</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">count</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">rt_pin_write</span><span class="p">(</span><span class="n">GPIO_LED_PIN</span><span class="p">,</span> <span class="n">PIN_HIGH</span><span class="p">);</span>
+        <span class="n">rt_thread_mdelay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+
+        <span class="n">rt_pin_write</span><span class="p">(</span><span class="n">GPIO_LED_PIN</span><span class="p">,</span> <span class="n">PIN_LOW</span><span class="p">);</span>
+        <span class="n">rt_thread_mdelay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">void</span> <span class="n">led_sample</span><span class="p">(</span><span class="n">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">rt_thread_t</span> <span class="n">tid</span><span class="p">;</span>
+
+    <span class="n">tid</span> <span class="o">=</span> <span class="n">rt_thread_create</span><span class="p">(</span><span class="s2">&quot;led_sample&quot;</span><span class="p">,</span> <span class="n">led_sample_thread_entry</span><span class="p">,</span> <span class="n">RT_NULL</span><span class="p">,</span>
+                           <span class="mi">512</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+    <span class="n">RT_ASSERT</span><span class="p">(</span><span class="n">tid</span> <span class="o">!=</span> <span class="n">RT_NULL</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tid</span> <span class="o">!=</span> <span class="n">RT_NULL</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">rt_thread_startup</span><span class="p">(</span><span class="n">tid</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">MSH_CMD_EXPORT</span><span class="p">(</span><span class="n">led_sample</span><span class="p">,</span> <span class="n">led</span> <span class="n">sample</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>这个sample随便放到main.c里面随便放到哪里都可以，</p>
+<p>测试的时候在console里面输入led_sample即可。这边要注意GPIO脚要做修改，引脚选择LED。</p>
+<p>改下引脚配置即可。</p>
+<p>这边测试sample里面调用函数关系</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rt_pin_mode</span>  <span class="o">--&gt;</span> <span class="n">mcu_pin_mode</span>
+<span class="n">rt_pin_write</span> <span class="o">--&gt;</span> <span class="n">mcu_pin_write</span>
+<span class="n">rt_hw_pin_init</span>
+</pre></div>
+</div>
+<section id="id3">
+<h3>开始实现代码<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>这边根据一般厂商的LED GPIO sample来</p>
+</section>
+<section id="rt-hw-pin-init">
+<h3>rt_hw_pin_init<a class="headerlink" href="#rt-hw-pin-init" title="此标题的永久链接"></a></h3>
+<p>这边先开时钟什么的时钟准备，一些GPIO初始化可以在这个函数里面</p>
+</section>
+<section id="mcu-pin-mode">
+<h3>mcu_pin_mode<a class="headerlink" href="#mcu-pin-mode" title="此标题的永久链接"></a></h3>
+<p>这个函数需要配置好GPIO引脚模式，通常为设置引脚为输出还是输入</p>
+<p>sample code，需要根据mode的值来判断，这边定义了几种常见的值</p>
+<p>给出sample code，</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">void</span> <span class="n">mcu_pin_mode</span><span class="p">(</span><span class="n">rt_device_t</span> <span class="n">dev</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">pin</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">mode</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">gpio_cfg_t</span> <span class="n">tmp_gpio_cfg</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">PIN_PORT</span><span class="p">(</span><span class="n">pin</span><span class="p">);</span>
+    <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">PIN_MCU_PIN</span><span class="p">(</span><span class="n">pin</span><span class="p">);</span>
+
+    <span class="n">switch</span> <span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="k">case</span> <span class="n">PIN_MODE_OUTPUT</span><span class="p">:</span>
+        <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">GPIO_FUNC_OUT</span><span class="p">;</span>
+        <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">pad</span> <span class="o">=</span> <span class="n">GPIO_PAD_NONE</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">PIN_MODE_INPUT</span><span class="p">:</span>
+        <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">GPIO_FUNC_IN</span><span class="p">;</span>
+        <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">pad</span> <span class="o">=</span> <span class="n">GPIO_PAD_NONE</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">PIN_MODE_INPUT_PULLUP</span><span class="p">:</span>
+        <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">GPIO_FUNC_IN</span><span class="p">;</span>
+        <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">pad</span> <span class="o">=</span> <span class="n">GPIO_PAD_PULL_UP</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">PIN_MODE_INPUT_PULLDOWN</span><span class="p">:</span>
+        <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">GPIO_FUNC_IN</span><span class="p">;</span>
+        <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">pad</span> <span class="o">=</span> <span class="n">GPIO_PAD_PULL_DOWN</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">PIN_MODE_OUTPUT_OD</span><span class="p">:</span>
+        <span class="o">//</span><span class="ow">not</span> <span class="n">support</span>
+        <span class="n">LOG_E</span><span class="p">(</span><span class="s2">&quot;NOT SUPPORT&quot;</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">GPIO_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tmp_gpio_cfg</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">E_NO_ERROR</span> <span class="o">!=</span> <span class="n">ret</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">LOG_E</span><span class="p">(</span><span class="s2">&quot;GPIO_Config error :</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="mcu-pin-write">
+<h3>mcu_pin_write<a class="headerlink" href="#mcu-pin-write" title="此标题的永久链接"></a></h3>
+<p>这个是用来设置引脚高低电平的</p>
+<p>sample code 根据value值来判断高电平还是低电平</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">void</span> <span class="n">mcu_pin_write</span><span class="p">(</span><span class="n">rt_device_t</span> <span class="n">dev</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">pin</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">value</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">gpio_cfg_t</span> <span class="n">tmp_gpio_cfg</span><span class="p">;</span>
+    <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">PIN_PORT</span><span class="p">(</span><span class="n">pin</span><span class="p">);</span>
+    <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">PIN_MCU_PIN</span><span class="p">(</span><span class="n">pin</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">GPIO_OutSet</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tmp_gpio_cfg</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">GPIO_OutClr</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tmp_gpio_cfg</span><span class="p">);</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>这几个函数实现了，就可以跑亮灯程序了。目标是小灯一闪一闪的即可</p>
+</section>
+</section>
+<section id="gpio-sample">
+<h2><span class="section-number">10.5. </span>添加gpio_sample<a class="headerlink" href="#gpio-sample" title="此标题的永久链接"></a></h2>
+<p>小灯亮了之后，完成一大半了，一些输出的驱动就可以跑了，不过还有一种输入设备是不能跑的，比如button等设备。</p>
+<p>这个时候，输入另外一个sample</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define GPIO_LED_PIN  13</span>
+<span class="c1">#define GPIO_BUTTON_PIN  12</span>
+
+<span class="n">static</span> <span class="n">void</span> <span class="n">button_callback</span><span class="p">(</span><span class="n">void</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">static</span> <span class="nb">int</span> <span class="n">flag1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">flag1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">flag1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">rt_pin_write</span><span class="p">(</span><span class="n">GPIO_LED_PIN</span><span class="p">,</span> <span class="n">PIN_LOW</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">flag1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">rt_pin_write</span><span class="p">(</span><span class="n">GPIO_LED_PIN</span><span class="p">,</span> <span class="n">PIN_HIGH</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">static</span> <span class="n">void</span> <span class="n">gpio_sample_thread_entry</span><span class="p">(</span><span class="n">void</span> <span class="o">*</span><span class="n">parameter</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nb">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">count</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">rt_thread_mdelay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+        <span class="n">rt_kprintf</span><span class="p">(</span><span class="s2">&quot;Current LED STATUS:</span><span class="si">%d</span><span class="se">\r\n</span><span class="s2"> &quot;</span><span class="p">,</span> <span class="n">rt_pin_read</span><span class="p">(</span><span class="n">GPIO_LED_PIN</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">void</span> <span class="n">gpio_sample</span><span class="p">(</span><span class="n">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">rt_thread_t</span> <span class="n">tid</span><span class="p">;</span>
+
+    <span class="n">rt_pin_mode</span><span class="p">(</span><span class="n">GPIO_LED_PIN</span><span class="p">,</span> <span class="n">PIN_MODE_OUTPUT</span><span class="p">);</span>
+
+    <span class="n">rt_pin_write</span><span class="p">(</span><span class="n">GPIO_LED_PIN</span><span class="p">,</span> <span class="n">PIN_HIGH</span><span class="p">);</span>
+
+    <span class="n">rt_pin_attach_irq</span><span class="p">(</span><span class="n">GPIO_BUTTON_PIN</span><span class="p">,</span> <span class="n">PIN_IRQ_MODE_FALLING</span><span class="p">,</span>
+                      <span class="n">button_callback</span><span class="p">,</span> <span class="p">(</span><span class="n">void</span> <span class="o">*</span><span class="p">)</span> <span class="n">true</span><span class="p">);</span>
+    <span class="n">rt_pin_irq_enable</span><span class="p">(</span><span class="n">GPIO_BUTTON_PIN</span><span class="p">,</span> <span class="n">PIN_IRQ_ENABLE</span><span class="p">);</span>
+
+    <span class="n">tid</span> <span class="o">=</span> <span class="n">rt_thread_create</span><span class="p">(</span><span class="s2">&quot;gpio_sample&quot;</span><span class="p">,</span> <span class="n">gpio_sample_thread_entry</span><span class="p">,</span> <span class="n">RT_NULL</span><span class="p">,</span>
+                           <span class="mi">512</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tid</span> <span class="o">!=</span> <span class="n">RT_NULL</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">rt_thread_startup</span><span class="p">(</span><span class="n">tid</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">MSH_CMD_EXPORT</span><span class="p">(</span><span class="n">gpio_sample</span><span class="p">,</span> <span class="n">gpio</span> <span class="n">sample</span><span class="p">);</span>
+</pre></div>
+</div>
+<section id="id4">
+<h3>开始实现代码<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<p>这个sample主要调用以下接口</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rt_pin_read</span>  <span class="o">---&gt;</span> <span class="n">mcu_pin_read</span>
+<span class="n">rt_pin_attach_irq</span> <span class="o">--&gt;</span> <span class="n">mcu_pin_attach_irq</span>
+<span class="n">rt_pin_irq_enable</span> <span class="o">--&gt;</span> <span class="n">mcu_pin_irq_enable</span>
+</pre></div>
+</div>
+</section>
+<section id="mcu-pin-read">
+<h3>mcu_pin_read<a class="headerlink" href="#mcu-pin-read" title="此标题的永久链接"></a></h3>
+<p>这个函数直接获取GPIO 脚的高低电平返回0 或者1即可</p>
+<p>sample code</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="nb">int</span> <span class="n">mcu_pin_read</span><span class="p">(</span><span class="n">rt_device_t</span> <span class="n">dev</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">pin</span><span class="p">)</span>
+<span class="p">{</span>
+   <span class="nb">int</span> <span class="n">value</span><span class="p">;</span>
+   <span class="n">gpio_cfg_t</span> <span class="n">tmp_gpio_cfg</span><span class="p">;</span>
+   <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">PIN_PORT</span><span class="p">(</span><span class="n">pin</span><span class="p">);</span>
+   <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">PIN_MCU_PIN</span><span class="p">(</span><span class="n">pin</span><span class="p">);</span>
+
+   <span class="k">if</span> <span class="p">(</span><span class="n">GPIO_InGet</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tmp_gpio_cfg</span><span class="p">))</span>
+   <span class="p">{</span>
+       <span class="n">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+   <span class="p">}</span>
+   <span class="k">else</span>
+   <span class="p">{</span>
+       <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+   <span class="p">}</span>
+
+   <span class="k">return</span> <span class="n">value</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="mcu-pin-attach-irq">
+<h3>mcu_pin_attach_irq<a class="headerlink" href="#mcu-pin-attach-irq" title="此标题的永久链接"></a></h3>
+<p>这个稍微复杂一些，这个会根据irq_mode来设置上升沿触发还是下降沿触发callback函数</p>
+<p>sample code</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">rt_err_t</span> <span class="n">mcu_pin_attach_irq</span><span class="p">(</span><span class="n">struct</span> <span class="n">rt_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">rt_int32_t</span> <span class="n">pin</span><span class="p">,</span>
+                                   <span class="n">rt_uint32_t</span> <span class="n">irq_mode</span><span class="p">,</span> <span class="n">void</span> <span class="p">(</span><span class="o">*</span><span class="n">hdr</span><span class="p">)(</span><span class="n">void</span> <span class="o">*</span><span class="n">args</span><span class="p">),</span> <span class="n">void</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">gpio_cfg_t</span> <span class="n">tmp_gpio_cfg</span><span class="p">;</span>
+    <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">PIN_MCU_PORT</span><span class="p">(</span><span class="n">pin</span><span class="p">);</span>
+    <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">PIN_MCU_PIN</span><span class="p">(</span><span class="n">pin</span><span class="p">);</span>
+
+
+    <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">pad</span> <span class="o">=</span> <span class="n">GPIO_PAD_PULL_UP</span><span class="p">;</span>
+    <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">GPIO_FUNC_IN</span><span class="p">;</span>
+    <span class="n">GPIO_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tmp_gpio_cfg</span><span class="p">);</span>
+    <span class="n">GPIO_RegisterCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tmp_gpio_cfg</span><span class="p">,</span> <span class="n">hdr</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+
+    <span class="n">gpio_int_mode_t</span> <span class="n">mcu_mode</span><span class="p">;</span>
+    <span class="n">gpio_int_pol_t</span> <span class="n">mcu_pol</span><span class="p">;</span>
+
+    <span class="n">switch</span> <span class="p">(</span><span class="n">irq_mode</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="k">case</span> <span class="n">PIN_IRQ_MODE_RISING</span><span class="p">:</span>
+        <span class="n">mcu_mode</span> <span class="o">=</span> <span class="n">GPIO_INT_EDGE</span><span class="p">;</span>
+        <span class="n">mcu_pol</span> <span class="o">=</span> <span class="n">GPIO_INT_RISING</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">PIN_IRQ_MODE_FALLING</span><span class="p">:</span>
+        <span class="n">mcu_mode</span> <span class="o">=</span> <span class="n">GPIO_INT_EDGE</span><span class="p">;</span>
+        <span class="n">mcu_pol</span> <span class="o">=</span> <span class="n">GPIO_INT_FALLING</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">PIN_IRQ_MODE_RISING_FALLING</span><span class="p">:</span>
+        <span class="n">mcu_mode</span> <span class="o">=</span> <span class="n">GPIO_INT_EDGE</span><span class="p">;</span>
+        <span class="n">mcu_pol</span> <span class="o">=</span> <span class="n">GPIO_INT_BOTH</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">PIN_IRQ_MODE_HIGH_LEVEL</span><span class="p">:</span>
+        <span class="n">mcu_mode</span> <span class="o">=</span> <span class="n">GPIO_INT_LEVEL</span><span class="p">;</span>
+        <span class="n">mcu_pol</span> <span class="o">=</span> <span class="n">GPIO_INT_HIGH</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">PIN_IRQ_MODE_LOW_LEVEL</span><span class="p">:</span>
+        <span class="n">mcu_mode</span> <span class="o">=</span> <span class="n">GPIO_INT_LEVEL</span><span class="p">;</span>
+        <span class="n">mcu_pol</span> <span class="o">=</span> <span class="n">GPIO_INT_LOW</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">GPIO_IntConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tmp_gpio_cfg</span><span class="p">,</span> <span class="n">mcu_mode</span><span class="p">,</span> <span class="n">mcu_pol</span><span class="p">);</span>
+
+
+    <span class="k">return</span> <span class="n">RT_EOK</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="mcu-pin-irq-enable">
+<h3>mcu_pin_irq_enable<a class="headerlink" href="#mcu-pin-irq-enable" title="此标题的永久链接"></a></h3>
+<p>这个就是开触发中断</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">rt_err_t</span> <span class="n">mcu_pin_irq_enable</span><span class="p">(</span><span class="n">struct</span> <span class="n">rt_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">pin</span><span class="p">,</span>
+                                   <span class="n">rt_uint32_t</span> <span class="n">enabled</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">gpio_cfg_t</span> <span class="n">tmp_gpio_cfg</span><span class="p">;</span>
+    <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">PIN_MCU_PORT</span><span class="p">(</span><span class="n">pin</span><span class="p">);</span>
+    <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">PIN_MCU_PIN</span><span class="p">(</span><span class="n">pin</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">enabled</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">GPIO_IntEnable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tmp_gpio_cfg</span><span class="p">);</span>
+        <span class="n">NVIC_EnableIRQ</span><span class="p">((</span><span class="n">IRQn_Type</span><span class="p">)</span><span class="n">MXC_GPIO_GET_IRQ</span><span class="p">(</span><span class="n">PIN_MCU_PORT</span><span class="p">(</span><span class="n">pin</span><span class="p">)));</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">GPIO_IntDisable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tmp_gpio_cfg</span><span class="p">);</span>
+        <span class="n">NVIC_DisableIRQ</span><span class="p">((</span><span class="n">IRQn_Type</span><span class="p">)</span><span class="n">MXC_GPIO_GET_IRQ</span><span class="p">(</span><span class="n">PIN_MCU_PORT</span><span class="p">(</span><span class="n">pin</span><span class="p">)));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">RT_EOK</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="mcu-pin-dettach-irq">
+<h3>mcu_pin_dettach_irq<a class="headerlink" href="#mcu-pin-dettach-irq" title="此标题的永久链接"></a></h3>
+<p>这个函数就是关中断和关callback等一系列操作，</p>
+<p>这个sample中没有调用，</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">rt_err_t</span> <span class="n">mcu_pin_dettach_irq</span><span class="p">(</span><span class="n">struct</span> <span class="n">rt_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">rt_int32_t</span> <span class="n">pin</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">gpio_cfg_t</span> <span class="n">tmp_gpio_cfg</span><span class="p">;</span>
+    <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">PIN_MCU_PORT</span><span class="p">(</span><span class="n">pin</span><span class="p">);</span>
+    <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">PIN_MCU_PIN</span><span class="p">(</span><span class="n">pin</span><span class="p">);</span>
+    <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">pad</span> <span class="o">=</span> <span class="n">GPIO_PAD_PULL_UP</span><span class="p">;</span>
+    <span class="n">tmp_gpio_cfg</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">GPIO_FUNC_IN</span><span class="p">;</span>
+    <span class="n">GPIO_Config</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tmp_gpio_cfg</span><span class="p">);</span>
+    <span class="n">GPIO_IntDisable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tmp_gpio_cfg</span><span class="p">);</span>
+    <span class="n">GPIO_RegisterCallback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tmp_gpio_cfg</span><span class="p">,</span> <span class="n">NULL</span><span class="p">,</span> <span class="n">NULL</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">RT_EOK</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3>中断处理函数<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
+<p>中断处理函数负责调callback回调函数，当触发某种中断的时候，能调到callback即可。</p>
+<p>基本完成这些就能快速porting完成了。</p>
+<p>最后gpio_sample的现象就是按button按钮，对应的LED小灯会切换灯的状态。</p>
+<p>=============================</p>
+<p>drv_gpio 需要的文件</p>
+<p>pin.c</p>
+<p>pin.h</p>
+<p>RT_USING_HEAP</p>
+<p>这个是要和pip.c和</p>
+<p>#if defined(RT_USING_HEAP)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">=====</span><span class="si">%s</span><span class="s2">===</span><span class="si">%d</span><span class="s2">==== </span><span class="se">\r\n</span><span class="s2"> &quot;</span><span class="p">,</span><span class="vm">__func__</span><span class="p">,</span><span class="n">__LINE__</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="01_rtthread_bsp_porting.html" class="btn btn-neutral float-left" title="9. RTTHREAD移植新的BSP开发板" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="03_rtthread_bsp_porting_spi.html" class="btn btn-neutral float-right" title="11. RTTHREAD移植BSP驱动 SPI篇" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

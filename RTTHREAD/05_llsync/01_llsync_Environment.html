@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>14. LLSYNC &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="15. LLSYNC 移植指南" href="02_llsync_struct_code.html" />
+    <link rel="prev" title="13. 如何用docker来学习rtthread-qemu" href="../04_docker/01_docker_images.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">RTTHRED: RT-Thread</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. RTTHREAD贡献TODO目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/02_RTTHREAD_introduce.html">2. RT-THREAD —-国产开源之光</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/01_software_package.html">3. RTTHREAD软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/02_software_introduce.html">4. RTTHREAD软件包目录自分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/03_sensor_list.html">5. RT-Thread 传感器软件包归类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/04_rtthread_auto_update.html">6. RTTHREAD 软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/05_rtthread_bsp_board.html">7. RTTHREAD BSP board支持目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/06_rtthread_softpackage_build_guide.html">8. 软件包制作小计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/01_rtthread_bsp_porting.html">9. RTTHREAD移植新的BSP开发板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/02_rtthread_bsp_porting_gpio.html">10. RTTHREAD移植BSP驱动 GPIO篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/03_rtthread_bsp_porting_spi.html">11. RTTHREAD移植BSP驱动 SPI篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/04_rtthread_bsp_porting_uart.html">12. rt-thread 移植BSP驱动 uart篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_docker/01_docker_images.html">13. 如何用docker来学习rtthread-qemu</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">14. LLSYNC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">14.1. 简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#llsync-demo">14.2. llsync DEMO如何使用</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">准备软件环境</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">下载例程代码</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">代码修改与烧录</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">烧入</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">使用</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02_llsync_struct_code.html">15. LLSYNC 移植指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_simular/01_keil_simulator.html">16. 如何在keil中STM32L496 跑simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_onchip/01_on_chip_file.html">17. STM32如何将文件放到内部flash里面</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">RTTHRED: RT-Thread</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">14. </span>LLSYNC</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/RTTHREAD/05_llsync/01_llsync_Environment.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="llsync">
+<h1><span class="section-number">14. </span>LLSYNC<a class="headerlink" href="#llsync" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">14.1. </span>简介<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>llsync是什么</p>
+<p>llsync是一款智能家居产品，用于蓝牙相关的，通过蓝牙接入腾讯连连小程序的一款SDK。可以通过蓝牙来点灯，与其他的蓝牙example不同的是，这个可以移植到很多其他平台而不需要过多的porting，后续整理其他feature的时候，也可以尽量规范通用一些。</p>
+<p>参考<a class="reference external" href="https://github.com/TencentCloud/tencentcloud-iot-explorer-ble-sdk-embedded-demo">DEMO</a></p>
+</section>
+<section id="llsync-demo">
+<h2><span class="section-number">14.2. </span>llsync DEMO如何使用<a class="headerlink" href="#llsync-demo" title="此标题的永久链接"></a></h2>
+<p>首先demo是基于ESP32和nrf52832两款芯片的。ESP32有WIFI和蓝牙两种连接智能家居的方式，nrf52832对于单蓝牙具有一定的代表性。</p>
+<p>首先第一点就是这个demo怎么用呢？参考文档<a class="reference external" href="https://cloud.tencent.com/document/product/1081/50969">蓝牙设备接入指引</a></p>
+<p>下面简单总结一下，首先准备一款nrf52832的开发板</p>
+<section id="id2">
+<h3>准备软件环境<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h3>
+<ol class="simple">
+<li><p>前往 <a class="reference external" href="https://www.nordicsemi.com/Software-and-tools/Software/nRF5-SDK/Download">NORDIC 官网</a> 下载 nRF5_SDK。</p></li>
+</ol>
+</section>
+<section id="id3">
+<h3>下载例程代码<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<ol class="simple">
+<li><p>下载 <a class="reference external" href="https://github.com/tencentyun/qcloud-iot-explorer-BLE-sdk-embedded-demo">示例程序</a>。</p></li>
+<li><p>拷贝 <code class="docutils literal notranslate"><span class="pre">qcloud-iot-ble-nrf52832</span></code> 文件夹至 nrf sdk 的示例程序目录下，例如 SDK\examples\ble_peripheral`。</p></li>
+</ol>
+</section>
+<section id="id4">
+<h3>代码修改与烧录<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<ol class="simple">
+<li><p>打开工程 SDK\examples\ble_peripheral\qcloud-iot-ble-nrf52832\pca10040\s132\arm5_no_packs\ble_app_blinky_pca10040_s132.uvprojx`。</p></li>
+<li><p>打开文件 <code class="docutils literal notranslate"><span class="pre">ble_qiot_ble_device.c</span></code>，找到以下三个宏并修改为您自己的设备信息。</p></li>
+</ol>
+<p><img alt="image-20220307230428376" src="../../_images/image-20220307230428376.png" /></p>
+<p>三个宏定义参考文档获取。</p>
+<p>之后参考文档就可以使用了，手机端采用微信里面的腾讯连连小程序即可。先添加设备，然后配网。</p>
+</section>
+<section id="id5">
+<h3>烧入<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
+<p>第一次烧入最好先将芯片整个擦除，防止flash里面预留了一些配对信息。</p>
+<p>先烧入softdevice  目录在 components\softdevice\s132\hex\s132_nrf52_7.2.0_softdevice.hex</p>
+<p>然后再烧入llsync工程生成的代码</p>
+</section>
+<section id="id6">
+<h3>使用<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h3>
+<p>打开腾讯连连小程序，连接设备即可。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../04_docker/01_docker_images.html" class="btn btn-neutral float-left" title="13. 如何用docker来学习rtthread-qemu" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="02_llsync_struct_code.html" class="btn btn-neutral float-right" title="15. LLSYNC 移植指南" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

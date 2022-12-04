@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2. Nordic 相关task &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="3. Nordic FAQ" href="../FAQ/01_introduce.html" />
+    <link rel="prev" title="1. Nordic 相关资料" href="01_introduce.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Nordic 篇</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_introduce.html">1. Nordic 相关资料</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. Nordic 相关task</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#task">2.1. 1. task 小计</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../FAQ/01_introduce.html">3. Nordic FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03/ble_app_blinky.html">4. ble_app_blinky 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05/ble_uart_app.html">5. ble_app_uart 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_nordic_i2c/nRF5x_I2C.html">6. nRF5x_BSP I2C 移植指南</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Nordic 篇</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2. </span>Nordic 相关task</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/nordic/01/02_task.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="nordic-task">
+<h1><span class="section-number">2. </span>Nordic 相关task<a class="headerlink" href="#nordic-task" title="此标题的永久链接"></a></h1>
+<section id="task">
+<h2><span class="section-number">2.1. </span>1. task 小计<a class="headerlink" href="#task" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>驱动部分</th>
+<th>备注</th>
+<th>难度</th>
+<th>申请人</th>
+<th>目标内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPIO</td>
+<td>软件SPI模拟，软件I2C模拟</td>
+<td>$$$</td>
+<td></td>
+<td>整理一套其他bsp也可以用的SOP手册</td>
+</tr>
+<tr>
+<td>mesh</td>
+<td>提交nrf mesh 软件包 demo。基于softdevice  （light_switch_client）</td>
+<td>$$$$$</td>
+<td></td>
+<td>整理mesh sdk框架结构</td>
+</tr>
+<tr>
+<td>USB</td>
+<td>根据stm32的USB性能<br />评估porting到nordic</td>
+<td>$$$$$</td>
+<td></td>
+<td>整理出学习流程和porting方法</td>
+</tr>
+<tr>
+<td>HWTIMER</td>
+<td>根据STM32整理出一套</td>
+<td>$$$</td>
+<td></td>
+<td>整理HWTIMER 快速porting流程</td>
+</tr>
+<tr>
+<td>module</td>
+<td>动态加载</td>
+<td>$$$</td>
+<td></td>
+<td>根据官方的手册整理出一套介绍文档</td>
+</tr>
+<tr>
+<td>NFC驱动</td>
+<td>驱动整理</td>
+<td>$$$</td>
+<td></td>
+<td>整理通用驱动如何放置到RTTHREAD</td>
+</tr>
+<tr>
+<td>ble_hogp</td>
+<td>整理sample</td>
+<td>$$$$</td>
+<td></td>
+<td>学习BLE鼠标是如何运作的</td>
+</tr>
+<tr>
+<td>micropython</td>
+<td>这边要验证完善UART驱动是否正常</td>
+<td>$$$$</td>
+<td></td>
+<td>学习整理如何用python如何验证平台</td>
+</tr>
+<tr>
+<td>RTT</td>
+<td>添加RTT调试端口</td>
+<td>$$</td>
+<td></td>
+<td>添加RTT 调试串口</td>
+</tr>
+<tr>
+<td>SWO</td>
+<td>添加SWO调试输出端口</td>
+<td>$</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>btstack</td>
+<td>熟悉btstack如何运行nordic</td>
+<td>$$</td>
+<td></td>
+<td>学习btstack</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/peripheral-sample">peripheral_samples</a></td>
+<td>整理peipheral sample</td>
+<td>$$$</td>
+<td></td>
+<td>整理介绍peipheral sample</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/kernel-sample">kernel_samples</a></td>
+<td>整理kernel sample</td>
+<td>$$$</td>
+<td></td>
+<td>整理介绍kernel sample</td>
+</tr>
+<tr>
+<td>GUI</td>
+<td>littlevgl</td>
+<td>$$$$</td>
+<td></td>
+<td>介绍littlevgl整个框架和使用</td>
+</tr>
+<tr>
+<td>submodule</td>
+<td>整理submodule</td>
+<td>$$$</td>
+<td></td>
+<td>学习submodule如何使用</td>
+</tr>
+<tr>
+<td>CoreMark</td>
+<td>学习CoreMark 如何给MCU 跑个分</td>
+<td>$$$</td>
+<td></td>
+<td>学习如何给MCU跑分</td>
+</tr>
+<tr>
+<td>RT-THREAD STUDIO</td>
+<td>将NORDIC开发板移植到RTTHREAD STUDIO bsp里面</td>
+<td>$$</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>microbit</td>
+<td>microbit开发板支持</td>
+<td>$$$$</td>
+<td></td>
+<td>添加microbit开发板</td>
+</tr>
+<tr>
+<td>cmbacktrace软件包使用</td>
+<td>cmbacktrace软件包使用介绍</td>
+<td>$$$</td>
+<td></td>
+<td>使用完善软件包</td>
+</tr>
+<tr>
+<td>docker</td>
+<td>学习docker</td>
+<td>$$$$$</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>qemu</td>
+<td>qemu</td>
+<td>$$$$</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>nordic</td>
+<td>scons  --dist</td>
+<td>$$$</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="01_introduce.html" class="btn btn-neutral float-left" title="1. Nordic 相关资料" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../FAQ/01_introduce.html" class="btn btn-neutral float-right" title="3. Nordic FAQ" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

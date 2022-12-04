@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>12. Zephyr 环境搭建 - ESP32 篇 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="13. Zephyr - Bluetooth 环境搭建 - QEMU 篇" href="Zephyr%20-%20Bluetooth%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20QEMU%20%E7%AF%87.html" />
+    <link rel="prev" title="11. Zephyr 环境搭建" href="Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">WB55:Jackistang</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/01_intruduce.html">2. CubeMX生成BLE应用(二)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_heart_rate_att_gatt/01_intruduce.html">3. GATT Service 定义总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_mbedos_advertising/readme.html">4. BLE_Advertising</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_mbedos_example_ble_led/readme.html">5. mbed-os LEDDemo 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_mbedos_gatt_client/GattClient.html">6. mbed os GattClient 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/DigitalOut.html">7. DigitalOut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/InterruptIn.html">8. InterruptIn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/Callback.html">9. Callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Virtualbox%20%E5%AE%89%E8%A3%85%20Ubuntu%2020.04.html">10. VirtualBox 安装 Ubuntu 20.04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html">11. Zephyr 环境搭建</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">12. Zephyr 环境搭建 - ESP32 篇</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">12.1. 前置条件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">12.2. 环境搭建</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#esp-idf">获取 ESP-IDF</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#xtensa-esp32-elf">安装 xtensa-esp32-elf 工具链</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zephyr-v2-4-branch">切换 Zephyr 为 v2.4-branch 版本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zephyr">配置 Zephyr 的构建环境变量</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">编译下载</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20-%20Bluetooth%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20QEMU%20%E7%AF%87.html">13. Zephyr - Bluetooth 环境搭建 - QEMU 篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20-%20Shell.html">14. Zephyr - Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20-%20BLE%20%E5%88%9D%E5%A7%8B%E5%8C%96.html">15. BLE 协议栈初始化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20-%20BLE%20%E5%B9%BF%E6%92%AD.html">16. Zephyr - BLE 广播</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20-%20BLE%20%E6%89%AB%E6%8F%8F.html">17. Zephyr - BLE 扫描</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09_esp32/problem.html">18. 掉坑汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_rtthread/workqueue.html">19. RT-Thread workqueue 详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_rtthread/jerryscript.html">20. Jerryscript 简介</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">WB55:Jackistang</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">12. </span>Zephyr 环境搭建 - ESP32 篇</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/02_Jackistang/08_zephyr/Zephyr 环境搭建 - ESP32 篇.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="zephyr-esp32">
+<h1><span class="section-number">12. </span>Zephyr 环境搭建 - ESP32 篇<a class="headerlink" href="#zephyr-esp32" title="此标题的永久链接"></a></h1>
+<p>本篇环境搭建的前提是 Zephyr 的基本环境已经搭建好，下述为与 ESP32 相关的环境搭建，最终的结果为使用 <code class="docutils literal notranslate"><span class="pre">west</span></code> 成功编译 <code class="docutils literal notranslate"><span class="pre">hello_world</span></code> 例程并下载到 ESP32 开发板上。Zephyr 基本环境搭建参考 [Zephyr 环境搭建](./Zephyr 环境搭建)。</p>
+<section id="id1">
+<h2><span class="section-number">12.1. </span>前置条件<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<ul class="simple">
+<li><p>Ubuntu 20.04 (virtualbox on win10)</p></li>
+<li><p>Zephyr (v2.4-branch)</p></li>
+<li><p>ESP32-DevKitC V4 (WROVER-E)</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2><span class="section-number">12.2. </span>环境搭建<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<section id="esp-idf">
+<h3>获取 ESP-IDF<a class="headerlink" href="#esp-idf" title="此标题的永久链接"></a></h3>
+<div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span>mkdir ~/esp
+<span class="nb">cd</span> ~/esp
+git clone -b v4.2 --recursive https://github.com/espressif/esp-idf.git
+</pre></div>
+</div>
+</section>
+<section id="xtensa-esp32-elf">
+<h3>安装 xtensa-esp32-elf 工具链<a class="headerlink" href="#xtensa-esp32-elf" title="此标题的永久链接"></a></h3>
+<p>由于 Zephyr SDK 并不支持 ESP32，因此我们需要安装第三方 ESP32 工具链 <code class="docutils literal notranslate"><span class="pre">xtensa-esp32-elf</span></code>，可以手动下载该<a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/v4.2/esp32/api-guides/tools/idf-tools.html#xtensa-esp32-elf">工具</a>，这里我选择使用 ESP-IDF 提供的脚本来自动下载工具链。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/esp/esp-idf
+./install.sh
+</pre></div>
+</div>
+<p>注意此时需要有 python 环境，即</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>jackis@jackis-zephyr:~/zephyrproject/zephyr$ python --version
+Python <span class="m">3</span>.8.5
+</pre></div>
+</div>
+<p>若没有则需要手动安装 python 3.8，并<a class="reference external" href="https://blog.csdn.net/u014775723/article/details/85213793">更新 python 执行 python 3.8</a>， 如下所示</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ln -s /usr/bin/python3.8 /usr/bin/python
+</pre></div>
+</div>
+<p>此时默认安装的工具链在 <code class="docutils literal notranslate"><span class="pre">$HOME/.espressif</span></code> 目录下，建议不要修改工具链的安装路径。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>jackis@jackis-zephyr:~$ ls .espressif/
+dist  python_env  tools
+</pre></div>
+</div>
+<p>ESP-IDF 还提供了配置环境变量的脚本文件 <code class="docutils literal notranslate"><span class="pre">export.sh</span></code>，其执行命令为：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>. <span class="nv">$HOME</span>/esp/esp-idf/export.sh
+</pre></div>
+</div>
+<p>注意 <code class="docutils literal notranslate"><span class="pre">.</span></code> 和 <code class="docutils literal notranslate"><span class="pre">$HOME</span></code> 之间有空格，该命令在后面会用到。</p>
+</section>
+<section id="zephyr-v2-4-branch">
+<h3>切换 Zephyr 为 v2.4-branch 版本<a class="headerlink" href="#zephyr-v2-4-branch" title="此标题的永久链接"></a></h3>
+<p>Zephyr master 分支编译 ESP32 会报错，切换为分支 v2.4-branch 即可，该分支为最新的发布版本。命令如下：</p>
+<div class="highlight-she notranslate"><div class="highlight"><pre><span></span>cd ~/zephyrproject/zephyr
+git checkout v2.4-branch
+</pre></div>
+</div>
+</section>
+<section id="zephyr">
+<h3>配置 Zephyr 的构建环境变量<a class="headerlink" href="#zephyr" title="此标题的永久链接"></a></h3>
+<p>此处一共需要配置三个环境变量：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ZEPHYR_TOOLCHAIN_VARIANT</span></code>：用于构建 Zephyr 当前工具链的名称。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ESPRESSIF_TOOLCHAIN_PATH</span></code>：espressif 工具链的路径。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ESP_IDF_PATH</span></code>：git clone [esp-idf](###获取 ESP-IDF) 的路径。</p></li>
+</ul>
+<p>在配置环境变量前需运行 ESP-IDF 的脚本文件 export.sh，完整命令如下：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>. ~/esp/esp-idf/export.sh
+<span class="nb">export</span> <span class="nv">ZEPHYR_TOOLCHAIN_VARIANT</span><span class="o">=</span>espressif
+<span class="nb">export</span> <span class="nv">ESPRESSIF_TOOLCHAIN_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/.espressif/tools/xtensa-esp32-elf/esp-2020r3-8.4.0/xtensa-esp32-elf
+<span class="nb">export</span> <span class="nv">ESP_IDF_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">IDF_PATH</span><span class="si">}</span>
+</pre></div>
+</div>
+<p>此处需要注意 <code class="docutils literal notranslate"><span class="pre">ESPRESSIF_TOOLCHAIN_PATH</span></code> 环境变量里的工具链路径一定要是系统里安装的工具链真实路径，该工具链版本不一致时该路径也会不一致。</p>
+</section>
+<section id="id3">
+<h3>编译下载<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>此处编译例程 hello_world，请确保 zephyr 目录下没有 build 子目录，否则会报错。</p>
+<div class="highlight-shel notranslate"><div class="highlight"><pre><span></span>cd ~/zephyrproject/zephyr
+west build -b esp32 samples/hello_world
+west flash
+</pre></div>
+</div>
+<p>将物理机的 [USB](./Virtualbox 安装 Ubuntu 20.04.md) 转串口接入虚拟机。</p>
+<p>由于 ESP32 下载程序通常使用串口下载，因此 <code class="docutils literal notranslate"><span class="pre">west</span> <span class="pre">flash</span></code> 需要能访问 ubuntu 的串口，普通用户不能直接操作串口，需要将当前用户添加到串口设备所属的组中。</p>
+<p>首先查看 <code class="docutils literal notranslate"><span class="pre">/dev/ttyUSB0</span></code> 的权限</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>jackis@jackis-VirtualBox:~/zephyrproject/zephyr$ ls -l /dev/ttyUSB0
+crw-rw---- <span class="m">1</span> root dialout <span class="m">188</span>, <span class="m">0</span> Jan <span class="m">26</span> <span class="m">16</span>:52 /dev/ttyUSB0
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>所有者：root，可读可写</p></li>
+<li><p>所属组：dialout，可读可写</p></li>
+<li><p>其他用户：无权限</p></li>
+</ul>
+<p>修改 udev 规则，让普通用户也能使用串口</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo vi /etc/udev/rules.d/70-ttyusb.rules
+</pre></div>
+</div>
+<p>添加下述内容，</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nv">KERNEL</span><span class="o">==</span><span class="s2">&quot;ttyUSB[0-9]*&quot;</span>,MODE<span class="o">=</span><span class="s2">&quot;0666&quot;</span>
+</pre></div>
+</div>
+<p>然后重新插入 USB 转串口即可。</p>
+<p>按住 ESP32 的 boot 按钮，输入 <code class="docutils literal notranslate"><span class="pre">west</span> <span class="pre">flash</span></code> 下载程序，松开 boot 按钮即可开始下载程序。</p>
+<p>用 <code class="docutils literal notranslate"><span class="pre">minicom</span> <span class="pre">-D</span> <span class="pre">/dev/ttyUSB0</span></code> 打开串口观察到数据。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>rst:0x1 <span class="o">(</span>POWERON_RESET<span class="o">)</span>,boot:0x13 <span class="o">(</span>SPI_FAST_FLASH_BOOT<span class="o">)</span>
+configsip: <span class="m">0</span>, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3ffb0000,len:116
+load:0x3ffb0074,len:140
+load:0x3ffb0100,len:704
+load:0x40080000,len:1024
+load:0x40080400,len:72
+load:0x40080448,len:256
+load:0x40080548,len:13132
+entry 0x400807b0
+*** Booting Zephyr OS build zephyr-v2.4.0-8-g9c30e7946974  ***
+Hello World! esp32
+</pre></div>
+</div>
+<p>参考：</p>
+<p><a class="reference external" href="https://docs.zephyrproject.org/latest/boards/xtensa/esp32/doc/index.html">Zephyr Supported Boards - ESP32</a></p>
+<p><a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/v4.2/esp32/api-guides/tools/idf-tools.html#xtensa-esp32-elf">ESP32 Toolchain - xtensa-esp32-elf</a></p>
+<p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/issues/24844">Zephyr Issues - Setting esp-idf path to match Espressif’s documentation</a></p>
+<p><a class="reference external" href="https://blog.csdn.net/u014775723/article/details/85213793">ubuntu安装python3.7，并更新python默认指向为python3.7</a></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html" class="btn btn-neutral float-left" title="11. Zephyr 环境搭建" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="Zephyr%20-%20Bluetooth%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20QEMU%20%E7%AF%87.html" class="btn btn-neutral float-right" title="13. Zephyr - Bluetooth 环境搭建 - QEMU 篇" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

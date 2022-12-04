@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>18. 掉坑汇总 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="19. RT-Thread workqueue 详解" href="../10_rtthread/workqueue.html" />
+    <link rel="prev" title="17. Zephyr - BLE 扫描" href="../08_zephyr/Zephyr%20-%20BLE%20%E6%89%AB%E6%8F%8F.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">WB55:Jackistang</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/01_intruduce.html">2. CubeMX生成BLE应用(二)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_heart_rate_att_gatt/01_intruduce.html">3. GATT Service 定义总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_mbedos_advertising/readme.html">4. BLE_Advertising</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_mbedos_example_ble_led/readme.html">5. mbed-os LEDDemo 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_mbedos_gatt_client/GattClient.html">6. mbed os GattClient 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/DigitalOut.html">7. DigitalOut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/InterruptIn.html">8. InterruptIn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/Callback.html">9. Callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Virtualbox%20%E5%AE%89%E8%A3%85%20Ubuntu%2020.04.html">10. VirtualBox 安装 Ubuntu 20.04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html">11. Zephyr 环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20ESP32%20%E7%AF%87.html">12. Zephyr 环境搭建 - ESP32 篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20Bluetooth%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20QEMU%20%E7%AF%87.html">13. Zephyr - Bluetooth 环境搭建 - QEMU 篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20Shell.html">14. Zephyr - Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20BLE%20%E5%88%9D%E5%A7%8B%E5%8C%96.html">15. BLE 协议栈初始化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20BLE%20%E5%B9%BF%E6%92%AD.html">16. Zephyr - BLE 广播</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20BLE%20%E6%89%AB%E6%8F%8F.html">17. Zephyr - BLE 扫描</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">18. 掉坑汇总</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#esp32">18.1. ESP32 不断重启</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">硬件环境</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">软件环境</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">错误信息</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../10_rtthread/workqueue.html">19. RT-Thread workqueue 详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_rtthread/jerryscript.html">20. Jerryscript 简介</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">WB55:Jackistang</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">18. </span>掉坑汇总</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/02_Jackistang/09_esp32/problem.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">18. </span>掉坑汇总<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h1>
+<section id="esp32">
+<h2><span class="section-number">18.1. </span>ESP32 不断重启<a class="headerlink" href="#esp32" title="此标题的永久链接"></a></h2>
+<section id="id2">
+<h3>硬件环境<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>ESP32-DevKitC V4 (模组 ESP32-WROVER-E)</p></li>
+<li><p>Micro USB 数据线</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>软件环境<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>examples/bluetooth/esp_ble_mesh/ble_mesh_node/onoff_server</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>错误信息<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<blockquote>
+<div><p>Brownout detector was triggered，failed to load RF calibration data.</p>
+</div></blockquote>
+<p>出现上述错误信息后就不断重启，该错误信息产生是因为触发了<strong>断电探测器</strong>。具体含义就是 ESP32 的电平低于某个设定值，导致触发了断电探测器，断电探测器就会使 ESP32 重启。</p>
+<p>这里根据错误信息可以知道是 RF 在工作时电压突然降低，导致 ESP32 重启。</p>
+<p>有很多原因可能导致这个问题：</p>
+<ul class="simple">
+<li><p>笔记本的 USB 口供电不稳定。</p></li>
+<li><p>ESP32 板卡本身的问题（新的板卡一般不会有这个问题）。</p></li>
+<li><p>Micro USB 数据线质量太差。</p></li>
+</ul>
+<p>我先采取禁用了断电探测器的方法，这样可以避免 ESP32 不断重启，输入</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">idf</span><span class="o">.</span><span class="n">py</span> <span class="n">menuconfig</span>
+</pre></div>
+</div>
+<p>然后禁用 <code class="docutils literal notranslate"><span class="pre">component</span> <span class="pre">config-&gt;ESP32-specific-&gt;Hardware</span> <span class="pre">brownout</span> <span class="pre">detect</span> <span class="pre">&amp;</span> <span class="pre">reset</span></code> 。这样 ESP32 的确不会重启，但出现了新的问题：</p>
+<p>我用 <code class="docutils literal notranslate"><span class="pre">idf.py</span> <span class="pre">-p</span> <span class="pre">/dev/ttyUSB0</span> <span class="pre">monitor</span></code> 监控串口，ESP32 在启动时会自动将串口断开，并报错：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>device reports readiness to <span class="nb">read</span> but returned no data <span class="o">(</span>device disconnected or multiple access on port?<span class="o">)</span>
+Waiting <span class="k">for</span> the device to reconnect....
+</pre></div>
+</div>
+<p>我换了一种思路，开始怀疑数据线的问题了，毕竟当时为了省钱在某宝买了很多的 3 元一根的 Micro USB 数据线。我这次换成了 10 元的 Micro USB 数据线，问题神奇的解决了！！！一分钱一分货，下次再也不贪小便宜了。</p>
+<p>之前出现这个问题的原因应该是数据线质量不好，导致供电不稳定，数据传输也不稳定。</p>
+<hr class="docutils" />
+<p>参考：</p>
+<p><a class="reference external" href="https://blog.csdn.net/qq_31232793/article/details/87889368">ESP32 Brownout detector was triggered，failed to load RF calibration data , 错误解决方法</a></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../08_zephyr/Zephyr%20-%20BLE%20%E6%89%AB%E6%8F%8F.html" class="btn btn-neutral float-left" title="17. Zephyr - BLE 扫描" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../10_rtthread/workqueue.html" class="btn btn-neutral float-right" title="19. RT-Thread workqueue 详解" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7. I2S总线介绍 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/translations.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="NORDIC:ylz0923" href="../07_ylz0923/index.html" />
+    <link rel="prev" title="6. USB" href="usb.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">NORDIC:chenyingchun0312</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_posix_dfs/rt_thread_posix_dfs.html">2. POSIX 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="elf_introduce.html">3. 程序员的自我修养</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nrf52832_rtthread_dlmodule.html">4. nRF52832 RT-Thread dmodule适配</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stm32l496.html">5. STM32L496 USB CDC适配</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usb.html">6. USB</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">7. I2S总线介绍</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">7.1. I2S基本介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">7.2. I2S协议细节</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bclk">BCLK</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ws">WS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sdata">SDATA</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">I2S系统接口</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">I2S数据格式</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">7.3. I2S 抓包分析</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id9">逻辑分析仪</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">抓包软件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">抓包配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">配置部分说明</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">7.4. 抓包协议分析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">7.5. 参考文档</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">NORDIC:chenyingchun0312</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">7. </span>I2S总线介绍</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/06_chenyingchun0312/i2s.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="i2s">
+<h1><span class="section-number">7. </span>I2S总线介绍<a class="headerlink" href="#i2s" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">7.1. </span>I2S基本介绍<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>I2S(Inter-IC Sound Bus)，又称集成电路内置音频总线，是飞利浦公司为数字音频设备之间的音频数据传输而制定的一种总线标准。该总线专门用于音频设备之间的数据传输，广泛应用于各种多媒体系统，在飞利浦公司的I2S标准中，既规定了硬件接口规范，也规定了数字音频数据的格式。</p>
+<p>I2S 特点：</p>
+<ul>
+<li><p>支持全双工，半双工模式</p>
+<blockquote>
+<div><p>全双工：同一时刻，允许数据在两个方向上同时传输</p>
+<p>半双工：同一时刻，只允许数据在某一个方向上传输数据</p>
+<p>单工：同一时刻，只有一方能接受或者放松数据</p>
+<p><img alt="image-20210915094816217" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202109171039439.png" /></p>
+</div></blockquote>
+</li>
+<li><p>支持主从模式</p>
+<blockquote>
+<div><p>一般主从模式的区别是谁提供时钟，谁就是master角色</p>
+</div></blockquote>
+</li>
+<li><p>I2S仅支持立体声通道（左右两个声道数据）</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2><span class="section-number">7.2. </span>I2S协议细节<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p>I2S一般有3个主要信号，BCLK, WS, SDATA， 有时，为了使系统间能更好地同步，还需要另外传输一个信号MCLK，称为主时钟，也叫系统时钟，这里暂时先说明如下三个主要信号。</p>
+<section id="bclk">
+<h3>BCLK<a class="headerlink" href="#bclk" title="此标题的永久链接"></a></h3>
+<p>位时钟，也称为SCK， SCLK等，串行时钟，对应数字音频的每一个bit数据，SCLK都有一个脉冲</p>
+</section>
+<section id="ws">
+<h3>WS<a class="headerlink" href="#ws" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>用于切换左右声道的数据。<strong>WS的频率＝采样频率</strong>。</p></li>
+<li><p>命令选择线， 0和1表明了正在被传输的声道为左声道还是右声道（可配置）。</p></li>
+<li><p>也叫帧时钟LRCK（左右时钟）</p></li>
+</ul>
+</section>
+<section id="sdata">
+<h3>SDATA<a class="headerlink" href="#sdata" title="此标题的永久链接"></a></h3>
+<p>串行数据，就是用二进制补码，表示音频数据， <strong>I2S格式的信号</strong>无论有多少位有效数据，数据的最高位总是被最先传输(在WS变化(也就是一帧开始)后的第2个SCK脉冲处)，因此最高位拥有固定的位置，而最低位的位置则是依赖于数据的<strong>有效位数</strong>。也就使得接收端与发送端的有效位数可以不同。如果接收端能处理的有效位数少于发送端，可以放弃数据帧中多余的低位数据；如果接收端能处理的有效位数多于发送端，可以自行补足剩余的位(常补足为零)。这种同步机制使得数字音频设备的互连更加方便，而且不会造成数据错位。为了保证数字音频信号的正确传输，<strong>发送端和接收端应该采用相同的数据格式和长度</strong>。当然，对I2S格式来说数据长度可以不同。</p>
+<blockquote>
+<div><p>这里的I2S格式的信号，有效位数，都是可配置的</p>
+</div></blockquote>
+</section>
+<section id="id3">
+<h3>I2S系统接口<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>对于系统而言，产生SCK和WS的信号端就是主设备，用MASTER表示，简单系统示意图如图1所示</p>
+<p><img alt="image-20210915125127642" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202109171039806.png" /></p>
+</section>
+<section id="id4">
+<h3>I2S数据格式<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<section id="id5">
+<h4>左对齐模式<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h4>
+<p>SDATA 的MSB在BCLK的第一个上升获得根据LRCK的传输。</p>
+<p><img alt="image-20210915133922031" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202109171039105.png" /></p>
+</section>
+<section id="id6">
+<h4>右对齐模式<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h4>
+<p><img alt="image-20210915134530110" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202109171039138.png" /></p>
+</section>
+<section id="id7">
+<h4>I2S模式<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h4>
+<p><img alt="image-20210915134600263" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202109171039378.png" /></p>
+</section>
+</section>
+</section>
+<section id="id8">
+<h2><span class="section-number">7.3. </span>I2S 抓包分析<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h2>
+<section id="id9">
+<h3>逻辑分析仪<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h3>
+<p>我这边使用的是如下逻辑分析仪，大概1000元人民币</p>
+<p><a class="reference external" href="https://dreamsourcelab.cn/shop/logic-analyzer/dslogic-plus/">购买链接</a></p>
+<p><img alt="image-20210917104543127" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202109171045431.png" /></p>
+</section>
+<section id="id10">
+<h3>抓包软件<a class="headerlink" href="#id10" title="此标题的永久链接"></a></h3>
+<p><a class="reference external" href="https://dreamsourcelab.cn/download/">DSView 软件 软件</a></p>
+<p><img alt="image-20210917104215829" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202109171042786.png" /></p>
+</section>
+<section id="id11">
+<h3>抓包配置<a class="headerlink" href="#id11" title="此标题的永久链接"></a></h3>
+<p>I2S解码器配置如下图所示</p>
+<p><img alt="image-20210908131107499" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202109171039921.png" /></p>
+</section>
+<section id="id12">
+<h3>配置部分说明<a class="headerlink" href="#id12" title="此标题的永久链接"></a></h3>
+<section id="ws-polarity">
+<h4>WS Polarity<a class="headerlink" href="#ws-polarity" title="此标题的永久链接"></a></h4>
+<p><img alt="image-20210908131958067" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202109171039841.png" /></p>
+<ul>
+<li><p>WS polarity: 即下图中的DACLRC/ADCLRC一栏，用来选择左声道还是右声道数据的，比如WS为低时（下图Left channel位置），表示左声道数据，WS为高时，表示右声道数据，当然WS为高，还是为低表示的是左声道还是右声道，这个也是可配置的，<strong>不过需要I2S master和 I2S salve端，配置相同</strong></p>
+<p><img alt="image-20210908131152058" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202109171039810.png" /></p>
+</li>
+<li><p>选择left-high 表示 WS为高时，表示的是左声道的数据</p></li>
+<li><p>选择left-low  表示WS为低时，表示的是左声道的数据</p></li>
+<li><p>WS的频率，也表示着I2S的采样频率，如下图所示，是可配置的采样率范围, I2S的采样频率，结合上面的这张图，怎么理解呢？比如48K的采样率，1秒钟，可以采样到48000个音频数据(左声道+右声道数据， I2S只有立体声数据，无单通道数据)</p></li>
+</ul>
+</section>
+<section id="sck-active-edge">
+<h4>SCK active edge<a class="headerlink" href="#sck-active-edge" title="此标题的永久链接"></a></h4>
+<p>标志着I2S的数据在SCK（BCLK）的上升沿，还是下降沿，有效，一般情况下都是上升沿有效</p>
+<p><img alt="image-20210908162848104" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202109171039447.png" /></p>
+</section>
+</section>
+</section>
+<section id="id13">
+<h2><span class="section-number">7.4. </span>抓包协议分析<a class="headerlink" href="#id13" title="此标题的永久链接"></a></h2>
+<p><img alt="image-20210908171930602" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202109171039509.png" /></p>
+<p><img alt="image-20210908171947234" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202109171040030.png" /></p>
+</section>
+<section id="id14">
+<h2><span class="section-number">7.5. </span>参考文档<a class="headerlink" href="#id14" title="此标题的永久链接"></a></h2>
+<p>[1] <a class="reference external" href="https://web.archive.org/web/20070102004400/http://www.nxp.com/acrobat_download/various/I2SBUS.pdf">I2SBUS.pdf</a>
+[2] <a class="reference external" href="https://www.cnblogs.com/linhaostudy/p/7700287.html">I2S协议</a>
+[3] <a class="reference external" href="https://cloud.tencent.com/developer/article/1529022">音频总线I2S协议</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="usb.html" class="btn btn-neutral float-left" title="6. USB" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../07_ylz0923/index.html" class="btn btn-neutral float-right" title="NORDIC:ylz0923" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

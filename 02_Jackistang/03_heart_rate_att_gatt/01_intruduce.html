@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. GATT Service 定义总结 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="4. BLE_Advertising" href="../04_mbedos_advertising/readme.html" />
+    <link rel="prev" title="2. CubeMX生成BLE应用(二)" href="../02_introduce/01_intruduce.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">WB55:Jackistang</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/01_intruduce.html">2. CubeMX生成BLE应用(二)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. GATT Service 定义总结</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#att">3.1. ATT 基础回顾</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#heart-rate-attribute-table">3.2. Heart Rate Attribute Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gatt">3.3. GATT 基础回顾</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service">3.4. Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#include-services">3.5. Include Services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#characteristic">3.6. Characteristic</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#characteristic-declaration">Characteristic declaration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#characteristic-value-declaration">Characteristic Value declaration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#characteristic-descriptor-declarations">Characteristic descriptor declarations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04_mbedos_advertising/readme.html">4. BLE_Advertising</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_mbedos_example_ble_led/readme.html">5. mbed-os LEDDemo 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_mbedos_gatt_client/GattClient.html">6. mbed os GattClient 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/DigitalOut.html">7. DigitalOut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/InterruptIn.html">8. InterruptIn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/Callback.html">9. Callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Virtualbox%20%E5%AE%89%E8%A3%85%20Ubuntu%2020.04.html">10. VirtualBox 安装 Ubuntu 20.04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html">11. Zephyr 环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20ESP32%20%E7%AF%87.html">12. Zephyr 环境搭建 - ESP32 篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20Bluetooth%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20QEMU%20%E7%AF%87.html">13. Zephyr - Bluetooth 环境搭建 - QEMU 篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20Shell.html">14. Zephyr - Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20BLE%20%E5%88%9D%E5%A7%8B%E5%8C%96.html">15. BLE 协议栈初始化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20BLE%20%E5%B9%BF%E6%92%AD.html">16. Zephyr - BLE 广播</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20BLE%20%E6%89%AB%E6%8F%8F.html">17. Zephyr - BLE 扫描</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09_esp32/problem.html">18. 掉坑汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_rtthread/workqueue.html">19. RT-Thread workqueue 详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_rtthread/jerryscript.html">20. Jerryscript 简介</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">WB55:Jackistang</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3. </span>GATT Service 定义总结</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/02_Jackistang/03_heart_rate_att_gatt/01_intruduce.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="gatt-service">
+<h1><span class="section-number">3. </span>GATT Service 定义总结<a class="headerlink" href="#gatt-service" title="此标题的永久链接"></a></h1>
+<p>最近跑了很多关于 GATT Service 的 demo，对于相关概念有了一定的印象。</p>
+<p>为了更深入的学习，我系统的学习了 Core Spec 5.2 里</p>
+<p>Vol 3: Host -&gt; Part G: Generic Attribute Profile (GATT) -&gt; 3 Service interoperability requirements</p>
+<p>里的相关内容，对于 Service definition，Include definiton 和 Characteristic definition 有了更深刻的认识，在这里记录下我的理解，我会结合一张 Heart Rate Server 里的 attribute 表来介绍。</p>
+<section id="att">
+<h2><span class="section-number">3.1. </span>ATT 基础回顾<a class="headerlink" href="#att" title="此标题的永久链接"></a></h2>
+<p>ATT(Attribute Protocol) ，属性协议，定义了属性 attribute 的格式，众多的 attributes 组合成了一个数据库，蓝牙设备通过这个数据库对外提供服务。</p>
+<p><img alt="../../_images/01.png" src="../../_images/01.png" /></p>
+<p>由此可以看出一个 attribute 是由</p>
+<ul class="simple">
+<li><p>Attribute Handle：访问该 attribute 的句柄。</p></li>
+<li><p>Attribute Type</p></li>
+<li><p>Attribute Value</p></li>
+<li><p>Attribute Permissions：访问该 attribute 的权限。</p></li>
+</ul>
+<p>组成。该 attribute 代表什么含义由 GATT(Generic Attribute Profile) 定义。</p>
+</section>
+<section id="heart-rate-attribute-table">
+<h2><span class="section-number">3.2. </span>Heart Rate Attribute Table<a class="headerlink" href="#heart-rate-attribute-table" title="此标题的永久链接"></a></h2>
+<p>这是一张 Heart Rate Server 里存储的 attribute 表，下面的分析会结合这张表。</p>
+<p><img alt="../../_images/02.png" src="../../_images/02.png" /></p>
+</section>
+<section id="gatt">
+<h2><span class="section-number">3.3. </span>GATT 基础回顾<a class="headerlink" href="#gatt" title="此标题的永久链接"></a></h2>
+<p>GATT 里的数据包含 Service, Include, Characteristic 。下面的图片表示的很清楚：</p>
+<p><img alt="../../_images/03.png" src="../../_images/03.png" /></p>
+<p>我们依次来看看 Service, Include, Characteristic 。</p>
+</section>
+<section id="service">
+<h2><span class="section-number">3.4. </span>Service<a class="headerlink" href="#service" title="此标题的永久链接"></a></h2>
+<p>在 GATT 里，Service 是由 service definition 来定义的。</p>
+<p>一个 service definition 必须包含一个 service declaration ，可以包含一些 include definitions 和 characteristic definitions 。</p>
+<p>service declaration 的 attribute 格式定义如下：</p>
+<p><img alt="../../_images/04.png" src="../../_images/04.png" /></p>
+<p>Attribute Type 可以是 «Primary Service» 或 «Secondary Service»，其 Attribute Value 就是该 Service 的 UUID 。</p>
+<p>从上述的表格里找出一个 service declaration 条目：</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Attribute Handle</th>
+<th>Attribute Type</th>
+<th>Attribute Value</th>
+<th>Attribute Permissions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x000b</td>
+<td>0x2800(Primary Service)</td>
+<td>0x180d(Heart Rate)</td>
+<td>Read Only, No Authentication, No  Authorization</td>
+</tr>
+</tbody>
+</table><p>接下来介绍 include definitions 和 characteristic definitions 。</p>
+</section>
+<section id="include-services">
+<h2><span class="section-number">3.5. </span>Include Services<a class="headerlink" href="#include-services" title="此标题的永久链接"></a></h2>
+<p>Include Services 有点像 C 语言里包含头文件，然后就可以引用其他模块给我们提供的接口。</p>
+<p>Include Services 用于引用该设备里已经定义好的另一个 Service 。</p>
+<p>一个 include definitions 只能包含一个 <strong>include declaration</strong> 其 attribute 格式定义如下：</p>
+<p><img alt="../../_images/05.png" src="../../_images/05.png" /></p>
+<p>这个用的比较少，而且上述的表格里也没有相关内容，就不介绍了。</p>
+</section>
+<section id="characteristic">
+<h2><span class="section-number">3.6. </span>Characteristic<a class="headerlink" href="#characteristic" title="此标题的永久链接"></a></h2>
+<p>一个 characteristic definition 必须包含一个 characteristic declaration 和一个 Characteristic Value declaration ，可以包含多个 characteristic descriptor declaration 。</p>
+<section id="characteristic-declaration">
+<h3>Characteristic declaration<a class="headerlink" href="#characteristic-declaration" title="此标题的永久链接"></a></h3>
+<p>其 attribute 格式定义如下：</p>
+<p><img alt="../../_images/06.png" src="../../_images/06.png" /></p>
+<ul class="simple">
+<li><p>Attribute Types 固定为 0x2803 。</p></li>
+<li><p>Characteristic Properties 为该 Characteristic 的属性，常用的由 Write, Read, Notify 。</p></li>
+<li><p>Characteristic Value Attribute Handle ，</p></li>
+<li><p>Characteristic UUID，</p></li>
+</ul>
+<p>各字段的大小如下：</p>
+<p><img alt="../../_images/07.png" src="../../_images/07.png" /></p>
+<p>上述表格中也有例子：</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Attribute  Handle</th>
+<th>Attribute Type</th>
+<th>Attribute Value</th>
+<th>Attribute Permissions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x000c</td>
+<td>0x2803(Characteristic)</td>
+<td>0x10(Notify),  0x000d(Characteristic Vaule Handle), 0x2a37(Heart Rate Measurement)</td>
+<td>Read  Only, No Authentication, No Authorization</td>
+</tr>
+</tbody>
+</table></section>
+<section id="characteristic-value-declaration">
+<h3>Characteristic Value declaration<a class="headerlink" href="#characteristic-value-declaration" title="此标题的永久链接"></a></h3>
+<p>其 attribute 格式定义如下：</p>
+<p><img alt="../../_images/08.png" src="../../_images/08.png" /></p>
+<p>Attribute Type 为该 Characteristic 的 UUID 。</p>
+<p>上述表格中有例子：</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Attribute  Handle</th>
+<th>Attribute Type</th>
+<th>Attribute Value</th>
+<th>Attribute Permissions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x000d</td>
+<td>0x2a37(Heart Rate Measurement)</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></section>
+<section id="characteristic-descriptor-declarations">
+<h3>Characteristic descriptor declarations<a class="headerlink" href="#characteristic-descriptor-declarations" title="此标题的永久链接"></a></h3>
+<p>Characteristic Value declaration 目前一共有 6 种，</p>
+<ul class="simple">
+<li><p>Characteristic Extended Properties</p></li>
+<li><p>Characteristic User Description</p></li>
+<li><p>Client Characteristic Configuration</p></li>
+<li><p>Server Characteristic Configuration</p></li>
+<li><p>Characteristic Presentation Format</p></li>
+<li><p>Characteristic Aggregate Format</p></li>
+</ul>
+<p>其中常用的为 Client Characteristic Configuration ，这里就以它为例子介绍了，其他的可以参考 Core Spec ，都是类似的。</p>
+<p>attribute 的格式定义如下：</p>
+<p><img alt="../../_images/09.png" src="../../_images/09.png" /></p>
+<ul class="simple">
+<li><p>Attribute Type 固定为 0x2902 ，</p></li>
+<li><p>Attribute Value 为配置 Characteristic 的位数据，定义如下：</p></li>
+</ul>
+<p><img alt="../../_images/10.png" src="../../_images/10.png" /></p>
+<p>其中第 0 位为 Notification 的配置位，第 1 位为 Indication 的配置位。</p>
+<p>若想要 Server 通知该 Characteristic ，将该描述符的第 0 位置 1 即可。</p>
+<p>在上述表格里有相应例子：</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Attribute  Handle</th>
+<th>Attribute Type</th>
+<th>Attribute Value</th>
+<th>Attribute Permissions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x000e</td>
+<td>0x2902(Client Characteristic  Configuration)</td>
+<td>0x01(Notify)</td>
+<td></td>
+</tr>
+</tbody>
+</table></section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../02_introduce/01_intruduce.html" class="btn btn-neutral float-left" title="2. CubeMX生成BLE应用(二)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../04_mbedos_advertising/readme.html" class="btn btn-neutral float-right" title="4. BLE_Advertising" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

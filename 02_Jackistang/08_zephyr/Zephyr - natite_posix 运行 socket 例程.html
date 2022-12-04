@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zephyr - native_posix 运行 socket 例程 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Zephyr - native_posix 运行 socket 例程</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/02_Jackistang/08_zephyr/Zephyr - natite_posix 运行 socket 例程.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="zephyr-native-posix-socket">
+<h1>Zephyr - native_posix 运行 socket 例程<a class="headerlink" href="#zephyr-native-posix-socket" title="此标题的永久链接"></a></h1>
+<p>native_posix 是 Zephyr 提供的一种使用方式，基于 POSIX 兼容层，它将应用程序与 Zephyr 内核编译成了操作系统里的可执行文件，这样可以使用操作系统平台的 gdb 或其他调试工具调试，十分方便，详细介绍参见：<a class="reference external" href="https://docs.zephyrproject.org/latest/boards/posix/native_posix/doc/index.html#native-posix">Native POSIX execution (native_posix)</a>。</p>
+<p>下面开始介绍如何在 native_posix 上运行 echo_server 例程，需要安装哪些环境。</p>
+<section id="id1">
+<h2>基础环境<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<ul class="simple">
+<li><p>Ubuntu 20.04</p></li>
+<li><p>Zephyr</p></li>
+</ul>
+</section>
+<section id="zephyr">
+<h2>下载 Zephyr 的网络工具包<a class="headerlink" href="#zephyr" title="此标题的永久链接"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">.</span><span class="n">cnpmjs</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">zephyrproject</span><span class="o">-</span><span class="n">rtos</span><span class="o">/</span><span class="n">net</span><span class="o">-</span><span class="n">tools</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2>例程运行<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p>运行此例程需打开三个终端：</p>
+<ul class="simple">
+<li><p>终端1：进入 net-tools 目录（<code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">net-tools</span></code>）</p></li>
+<li><p>终端2：与通常的应用开发一样，在 Zephry 工程的根目录</p></li>
+<li><p>终端3：连接 Zephyr native_posix 实例（可选）</p></li>
+</ul>
+<section id="id3">
+<h3>步骤1 - 创建以太网接口<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>在终端 1 里输入：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">net</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</section>
+<section id="native-posix">
+<h3>步骤2 - 在 native_posix 环境下运行应用程序<a class="headerlink" href="#native-posix" title="此标题的永久链接"></a></h3>
+<p>在终端 2 里输入：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">west</span> <span class="n">build</span> <span class="o">-</span><span class="n">b</span> <span class="n">native_posix</span> <span class="n">samples</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">sockets</span><span class="o">/</span><span class="n">echo_server</span>
+<span class="n">west</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">run</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>步骤3 - 连接网络终端（可选）<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<p>在步骤 2 运行应用程序时，会打印出一条类似下述的信息：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">UART</span> <span class="n">connected</span> <span class="n">to</span> <span class="n">pseudotty</span><span class="p">:</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">pts</span><span class="o">/</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>注意其中的 <code class="docutils literal notranslate"><span class="pre">/dev/pts/5</span></code>，然后我们就可以使用下述命令连接网络终端</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">screen</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">pts</span><span class="o">/</span><span class="mi">5</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>参考：</p>
+<p><a class="reference external" href="https://docs.zephyrproject.org/latest/guides/networking/native_posix_setup.html#networking-with-native-posix">Networking with native_posix board</a></p>
+<p><a class="reference external" href="https://docs.zephyrproject.org/latest/boards/posix/native_posix/doc/index.html#native-posix">Native POSIX execution (native_posix)</a></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

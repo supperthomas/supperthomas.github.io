@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2. sphinx-autobuild OSError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="3. Typora+图床（PicGo+腾讯云）" href="03_Typora_PicGo_Tencent.html" />
+    <link rel="prev" title="1. Read The Docs上架加入sphinx_markdown_tables后的问题" href="01_Read_The_Docs_FAQ_for_sphinx_markdown_tables.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">NORDIC:bobwenstudy</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/index.html">01_introduce</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_zephyr_polling/index.html">02_zephyr_polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bluetooth/index.html">03_bluetooth</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">04_markdown</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01_Read_The_Docs_FAQ_for_sphinx_markdown_tables.html">1. Read The Docs上架加入sphinx_markdown_tables后的问题</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2. sphinx-autobuild OSError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.1. 引言</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.2. 搭建环境</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">2.3. 问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03_Typora_PicGo_Tencent.html">3. Typora+图床（PicGo+腾讯云）</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../05_compile/index.html">05_compile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">NORDIC:bobwenstudy</a></li>
+          <li class="breadcrumb-item"><a href="index.html">04_markdown</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2. </span>sphinx-autobuild OSError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/14_bobwenstudy/04_markdown/02_sphinx-autobuild_error.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sphinx-autobuild-oserror-winerror-10013">
+<h1><span class="section-number">2. </span>sphinx-autobuild OSError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。<a class="headerlink" href="#sphinx-autobuild-oserror-winerror-10013" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">2.1. </span>引言<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>最近在搭建在线电子书：Sphinx + Github + ReadTheDocs，每次都需要打开index.html很麻烦，尝试《sphinx-autobuild》来自动构建，这样就不需要每次都通过《make html来操作》</p>
+</section>
+<section id="id2">
+<h2><span class="section-number">2.2. </span>搭建环境<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p>如何构建环境网上有很多大佬写好了，就不在此展示了。</p>
+<p><a class="reference external" href="https://blog.csdn.net/u010698107/article/details/120640628">搭建在线电子书：Sphinx + Github + ReadTheDocs_测试开发小记的博客-CSDN博客</a></p>
+<p><a class="reference external" href="https://blog.csdn.net/tiandiren111/article/details/119524919?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1-119524919-blog-120640628.pc_relevant_multi_platform_featuressortv2removedup&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1-119524919-blog-120640628.pc_relevant_multi_platform_featuressortv2removedup&amp;utm_relevant_index=2">Sphinx+gitee+Read the Docs搭建在线文档系统_DLGG创客DIY的博客-CSDN博客</a></p>
+</section>
+<section id="id3">
+<h2><span class="section-number">2.3. </span>问题<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h2>
+<p>按照操作执行《<strong>sphinx-autobuild source build/html</strong>》，而后提示：<strong>OSError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>D:\worksplace\github\read_the_doc\study_docs\docs&gt;sphinx-autobuild source build/html
+[sphinx-autobuild] &gt; sphinx-build &#39;D:\worksplace\github\read_the_doc\study_docs\docs\source&#39; &#39;D:\worksplace\github\read_the_doc\study_docs\docs\build\html&#39;
+Running Sphinx v5.1.1
+loading translations [zh_CN]... done
+loading pickled environment... done
+building [mo]: targets for 0 po files that are out of date
+building [html]: targets for 0 source files that are out of date
+updating environment: [extensions changed (&#39;sphinx_markdown_tables&#39;)] 3 added, 0 changed, 0 removed
+C:\Users\wenbo\AppData\Local\Programs\Python\Python310\lib\site-packages\recommonmark\parser.py:75: UserWarning: Container node skipped: type=document
+  warn(&quot;Container node skipped: type={0}&quot;.format(mdnode.t))
+reading sources... [100%] markdown/index
+looking for now-outdated files... none found
+pickling environment... done
+checking consistency... done
+preparing documents... done
+writing output... [100%] markdown/index
+generating indices... genindex done
+writing additional pages... search done
+copying static files... WARNING: Failed to copy a file in html_static_file: C:\Users\wenbo\AppData\Local\Programs\Python\Python310\lib\site-packages\sphinx\templates\apidoc/package.rst_t: TemplateRuntimeError(&quot;No filter named &#39;heading&#39; found.&quot;)
+WARNING: Failed to copy a file in html_static_file: C:\Users\wenbo\AppData\Local\Programs\Python\Python310\lib\site-packages\sphinx\templates\apidoc/toc.rst_t: TemplateAssertionError(&quot;No filter named &#39;heading&#39;.&quot;)
+WARNING: Failed to copy a file in html_static_file: C:\Users\wenbo\AppData\Local\Programs\Python\Python310\lib\site-packages\sphinx\templates\quickstart/conf.py_t: TemplateAssertionError(&quot;No filter named &#39;repr&#39;.&quot;)
+done
+copying extra files... done
+dumping search index in Chinese (code: zh)... done
+dumping object inventory... done
+build succeeded, 3 warnings.
+
+The HTML pages are in build\html.
+[I 220803 20:29:18 server:335] Serving on http://127.0.0.1:8000
+Traceback (most recent call last):
+  File &quot;C:\Users\wenbo\AppData\Local\Programs\Python\Python310\lib\runpy.py&quot;, line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File &quot;C:\Users\wenbo\AppData\Local\Programs\Python\Python310\lib\runpy.py&quot;, line 86, in _run_code
+    exec(code, run_globals)
+  File &quot;C:\Users\wenbo\AppData\Local\Programs\Python\Python310\Scripts\sphinx-autobuild.exe\__main__.py&quot;, line 7, in &lt;module&gt;
+  File &quot;C:\Users\wenbo\AppData\Local\Programs\Python\Python310\lib\site-packages\sphinx_autobuild\cli.py&quot;, line 196, in main
+    server.serve(port=portn, host=args.host, root=outdir)
+  File &quot;C:\Users\wenbo\AppData\Local\Programs\Python\Python310\lib\site-packages\livereload\server.py&quot;, line 339, in serve
+    self.application(
+  File &quot;C:\Users\wenbo\AppData\Local\Programs\Python\Python310\lib\site-packages\livereload\server.py&quot;, line 291, in application
+    app.listen(port, address=host)
+  File &quot;C:\Users\wenbo\AppData\Local\Programs\Python\Python310\lib\site-packages\tornado\web.py&quot;, line 2134, in listen
+    server.listen(
+  File &quot;C:\Users\wenbo\AppData\Local\Programs\Python\Python310\lib\site-packages\tornado\tcpserver.py&quot;, line 183, in listen
+    sockets = bind_sockets(
+  File &quot;C:\Users\wenbo\AppData\Local\Programs\Python\Python310\lib\site-packages\tornado\netutil.py&quot;, line 162, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+</pre></div>
+</div>
+<p>网上直接搜索没看到基本都是讲别的问题，[Error: <a class="reference external" href="https://www.bbsmax.com/A/KE5Qwk24zL/">WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试 (bbsmax.com)</a>，但是大体是知道这个端口被占用了。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">Administrator</span><span class="o">&gt;</span><span class="n">netstat</span> <span class="o">-</span><span class="n">ano</span><span class="o">|</span><span class="n">findstr</span> <span class="n">端口号</span>
+
+<span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">Administrator</span><span class="o">&gt;</span><span class="n">tasklist</span> <span class="o">|</span><span class="n">findstr</span> <span class="n">pid号</span>
+
+<span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">Administrator</span><span class="o">&gt;</span><span class="n">taskkill</span> <span class="o">/</span><span class="n">pid</span> <span class="n">pid号</span> <span class="o">/</span><span class="n">F</span>
+</pre></div>
+</div>
+<p>一查，确实有东西在占用，也不知道是什么，直接干掉怕有别的问题，先不管。想着不可能只有我遇到问题，help里面肯定有说明。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">D</span><span class="p">:</span>\<span class="n">worksplace</span>\<span class="n">github</span>\<span class="n">read_the_doc</span>\<span class="n">study_docs</span>\<span class="n">docs</span><span class="o">&gt;</span><span class="n">netstat</span> <span class="o">-</span><span class="n">ano</span><span class="o">|</span><span class="n">findstr</span> <span class="mi">8000</span>
+  <span class="n">TCP</span>    <span class="mf">0.0.0.0</span><span class="p">:</span><span class="mi">8000</span>           <span class="mf">0.0.0.0</span><span class="p">:</span><span class="mi">0</span>              <span class="n">LISTENING</span>       <span class="mi">32308</span>
+  <span class="n">UDP</span>    <span class="mf">0.0.0.0</span><span class="p">:</span><span class="mi">8000</span>           <span class="o">*</span><span class="p">:</span><span class="o">*</span>                                    <span class="mi">32308</span>
+</pre></div>
+</div>
+<p>直接输入《<strong>sphinx-autobuild</strong>》可以看到《<strong>[–port PORT]</strong>》的配置，那一下就懂了，肯定用他可以改端口。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">D</span><span class="p">:</span>\<span class="n">worksplace</span>\<span class="n">github</span>\<span class="n">read_the_doc</span>\<span class="n">study_docs</span>\<span class="n">docs</span><span class="o">&gt;</span><span class="n">sphinx</span><span class="o">-</span><span class="n">autobuild</span>
+<span class="n">usage</span><span class="p">:</span> <span class="n">sphinx</span><span class="o">-</span><span class="n">autobuild</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">port</span> <span class="n">PORT</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">host</span> <span class="n">HOST</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">re</span><span class="o">-</span><span class="n">ignore</span> <span class="n">RE_IGNORE</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">ignore</span> <span class="n">IGNORE</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">initial</span><span class="p">]</span>
+                        <span class="p">[</span><span class="o">--</span><span class="nb">open</span><span class="o">-</span><span class="n">browser</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">delay</span> <span class="n">DELAY</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">watch</span> <span class="n">DIR</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">pre</span><span class="o">-</span><span class="n">build</span> <span class="n">COMMAND</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">version</span><span class="p">]</span>
+                        <span class="n">sourcedir</span> <span class="n">outdir</span> <span class="p">[</span><span class="n">filenames</span> <span class="o">...</span><span class="p">]</span>
+<span class="n">sphinx</span><span class="o">-</span><span class="n">autobuild</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="n">the</span> <span class="n">following</span> <span class="n">arguments</span> <span class="n">are</span> <span class="n">required</span><span class="p">:</span> <span class="n">sourcedir</span><span class="p">,</span> <span class="n">outdir</span><span class="p">,</span> <span class="n">filenames</span>
+</pre></div>
+</div>
+<p>执行《<strong>sphinx-autobuild source build/html –port 8001</strong>》指定port为8001，就OK了。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">D</span><span class="p">:</span>\<span class="n">worksplace</span>\<span class="n">github</span>\<span class="n">read_the_doc</span>\<span class="n">study_docs</span>\<span class="n">docs</span><span class="o">&gt;</span><span class="n">sphinx</span><span class="o">-</span><span class="n">autobuild</span> <span class="n">source</span> <span class="n">build</span><span class="o">/</span><span class="n">html</span> <span class="o">--</span><span class="n">port</span> <span class="mi">8001</span>
+<span class="p">[</span><span class="n">sphinx</span><span class="o">-</span><span class="n">autobuild</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">sphinx</span><span class="o">-</span><span class="n">build</span> <span class="s1">&#39;D:\worksplace\github</span><span class="se">\r</span><span class="s1">ead_the_doc\study_docs\docs\source&#39;</span> <span class="s1">&#39;D:\worksplace\github</span><span class="se">\r</span><span class="s1">ead_the_doc\study_docs\docs</span><span class="se">\b</span><span class="s1">uild\html&#39;</span>
+<span class="n">Running</span> <span class="n">Sphinx</span> <span class="n">v5</span><span class="mf">.1.1</span>
+<span class="n">loading</span> <span class="n">translations</span> <span class="p">[</span><span class="n">zh_CN</span><span class="p">]</span><span class="o">...</span> <span class="n">done</span>
+<span class="n">loading</span> <span class="n">pickled</span> <span class="n">environment</span><span class="o">...</span> <span class="n">done</span>
+<span class="n">building</span> <span class="p">[</span><span class="n">mo</span><span class="p">]:</span> <span class="n">targets</span> <span class="k">for</span> <span class="mi">0</span> <span class="n">po</span> <span class="n">files</span> <span class="n">that</span> <span class="n">are</span> <span class="n">out</span> <span class="n">of</span> <span class="n">date</span>
+<span class="n">building</span> <span class="p">[</span><span class="n">html</span><span class="p">]:</span> <span class="n">targets</span> <span class="k">for</span> <span class="mi">0</span> <span class="n">source</span> <span class="n">files</span> <span class="n">that</span> <span class="n">are</span> <span class="n">out</span> <span class="n">of</span> <span class="n">date</span>
+<span class="n">updating</span> <span class="n">environment</span><span class="p">:</span> <span class="mi">0</span> <span class="n">added</span><span class="p">,</span> <span class="mi">0</span> <span class="n">changed</span><span class="p">,</span> <span class="mi">0</span> <span class="n">removed</span>
+<span class="n">looking</span> <span class="k">for</span> <span class="n">now</span><span class="o">-</span><span class="n">outdated</span> <span class="n">files</span><span class="o">...</span> <span class="n">none</span> <span class="n">found</span>
+<span class="n">no</span> <span class="n">targets</span> <span class="n">are</span> <span class="n">out</span> <span class="n">of</span> <span class="n">date</span><span class="o">.</span>
+<span class="n">build</span> <span class="n">succeeded</span><span class="o">.</span>
+
+<span class="n">The</span> <span class="n">HTML</span> <span class="n">pages</span> <span class="n">are</span> <span class="ow">in</span> <span class="n">build</span>\<span class="n">html</span><span class="o">.</span>
+<span class="p">[</span><span class="n">I</span> <span class="mi">220803</span> <span class="mi">20</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">35</span> <span class="n">server</span><span class="p">:</span><span class="mi">335</span><span class="p">]</span> <span class="n">Serving</span> <span class="n">on</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0.0.1</span><span class="p">:</span><span class="mi">8001</span>
+<span class="p">[</span><span class="n">I</span> <span class="mi">220803</span> <span class="mi">20</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">35</span> <span class="n">handlers</span><span class="p">:</span><span class="mi">62</span><span class="p">]</span> <span class="n">Start</span> <span class="n">watching</span> <span class="n">changes</span>
+<span class="p">[</span><span class="n">I</span> <span class="mi">220803</span> <span class="mi">20</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">35</span> <span class="n">handlers</span><span class="p">:</span><span class="mi">64</span><span class="p">]</span> <span class="n">Start</span> <span class="n">detecting</span> <span class="n">changes</span>
+<span class="p">[</span><span class="n">I</span> <span class="mi">220803</span> <span class="mi">20</span><span class="p">:</span><span class="mi">34</span><span class="p">:</span><span class="mi">20</span> <span class="n">handlers</span><span class="p">:</span><span class="mi">135</span><span class="p">]</span> <span class="n">Browser</span> <span class="n">Connected</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0.0.1</span><span class="p">:</span><span class="mi">8001</span><span class="o">/</span>
+<span class="p">[</span><span class="n">W</span> <span class="mi">220803</span> <span class="mi">20</span><span class="p">:</span><span class="mi">34</span><span class="p">:</span><span class="mi">20</span> <span class="n">web</span><span class="p">:</span><span class="mi">2271</span><span class="p">]</span> <span class="mi">404</span> <span class="n">GET</span> <span class="o">/</span><span class="n">favicon</span><span class="o">.</span><span class="n">ico</span> <span class="p">(</span><span class="mf">127.0.0.1</span><span class="p">)</span> <span class="mf">1.59</span><span class="n">ms</span>
+<span class="p">[</span><span class="n">I</span> <span class="mi">220803</span> <span class="mi">20</span><span class="p">:</span><span class="mi">34</span><span class="p">:</span><span class="mi">23</span> <span class="n">handlers</span><span class="p">:</span><span class="mi">135</span><span class="p">]</span> <span class="n">Browser</span> <span class="n">Connected</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0.0.1</span><span class="p">:</span><span class="mi">8001</span><span class="o">/</span><span class="n">markdown</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
+<span class="p">[</span><span class="n">I</span> <span class="mi">220803</span> <span class="mi">20</span><span class="p">:</span><span class="mi">34</span><span class="p">:</span><span class="mi">24</span> <span class="n">handlers</span><span class="p">:</span><span class="mi">135</span><span class="p">]</span> <span class="n">Browser</span> <span class="n">Connected</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0.0.1</span><span class="p">:</span><span class="mi">8001</span><span class="o">/</span><span class="n">markdown</span><span class="o">/</span><span class="n">Typora</span><span class="o">%</span><span class="mi">2</span><span class="n">BPicGo</span><span class="o">%</span><span class="mi">2</span><span class="n">B</span><span class="o">%</span><span class="n">E8</span><span class="o">%</span><span class="mi">85</span><span class="o">%</span><span class="n">BE</span><span class="o">%</span><span class="n">E8</span><span class="o">%</span><span class="n">AE</span><span class="o">%</span><span class="n">AF</span><span class="o">%</span><span class="n">E4</span><span class="o">%</span><span class="n">BA</span><span class="o">%</span><span class="mf">91.</span><span class="n">html</span>
+<span class="p">[</span><span class="n">I</span> <span class="mi">220803</span> <span class="mi">20</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">45</span> <span class="n">watcher</span><span class="p">:</span><span class="mi">110</span><span class="p">]</span> <span class="n">Running</span> <span class="n">task</span><span class="p">:</span> <span class="n">build</span> <span class="p">(</span><span class="n">delay</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+<span class="p">[</span><span class="n">sphinx</span><span class="o">-</span><span class="n">autobuild</span><span class="p">]</span> <span class="n">Detected</span> <span class="n">change</span><span class="p">:</span> <span class="n">D</span><span class="p">:</span>\<span class="n">worksplace</span>\<span class="n">github</span>\<span class="n">read_the_doc</span>\<span class="n">study_docs</span>\<span class="n">docs</span>\<span class="n">source</span>\<span class="n">markdown</span>\<span class="n">sphinx</span><span class="o">-</span><span class="n">autobuild_error</span><span class="o">.</span><span class="n">md</span>
+<span class="p">[</span><span class="n">sphinx</span><span class="o">-</span><span class="n">autobuild</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">sphinx</span><span class="o">-</span><span class="n">build</span> <span class="s1">&#39;D:\worksplace\github</span><span class="se">\r</span><span class="s1">ead_the_doc\study_docs\docs\source&#39;</span> <span class="s1">&#39;D:\worksplace\github</span><span class="se">\r</span><span class="s1">ead_the_doc\study_docs\docs</span><span class="se">\b</span><span class="s1">uild\html&#39;</span>
+</pre></div>
+</div>
+<p>打开网站《http://127.0.0.1:8001》，只要终端不关闭，只要检测到有改动，就会自动更新，还是蛮方便的。</p>
+<p><img alt="image-20220803205150542" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220803205150542.png" /></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="01_Read_The_Docs_FAQ_for_sphinx_markdown_tables.html" class="btn btn-neutral float-left" title="1. Read The Docs上架加入sphinx_markdown_tables后的问题" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="03_Typora_PicGo_Tencent.html" class="btn btn-neutral float-right" title="3. Typora+图床（PicGo+腾讯云）" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

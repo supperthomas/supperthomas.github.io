@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. Scons环境搭建和编译原理概述及嵌入式开发常用模板 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="2. 使用Eclipse CDT build tools之后导致makefile环境错乱的问题" href="02_makefile_shell_env.html" />
+    <link rel="prev" title="05_compile" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">NORDIC:bobwenstudy</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/index.html">01_introduce</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_zephyr_polling/index.html">02_zephyr_polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bluetooth/index.html">03_bluetooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_markdown/index.html">04_markdown</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">05_compile</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1. Scons环境搭建和编译原理概述及嵌入式开发常用模板</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.1. 为什么用Scons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.2. 环境搭建</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.3. 初识Scons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">1.4. Scons原理分析</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="02_makefile_shell_env.html">2. 使用Eclipse CDT build tools之后导致makefile环境错乱的问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_kconfig_system.html">3. 从零到一搭建Kconfig配置系统</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">NORDIC:bobwenstudy</a></li>
+          <li class="breadcrumb-item"><a href="index.html">05_compile</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">1. </span>Scons环境搭建和编译原理概述及嵌入式开发常用模板</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/14_bobwenstudy/05_compile/01_scons_introduce_and_common_templates_for_embedded_development.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="scons">
+<h1><span class="section-number">1. </span>Scons环境搭建和编译原理概述及嵌入式开发常用模板<a class="headerlink" href="#scons" title="此标题的永久链接"></a></h1>
+<p>Scons是用python实现的一个类似makefile的软件构建工具。其官网是<a class="reference external" href="https://www.scons.org/">SCons: A software construction tool - SCons</a>，其具有详细的文档来对其使用进行说明<a class="reference external" href="https://scons.org/docversions.html">SCons Documentation</a>。</p>
+<p>Scons是一个软件构建工具，除了能对c/c++/asm进行构建外，也能实现对java等语言进行构建。因为其是用python来实现的，所以其具备跨平台的特性。</p>
+<p>本例程所有相关代码在GitHub上，请自行下载。<a class="reference external" href="https://github.com/bobwenstudy/scons_demo">bobwenstudy/scons_demo (github.com)</a></p>
+<section id="id1">
+<h2><span class="section-number">1.1. </span>为什么用Scons<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>第一次接触Scons是在RTThread中，进一步了解它的特性，渐渐的就喜欢上了，平常自己写一些代码，用Scons可以方便不少。对于我个人来说，主要的好处有：</p>
+<p>实际项目中编译工程时，除了要对代码进行编译生成固件外，还需要整合一些其他资源（如编译耳机项目时，需要讲提示音等wav资源打包进代码中；多固件合并打包之类。）之前完成这些动作是用python写的，当然能用makefile调用，但是相比Scons本身就是python，同一套环境调试起来会方便不少。</p>
+<p>易读性，相比于makefile这么久远的构建语言，Scons是python写的，其语法和调试起来更方便，函数调用和可读性都比makefile好。</p>
+<p>文件依赖，使用makefile时，由于经常编译的时候只将c文件作为依赖，而没有将h文件作为依赖，或其他资源，导致部分h文件更新时，经常要考虑先make clean，再make all。而Scons可以自动将关联的文件作为依赖，并构建依赖树，不用考虑太多就可以自动将相关依赖关系给维护好，当文件更新再次编译时，只编译特定文件。同时可以通过<strong>Depends</strong>指定依赖关系。</p>
+<p>缺点也有：</p>
+<p>集成度太强：Scons内部做了太多事情，对于我这种掌控欲比较强的程序猿来说，有点脱离掌控了，虽然方便，但是当构建大型项目时，内部一些行为可能导致debug很长时间，需要我们对其原理进行深入分析。</p>
+<p>资料较少：毕竟是新语言，现在很多新语言很快的死在沙滩上了，对于新语言，大家或多或少保持观望态度，所以目前资料还是比较少的。遇到bug得自己看官方手册，还是有点麻烦的。</p>
+</section>
+<section id="id2">
+<h2><span class="section-number">1.2. </span>环境搭建<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p>从上面描述可知，Scons类似于makefile，但并不是替代了GCC，只是实现了对GCC的使用。按照makefile的逻辑，需要准备如下环境：</p>
+<p>GCC环境：笔者是Windows环境，所以需要msys64+mingw工具链。</p>
+<p>Scons环境：python环境安装后，再安装scons就行。</p>
+<section id="gcc">
+<h3>GCC环境<a class="headerlink" href="#gcc" title="此标题的永久链接"></a></h3>
+<section id="pcgcc">
+<h4>PC下的GCC环境安装<a class="headerlink" href="#pcgcc" title="此标题的永久链接"></a></h4>
+<p>参考这个文章安装即可。<a class="reference external" href="https://www.cnblogs.com/milton/p/11808091.html">Win7下msys64安装mingw工具链 - Milton - 博客园 (cnblogs.com)</a></p>
+<p>安装完以后，键入<code class="docutils literal notranslate"><span class="pre">gcc</span> <span class="pre">-v</span></code>，得到如下提示说明环境安装好了，目前笔者用的是mingw32的gcc。</p>
+<p><img alt="image-20220912103125415" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220912103125415.png" /></p>
+</section>
+<section id="armgcc">
+<h4>ARM下的GCC环境安装<a class="headerlink" href="#armgcc" title="此标题的永久链接"></a></h4>
+<p>从各个芯片产商都可以获取到对应的交叉工具链，笔者的交叉工具链解压缩后，就有gcc环境，一般交叉工具链会有前缀。</p>
+<p>安装完以后，键入<code class="docutils literal notranslate"><span class="pre">arm-none-eabi-gcc</span> <span class="pre">-v</span></code>，出现如下信息就代表安装成功了。</p>
+<p><img alt="image-20220912111316820" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220912111316820.png" /></p>
+</section>
+</section>
+<section id="id3">
+<h3>Scons环境<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<section id="python">
+<h4>Python安装<a class="headerlink" href="#python" title="此标题的永久链接"></a></h4>
+<p>Scons是运行在python环境下的，目前新版本的都运行在Python3+的版本上，就不建议安装Python2的环境了（当然也可以用Python2就是了，不过最新的pip已经不支持Python2了，希望大家早点切换）。</p>
+<p>网上有很多教程了，<a class="reference external" href="https://blog.csdn.net/weixin_49237144/article/details/122915089">Python安装教程-史上最全_壬杰的博客-CSDN博客_python安装</a>可以参考这个，当然也可以直接到<a class="reference external" href="https://www.python.org/">Welcome to Python.org</a>下载。</p>
+<p>最终安装结束后，键入<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-V</span></code>，能看到python版本，代表环境安装好了。</p>
+<p><img alt="image-20220912103922628" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220912103922628.png" /></p>
+</section>
+<section id="id4">
+<h4>Scons安装<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h4>
+<p>使用<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">scons</span></code>即可。当然可以到官网看看<a class="reference external" href="https://scons.org/pages/download.html">SCons Downloads</a>。</p>
+<p>最终安装结束后，键入<code class="docutils literal notranslate"><span class="pre">scons</span> <span class="pre">-v</span></code>，能看到如下信息，代表环境安装好了。</p>
+<p><img alt="image-20220912104526394" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220912104526394.png" /></p>
+</section>
+</section>
+</section>
+<section id="id5">
+<h2><span class="section-number">1.3. </span>初识Scons<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h2>
+<section id="id6">
+<h3>基本概述<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h3>
+<p>要讲清楚Scons，需要理解gcc是如何使用的，已经相比于make，scons的行为差异。首先对gcc、make和scons基本概念进行说明。</p>
+<section id="id7">
+<h4>gcc<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h4>
+<p>实际编译c文件的动作都是由gcc来完成的，scons/make等构建语言只是完成了对多个编译文件和编译目标的调度管理，本身不完成编译文件的动作。</p>
+<p><strong>c编译原理</strong>的概念很多大佬已经讲得比较多了，可以参考：<a class="reference external" href="https://blog.csdn.net/daixiao3636/article/details/106913843">C编译原理_daixiao3636的博客-CSDN博客_c编译原理</a>。当然现在要编译文件也很简单了，一般我们只用2步，一个是通过<code class="docutils literal notranslate"><span class="pre">gcc</span> <span class="pre">-c</span> <span class="pre">-o</span></code>生成object文件，然后再将object文件<code class="docutils literal notranslate"><span class="pre">gcc</span> <span class="pre">-o</span></code>生成目标文件。</p>
+</section>
+<section id="make">
+<h4>make<a class="headerlink" href="#make" title="此标题的永久链接"></a></h4>
+<p>使用的换需要安装make环境，一般安装好mingw的时候，就自动装好了make+gcc环境，需要注意的是，新版装好后没有make.exe，而是：<strong>mingw32-make.exe</strong>，可以复制一份，并修改文件名为<strong>make.exe</strong>，以方便后面使用。</p>
+<p><img alt="image-20220912110738208" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220912110738208.png" /></p>
+<p>make使用可以直接在终端上使用，键入<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">-v</span></code>，看到如下信息，说明<strong>make</strong>环境安装成功了。</p>
+<p><img alt="image-20220912110902820" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220912110902820.png" /></p>
+<p>执行make，会去寻找文件：GNUmakefile、makefile 和 Makefile。详细可以见：<a class="reference external" href="https://blog.csdn.net/oqqHuTu12345678/article/details/125634958">认识Makefile文件_天糊土的博客-CSDN博客_makefile文件在哪</a></p>
+<p><img alt="image-20220913100427048" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220913100427048.png" /></p>
+</section>
+<section id="id8">
+<h4>Scons<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h4>
+<p>之前已经安装好了scons环境，要使用scons，和make类似，也需要一个脚本文件，配置要执行的操作。文件名为：<strong>SConstruct</strong>。</p>
+<p><img alt="image-20220913100518586" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220913100518586.png" /></p>
+</section>
+</section>
+<section id="id9">
+<h3>单文件构建<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h3>
+<section id="id10">
+<h4>gcc编译<a class="headerlink" href="#id10" title="此标题的永久链接"></a></h4>
+<p>单个文件编译，gcc直接命令行操作就行，两行命令就可以搞定（当然1条命令也可以，这里为了统一，都要求先生成object文件，再生成目标文件）。</p>
+<p><img alt="image-20220913101553879" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220913101553879.png" /></p>
+<p>main.c的源码如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello, world</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h4>make编译<a class="headerlink" href="#id11" title="此标题的永久链接"></a></h4>
+<p>如图所示，第一次编译的时候，编译目标<code class="docutils literal notranslate"><span class="pre">all</span></code>依赖<code class="docutils literal notranslate"><span class="pre">main.o</span></code>，由于没有<code class="docutils literal notranslate"><span class="pre">main.o</span></code>，先对<code class="docutils literal notranslate"><span class="pre">main.c</span></code>进行编译，生成<code class="docutils literal notranslate"><span class="pre">main.o</span></code>，最后生成最终目标。第二次编译时，由于<code class="docutils literal notranslate"><span class="pre">main.c</span></code>没改变，自然<code class="docutils literal notranslate"><span class="pre">main.o</span></code>不需要改变，所以只需要执行<code class="docutils literal notranslate"><span class="pre">all</span></code>所对应的指令，生成目标<code class="docutils literal notranslate"><span class="pre">main</span></code>。</p>
+<p><code class="docutils literal notranslate"><span class="pre">clean</span></code>清除完环境后，再次<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code>，所有的操作都重新来过。</p>
+<p><img alt="image-20220913102014649" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220913102014649.png" /></p>
+<p>Makefile的源码如下：</p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="nf">all</span><span class="o">:</span> <span class="n">main</span>.<span class="n">o</span>
+	gcc main.o -o main
+<span class="nf">main.o</span><span class="o">:</span> <span class="n">main</span>.<span class="n">c</span>
+	gcc main.c -c -o main.o
+<span class="nf">clean</span><span class="o">:</span>
+	rm main.o main.exe
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h4>Scons编译<a class="headerlink" href="#id12" title="此标题的永久链接"></a></h4>
+<p>如下图所示是一个简易的scons编译行为，可以看到，脚本写的时候只需配置好源文件和目标文件<code class="docutils literal notranslate"><span class="pre">source=main.c</span> <span class="pre">target=main</span></code>，直接执行scons就可以，第二次编译的时候，由于什么都没变化scons不执行任何操作。</p>
+<p>相比于make，清空环境只需要执行<code class="docutils literal notranslate"><span class="pre">scons</span> <span class="pre">-c</span></code>就可以自动清除编译生成的文件，无需像make要指定所有目标。而后再次编译又会重新开始了。</p>
+<p><img alt="image-20220913103139409" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220913103139409.png" /></p>
+<p>scons源码如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">obj</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span><span class="s1">&#39;main.c&#39;</span><span class="p">)</span>
+<span class="n">Program</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h4>总结<a class="headerlink" href="#id13" title="此标题的永久链接"></a></h4>
+<p>gcc直接操作，每次编译都需要输入所有command，不能自动识别文件哪些有改动，只编译所需的文件，对于大型工程来说，编译时间还是很长的，只编译有修改的文件还是很方便的。</p>
+<p>make解决了gcc的缺点，每次编译只需要执行<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code>，删除执行<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code>就可以，但是写<code class="docutils literal notranslate"><span class="pre">makefile</span></code>的人需要知晓所有的中间文件，并了解文件的依赖关系。</p>
+<p>scons保留了make的优点，每次编译只需要执行<code class="docutils literal notranslate"><span class="pre">scons</span></code>，删除执行<code class="docutils literal notranslate"><span class="pre">scons</span> <span class="pre">-c</span></code>就可以。同时写<code class="docutils literal notranslate"><span class="pre">Sconstruct</span></code>也更为轻松，不需要了解中间文件是什么，也不用专门写一个clean操作。所有的事情交给scons就行。</p>
+</section>
+</section>
+<section id="h">
+<h3>带.h文件的构建<a class="headerlink" href="#h" title="此标题的永久链接"></a></h3>
+<section id="id14">
+<h4>gcc编译<a class="headerlink" href="#id14" title="此标题的永久链接"></a></h4>
+<p>多个文件编译的时候，先将2个文件生成object文件，再将2个object文件编译成目标main.exe。</p>
+<p><img alt="image-20220913105136107" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220913105136107.png" /></p>
+<p>main.c的源码如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;test.h&quot;</span><span class="cp"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello, world</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">	</span><span class="n">test_work</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>test.c的源码如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;test.h&quot;</span><span class="cp"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">test_work</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="n">TEST_PRINT_STRING</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>test.h的源码如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef _TEST_H_</span>
+<span class="cp">#define _TEST_H_</span>
+
+<span class="cp">#define TEST_PRINT_STRING &quot;Test_Origin_0&quot;</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">test_work</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span><span class="w"></span>
+
+<span class="cp">#endif </span><span class="c1">//_TEST_H_</span>
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h4>make编译<a class="headerlink" href="#id15" title="此标题的永久链接"></a></h4>
+<p>按照流程写好，这里需要注意的是，修改完<code class="docutils literal notranslate"><span class="pre">test.h</span></code>后，再次编译的时候<code class="docutils literal notranslate"><span class="pre">make</span></code>只再次生成了<code class="docutils literal notranslate"><span class="pre">main.exe</span></code>，并没有重新编译<code class="docutils literal notranslate"><span class="pre">test.o</span></code>和<code class="docutils literal notranslate"><span class="pre">main.o</span></code>，并没有达到我们的目标。</p>
+<p>这是因为我们的<code class="docutils literal notranslate"><span class="pre">makefile</span></code>没写好，没把<code class="docutils literal notranslate"><span class="pre">test.h</span></code>依赖关系给写好。</p>
+<p><img alt="image-20220913105753757" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220913105753757.png" /></p>
+<p>将makefile修改一下，这时候再次修改<code class="docutils literal notranslate"><span class="pre">test.h</span></code>文件，<code class="docutils literal notranslate"><span class="pre">make</span></code>就知道需要重新编译文件了（大型项目通常通过<code class="docutils literal notranslate"><span class="pre">-MMD</span> <span class="pre">-MP</span></code>来生成<code class="docutils literal notranslate"><span class="pre">.h</span></code>的依赖树）。</p>
+<p>注意，这个问题是我们写makefile经常遇到的问题，这个还存在更换之类的场景下，依赖关系没写好，导致再次编译的时候没将所有改动给编译进去，通常要先<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code>再<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code>，完全丧失了make只编译改动的特点，导致编译效率大大降低。</p>
+<p><img alt="image-20220913111616496" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220913111616496.png" /></p>
+<p>Makefile的源码如下：</p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="nf">all</span><span class="o">:</span> <span class="n">main</span>.<span class="n">o</span> <span class="n">test</span>.<span class="n">o</span>
+	gcc main.o test.o -o main
+<span class="nf">main.o</span><span class="o">:</span> <span class="n">main</span>.<span class="n">c</span> <span class="n">test</span>.<span class="n">h</span>
+	gcc main.c -c -o main.o
+<span class="nf">test.o</span><span class="o">:</span> <span class="n">test</span>.<span class="n">c</span> <span class="n">test</span>.<span class="n">h</span>
+	gcc test.c -c -o test.o
+<span class="nf">clean</span><span class="o">:</span>
+	rm main.o test.o main.exe
+</pre></div>
+</div>
+</section>
+<section id="id16">
+<h4>Scons编译<a class="headerlink" href="#id16" title="此标题的永久链接"></a></h4>
+<p>scons的脚本依然很简单，配置好objects所需的源文件，在配置好目标，执行scons就可以了。需要注意的是，我们并没有显示的声明test.h的依赖关系，当修改test.h后再次编译，scons就能知道文件间的依赖关系，将整个工程正确的重新编译了，这对于写Sconstruct的人要求大大降低。</p>
+<p><img alt="image-20220913112536319" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220913112536319.png" /></p>
+<p>SConstruct源码如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">objs</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span><span class="s1">&#39;main.c&#39;</span><span class="p">)</span>
+<span class="n">objs</span> <span class="o">+=</span> <span class="n">Object</span><span class="p">(</span><span class="s1">&#39;test.c&#39;</span><span class="p">)</span>
+<span class="n">Program</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="n">objs</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id17">
+<h4>总结<a class="headerlink" href="#id17" title="此标题的永久链接"></a></h4>
+<p>在包含.h文件等多种隐示依赖的情况下，scons无需开发人员了解编译的底层原理，只需要将所需编译的主文件配置好，并配置好目标，剩下scons都可以自动搞定，大大节约了工程人员的开发和维护成本。</p>
+</section>
+</section>
+</section>
+<section id="id18">
+<h2><span class="section-number">1.4. </span>Scons原理分析<a class="headerlink" href="#id18" title="此标题的永久链接"></a></h2>
+<p>从上一章的分析可以看出，<code class="docutils literal notranslate"><span class="pre">scons</span></code>保留了make的所有优点，并简化了脚本编译，同时很好的维护了各个文件的隐示依赖关系，避免大家每次都要<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code>，再<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code>了。</p>
+<p>这一章我们简单分析下Scons是如何工作的。</p>
+<section id="id19">
+<h3>脚本如何运行<a class="headerlink" href="#id19" title="此标题的永久链接"></a></h3>
+<p>没时间细看代码，自己也写过一些测试环境之类，大体猜测Scons的运行机制就是将<code class="docutils literal notranslate"><span class="pre">Sconstruct</span></code>文件用<code class="docutils literal notranslate"><span class="pre">exec</span></code>函数来执行，这样才能只写部分代码就可以完成编译工作。</p>
+<p>简单搜索了下源码<code class="docutils literal notranslate"><span class="pre">Sconstruct</span></code>，可以看到<code class="docutils literal notranslate"><span class="pre">_SConstruct_exists</span></code>函数会去用这个文件。</p>
+<p><img alt="image-20220913125729673" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220913125729673.png" /></p>
+<p>之后有用python的<code class="docutils literal notranslate"><span class="pre">exec</span></code>函数来执行这个文件。</p>
+<p><img alt="image-20220913130153687" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220913130153687.png" /></p>
+</section>
+<section id="id20">
+<h3>如何指导编译<a class="headerlink" href="#id20" title="此标题的永久链接"></a></h3>
+<p>如果学习过<code class="docutils literal notranslate"><span class="pre">make</span></code>的语法，其核心语法就是<code class="docutils literal notranslate"><span class="pre">目标和依赖</span></code>，利用好其基本语法，再借助其强大的工具函数，就可以完成项目的编译管理工作。</p>
+<p>scons和make一样，本质并不会去做gcc的工作，更多是管理工程文件如何依次调用gcc进行编译。</p>
+<p>要用scons实现大型项目的管理，也必须理解其底层运行机制，这样才能实现各种复杂的行为。直接学习其源码是可以的，但是太累了，直接看其文档也能看到一些，但是也不是特别清楚，所以这里笔者以自己浅显的理解来分析其行为。</p>
+<p>从上面的说明例子中，简单的c项目编译，只需要指定<code class="docutils literal notranslate"><span class="pre">Object</span></code>所需的source文件，然后再指定<code class="docutils literal notranslate"><span class="pre">Program</span></code>所需的objs和target对象，剩下都是scons来完成的。那么我们依次拆分其操作行为。</p>
+<section id="env-dump">
+<h4>打印环境信息env.Dump()<a class="headerlink" href="#env-dump" title="此标题的永久链接"></a></h4>
+<p>scons所有的配置参数和信息存储在<code class="docutils literal notranslate"><span class="pre">Environment</span></code>对象中，可以通过<code class="docutils literal notranslate"><span class="pre">Dump</span></code>方法可以打印当前scons的所有配置参数，而后用python的<code class="docutils literal notranslate"><span class="pre">print</span></code>方法就可以打印出来了。</p>
+<p>官方手册上也有说明：</p>
+<p><img alt="image-20220914115119261" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220914115119261.png" /></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">Dump</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>打印出来的信息如下所示，参数有很多，看不懂咋办。</p>
+<p>目前只需要完成嵌入式C开发需要，只要认下面几个关键字：</p>
+<ul class="simple">
+<li><p>C编译：<code class="docutils literal notranslate"><span class="pre">CC</span></code>和<code class="docutils literal notranslate"><span class="pre">CCCOM</span></code></p></li>
+<li><p>ASM编译：<code class="docutils literal notranslate"><span class="pre">AS</span></code>和<code class="docutils literal notranslate"><span class="pre">ASCOM</span></code></p></li>
+<li><p>链接：<code class="docutils literal notranslate"><span class="pre">LINK</span></code>和<code class="docutils literal notranslate"><span class="pre">LINKCOM</span></code></p></li>
+</ul>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>scons: Reading SConscript files ...
+{ &#39;AR&#39;: &#39;ar&#39;,
+  &#39;ARCOM&#39;: &#39;$AR $ARFLAGS $TARGET $SOURCES&#39;,
+  &#39;ARFLAGS&#39;: [&#39;rc&#39;],
+  &#39;AS&#39;: &#39;as&#39;,
+  &#39;ASCOM&#39;: &#39;$AS $ASFLAGS -o $TARGET $SOURCES&#39;,
+  &#39;ASFLAGS&#39;: [],
+  &#39;ASPPCOM&#39;: &#39;$CC $ASPPFLAGS $CPPFLAGS $_CPPDEFFLAGS $_CPPINCFLAGS -c -o &#39;
+             &#39;$TARGET $SOURCES&#39;,
+  &#39;ASPPFLAGS&#39;: &#39;$ASFLAGS&#39;,
+  &#39;BUILDERS&#39;: { &#39;CopyAs&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9B0C7F0&gt;,
+                &#39;CopyTo&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9B0C7C0&gt;,
+                &#39;JarFile&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9B0C910&gt;,
+                &#39;JavaClassDir&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9B0CC10&gt;,
+                &#39;JavaClassFile&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9B0CB50&gt;,
+                &#39;JavaFile&#39;: &lt;SCons.Builder.CompositeBuilder object at 0x000001F3D9B0CA60&gt;,
+                &#39;Library&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9ACAA10&gt;,
+                &#39;LoadableModule&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9ACA680&gt;,
+                &#39;M4&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9B0C4C0&gt;,
+                &#39;Object&#39;: &lt;SCons.Builder.CompositeBuilder object at 0x000001F3D9AC9360&gt;,
+                &#39;Program&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9AC9900&gt;,
+                &#39;ProgramAllAtOnce&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9B0C6D0&gt;,
+                &#39;RES&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9A2ECB0&gt;,
+                &#39;RMIC&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9A89930&gt;,
+                &#39;SharedLibrary&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9ACA290&gt;,
+                &#39;SharedObject&#39;: &lt;SCons.Builder.CompositeBuilder object at 0x000001F3D9AC95A0&gt;,
+                &#39;StaticLibrary&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9ACAA10&gt;,
+                &#39;StaticObject&#39;: &lt;SCons.Builder.CompositeBuilder object at 0x000001F3D9AC9360&gt;,
+                &#39;Substfile&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9AC8FD0&gt;,
+                &#39;Tar&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9A8AB60&gt;,
+                &#39;Textfile&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9AC8F70&gt;,
+                &#39;Zip&#39;: &lt;SCons.Builder.BuilderBase object at 0x000001F3D9A8AEC0&gt;},
+  &#39;CC&#39;: &#39;gcc&#39;,
+  &#39;CCCOM&#39;: &#39;$CC -o $TARGET -c $CFLAGS $CCFLAGS $_CCCOMCOM $SOURCES&#39;,
+  &#39;CCDEPFLAGS&#39;: &#39;-MMD -MF ${TARGET}.d&#39;,
+  &#39;CCFLAGS&#39;: [],
+  &#39;CCVERSION&#39;: &#39;12.1.0&#39;,
+  &#39;CFILESUFFIX&#39;: &#39;.c&#39;,
+  &#39;CFLAGS&#39;: [],
+  &#39;CONFIGUREDIR&#39;: &#39;#/.sconf_temp&#39;,
+  &#39;CONFIGURELOG&#39;: &#39;#/config.log&#39;,
+  &#39;COPYSTR&#39;: &#39;Copy file(s): &quot;$SOURCES&quot; to &quot;$TARGETS&quot;&#39;,
+  &#39;CPPDEFPREFIX&#39;: &#39;-D&#39;,
+  &#39;CPPDEFSUFFIX&#39;: &#39;&#39;,
+  &#39;CPPSUFFIXES&#39;: [ &#39;.c&#39;,
+                   &#39;.C&#39;,
+                   &#39;.cxx&#39;,
+                   &#39;.cpp&#39;,
+                   &#39;.c++&#39;,
+                   &#39;.cc&#39;,
+                   &#39;.h&#39;,
+                   &#39;.H&#39;,
+                   &#39;.hxx&#39;,
+                   &#39;.hpp&#39;,
+                   &#39;.hh&#39;,
+                   &#39;.F&#39;,
+                   &#39;.fpp&#39;,
+                   &#39;.FPP&#39;,
+                   &#39;.m&#39;,
+                   &#39;.mm&#39;,
+                   &#39;.S&#39;,
+                   &#39;.spp&#39;,
+                   &#39;.SPP&#39;,
+                   &#39;.sx&#39;],
+  &#39;CXX&#39;: &#39;g++&#39;,
+  &#39;CXXCOM&#39;: &#39;$CXX -o $TARGET -c $CXXFLAGS $CCFLAGS $_CCCOMCOM $SOURCES&#39;,
+  &#39;CXXFILESUFFIX&#39;: &#39;.cc&#39;,
+  &#39;CXXFLAGS&#39;: [],
+  &#39;CXXVERSION&#39;: &#39;12.1.0&#39;,
+  &#39;DC&#39;: &#39;dmd&#39;,
+  &#39;DCOM&#39;: &#39;$DC $_DINCFLAGS $_DVERFLAGS $_DDEBUGFLAGS $_DFLAGS -c -of$TARGET &#39;
+          &#39;$SOURCES&#39;,
+  &#39;DDEBUG&#39;: [],
+  &#39;DDEBUGPREFIX&#39;: &#39;-debug=&#39;,
+  &#39;DDEBUGSUFFIX&#39;: &#39;&#39;,
+  &#39;DFILESUFFIX&#39;: &#39;.d&#39;,
+  &#39;DFLAGPREFIX&#39;: &#39;-&#39;,
+  &#39;DFLAGS&#39;: [],
+  &#39;DFLAGSUFFIX&#39;: &#39;&#39;,
+  &#39;DINCPREFIX&#39;: &#39;-I&#39;,
+  &#39;DINCSUFFIX&#39;: &#39;&#39;,
+  &#39;DLIB&#39;: &#39;lib&#39;,
+  &#39;DLIBCOM&#39;: &#39;$DLIB $_DLIBFLAGS -c $TARGET $SOURCES $_DLIBFLAGS&#39;,
+  &#39;DLIBDIRPREFIX&#39;: &#39;-L-L&#39;,
+  &#39;DLIBDIRSUFFIX&#39;: &#39;&#39;,
+  &#39;DLIBFLAGPREFIX&#39;: &#39;-&#39;,
+  &#39;DLIBFLAGSUFFIX&#39;: &#39;&#39;,
+  &#39;DLIBLINKPREFIX&#39;: &#39;&#39;,
+  &#39;DLIBLINKSUFFIX&#39;: &#39;.lib&#39;,
+  &#39;DLINK&#39;: &#39;$DC&#39;,
+  &#39;DLINKCOM&#39;: &#39;$DLINK -of$TARGET $DLINKFLAGS $__DRPATH $SOURCES $_DLIBDIRFLAGS &#39;
+              &#39;$_DLIBFLAGS&#39;,
+  &#39;DLINKFLAGS&#39;: [],
+  &#39;DPATH&#39;: [&#39;#/&#39;],
+  &#39;DRPATHPREFIX&#39;: &#39;-L-rpath=&#39;,
+  &#39;DRPATHSUFFIX&#39;: &#39;&#39;,
+  &#39;DSUFFIXES&#39;: [&#39;.d&#39;],
+  &#39;DVERPREFIX&#39;: &#39;-version=&#39;,
+  &#39;DVERSIONS&#39;: [],
+  &#39;DVERSUFFIX&#39;: &#39;&#39;,
+  &#39;Dir&#39;: &lt;SCons.Defaults.Variable_Method_Caller object at 0x000001F3D93C82E0&gt;,
+  &#39;Dirs&#39;: &lt;SCons.Defaults.Variable_Method_Caller object at 0x000001F3D93C8370&gt;,
+  &#39;ENV&#39;: { &#39;COMSPEC&#39;: &#39;C:\\Windows\\system32\\cmd.exe&#39;,
+           &#39;PATH&#39;: &#39;C:\\Windows\\System32;C:\\msys64\\mingw32\\bin&#39;,
+           &#39;PATHEXT&#39;: &#39;.COM;.EXE;.BAT;.CMD&#39;,
+           &#39;SystemDrive&#39;: &#39;C:&#39;,
+           &#39;SystemRoot&#39;: &#39;C:\\Windows&#39;,
+           &#39;TEMP&#39;: &#39;C:\\Users\\wenbo\\AppData\\Local\\Temp&#39;,
+           &#39;TMP&#39;: &#39;C:\\Users\\wenbo\\AppData\\Local\\Temp&#39;,
+           &#39;USERPROFILE&#39;: &#39;C:\\Users\\wenbo&#39;},
+  &#39;ESCAPE&#39;: &lt;function escape at 0x000001F3D9519B40&gt;,
+  &#39;F03&#39;: &#39;gfortran&#39;,
+  &#39;F03COM&#39;: &#39;$F03 -o $TARGET -c $FORTRANCOMMONFLAGS $F03FLAGS $_F03INCFLAGS &#39;
+            &#39;$_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;F03FLAGS&#39;: [],
+  &#39;F03PPCOM&#39;: &#39;$F03 -o $TARGET -c $FORTRANCOMMONFLAGS $F03FLAGS $CPPFLAGS &#39;
+              &#39;$_CPPDEFFLAGS $_F03INCFLAGS $_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;F08&#39;: &#39;gfortran&#39;,
+  &#39;F08COM&#39;: &#39;$F08 -o $TARGET -c $FORTRANCOMMONFLAGS $F08FLAGS $_F08INCFLAGS &#39;
+            &#39;$_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;F08FLAGS&#39;: [],
+  &#39;F08PPCOM&#39;: &#39;$F08 -o $TARGET -c $FORTRANCOMMONFLAGS $F08FLAGS $CPPFLAGS &#39;
+              &#39;$_CPPDEFFLAGS $_F08INCFLAGS $_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;F77&#39;: &#39;gfortran&#39;,
+  &#39;F77COM&#39;: &#39;$F77 -o $TARGET -c $FORTRANCOMMONFLAGS $F77FLAGS $_F77INCFLAGS &#39;
+            &#39;$SOURCES&#39;,
+  &#39;F77FLAGS&#39;: [],
+  &#39;F77PPCOM&#39;: &#39;$F77 -o $TARGET -c $FORTRANCOMMONFLAGS $F77FLAGS $CPPFLAGS &#39;
+              &#39;$_CPPDEFFLAGS $_F77INCFLAGS $SOURCES&#39;,
+  &#39;F90&#39;: &#39;gfortran&#39;,
+  &#39;F90COM&#39;: &#39;$F90 -o $TARGET -c $FORTRANCOMMONFLAGS $F90FLAGS $_F90INCFLAGS &#39;
+            &#39;$_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;F90FLAGS&#39;: [],
+  &#39;F90PPCOM&#39;: &#39;$F90 -o $TARGET -c $FORTRANCOMMONFLAGS $F90FLAGS $CPPFLAGS &#39;
+              &#39;$_CPPDEFFLAGS $_F90INCFLAGS $_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;F95&#39;: &#39;gfortran&#39;,
+  &#39;F95COM&#39;: &#39;$F95 -o $TARGET -c $FORTRANCOMMONFLAGS $F95FLAGS $_F95INCFLAGS &#39;
+            &#39;$_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;F95FLAGS&#39;: [],
+  &#39;F95PPCOM&#39;: &#39;$F95 -o $TARGET -c $FORTRANCOMMONFLAGS $F95FLAGS $CPPFLAGS &#39;
+              &#39;$_CPPDEFFLAGS $_F95INCFLAGS $_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;FORTRAN&#39;: &#39;gfortran&#39;,
+  &#39;FORTRANCOM&#39;: &#39;$FORTRAN -o $TARGET -c $FORTRANCOMMONFLAGS $FORTRANFLAGS &#39;
+                &#39;$_FORTRANINCFLAGS $_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;FORTRANFLAGS&#39;: [],
+  &#39;FORTRANMODDIR&#39;: &#39;&#39;,
+  &#39;FORTRANMODDIRPREFIX&#39;: &#39;-J&#39;,
+  &#39;FORTRANMODDIRSUFFIX&#39;: &#39;&#39;,
+  &#39;FORTRANMODPREFIX&#39;: &#39;&#39;,
+  &#39;FORTRANMODSUFFIX&#39;: &#39;.mod&#39;,
+  &#39;FORTRANPPCOM&#39;: &#39;$FORTRAN -o $TARGET -c $FORTRANCOMMONFLAGS $FORTRANFLAGS &#39;
+                  &#39;$CPPFLAGS $_CPPDEFFLAGS $_FORTRANINCFLAGS $_FORTRANMODFLAG &#39;
+                  &#39;$SOURCES&#39;,
+  &#39;FORTRANSUFFIXES&#39;: [ &#39;.f&#39;,
+                       &#39;.for&#39;,
+                       &#39;.ftn&#39;,
+                       &#39;.F&#39;,
+                       &#39;.FOR&#39;,
+                       &#39;.FTN&#39;,
+                       &#39;.fpp&#39;,
+                       &#39;.FPP&#39;,
+                       &#39;.f77&#39;,
+                       &#39;.F77&#39;,
+                       &#39;.f90&#39;,
+                       &#39;.F90&#39;,
+                       &#39;.f95&#39;,
+                       &#39;.F95&#39;,
+                       &#39;.f03&#39;,
+                       &#39;.F03&#39;,
+                       &#39;.f08&#39;,
+                       &#39;.F08&#39;],
+  &#39;FRAMEWORKPATH&#39;: [],
+  &#39;FRAMEWORKS&#39;: [],
+  &#39;File&#39;: &lt;SCons.Defaults.Variable_Method_Caller object at 0x000001F3D93C83A0&gt;,
+  &#39;HOST_ARCH&#39;: &#39;x86_64&#39;,
+  &#39;HOST_OS&#39;: &#39;win32&#39;,
+  &#39;IDLSUFFIXES&#39;: [&#39;.idl&#39;, &#39;.IDL&#39;],
+  &#39;IMPLIBNOVERSIONSYMLINKS&#39;: True,
+  &#39;INCF03PREFIX&#39;: &#39;-I&#39;,
+  &#39;INCF03SUFFIX&#39;: &#39;&#39;,
+  &#39;INCF08PREFIX&#39;: &#39;-I&#39;,
+  &#39;INCF08SUFFIX&#39;: &#39;&#39;,
+  &#39;INCF77PREFIX&#39;: &#39;-I&#39;,
+  &#39;INCF77SUFFIX&#39;: &#39;&#39;,
+  &#39;INCF90PREFIX&#39;: &#39;-I&#39;,
+  &#39;INCF90SUFFIX&#39;: &#39;&#39;,
+  &#39;INCF95PREFIX&#39;: &#39;-I&#39;,
+  &#39;INCF95SUFFIX&#39;: &#39;&#39;,
+  &#39;INCFORTRANPREFIX&#39;: &#39;-I&#39;,
+  &#39;INCFORTRANSUFFIX&#39;: &#39;&#39;,
+  &#39;INCPREFIX&#39;: &#39;-I&#39;,
+  &#39;INCSUFFIX&#39;: &#39;&#39;,
+  &#39;JAR&#39;: &#39;jar&#39;,
+  &#39;JARCOM&#39;: &quot;${TEMPFILE(&#39;$_JARCOM&#39;,&#39;$JARCOMSTR&#39;)}&quot;,
+  &#39;JARFLAGS&#39;: [&#39;cf&#39;],
+  &#39;JARSUFFIX&#39;: &#39;.jar&#39;,
+  &#39;JAVABOOTCLASSPATH&#39;: [],
+  &#39;JAVAC&#39;: &#39;javac&#39;,
+  &#39;JAVACCOM&#39;: &quot;${TEMPFILE(&#39;$_JAVACCOM&#39;,&#39;$JAVACCOMSTR&#39;)}&quot;,
+  &#39;JAVACFLAGS&#39;: [],
+  &#39;JAVACLASSPATH&#39;: [],
+  &#39;JAVACLASSSUFFIX&#39;: &#39;.class&#39;,
+  &#39;JAVAINCLUDES&#39;: [],
+  &#39;JAVASOURCEPATH&#39;: [],
+  &#39;JAVASUFFIX&#39;: &#39;.java&#39;,
+  &#39;LDMODULE&#39;: &#39;$SHLINK&#39;,
+  &#39;LDMODULECOM&#39;: &lt;SCons.Action.CommandGeneratorAction object at 0x000001F3D9A2E800&gt;,
+  &#39;LDMODULEEMITTER&#39;: [ &lt;function lib_emitter at 0x000001F3D93B4AF0&gt;,
+                       &lt;function ldmod_symlink_emitter at 0x000001F3D9AE8940&gt;,
+                       &lt;function shlib_emitter at 0x000001F3D9A5A290&gt;],
+  &#39;LDMODULEFLAGS&#39;: &#39;$SHLINKFLAGS&#39;,
+  &#39;LDMODULENAME&#39;: &#39;${LDMODULEPREFIX}$_get_ldmodule_stem${_LDMODULESUFFIX}&#39;,
+  &#39;LDMODULENOVERSIONSYMLINKS&#39;: True,
+  &#39;LDMODULEPREFIX&#39;: &#39;$SHLIBPREFIX&#39;,
+  &#39;LDMODULESUFFIX&#39;: &#39;$SHLIBSUFFIX&#39;,
+  &#39;LDMODULEVERSION&#39;: &#39;$SHLIBVERSION&#39;,
+  &#39;LDMODULE_NOVERSION_SYMLINK&#39;: &#39;$_get_shlib_dir${LDMODULEPREFIX}$_get_ldmodule_stem${LDMODULESUFFIX}&#39;,
+  &#39;LDMODULE_SONAME_SYMLINK&#39;: &#39;$_get_shlib_dir$_LDMODULESONAME&#39;,
+  &#39;LIBDIRPREFIX&#39;: &#39;-L&#39;,
+  &#39;LIBDIRSUFFIX&#39;: &#39;&#39;,
+  &#39;LIBLINKPREFIX&#39;: &#39;-l&#39;,
+  &#39;LIBLINKSUFFIX&#39;: &#39;&#39;,
+  &#39;LIBPREFIX&#39;: &#39;lib&#39;,
+  &#39;LIBPREFIXES&#39;: [&#39;$LIBPREFIX&#39;],
+  &#39;LIBSUFFIX&#39;: &#39;.a&#39;,
+  &#39;LIBSUFFIXES&#39;: [&#39;$LIBSUFFIX&#39;],
+  &#39;LINESEPARATOR&#39;: &#39;\n&#39;,
+  &#39;LINK&#39;: &#39;$SMARTLINK&#39;,
+  &#39;LINKCOM&#39;: &#39;$LINK -o $TARGET $LINKFLAGS $__RPATH $SOURCES $_LIBDIRFLAGS &#39;
+             &#39;$_LIBFLAGS&#39;,
+  &#39;LINKFLAGS&#39;: [],
+  &#39;M4&#39;: &#39;m4&#39;,
+  &#39;M4COM&#39;: &#39;cd ${SOURCE.rsrcdir} &amp;&amp; $M4 $M4FLAGS &lt; ${SOURCE.file} &gt; &#39;
+           &#39;${TARGET.abspath}&#39;,
+  &#39;M4FLAGS&#39;: [&#39;-E&#39;],
+  &#39;MAXLINELENGTH&#39;: 2048,
+  &#39;NINJA_DEPFILE_PARSE_FORMAT&#39;: &#39;gcc&#39;,
+  &#39;OBJPREFIX&#39;: &#39;&#39;,
+  &#39;OBJSUFFIX&#39;: &#39;.o&#39;,
+  &#39;PLATFORM&#39;: &#39;win32&#39;,
+  &#39;PROGPREFIX&#39;: &#39;&#39;,
+  &#39;PROGSUFFIX&#39;: &#39;.exe&#39;,
+  &#39;PSPAWN&#39;: &lt;function piped_spawn at 0x000001F3D9519990&gt;,
+  &#39;RANLIB&#39;: &#39;ranlib&#39;,
+  &#39;RANLIBCOM&#39;: &#39;$RANLIB $RANLIBFLAGS $TARGET&#39;,
+  &#39;RANLIBFLAGS&#39;: [],
+  &#39;RC&#39;: &#39;windres&#39;,
+  &#39;RCCOM&#39;: &#39;$RC $_CPPDEFFLAGS $RCINCFLAGS ${RCINCPREFIX} ${SOURCE.dir} &#39;
+           &#39;$RCFLAGS -i $SOURCE -o $TARGET&#39;,
+  &#39;RCFLAGS&#39;: [],
+  &#39;RCINCFLAGS&#39;: &#39;${_concat(RCINCPREFIX, CPPPATH, RCINCSUFFIX, __env__, RDirs, &#39;
+                &#39;TARGET, SOURCE, affect_signature=False)}&#39;,
+  &#39;RCINCPREFIX&#39;: &#39;--include-dir &#39;,
+  &#39;RCINCSUFFIX&#39;: &#39;&#39;,
+  &#39;RDirs&#39;: &lt;SCons.Defaults.Variable_Method_Caller object at 0x000001F3D93C8430&gt;,
+  &#39;RMIC&#39;: &#39;rmic&#39;,
+  &#39;RMICCOM&#39;: &#39;$RMIC $RMICFLAGS -d ${TARGET.attributes.java_lookupdir} &#39;
+             &#39;-classpath ${SOURCE.attributes.java_classdir} &#39;
+             &#39;${SOURCES.attributes.java_classname}&#39;,
+  &#39;RMICFLAGS&#39;: [],
+  &#39;RPATHPREFIX&#39;: &#39;-Wl,-rpath=&#39;,
+  &#39;RPATHSUFFIX&#39;: &#39;&#39;,
+  &#39;SCANNERS&#39;: [&lt;SCons.Scanner.ScannerBase object at 0x000001F3D9393C10&gt;],
+  &#39;SHCC&#39;: &#39;$CC&#39;,
+  &#39;SHCCCOM&#39;: &#39;$SHCC -o $TARGET -c $SHCFLAGS $SHCCFLAGS $_CCCOMCOM $SOURCES&#39;,
+  &#39;SHCCFLAGS&#39;: [&#39;$CCFLAGS&#39;],
+  &#39;SHCFLAGS&#39;: [&#39;$CFLAGS&#39;],
+  &#39;SHCXX&#39;: &#39;$CXX&#39;,
+  &#39;SHCXXCOM&#39;: &#39;$SHCXX -o $TARGET -c $SHCXXFLAGS $SHCCFLAGS $_CCCOMCOM $SOURCES&#39;,
+  &#39;SHCXXFLAGS&#39;: [&#39;$CXXFLAGS&#39;],
+  &#39;SHDC&#39;: &#39;$DC&#39;,
+  &#39;SHDCOM&#39;: &#39;$DC $_DINCFLAGS $_DVERFLAGS $_DDEBUGFLAGS $_DFLAGS -c -fPIC &#39;
+            &#39;-of$TARGET $SOURCES&#39;,
+  &#39;SHDLINK&#39;: &#39;$DC&#39;,
+  &#39;SHDLINKCOM&#39;: &#39;$DLINK -of$TARGET $SHDLINKFLAGS $__SHDLIBVERSIONFLAGS &#39;
+                &#39;$__DRPATH $SOURCES $_DLIBDIRFLAGS $_DLIBFLAGS&#39;,
+  &#39;SHDLINKFLAGS&#39;: [&#39;$DLINKFLAGS&#39;, &#39;-shared&#39;, &#39;-defaultlib=libphobos2.so&#39;],
+  &#39;SHELL&#39;: &#39;C:\\Windows\\System32\\cmd.exe&#39;,
+  &#39;SHF03&#39;: &#39;$F03&#39;,
+  &#39;SHF03COM&#39;: &#39;$SHF03 -o $TARGET -c $FORTRANCOMMONFLAGS $SHF03FLAGS &#39;
+              &#39;$_F03INCFLAGS $_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;SHF03FLAGS&#39;: [&#39;$F03FLAGS&#39;],
+  &#39;SHF03PPCOM&#39;: &#39;$SHF03 -o $TARGET -c $FORTRANCOMMONFLAGS $SHF03FLAGS &#39;
+                &#39;$CPPFLAGS $_CPPDEFFLAGS $_F03INCFLAGS $_FORTRANMODFLAG &#39;
+                &#39;$SOURCES&#39;,
+  &#39;SHF08&#39;: &#39;$F08&#39;,
+  &#39;SHF08COM&#39;: &#39;$SHF08 -o $TARGET -c $FORTRANCOMMONFLAGS $SHF08FLAGS &#39;
+              &#39;$_F08INCFLAGS $_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;SHF08FLAGS&#39;: [&#39;$F08FLAGS&#39;],
+  &#39;SHF08PPCOM&#39;: &#39;$SHF08 -o $TARGET -c $FORTRANCOMMONFLAGS $SHF08FLAGS &#39;
+                &#39;$CPPFLAGS $_CPPDEFFLAGS $_F08INCFLAGS $_FORTRANMODFLAG &#39;
+                &#39;$SOURCES&#39;,
+  &#39;SHF77&#39;: &#39;$F77&#39;,
+  &#39;SHF77COM&#39;: &#39;$SHF77 -o $TARGET -c $FORTRANCOMMONFLAGS $SHF77FLAGS &#39;
+              &#39;$_F77INCFLAGS $SOURCES&#39;,
+  &#39;SHF77FLAGS&#39;: [&#39;$F77FLAGS&#39;],
+  &#39;SHF77PPCOM&#39;: &#39;$SHF77 -o $TARGET -c $FORTRANCOMMONFLAGS $SHF77FLAGS &#39;
+                &#39;$CPPFLAGS $_CPPDEFFLAGS $_F77INCFLAGS $SOURCES&#39;,
+  &#39;SHF90&#39;: &#39;$F90&#39;,
+  &#39;SHF90COM&#39;: &#39;$SHF90 -o $TARGET -c $FORTRANCOMMONFLAGS $SHF90FLAGS &#39;
+              &#39;$_F90INCFLAGS $_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;SHF90FLAGS&#39;: [&#39;$F90FLAGS&#39;],
+  &#39;SHF90PPCOM&#39;: &#39;$SHF90 -o $TARGET -c $FORTRANCOMMONFLAGS $SHF90FLAGS &#39;
+                &#39;$CPPFLAGS $_CPPDEFFLAGS $_F90INCFLAGS $_FORTRANMODFLAG &#39;
+                &#39;$SOURCES&#39;,
+  &#39;SHF95&#39;: &#39;$F95&#39;,
+  &#39;SHF95COM&#39;: &#39;$SHF95 -o $TARGET -c $FORTRANCOMMONFLAGS $SHF95FLAGS &#39;
+              &#39;$_F95INCFLAGS $_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;SHF95FLAGS&#39;: [&#39;$F95FLAGS&#39;],
+  &#39;SHF95PPCOM&#39;: &#39;$SHF95 -o $TARGET -c $FORTRANCOMMONFLAGS $SHF95FLAGS &#39;
+                &#39;$CPPFLAGS $_CPPDEFFLAGS $_F95INCFLAGS $_FORTRANMODFLAG &#39;
+                &#39;$SOURCES&#39;,
+  &#39;SHFORTRAN&#39;: &#39;$FORTRAN&#39;,
+  &#39;SHFORTRANCOM&#39;: &#39;$SHFORTRAN -o $TARGET -c $FORTRANCOMMONFLAGS &#39;
+                  &#39;$SHFORTRANFLAGS $_FORTRANINCFLAGS $_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;SHFORTRANFLAGS&#39;: [&#39;$FORTRANFLAGS&#39;],
+  &#39;SHFORTRANPPCOM&#39;: &#39;$SHFORTRAN -o $TARGET -c $FORTRANCOMMONFLAGS &#39;
+                    &#39;$SHFORTRANFLAGS $CPPFLAGS $_CPPDEFFLAGS $_FORTRANINCFLAGS &#39;
+                    &#39;$_FORTRANMODFLAG $SOURCES&#39;,
+  &#39;SHLIBEMITTER&#39;: [ &lt;function lib_emitter at 0x000001F3D93B4AF0&gt;,
+                    &lt;function shlib_symlink_emitter at 0x000001F3D9AE8B80&gt;,
+                    &lt;function shlib_emitter at 0x000001F3D9A5A290&gt;],
+  &#39;SHLIBNAME&#39;: &#39;${_get_shlib_dir}${SHLIBPREFIX}$_get_shlib_stem${_SHLIBSUFFIX}&#39;,
+  &#39;SHLIBNOVERSIONSYMLINKS&#39;: True,
+  &#39;SHLIBPREFIX&#39;: &#39;&#39;,
+  &#39;SHLIBSONAMEFLAGS&#39;: &#39;-Wl,-soname=$_SHLIBSONAME&#39;,
+  &#39;SHLIBSUFFIX&#39;: &#39;.dll&#39;,
+  &#39;SHLIB_NOVERSION_SYMLINK&#39;: &#39;${_get_shlib_dir}${SHLIBPREFIX}$_get_shlib_stem${SHLIBSUFFIX}&#39;,
+  &#39;SHLIB_SONAME_SYMLINK&#39;: &#39;${_get_shlib_dir}$_SHLIBSONAME&#39;,
+  &#39;SHLINK&#39;: &#39;$LINK&#39;,
+  &#39;SHLINKCOM&#39;: &lt;SCons.Action.CommandGeneratorAction object at 0x000001F3D9A2E7A0&gt;,
+  &#39;SHLINKCOMSTR&#39;: &lt;function shlib_generator at 0x000001F3D9A59630&gt;,
+  &#39;SHLINKFLAGS&#39;: [&#39;$LINKFLAGS&#39;, &#39;-shared&#39;],
+  &#39;SHOBJPREFIX&#39;: &#39;$OBJPREFIX&#39;,
+  &#39;SHOBJSUFFIX&#39;: &#39;.o&#39;,
+  &#39;SMARTLINK&#39;: &lt;function smart_link at 0x000001F3D93B4A60&gt;,
+  &#39;SPAWN&#39;: &lt;function spawn at 0x000001F3D9519AB0&gt;,
+  &#39;STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME&#39;: 1,
+  &#39;SUBSTFILEPREFIX&#39;: &#39;&#39;,
+  &#39;SUBSTFILESUFFIX&#39;: &#39;&#39;,
+  &#39;TAR&#39;: &#39;tar&#39;,
+  &#39;TARCOM&#39;: &#39;$TAR $TARFLAGS -f $TARGET $SOURCES&#39;,
+  &#39;TARFLAGS&#39;: [&#39;-c&#39;],
+  &#39;TARGET_ARCH&#39;: None,
+  &#39;TARGET_OS&#39;: None,
+  &#39;TARSUFFIX&#39;: &#39;.tar&#39;,
+  &#39;TEMPFILE&#39;: &lt;class &#39;SCons.Platform.TempFileMunge&#39;&gt;,
+  &#39;TEMPFILEARGESCFUNC&#39;: &lt;function quote_spaces at 0x000001F3D9252DD0&gt;,
+  &#39;TEMPFILEARGJOIN&#39;: &#39; &#39;,
+  &#39;TEMPFILEPREFIX&#39;: &#39;@&#39;,
+  &#39;TEXTFILEPREFIX&#39;: &#39;&#39;,
+  &#39;TEXTFILESUFFIX&#39;: &#39;.txt&#39;,
+  &#39;TOOLS&#39;: [ &#39;default&#39;,
+             &#39;mingw&#39;,
+             &#39;gcc&#39;,
+             &#39;g++&#39;,
+             &#39;gnulink&#39;,
+             &#39;ar&#39;,
+             &#39;gas&#39;,
+             &#39;gfortran&#39;,
+             &#39;m4&#39;,
+             &#39;dmd&#39;,
+             &#39;filesystem&#39;,
+             &#39;jar&#39;,
+             &#39;javac&#39;,
+             &#39;rmic&#39;,
+             &#39;tar&#39;,
+             &#39;zip&#39;,
+             &#39;textfile&#39;],
+  &#39;WINDOWSDEFPREFIX&#39;: &#39;&#39;,
+  &#39;WINDOWSDEFSUFFIX&#39;: &#39;.def&#39;,
+  &#39;WIXCANDLE&#39;: &#39;candle.exe&#39;,
+  &#39;WIXLIGHT&#39;: &#39;light.exe&#39;,
+  &#39;ZIP&#39;: &#39;zip&#39;,
+  &#39;ZIPCOM&#39;: &lt;SCons.Action.FunctionAction object at 0x000001F3D9A8ACB0&gt;,
+  &#39;ZIPCOMPRESSION&#39;: 8,
+  &#39;ZIPFLAGS&#39;: [],
+  &#39;ZIPROOT&#39;: [],
+  &#39;ZIPSUFFIX&#39;: &#39;.zip&#39;,
+  &#39;_CCCOMCOM&#39;: &#39;$CPPFLAGS $_CPPDEFFLAGS $_CPPINCFLAGS&#39;,
+  &#39;_CPPDEFFLAGS&#39;: &#39;${_defines(CPPDEFPREFIX, CPPDEFINES, CPPDEFSUFFIX, __env__, &#39;
+                  &#39;TARGET, SOURCE)}&#39;,
+  &#39;_CPPINCFLAGS&#39;: &#39;${_concat(INCPREFIX, CPPPATH, INCSUFFIX, __env__, RDirs, &#39;
+                  &#39;TARGET, SOURCE, affect_signature=False)}&#39;,
+  &#39;_DDEBUGFLAGS&#39;: &#39;${_concat(DDEBUGPREFIX, DDEBUG, DDEBUGSUFFIX, __env__)}&#39;,
+  &#39;_DFLAGS&#39;: &#39;${_concat(DFLAGPREFIX, DFLAGS, DFLAGSUFFIX, __env__)}&#39;,
+  &#39;_DINCFLAGS&#39;: &#39;${_concat(DINCPREFIX, DPATH, DINCSUFFIX, __env__, RDirs, &#39;
+                &#39;TARGET, SOURCE)}&#39;,
+  &#39;_DLIBDIRFLAGS&#39;: &#39;${_concat(DLIBDIRPREFIX, LIBPATH, DLIBDIRSUFFIX, __env__, &#39;
+                   &#39;RDirs, TARGET, SOURCE)}&#39;,
+  &#39;_DLIBFLAGS&#39;: &#39;${_stripixes(DLIBLINKPREFIX, LIBS, DLIBLINKSUFFIX, &#39;
+                &#39;LIBPREFIXES, LIBSUFFIXES,  __env__)}&#39;,
+  &#39;_DRPATH&#39;: &#39;${_concat(DRPATHPREFIX, RPATH, DRPATHSUFFIX, __env__)}&#39;,
+  &#39;_DVERFLAGS&#39;: &#39;${_concat(DVERPREFIX, DVERSIONS, DVERSUFFIX, __env__)}&#39;,
+  &#39;_F03INCFLAGS&#39;: &#39;${_concat(INCF03PREFIX, F03PATH, INCF03SUFFIX, __env__, &#39;
+                  &#39;RDirs, TARGET, SOURCE, affect_signature=False)}&#39;,
+  &#39;_F08INCFLAGS&#39;: &#39;${_concat(INCF08PREFIX, F08PATH, INCF08SUFFIX, __env__, &#39;
+                  &#39;RDirs, TARGET, SOURCE, affect_signature=False)}&#39;,
+  &#39;_F77INCFLAGS&#39;: &#39;${_concat(INCF77PREFIX, F77PATH, INCF77SUFFIX, __env__, &#39;
+                  &#39;RDirs, TARGET, SOURCE, affect_signature=False)}&#39;,
+  &#39;_F90INCFLAGS&#39;: &#39;${_concat(INCF90PREFIX, F90PATH, INCF90SUFFIX, __env__, &#39;
+                  &#39;RDirs, TARGET, SOURCE, affect_signature=False)}&#39;,
+  &#39;_F95INCFLAGS&#39;: &#39;${_concat(INCF95PREFIX, F95PATH, INCF95SUFFIX, __env__, &#39;
+                  &#39;RDirs, TARGET, SOURCE, affect_signature=False)}&#39;,
+  &#39;_FORTRANINCFLAGS&#39;: &#39;${_concat(INCFORTRANPREFIX, FORTRANPATH, &#39;
+                      &#39;INCFORTRANSUFFIX, __env__, RDirs, TARGET, SOURCE, &#39;
+                      &#39;affect_signature=False)}&#39;,
+  &#39;_FORTRANMODFLAG&#39;: &#39;$( ${_concat(FORTRANMODDIRPREFIX, FORTRANMODDIR, &#39;
+                     &#39;FORTRANMODDIRSUFFIX, __env__, RDirs, TARGET, SOURCE)} $)&#39;,
+  &#39;_JARCOM&#39;: &#39;$JAR $_JARFLAGS $TARGET $_JARMANIFEST $_JARSOURCES&#39;,
+  &#39;_JARFLAGS&#39;: &lt;function jarFlags at 0x000001F3D9AB6EF0&gt;,
+  &#39;_JARMANIFEST&#39;: &lt;function jarManifest at 0x000001F3D9AB6E60&gt;,
+  &#39;_JARSOURCES&#39;: &lt;function jarSources at 0x000001F3D9AB5990&gt;,
+  &#39;_JAVABOOTCLASSPATH&#39;: &#39;${_javapathopt(&quot;-bootclasspath&quot;, &#39;
+                        &#39;&quot;JAVABOOTCLASSPATH&quot;)} &#39;,
+  &#39;_JAVACCOM&#39;: &#39;$JAVAC $JAVACFLAGS $_JAVABOOTCLASSPATH $_JAVACLASSPATH -d &#39;
+               &#39;${TARGET.attributes.java_classdir} $_JAVASOURCEPATH $SOURCES&#39;,
+  &#39;_JAVACLASSPATH&#39;: &#39;${_javapathopt(&quot;-classpath&quot;, &quot;JAVACLASSPATH&quot;)} &#39;,
+  &#39;_JAVASOURCEPATH&#39;: &#39;${_javapathopt(&quot;-sourcepath&quot;, &quot;JAVASOURCEPATH&quot;, &#39;
+                     &#39;&quot;_JAVASOURCEPATHDEFAULT&quot;)} &#39;,
+  &#39;_JAVASOURCEPATHDEFAULT&#39;: &#39;${TARGET.attributes.java_sourcedir}&#39;,
+  &#39;_LDMODULESONAME&#39;: &lt;function _ldmodule_soname at 0x000001F3D9AE9000&gt;,
+  &#39;_LDMODULESOVERSION&#39;: &lt;function _ldmodule_soversion at 0x000001F3D9AE8F70&gt;,
+  &#39;_LDMODULESUFFIX&#39;: &#39;${LDMODULESUFFIX}${_LDMODULEVERSION}&#39;,
+  &#39;_LDMODULEVERSION&#39;: &lt;function _LDMODULEVERSION at 0x000001F3D9AE9090&gt;,
+  &#39;_LDMODULEVERSIONFLAGS&#39;: &#39;$LDMODULEVERSIONFLAGS -Wl,-soname=$_LDMODULESONAME&#39;,
+  &#39;_LIBDIRFLAGS&#39;: &#39;${_concat(LIBDIRPREFIX, LIBPATH, LIBDIRSUFFIX, __env__, &#39;
+                  &#39;RDirs, TARGET, SOURCE, affect_signature=False)}&#39;,
+  &#39;_LIBFLAGS&#39;: &#39;${_stripixes(LIBLINKPREFIX, LIBS, LIBLINKSUFFIX, LIBPREFIXES, &#39;
+               &#39;LIBSUFFIXES, __env__)}&#39;,
+  &#39;_RPATH&#39;: &#39;${_concat(RPATHPREFIX, RPATH, RPATHSUFFIX, __env__)}&#39;,
+  &#39;_SHDLIBVERSIONFLAGS&#39;: &#39;$SHDLIBVERSIONFLAGS -L-soname=$_SHLIBSONAME&#39;,
+  &#39;_SHLIBSONAME&#39;: &lt;function _soname at 0x000001F3D9AE8CA0&gt;,
+  &#39;_SHLIBSOVERSION&#39;: &lt;function _soversion at 0x000001F3D9AE8C10&gt;,
+  &#39;_SHLIBSUFFIX&#39;: &#39;$SHLIBSUFFIX&#39;,
+  &#39;_SHLIBVERSION&#39;: &quot;${SHLIBVERSION and &#39;.&#39;+SHLIBVERSION or &#39;&#39;}&quot;,
+  &#39;_SHLIBVERSIONFLAGS&#39;: &#39;$SHLIBVERSIONFLAGS -Wl,-soname=$_SHLIBSONAME&#39;,
+  &#39;__DSHLIBVERSIONFLAGS&#39;: &#39;${__libversionflags(__env__,&quot;DSHLIBVERSION&quot;,&quot;_DSHLIBVERSIONFLAGS&quot;)}&#39;,
+  &#39;__LDMODULEVERSIONFLAGS&#39;: &#39;${__libversionflags(__env__,&quot;LDMODULEVERSION&quot;,&quot;_LDMODULEVERSIONFLAGS&quot;)}&#39;,
+  &#39;__SHLIBVERSIONFLAGS&#39;: &#39;${__libversionflags(__env__,&quot;SHLIBVERSION&quot;,&quot;_SHLIBVERSIONFLAGS&quot;)}&#39;,
+  &#39;__lib_either_version_flag&#39;: &lt;function __lib_either_version_flag at 0x000001F3D93B7250&gt;,
+  &#39;__libversionflags&#39;: &lt;function __libversionflags at 0x000001F3D93B6F80&gt;,
+  &#39;_concat&#39;: &lt;function _concat at 0x000001F3D93B6CB0&gt;,
+  &#39;_defines&#39;: &lt;function _defines at 0x000001F3D93B6EF0&gt;,
+  &#39;_get_ldmodule_stem&#39;: &lt;function _get_ldmodule_stem at 0x000001F3D9AE8EE0&gt;,
+  &#39;_get_shlib_dir&#39;: &lt;function _get_shlib_dir at 0x000001F3D9AE8DC0&gt;,
+  &#39;_get_shlib_stem&#39;: &lt;function _get_shlib_stem at 0x000001F3D9AE8D30&gt;,
+  &#39;_javapathopt&#39;: &lt;class &#39;SCons.Tool.javac.pathopt&#39;&gt;,
+  &#39;_stripixes&#39;: &lt;function _stripixes at 0x000001F3D93B6DD0&gt;}
+scons: done reading SConscript files.
+scons: Building targets ...
+scons: `.&#39; is up to date.
+scons: done building targets.
+</pre></div>
+</div>
+</section>
+<section id="c">
+<h4>C文件编译行为分析<a class="headerlink" href="#c" title="此标题的永久链接"></a></h4>
+<p>首先我们调整下编译行为，注释<code class="docutils literal notranslate"><span class="pre">Program</span></code>，只执行<code class="docutils literal notranslate"><span class="pre">Object</span></code>，可以看到其最终执行了<code class="docutils literal notranslate"><span class="pre">gcc</span> <span class="pre">-o</span> <span class="pre">main.o</span> <span class="pre">-c</span> <span class="pre">main.c</span></code>，那为什么其知道要使用这个命令呢？如果我需要加一些编译参数，应该如何配置呢？如果要进行嵌入式开发，需要替换gcc为aram-xx-gcc如何处理？</p>
+<p><img alt="image-20220913212755986" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220913212755986.png" /></p>
+<p>从上文可知，scons是通过<code class="docutils literal notranslate"><span class="pre">CCCOM</span></code>来指导c文件编译的。从官网上也可以看出是通过这个来完成对c的源文件编译，生成object文件。</p>
+<p><img alt="image-20220914132041877" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220914132041877.png" /></p>
+<p>通过dump可知，默认配置下，各个参数如下：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TARGET</span></code>：就是目标文件</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SOURCES</span></code>：就是源文件列表</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CFLAGS</span></code>：通用C配置参数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CCFLAGS</span></code>：通用C和C++公用的配置参数，因为scons支持多个语言，配置了这个参数，其同时会在C++编译时使用。详细可以参考：<code class="docutils literal notranslate"><span class="pre">CXXCOM</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_CCCOMCOM</span></code>： 更多参数配置，如-D或者-I等配置。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">CPPFLAGS</span></code>：用于预处理相关的配置，既可以用于C编译，同时也被用于ASM编译。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_CPPDEFFLAGS</span></code>：用于-D的预编译配置。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_CPPINCFLAGS</span></code>：用于-I的include路径配置。</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
+  &#39;CC&#39;: &#39;gcc&#39;,
+  &#39;CCCOM&#39;: &#39;$CC -o $TARGET -c $CFLAGS $CCFLAGS $_CCCOMCOM $SOURCES&#39;,
+  &#39;CCFLAGS&#39;: [],
+  &#39;CFLAGS&#39;: [],
+  &#39;_CCCOMCOM&#39;: &#39;$CPPFLAGS $_CPPDEFFLAGS $_CPPINCFLAGS&#39;,
+  &#39;CPPDEFPREFIX&#39;: &#39;-D&#39;,
+  &#39;CPPDEFSUFFIX&#39;: &#39;&#39;,
+  &#39;_CPPDEFFLAGS&#39;: &#39;${_defines(CPPDEFPREFIX, CPPDEFINES, CPPDEFSUFFIX, __env__, &#39;
+                  &#39;TARGET, SOURCE)}&#39;,
+  &#39;INCPREFIX&#39;: &#39;-I&#39;,
+  &#39;INCSUFFIX&#39;: &#39;&#39;,
+  &#39;_CPPINCFLAGS&#39;: &#39;${_concat(INCPREFIX, CPPPATH, INCSUFFIX, __env__, RDirs, &#39;
+                  &#39;TARGET, SOURCE, affect_signature=False)}&#39;,
+}
+</pre></div>
+</div>
+<p>其实熟悉GCC的基本已经看明白了，其实把gcc编译object的参数全部配置好了，需要的话直接改env对应的参数即可。</p>
+<p>在示例中，<code class="docutils literal notranslate"><span class="pre">obj</span> <span class="pre">=</span> <span class="pre">Object('main.c')</span></code>中<code class="docutils literal notranslate"><span class="pre">SOURCES</span> <span class="pre">=</span> <span class="pre">[main.c]</span></code>，<code class="docutils literal notranslate"><span class="pre">TARGET</span> <span class="pre">=</span> <span class="pre">main.o</span></code>，其他参数由于都没开启，所以没显示。最终就是我们看到的gcc操作。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">gcc</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="n">main</span><span class="p">.</span><span class="n">o</span><span class="w"> </span><span class="o">-</span><span class="n">c</span><span class="w"> </span><span class="n">main</span><span class="p">.</span><span class="n">c</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">obj</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span><span class="s1">&#39;main.c&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>假设调整<code class="docutils literal notranslate"><span class="pre">CCFLAGS</span></code>，加入<code class="docutils literal notranslate"><span class="pre">-g</span></code>参数，编译结果如下图所示，可以看出确实是跟着变的，之后我们只要对应改相关的参数，就可以做到修改gcc的目的。</p>
+<p><img alt="image-20220914134548062" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220914134548062.png" /></p>
+</section>
+<section id="asm">
+<h4>ASM文件编译行为分析<a class="headerlink" href="#asm" title="此标题的永久链接"></a></h4>
+<p>在PC环境下，基本很少写ASM相关的程序，而在嵌入式环境下，不管是<code class="docutils literal notranslate"><span class="pre">startup</span></code>文件还是一些特殊用途的行为，都需要使用ASM语句进行操作。</p>
+<p>类似于C文件的编译过程，由于PC环境所需的汇编指令各不相同，在嵌入式系统下针对对应的芯片，也有不同汇编指令，本节只对相关配置进行说明。</p>
+<p>从上文可知，scons是通过<code class="docutils literal notranslate"><span class="pre">ASCOM</span></code>来指导asm文件编译的。从官网上也可以看出是通过这个来完成对c的源文件编译，生成object文件。</p>
+<p><img alt="image-20220915091107811" src="14_bobwenstudy/05_compile/C:/Users/wenbo/AppData/Roaming/Typora/typora-user-images/image-20220915091107811.png" /></p>
+<p>通过dump可知，默认配置下，各个参数如下：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TARGET</span></code>：就是目标文件</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SOURCES</span></code>：就是源文件列表</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ASFLAGS</span></code>：通用ASM配置参数</p></li>
+</ul>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
+  &#39;AS&#39;: &#39;as&#39;,
+  &#39;ASCOM&#39;: &#39;$AS $ASFLAGS -o $TARGET $SOURCES&#39;,
+  &#39;ASFLAGS&#39;: [],
+}
+</pre></div>
+</div>
+<p>和gcc类似，实际是使用<code class="docutils literal notranslate"><span class="pre">as</span></code>来对ASM程序进行编译，生成object文件。</p>
+</section>
+<section id="link">
+<h4>Link编译行为分析<a class="headerlink" href="#link" title="此标题的永久链接"></a></h4>
+<p>在完成Object的文件编译后，生成了一个或多个的Object文件。编译的最后一步是将这些Object文件Link为Program程序。</p>
+<p>我们保留生成的Object，只执行<code class="docutils literal notranslate"><span class="pre">Program</span></code>，</p>
+<p>首先我们调整下编译行为，注释<code class="docutils literal notranslate"><span class="pre">Program</span></code>，只执行<code class="docutils literal notranslate"><span class="pre">Object</span></code>，可以看到其最终执行了<code class="docutils literal notranslate"><span class="pre">gcc</span> <span class="pre">-o</span> <span class="pre">main.exe</span> <span class="pre">main.o</span></code>，那为什么其知道要使用这个命令呢？如果我需要加一些编译参数，应该如何配置呢？如果要进行嵌入式开发，需要替换gcc为aram-xx-ld如何处理？</p>
+<p><img alt="image-20220915092157352" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220915092157352.png" /></p>
+<p>从上文可知，scons是通过<code class="docutils literal notranslate"><span class="pre">LINKCOM</span></code>来指导LINK的。从官网上也可以看出是通过这个来完成对Object文件Link流程的。</p>
+<p><img alt="image-20220915092318063" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220915092318063.png" /></p>
+<p>通过dump可知，默认配置下，各个参数如下，由于LINK实际环境使用的程序各不一样，所以实际是一个python对象：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TARGET</span></code>：就是目标文件</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SOURCES</span></code>：就是源文件列表</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LINKFLAGS</span></code>：通用ld配置参数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_LIBDIRFLAGS</span></code>：用于-L的lib路径配置，<code class="docutils literal notranslate"><span class="pre">LIBPATH</span></code>为具体路径</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_LIBFLAGS</span></code>： 用于-l的lib文件配置，<code class="docutils literal notranslate"><span class="pre">LIBS</span></code>为具体lib名称。</p></li>
+</ul>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
+  &#39;LINK&#39;: &#39;$SMARTLINK&#39;,
+  &#39;LINKCOM&#39;: &#39;$LINK -o $TARGET $LINKFLAGS $__RPATH $SOURCES $_LIBDIRFLAGS &#39;
+             &#39;$_LIBFLAGS&#39;,
+  &#39;LINKFLAGS&#39;: [],
+  &#39;LIBDIRPREFIX&#39;: &#39;-L&#39;,
+  &#39;LIBDIRSUFFIX&#39;: &#39;&#39;,
+  &#39;_LIBDIRFLAGS&#39;: &#39;${_concat(LIBDIRPREFIX, LIBPATH, LIBDIRSUFFIX, __env__, &#39;
+                  &#39;RDirs, TARGET, SOURCE, affect_signature=False)}&#39;,
+  &#39;LIBLINKPREFIX&#39;: &#39;-l&#39;,
+  &#39;LIBLINKSUFFIX&#39;: &#39;&#39;,
+  &#39;_LIBFLAGS&#39;: &#39;${_stripixes(LIBLINKPREFIX, LIBS, LIBLINKSUFFIX, LIBPREFIXES, &#39;
+               &#39;LIBSUFFIXES, __env__)}&#39;,
+}
+</pre></div>
+</div>
+<p>和GCC一样，Program最终调用的就是这个配置。</p>
+<p>假设调整<code class="docutils literal notranslate"><span class="pre">LINKFLAGS</span></code>，加入<code class="docutils literal notranslate"><span class="pre">-g</span></code>参数，编译结果如下图所示，可以看出确实是跟着变的，之后我们只要对应改相关的参数，就可以做到修改link的目的。</p>
+<p><img alt="image-20220915093322494" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220915093322494.png" /></p>
+</section>
+</section>
+<section id="id21">
+<h3>嵌入式开发和Scons模板<a class="headerlink" href="#id21" title="此标题的永久链接"></a></h3>
+<p>默认情况下，c编译是根据具体编译环境来的，scons会自己选定gcc程序、asm程序和Link程序，但是在嵌入式开发时，需要指定交叉编译器，按照之前的所描述的，其实大家已经清楚了，只需要调整相应的配置参数即可。</p>
+<p>此外嵌入式开发也有一些特殊的配置，这都需要我们理解并调整配置参数才行。</p>
+<p>如下所示，每行都有注释，下面对一些关键参数/函数进行说明：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">get_path_files</span></code>：工具函数，获取路径下所有特定后缀的文件，当然可以用其他方式实现（实现这个函数主要为了写path的时候方便）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GCC_ARM_PATH</span></code>：交叉工具链路径，scons直接改工作路径不怎么会，直接指定路径</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PLF</span></code>：编译平台，默认使用PC编译，当然嵌入式开发可以选<code class="docutils literal notranslate"><span class="pre">'arm'</span></code>，之后会自动去配置相关参数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PREFIX</span></code>：嵌入式开发需要，交叉工具链前缀</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SPEC_LD_FLAGS</span></code>：arm交叉工具链开发的时候，LD使用有一些特殊的要求，scons原生的参数不怎么好用，需要在<code class="docutils literal notranslate"><span class="pre">_LIBFLAGS</span></code>参数尾巴拼接上Map信息，其他工具链有特殊要求也可以根据需要调整。</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="k">def</span> <span class="nf">get_path_files</span><span class="p">(</span><span class="n">dirs</span><span class="p">,</span> <span class="n">file_ext</span><span class="p">):</span>
+    <span class="n">path_files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># print(&#39;dir: &#39; + str(dirs))</span>
+    <span class="k">for</span> <span class="nb">dir</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+        <span class="c1"># print(&#39;dir: &#39; + dir)</span>
+        <span class="n">path_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Glob</span><span class="p">(</span><span class="nb">dir</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">file_ext</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">path_files</span>
+
+
+<span class="n">GCC_ARM_PATH</span> <span class="o">=</span> <span class="s1">&#39;D:/env/gcc-arm-none-eabi-4_8-2014q3-20140805-win32&#39;</span>
+
+<span class="c1">#PLF = &#39;arm&#39;</span>
+<span class="n">PLF</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+<span class="c1"># toolchains</span>
+<span class="k">if</span> <span class="n">PLF</span> <span class="o">==</span> <span class="s1">&#39;arm&#39;</span><span class="p">:</span>
+    <span class="n">PREFIX</span> <span class="o">=</span> <span class="n">GCC_ARM_PATH</span> <span class="o">+</span> <span class="s1">&#39;/bin/arm-none-eabi-&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">PREFIX</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+<span class="n">CC</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;gcc&#39;</span>
+<span class="n">AS</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;as&#39;</span>
+<span class="n">AR</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;ar&#39;</span>
+<span class="n">CXX</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;g++&#39;</span>
+<span class="n">LINK</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;ld&#39;</span>
+
+<span class="n">SIZE</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;size&#39;</span>
+<span class="n">OBJDUMP</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;objdump&#39;</span>
+<span class="n">OBJCPY</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;objcopy&#39;</span>
+
+
+<span class="n">TARGET_PATH</span> <span class="o">=</span> <span class="s1">&#39;build/&#39;</span>
+<span class="n">TARGET_NAME</span> <span class="o">=</span> <span class="s1">&#39;main&#39;</span>
+<span class="n">TARGET_WITHOUT_SUFFIX</span> <span class="o">=</span> <span class="n">TARGET_PATH</span> <span class="o">+</span> <span class="n">TARGET_NAME</span>
+
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># C source dirs config</span>
+<span class="n">C_DIRS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#C_DIRS.append(&#39;src&#39;)</span>
+
+<span class="c1"># C source files config</span>
+<span class="n">C_FILES</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#C_FILES.append(&#39;main.c&#39;)</span>
+
+<span class="c1"># Create c sources list</span>
+<span class="n">C_SRC_LIST</span> <span class="o">=</span> <span class="n">get_path_files</span><span class="p">(</span><span class="n">C_DIRS</span><span class="p">,</span> <span class="s1">&#39;*.c&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">C_FILES</span>
+
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># ASM source dirs config</span>
+<span class="n">AS_DIRS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#AS_DIRS.append(&#39;src&#39;)</span>
+
+<span class="c1"># ASM source files config</span>
+<span class="n">AS_FILES</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#AS_FILES.append(&#39;startup.s&#39;)</span>
+
+<span class="n">AS_SRC_LIST</span> <span class="o">=</span> <span class="n">get_path_files</span><span class="p">(</span><span class="n">AS_DIRS</span><span class="p">,</span> <span class="s1">&#39;*.s&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">AS_FILES</span>
+
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># -I, Include path config</span>
+<span class="n">CPP_PATH</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#CPP_PATH.append(&#39;inc&#39;)</span>
+
+<span class="c1"># -D, Preprocess Define</span>
+<span class="n">CPP_DEFINES</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#CPP_DEFINES.append(&#39;CFG_TEST&#39;)</span>
+
+<span class="c1"># C generate define</span>
+<span class="n">C_FLAGS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">C_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-O1&#39;</span><span class="p">)</span>
+<span class="n">C_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-g&#39;</span><span class="p">)</span>
+<span class="n">C_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-std=c99&#39;</span><span class="p">)</span>
+
+<span class="c1"># C and C++ generate define</span>
+<span class="n">CC_FLAGS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">CC_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-Wall&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># ASM generate define</span>
+<span class="n">AS_FLAGS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">AS_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-g&#39;</span><span class="p">)</span>
+
+
+
+
+<span class="c1"># Link Config</span>
+<span class="n">LINK_FLAGS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#LINK_FLAGS.append(&#39;-Wl,–gc-sections&#39;)</span>
+
+
+<span class="c1"># lib path.</span>
+<span class="n">LIB_PATH</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#LIB_PATH.append(&#39;lib&#39;)</span>
+
+
+<span class="c1"># .lib, .a file</span>
+<span class="n">LIBS_FILES</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#LIBS_FILES.append(&#39;test&#39;)</span>
+
+<span class="c1"># spec ld flag. Arm spec.</span>
+<span class="n">SPEC_LD_FLAGS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">if</span> <span class="n">PLF</span> <span class="o">==</span> <span class="s1">&#39;arm&#39;</span><span class="p">:</span>
+    <span class="n">SPEC_LD_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-Map&#39;</span><span class="p">)</span>
+    <span class="n">SPEC_LD_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TARGET_WITHOUT_SUFFIX</span> <span class="o">+</span> <span class="s1">&#39;.map&#39;</span><span class="p">)</span>
+    <span class="n">SPEC_LD_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-T&#39;</span> <span class="o">+</span> <span class="s1">&#39;src/map_ram.txt&#39;</span><span class="p">)</span>
+
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">()</span>
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># Step0: toolchains setting.</span>
+<span class="k">if</span> <span class="n">PLF</span> <span class="o">==</span> <span class="s1">&#39;arm&#39;</span><span class="p">:</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;CC&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CC</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">AS</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;AR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">AR</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;CXX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CXX</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;LINK&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">LINK</span>
+
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;OBJSUFFIX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;.o&#39;</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;LIBPREFIX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;lib&#39;</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;LIBSUFFIX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;.a&#39;</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;PROGSUFFIX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;.elf&#39;</span>
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># Step1: C compile setting. use &lt;print(env.Dump())&gt; for details.</span>
+<span class="c1"># &#39;CCCOM&#39;: &#39;$CC -o $TARGET -c $CFLAGS $CCFLAGS $_CCCOMCOM $SOURCES&#39;</span>
+
+<span class="c1"># Step1.0: General options, like: optim/debug setting. $CFLAGS.</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">CFLAGS</span><span class="o">=</span><span class="n">C_FLAGS</span><span class="p">)</span>
+
+<span class="c1"># Step1.1: General options, other setting. $CCFLAGS.</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">CCFLAGS</span><span class="o">=</span><span class="n">CC_FLAGS</span><span class="p">)</span>
+
+<span class="c1"># Step1.2: -D, -I, setting. $_CCCOMCOM</span>
+<span class="c1"># &#39;_CCCOMCOM&#39;: &#39;$CPPFLAGS $_CPPDEFFLAGS $_CPPINCFLAGS&#39;</span>
+<span class="c1"># StepX.2.0: CPPFLAGS setting. --- do nothing.</span>
+<span class="c1"># StepX.2.1: -D setting. </span>
+<span class="c1"># &#39;CPPDEFPREFIX&#39;: &#39;-D&#39;</span>
+<span class="c1"># &#39;_CPPDEFFLAGS&#39;: &#39;${_defines(CPPDEFPREFIX, CPPDEFINES, CPPDEFSUFFIX, __env__, &#39;</span>
+<span class="c1">#                 &#39;TARGET, SOURCE)}&#39;,</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">CPPDEFINES</span><span class="o">=</span><span class="n">CPP_DEFINES</span><span class="p">)</span>
+<span class="c1"># Step1.2.2: -I setting. </span>
+<span class="c1"># &#39;INCPREFIX&#39;: &#39;-I&#39;</span>
+<span class="c1"># &#39;_CPPINCFLAGS&#39;: &#39;${_concat(INCPREFIX, CPPPATH, INCSUFFIX, __env__, RDirs, &#39;</span>
+<span class="c1">#                 &#39;TARGET, SOURCE, affect_signature=False)}&#39;,</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">CPPPATH</span><span class="o">=</span><span class="n">CPP_PATH</span><span class="p">)</span>
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># Step2: ASM compile setting. use &lt;print(env.Dump())&gt; for details.</span>
+<span class="c1"># &#39;ASCOM&#39;: &#39;$AS $ASFLAGS -o $TARGET $SOURCES&#39;</span>
+
+<span class="c1"># Step2.0: General options. $ASFLAGS.</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">ASFLAGS</span><span class="o">=</span><span class="n">AS_FLAGS</span><span class="p">)</span>
+
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># Step3: LINK setting. use &lt;print(env.Dump())&gt; for details.</span>
+<span class="c1"># &#39;LINKCOM&#39;: &#39;$LINK -o $TARGET $LINKFLAGS $__RPATH $SOURCES $_LIBDIRFLAGS &#39;</span>
+<span class="c1">#            &#39;$_LIBFLAGS&#39;,</span>
+
+<span class="c1"># Step3.0: General options. $LINKFLAGS.</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">LINKFLAGS</span><span class="o">=</span><span class="n">LINK_FLAGS</span><span class="p">)</span>
+
+<span class="c1"># Step3.1: Link path setting. $_LIBDIRFLAGS.</span>
+<span class="c1"># &#39;_LIBDIRFLAGS&#39;: &#39;${_concat(LIBDIRPREFIX, LIBPATH, LIBDIRSUFFIX, __env__, &#39;</span>
+<span class="c1">#                 &#39;RDirs, TARGET, SOURCE, affect_signature=False)}&#39;,</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">LIBPATH</span><span class="o">=</span><span class="n">LIB_PATH</span><span class="p">)</span>
+
+<span class="c1"># Step3.2: libs setting, like *.a, *.lib. $_LIBFLAGS.</span>
+<span class="c1">#   &#39;_LIBFLAGS&#39;: &#39;${_stripixes(LIBLINKPREFIX, LIBS, LIBLINKSUFFIX, LIBPREFIXES, &#39;</span>
+<span class="c1">#                &#39;LIBSUFFIXES, __env__)}&#39;,</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">LIBS</span><span class="o">=</span><span class="n">LIBS_FILES</span><span class="p">)</span>
+
+<span class="c1"># Step3.3: Add some spec params. must append at end.</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">_LIBFLAGS</span><span class="o">=</span><span class="n">SPEC_LD_FLAGS</span><span class="p">)</span>
+
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># Step4: Compile Object files, use:</span>
+<span class="c1">#        1. &lt;$CCCOM&gt;: For c code compile</span>
+<span class="c1">#        2. &lt;$ASCOM&gt;: For asm code compile</span>
+<span class="n">c_objs</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span><span class="n">C_SRC_LIST</span><span class="p">)</span>
+<span class="n">as_objs</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span><span class="n">AS_SRC_LIST</span><span class="p">)</span>
+
+
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># Step5: Compile target &lt;.elf&gt;, use &lt;$LINKCOM&gt;.</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">Program</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">TARGET_WITHOUT_SUFFIX</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="p">[</span><span class="n">c_objs</span><span class="p">,</span> <span class="n">as_objs</span><span class="p">])</span>
+
+<span class="c1"># Other compile target.</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Command</span><span class="p">(</span><span class="n">TARGET_WITHOUT_SUFFIX</span> <span class="o">+</span> <span class="s1">&#39;.bin&#39;</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">OBJCPY</span> <span class="o">+</span> <span class="s1">&#39; -v -O binary $SOURCE $TARGET&#39;</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Command</span><span class="p">(</span><span class="n">TARGET_WITHOUT_SUFFIX</span> <span class="o">+</span> <span class="s1">&#39;.lst&#39;</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">OBJDUMP</span> <span class="o">+</span> <span class="s1">&#39; --source --all-headers --demangle --line-numbers --wide $SOURCE &gt; $TARGET&#39;</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Command</span><span class="p">(</span><span class="n">TARGET_WITHOUT_SUFFIX</span> <span class="o">+</span> <span class="s1">&#39;.size&#39;</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">SIZE</span> <span class="o">+</span> <span class="s1">&#39; --format=berkeley $SOURCE&#39;</span><span class="p">)</span>
+
+<span class="c1"># Dump() env params, if need.</span>
+<span class="c1">#print(env.Dump())</span>
+
+</pre></div>
+</div>
+</section>
+<section id="id22">
+<h3>模板使用示例<a class="headerlink" href="#id22" title="此标题的永久链接"></a></h3>
+<p>下面举一个例子，还是以PC举例，嵌入式开发自己根据需要配置即可。</p>
+<p>有如下的一个多文件结构的C代码，目前要用scons来编译，在根目录下写<code class="docutils literal notranslate"><span class="pre">SConstruct</span></code>配置文件。</p>
+<p><img alt="image-20220915220449757" src="https://markdown-1306347444.cos.ap-shanghai.myqcloud.com/img/image-20220915220449757.png" /></p>
+<p>最终的SConstruct配置如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="k">def</span> <span class="nf">get_path_files</span><span class="p">(</span><span class="n">dirs</span><span class="p">,</span> <span class="n">file_ext</span><span class="p">):</span>
+    <span class="n">path_files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># print(&#39;dir: &#39; + str(dirs))</span>
+    <span class="k">for</span> <span class="nb">dir</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+        <span class="c1"># print(&#39;dir: &#39; + dir)</span>
+        <span class="n">path_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Glob</span><span class="p">(</span><span class="nb">dir</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">file_ext</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">path_files</span>
+
+
+<span class="n">GCC_ARM_PATH</span> <span class="o">=</span> <span class="s1">&#39;D:/env/gcc-arm-none-eabi-4_8-2014q3-20140805-win32&#39;</span>
+
+<span class="c1">#PLF = &#39;arm&#39;</span>
+<span class="n">PLF</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+<span class="c1"># toolchains</span>
+<span class="k">if</span> <span class="n">PLF</span> <span class="o">==</span> <span class="s1">&#39;arm&#39;</span><span class="p">:</span>
+    <span class="n">PREFIX</span> <span class="o">=</span> <span class="n">GCC_ARM_PATH</span> <span class="o">+</span> <span class="s1">&#39;/bin/arm-none-eabi-&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">PREFIX</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+<span class="n">CC</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;gcc&#39;</span>
+<span class="n">AS</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;as&#39;</span>
+<span class="n">AR</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;ar&#39;</span>
+<span class="n">CXX</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;g++&#39;</span>
+<span class="n">LINK</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;ld&#39;</span>
+
+<span class="n">SIZE</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;size&#39;</span>
+<span class="n">OBJDUMP</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;objdump&#39;</span>
+<span class="n">OBJCPY</span> <span class="o">=</span> <span class="n">PREFIX</span> <span class="o">+</span> <span class="s1">&#39;objcopy&#39;</span>
+
+
+<span class="n">TARGET_PATH</span> <span class="o">=</span> <span class="s1">&#39;build/&#39;</span>
+<span class="n">TARGET_NAME</span> <span class="o">=</span> <span class="s1">&#39;main&#39;</span>
+<span class="n">TARGET_WITHOUT_SUFFIX</span> <span class="o">=</span> <span class="n">TARGET_PATH</span> <span class="o">+</span> <span class="n">TARGET_NAME</span>
+
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># C source dirs config</span>
+<span class="n">C_DIRS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">C_DIRS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;app\driver\src&#39;</span><span class="p">)</span>
+<span class="n">C_DIRS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;module1\src&#39;</span><span class="p">)</span>
+<span class="n">C_DIRS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;module2\src&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># C source files config</span>
+<span class="n">C_FILES</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">C_FILES</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;app\main.c&#39;</span><span class="p">)</span>
+
+<span class="c1"># Create c sources list</span>
+<span class="n">C_SRC_LIST</span> <span class="o">=</span> <span class="n">get_path_files</span><span class="p">(</span><span class="n">C_DIRS</span><span class="p">,</span> <span class="s1">&#39;*.c&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">C_FILES</span>
+
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># ASM source dirs config</span>
+<span class="n">AS_DIRS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#AS_DIRS.append(&#39;src&#39;)</span>
+
+<span class="c1"># ASM source files config</span>
+<span class="n">AS_FILES</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#AS_FILES.append(&#39;startup.s&#39;)</span>
+
+<span class="n">AS_SRC_LIST</span> <span class="o">=</span> <span class="n">get_path_files</span><span class="p">(</span><span class="n">AS_DIRS</span><span class="p">,</span> <span class="s1">&#39;*.s&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">AS_FILES</span>
+
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># -I, Include path config</span>
+<span class="n">CPP_PATH</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">CPP_PATH</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;app\driver\inc&#39;</span><span class="p">)</span>
+<span class="n">CPP_PATH</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;module1\inc&#39;</span><span class="p">)</span>
+<span class="n">CPP_PATH</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;module2\inc&#39;</span><span class="p">)</span>
+
+<span class="c1"># -D, Preprocess Define</span>
+<span class="n">CPP_DEFINES</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#CPP_DEFINES.append(&#39;CFG_TEST&#39;)</span>
+
+<span class="c1"># C generate define</span>
+<span class="n">C_FLAGS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">C_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-O1&#39;</span><span class="p">)</span>
+<span class="n">C_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-g&#39;</span><span class="p">)</span>
+<span class="n">C_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-std=c99&#39;</span><span class="p">)</span>
+
+<span class="c1"># C and C++ generate define</span>
+<span class="n">CC_FLAGS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">CC_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-Wall&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># ASM generate define</span>
+<span class="n">AS_FLAGS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">AS_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-g&#39;</span><span class="p">)</span>
+
+
+
+
+<span class="c1"># Link Config</span>
+<span class="n">LINK_FLAGS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#LINK_FLAGS.append(&#39;-Wl,–gc-sections&#39;)</span>
+
+
+<span class="c1"># lib path.</span>
+<span class="n">LIB_PATH</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#LIB_PATH.append(&#39;lib&#39;)</span>
+
+
+<span class="c1"># .lib, .a file</span>
+<span class="n">LIBS_FILES</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#LIBS_FILES.append(&#39;test&#39;)</span>
+
+<span class="c1"># spec ld flag. Arm spec.</span>
+<span class="n">SPEC_LD_FLAGS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">if</span> <span class="n">PLF</span> <span class="o">==</span> <span class="s1">&#39;arm&#39;</span><span class="p">:</span>
+    <span class="n">SPEC_LD_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-Map&#39;</span><span class="p">)</span>
+    <span class="n">SPEC_LD_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TARGET_WITHOUT_SUFFIX</span> <span class="o">+</span> <span class="s1">&#39;.map&#39;</span><span class="p">)</span>
+    <span class="n">SPEC_LD_FLAGS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-T&#39;</span> <span class="o">+</span> <span class="s1">&#39;src/map_ram.txt&#39;</span><span class="p">)</span>
+
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">()</span>
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># Step0: toolchains setting.</span>
+<span class="k">if</span> <span class="n">PLF</span> <span class="o">==</span> <span class="s1">&#39;arm&#39;</span><span class="p">:</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;CC&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CC</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">AS</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;AR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">AR</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;CXX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CXX</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;LINK&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">LINK</span>
+
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;OBJSUFFIX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;.o&#39;</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;LIBPREFIX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;lib&#39;</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;LIBSUFFIX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;.a&#39;</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;PROGSUFFIX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;.elf&#39;</span>
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># Step1: C compile setting. use &lt;print(env.Dump())&gt; for details.</span>
+<span class="c1"># &#39;CCCOM&#39;: &#39;$CC -o $TARGET -c $CFLAGS $CCFLAGS $_CCCOMCOM $SOURCES&#39;</span>
+
+<span class="c1"># Step1.0: General options, like: optim/debug setting. $CFLAGS.</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">CFLAGS</span><span class="o">=</span><span class="n">C_FLAGS</span><span class="p">)</span>
+
+<span class="c1"># Step1.1: General options, other setting. $CCFLAGS.</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">CCFLAGS</span><span class="o">=</span><span class="n">CC_FLAGS</span><span class="p">)</span>
+
+<span class="c1"># Step1.2: -D, -I, setting. $_CCCOMCOM</span>
+<span class="c1"># &#39;_CCCOMCOM&#39;: &#39;$CPPFLAGS $_CPPDEFFLAGS $_CPPINCFLAGS&#39;</span>
+<span class="c1"># StepX.2.0: CPPFLAGS setting. --- do nothing.</span>
+<span class="c1"># StepX.2.1: -D setting. </span>
+<span class="c1"># &#39;CPPDEFPREFIX&#39;: &#39;-D&#39;</span>
+<span class="c1"># &#39;_CPPDEFFLAGS&#39;: &#39;${_defines(CPPDEFPREFIX, CPPDEFINES, CPPDEFSUFFIX, __env__, &#39;</span>
+<span class="c1">#                 &#39;TARGET, SOURCE)}&#39;,</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">CPPDEFINES</span><span class="o">=</span><span class="n">CPP_DEFINES</span><span class="p">)</span>
+<span class="c1"># Step1.2.2: -I setting. </span>
+<span class="c1"># &#39;INCPREFIX&#39;: &#39;-I&#39;</span>
+<span class="c1"># &#39;_CPPINCFLAGS&#39;: &#39;${_concat(INCPREFIX, CPPPATH, INCSUFFIX, __env__, RDirs, &#39;</span>
+<span class="c1">#                 &#39;TARGET, SOURCE, affect_signature=False)}&#39;,</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">CPPPATH</span><span class="o">=</span><span class="n">CPP_PATH</span><span class="p">)</span>
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># Step2: ASM compile setting. use &lt;print(env.Dump())&gt; for details.</span>
+<span class="c1"># &#39;ASCOM&#39;: &#39;$AS $ASFLAGS -o $TARGET $SOURCES&#39;</span>
+
+<span class="c1"># Step2.0: General options. $ASFLAGS.</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">ASFLAGS</span><span class="o">=</span><span class="n">AS_FLAGS</span><span class="p">)</span>
+
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># Step3: LINK setting. use &lt;print(env.Dump())&gt; for details.</span>
+<span class="c1"># &#39;LINKCOM&#39;: &#39;$LINK -o $TARGET $LINKFLAGS $__RPATH $SOURCES $_LIBDIRFLAGS &#39;</span>
+<span class="c1">#            &#39;$_LIBFLAGS&#39;,</span>
+
+<span class="c1"># Step3.0: General options. $LINKFLAGS.</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">LINKFLAGS</span><span class="o">=</span><span class="n">LINK_FLAGS</span><span class="p">)</span>
+
+<span class="c1"># Step3.1: Link path setting. $_LIBDIRFLAGS.</span>
+<span class="c1"># &#39;_LIBDIRFLAGS&#39;: &#39;${_concat(LIBDIRPREFIX, LIBPATH, LIBDIRSUFFIX, __env__, &#39;</span>
+<span class="c1">#                 &#39;RDirs, TARGET, SOURCE, affect_signature=False)}&#39;,</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">LIBPATH</span><span class="o">=</span><span class="n">LIB_PATH</span><span class="p">)</span>
+
+<span class="c1"># Step3.2: libs setting, like *.a, *.lib. $_LIBFLAGS.</span>
+<span class="c1">#   &#39;_LIBFLAGS&#39;: &#39;${_stripixes(LIBLINKPREFIX, LIBS, LIBLINKSUFFIX, LIBPREFIXES, &#39;</span>
+<span class="c1">#                &#39;LIBSUFFIXES, __env__)}&#39;,</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">LIBS</span><span class="o">=</span><span class="n">LIBS_FILES</span><span class="p">)</span>
+
+<span class="c1"># Step3.3: Add some spec params. must append at end.</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">_LIBFLAGS</span><span class="o">=</span><span class="n">SPEC_LD_FLAGS</span><span class="p">)</span>
+
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># Step4: Compile Object files, use:</span>
+<span class="c1">#        1. &lt;$CCCOM&gt;: For c code compile</span>
+<span class="c1">#        2. &lt;$ASCOM&gt;: For asm code compile</span>
+<span class="n">c_objs</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span><span class="n">C_SRC_LIST</span><span class="p">)</span>
+<span class="n">as_objs</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span><span class="n">AS_SRC_LIST</span><span class="p">)</span>
+
+
+
+<span class="c1">###################################################################################</span>
+<span class="c1"># Step5: Compile target &lt;.elf&gt;, use &lt;$LINKCOM&gt;.</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">Program</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">TARGET_WITHOUT_SUFFIX</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="p">[</span><span class="n">c_objs</span><span class="p">,</span> <span class="n">as_objs</span><span class="p">])</span>
+
+<span class="c1"># Other compile target.</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Command</span><span class="p">(</span><span class="n">TARGET_WITHOUT_SUFFIX</span> <span class="o">+</span> <span class="s1">&#39;.bin&#39;</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">OBJCPY</span> <span class="o">+</span> <span class="s1">&#39; -v -O binary $SOURCE $TARGET&#39;</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Command</span><span class="p">(</span><span class="n">TARGET_WITHOUT_SUFFIX</span> <span class="o">+</span> <span class="s1">&#39;.lst&#39;</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">OBJDUMP</span> <span class="o">+</span> <span class="s1">&#39; --source --all-headers --demangle --line-numbers --wide $SOURCE &gt; $TARGET&#39;</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">Command</span><span class="p">(</span><span class="n">TARGET_WITHOUT_SUFFIX</span> <span class="o">+</span> <span class="s1">&#39;.size&#39;</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">SIZE</span> <span class="o">+</span> <span class="s1">&#39; --format=berkeley $SOURCE&#39;</span><span class="p">)</span>
+
+<span class="c1"># Dump() env params, if need.</span>
+<span class="c1">#print(env.Dump())</span>
+
+
+
+</pre></div>
+</div>
+<p>执行scons操作，可以看到相关参数的编译过程，最后也会生成bin、lst以及code size信息。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>D:<span class="se">\t</span>est<span class="se">\s</span>ample_4&gt;scons
+scons: Reading SConscript files ...
+scons: <span class="k">done</span> reading SConscript files.
+scons: Building targets ...
+gcc -o app<span class="se">\d</span>river<span class="se">\s</span>rc<span class="se">\d</span>river1.1.o -c -O1 -g -std<span class="o">=</span>c99 -Wall -Iapp<span class="se">\d</span>river<span class="se">\i</span>nc -Imodule1<span class="se">\i</span>nc -Imodule2<span class="se">\i</span>nc app<span class="se">\d</span>river<span class="se">\s</span>rc<span class="se">\d</span>river1.1.c
+gcc -o app<span class="se">\d</span>river<span class="se">\s</span>rc<span class="se">\d</span>river2.2.o -c -O1 -g -std<span class="o">=</span>c99 -Wall -Iapp<span class="se">\d</span>river<span class="se">\i</span>nc -Imodule1<span class="se">\i</span>nc -Imodule2<span class="se">\i</span>nc app<span class="se">\d</span>river<span class="se">\s</span>rc<span class="se">\d</span>river2.2.c
+gcc -o app<span class="se">\m</span>ain.o -c -O1 -g -std<span class="o">=</span>c99 -Wall -Iapp<span class="se">\d</span>river<span class="se">\i</span>nc -Imodule1<span class="se">\i</span>nc -Imodule2<span class="se">\i</span>nc app<span class="se">\m</span>ain.c
+gcc -o module1<span class="se">\s</span>rc<span class="se">\m</span>odule1.1.o -c -O1 -g -std<span class="o">=</span>c99 -Wall -Iapp<span class="se">\d</span>river<span class="se">\i</span>nc -Imodule1<span class="se">\i</span>nc -Imodule2<span class="se">\i</span>nc module1<span class="se">\s</span>rc<span class="se">\m</span>odule1.1.c
+gcc -o module1<span class="se">\s</span>rc<span class="se">\m</span>odule1.2.o -c -O1 -g -std<span class="o">=</span>c99 -Wall -Iapp<span class="se">\d</span>river<span class="se">\i</span>nc -Imodule1<span class="se">\i</span>nc -Imodule2<span class="se">\i</span>nc module1<span class="se">\s</span>rc<span class="se">\m</span>odule1.2.c
+gcc -o module2<span class="se">\s</span>rc<span class="se">\m</span>odule2.1.o -c -O1 -g -std<span class="o">=</span>c99 -Wall -Iapp<span class="se">\d</span>river<span class="se">\i</span>nc -Imodule1<span class="se">\i</span>nc -Imodule2<span class="se">\i</span>nc module2<span class="se">\s</span>rc<span class="se">\m</span>odule2.1.c
+gcc -o module2<span class="se">\s</span>rc<span class="se">\m</span>odule2.2.o -c -O1 -g -std<span class="o">=</span>c99 -Wall -Iapp<span class="se">\d</span>river<span class="se">\i</span>nc -Imodule1<span class="se">\i</span>nc -Imodule2<span class="se">\i</span>nc module2<span class="se">\s</span>rc<span class="se">\m</span>odule2.2.c
+gcc -o build<span class="se">\m</span>ain.exe app<span class="se">\d</span>river<span class="se">\s</span>rc<span class="se">\d</span>river1.1.o app<span class="se">\d</span>river<span class="se">\s</span>rc<span class="se">\d</span>river2.2.o module1<span class="se">\s</span>rc<span class="se">\m</span>odule1.1.o module1<span class="se">\s</span>rc<span class="se">\m</span>odule1.2.o module2<span class="se">\s</span>rc<span class="se">\m</span>odule2.1.o module2<span class="se">\s</span>rc<span class="se">\m</span>odule2.2.o app<span class="se">\m</span>ain.o
+objcopy -v -O binary build<span class="se">\m</span>ain.exe build<span class="se">\m</span>ain.bin
+copy from <span class="sb">`</span>build<span class="se">\m</span>ain.exe<span class="s1">&#39; [pei-i386] to `build\main.bin&#39;</span> <span class="o">[</span>binary<span class="o">]</span>
+objdump --source --all-headers --demangle --line-numbers --wide build<span class="se">\m</span>ain.exe &gt; build<span class="se">\m</span>ain.lst
+size --format<span class="o">=</span>berkeley build<span class="se">\m</span>ain.exe
+   text    data     bss     dec     hex filename
+  <span class="m">39620</span>    <span class="m">2944</span>    <span class="m">2676</span>   <span class="m">45240</span>    b0b8 build<span class="se">\m</span>ain.exe
+scons: <span class="k">done</span> building targets.
+
+D:<span class="se">\t</span>est<span class="se">\s</span>ample_4&gt;scons -c
+scons: Reading SConscript files ...
+scons: <span class="k">done</span> reading SConscript files.
+scons: Cleaning targets ...
+Removed app<span class="se">\d</span>river<span class="se">\s</span>rc<span class="se">\d</span>river1.1.o
+Removed app<span class="se">\d</span>river<span class="se">\s</span>rc<span class="se">\d</span>river2.2.o
+Removed app<span class="se">\m</span>ain.o
+Removed module1<span class="se">\s</span>rc<span class="se">\m</span>odule1.1.o
+Removed module1<span class="se">\s</span>rc<span class="se">\m</span>odule1.2.o
+Removed module2<span class="se">\s</span>rc<span class="se">\m</span>odule2.1.o
+Removed module2<span class="se">\s</span>rc<span class="se">\m</span>odule2.2.o
+Removed build<span class="se">\m</span>ain.exe
+Removed build<span class="se">\m</span>ain.bin
+Removed build<span class="se">\m</span>ain.lst
+scons: <span class="k">done</span> cleaning targets.
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="index.html" class="btn btn-neutral float-left" title="05_compile" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="02_makefile_shell_env.html" class="btn btn-neutral float-right" title="2. 使用Eclipse CDT build tools之后导致makefile环境错乱的问题" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

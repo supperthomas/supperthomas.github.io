@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5. RT-Thread 传感器软件包归类 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="6. RTTHREAD 软件包目录" href="04_rtthread_auto_update.html" />
+    <link rel="prev" title="4. RTTHREAD软件包目录自分类" href="02_software_introduce.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">RTTHRED: RT-Thread</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. RTTHREAD贡献TODO目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/02_RTTHREAD_introduce.html">2. RT-THREAD —-国产开源之光</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_software_package.html">3. RTTHREAD软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_software_introduce.html">4. RTTHREAD软件包目录自分类</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5. RT-Thread 传感器软件包归类</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">5.1. 简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">5.2. 传感器软件包列表</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04_rtthread_auto_update.html">6. RTTHREAD 软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_rtthread_bsp_board.html">7. RTTHREAD BSP board支持目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_rtthread_softpackage_build_guide.html">8. 软件包制作小计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/01_rtthread_bsp_porting.html">9. RTTHREAD移植新的BSP开发板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/02_rtthread_bsp_porting_gpio.html">10. RTTHREAD移植BSP驱动 GPIO篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/03_rtthread_bsp_porting_spi.html">11. RTTHREAD移植BSP驱动 SPI篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/04_rtthread_bsp_porting_uart.html">12. rt-thread 移植BSP驱动 uart篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_docker/01_docker_images.html">13. 如何用docker来学习rtthread-qemu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_llsync/01_llsync_Environment.html">14. LLSYNC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_llsync/02_llsync_struct_code.html">15. LLSYNC 移植指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_simular/01_keil_simulator.html">16. 如何在keil中STM32L496 跑simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_onchip/01_on_chip_file.html">17. STM32如何将文件放到内部flash里面</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">RTTHRED: RT-Thread</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">5. </span>RT-Thread 传感器软件包归类</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/RTTHREAD/02_softpackage_list/03_sensor_list.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="rt-thread">
+<h1><span class="section-number">5. </span>RT-Thread 传感器软件包归类<a class="headerlink" href="#rt-thread" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">5.1. </span>简介<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>介绍了目前已经适配了rtthread的sensor框架的软件包，注意：<strong>有些传感器是即支持IIC也支持SPI，但是目前适配sensor框架只用了一种通讯接口。</strong></p>
+</section>
+<section id="id2">
+<h2><span class="section-number">5.2. </span>传感器软件包列表<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th style="text-align: left;">传感器型号</th>
+<th>类型</th>
+<th>通讯接口</th>
+<th>厂家</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/RT-Thread-packages/aht10">AHT10</a></td>
+<td>温湿度传感器</td>
+<td>IIC</td>
+<td>ASAIR</td>
+<td>SMD封装可用于回流焊，精度一般</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/RT-Thread-packages/ap3216c">AP3216C</a></td>
+<td>接近感应与光照强度传感器</td>
+<td>IIC</td>
+<td>Kingbright</td>
+<td>集成光传感器，距离传感器，红外LED的芯片</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/sanjaywu/bh1750_sensor">BH1750</a></td>
+<td>光照强度传感器</td>
+<td>IIC</td>
+<td>ROHM</td>
+<td>16位量程</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/RT-Thread-packages/bma400">BMA400</a></td>
+<td>三轴加速度传感器</td>
+<td>IIC</td>
+<td>BOSH</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/RT-Thread-packages/bme280">BME280</a></td>
+<td>温湿度/气压传感器</td>
+<td>IIC</td>
+<td>BOSH</td>
+<td>温度、湿度、气压三合一传感器</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/luhuadong/rtt-bme680">BME680</a></td>
+<td>VOC 温湿度 气压传感器</td>
+<td>IIC</td>
+<td>BOSH</td>
+<td>贵</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/gmyFighting/bmi088">BMI088</a></td>
+<td>六轴传感器</td>
+<td>IIC</td>
+<td>BOSH</td>
+<td>3轴陀螺仪和3轴加速度计，可用于无人机和机器人</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/RT-Thread-packages/bmi160_bmx160">BMI160/BMX160</a></td>
+<td>六轴/九轴传感器</td>
+<td>IIC</td>
+<td>BOSH</td>
+<td>超低功耗；BMI：六轴 BMX：九轴</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/Prry/rtt-bmp180">BMP180</a></td>
+<td>气压/温度传感器</td>
+<td>IIC</td>
+<td>BOSH</td>
+<td>比较老了</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/nfsq246/RTT_BMP280">BMP280</a></td>
+<td>气压/温度传感器</td>
+<td>IIC/SPI</td>
+<td>BOSH</td>
+<td>应该是要替代BMP280的，支持IIC和SPI两种接口</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/luhuadong/rtt-ccs811">CCS811</a></td>
+<td>气体传感器</td>
+<td>IIC</td>
+<td>AMS</td>
+<td>用于检测室内低水平的挥发性有机化合物和二氧化碳浓度</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/MiraMEMS-Wonderful/da270-RT-Thread">DA270</a></td>
+<td>加速度三轴传感器</td>
+<td>IIC</td>
+<td>MiraMEMS</td>
+<td>超低功耗</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/MiraMEMS-Wonderful/df220-RT-Thread">DF220</a></td>
+<td>力传感器</td>
+<td>IIC</td>
+<td>MiraMEMS</td>
+<td>超低功耗</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/murphyzhao/dht11_rtt">DHT11</a></td>
+<td>温湿度传感器</td>
+<td>单总线</td>
+<td>AOSONG</td>
+<td>单总线通讯</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/luhuadong/rtt-dhtxx">DHTxx</a></td>
+<td>DHT家族大集合</td>
+<td>单总线</td>
+<td>AOSONG</td>
+<td>DHT11、DHT12、DHT21 和 DHT22 等型号</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/willianchanlovegithub/ds18b20">DS18B20</a></td>
+<td>温度传感器</td>
+<td>单总线</td>
+<td>UMW</td>
+<td>单总线温度传感器</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/luhuadong/rtt-gp2y10">GP2Y10</a></td>
+<td>灰尘检测传感器</td>
+<td>ADC</td>
+<td>SHARP</td>
+<td>粉尘传感器，模拟电压输出</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/jch12138/gy271">GY271</a></td>
+<td>地磁传感器</td>
+<td>IIC</td>
+<td>Honeywell</td>
+<td>测量范围: ±1.3-8Ga</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/Forest-Rain/hdc1000">HDC1000</a></td>
+<td>温湿度传感器</td>
+<td>IIC</td>
+<td>TI</td>
+<td>超低功耗，新设计推荐用HDC2010</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/Forest-Rain/hdc1000.git">HMC5883</a></td>
+<td>三轴磁力计</td>
+<td>IIC</td>
+<td>Honeywell</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/lucaslsh/hshcal001">HSHCAL001</a></td>
+<td>温湿度传感器</td>
+<td>IIC</td>
+<td>ALPSALPINE</td>
+<td>超低功耗</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/RT-Thread-packages/hts221">HTS221</a></td>
+<td>温湿度传感器</td>
+<td>IIC</td>
+<td>ST</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/xupenghu/ina226">INA226</a></td>
+<td>功率监视器</td>
+<td>IIC</td>
+<td>TI</td>
+<td>可监测总线电压、电流和功率</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/xupenghu/ina260">INA260</a></td>
+<td>功率监视器</td>
+<td>IIC</td>
+<td>TI</td>
+<td>自带2mΩ采样电阻，可采样15A连续电流</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/StackRyan/lis2dh12">LIS2DH12</a></td>
+<td>加速度传感器</td>
+<td>SPI</td>
+<td>ST</td>
+<td>超低功耗</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/RT-Thread-packages/lps22hb">LPS22HB</a></td>
+<td>气压传感器</td>
+<td>IIC</td>
+<td>ST</td>
+<td>测量的气压范围0.26<em>10^5pa---1.26</em>10^5pa，且精度能达到10cm</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/RT-Thread-packages/lsm303agr">LSM303AGR</a></td>
+<td>加速度&amp;磁力计传感器</td>
+<td>IIC</td>
+<td>ST</td>
+<td>超低功耗，内嵌32级FIFO</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/RT-Thread-packages/lsm6dsl">LSM605L</a></td>
+<td>加速度&amp;陀螺仪传感器</td>
+<td>IIC</td>
+<td>ST</td>
+<td>内置计步器</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/Jackistang/max30102_rtt">MAX30102</a></td>
+<td>心率&amp;血氧传感器</td>
+<td>IIC</td>
+<td>Maxim</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/SimpleInit/max31865">MAX31865</a></td>
+<td>温度传感器</td>
+<td>SPI</td>
+<td>Maxim</td>
+<td>热敏电阻转数字输出转换器，非数字传感器</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/JonasWen/max6675">MAX6675</a></td>
+<td>温度传感器</td>
+<td>SPI</td>
+<td>Maxim</td>
+<td>±0.25℃精度</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="">MLX90632</a></td>
+<td>非接触式温度传感器</td>
+<td>IIC</td>
+<td>Melexis</td>
+<td>人体温度测量精度高达±0.2 °C</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/RT-Thread-packages/mpu-6xxx">MPU6xxx</a></td>
+<td>加速度&amp;陀螺仪传感器</td>
+<td>IIC</td>
+<td>InvenSense</td>
+<td>兼容 mpu6000、mpu6050、mpu6500、mpu9250、icm20608 等</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/sogwms/ms5611">MS5611</a></td>
+<td>气压传感器</td>
+<td>IIC&amp;SPI</td>
+<td>MEAS</td>
+<td>高分辨率气压传感器</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/schuck-wang/RTThread-MS5805">MS5805</a></td>
+<td>气压传感器</td>
+<td>IIC</td>
+<td>MEAS</td>
+<td>高分辨率气压传感器</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/luhuadong/rtt-pmsxx">PMSxx</a></td>
+<td>颗粒物传感器</td>
+<td>UART</td>
+<td>Plantower</td>
+<td>支持 PMS1003、PMS3003、PMS5003、PMS7003、PMS9003、PMSA003 等多种型号传感器，还没有对接sensor框架。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/RichtekTechnology/RT3020">RT3020</a></td>
+<td>加速度传感器</td>
+<td>IIC</td>
+<td>Richtek</td>
+<td>低功耗，用于可穿戴设备</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/luhuadong/rtt-sgp30">SGP30</a></td>
+<td>金属氧化物气体传感器</td>
+<td>IIC</td>
+<td>Sensirion</td>
+<td>用于检测 TVOC 和 eCO2</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/nfsq246/RTT_SHTC1">SHTC1</a></td>
+<td>大气压强传感器</td>
+<td>IIC</td>
+<td>SENSIRION</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/RT-Thread-packages/spl0601">SPL0601</a></td>
+<td>大气压传感器</td>
+<td>IIC</td>
+<td>Goer</td>
+<td>同时内置温度传感器，低功耗</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/alec-shan/hc-sr04">HC-SR04</a></td>
+<td>超声波测速</td>
+<td>Timer</td>
+<td>无</td>
+<td>淘宝有模块</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/Prry/rtt-tmp1075">TMP1075</a></td>
+<td>温度传感器</td>
+<td>IIC</td>
+<td>TI</td>
+<td>供电范围广、功耗低、精度高</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/JellyYe/tsl4531pkgs">TSL4531</a></td>
+<td>光照度传感器</td>
+<td>IIC</td>
+<td>AMS</td>
+<td>量程:3 lux-220k lux 分辨率: 1 lux</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="https://github.com/Prry/rtt-vl53l0x">VL53L0x</a></td>
+<td>红外测距传感器</td>
+<td>IIC</td>
+<td>ST</td>
+<td>量程: 0-2000mm 分辨率: 1mm</td>
+</tr>
+</tbody>
+</table></section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="02_software_introduce.html" class="btn btn-neutral float-left" title="4. RTTHREAD软件包目录自分类" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="04_rtthread_auto_update.html" class="btn btn-neutral float-right" title="6. RTTHREAD 软件包目录" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

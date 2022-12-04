@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. HRS（心率服务） &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Nordic 篇" href="../../nordic/index.html" />
+    <link rel="prev" title="2. DIS (设备信息服务)" href="../02_device_infomation_profile/device_infomation_profile.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">BLE PROFILE篇</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_battery_service_profile/battery_service.html">1. BAS (电池服务规格书)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_device_infomation_profile/device_infomation_profile.html">2. DIS (设备信息服务)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. HRS（心率服务）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">3.1. 简介</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">一致性</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">服务依赖</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">蓝牙规范发布兼容性</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gatt">GATT子规程要求</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">传输依赖</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">错误码</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">字节传输顺序</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">3.2. 服务声明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">3.3. 服务特性</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id10">心率测量</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id21">身体传感器位置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id23">心率测量点</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id25">对时间敏感数据的要求</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id26">3.4. 缩略语表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id27">3.5. 参考文献</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">BLE PROFILE篇</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3. </span>HRS（心率服务）</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/ble_profile/03_heart_rate_profile/heart_tate_profile.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="hrs">
+<h1><span class="section-number">3. </span>HRS（心率服务）<a class="headerlink" href="#hrs" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">3.1. </span>简介<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>为了适用于健身应用，心率服务提供了心率数据和心率传感器相关的其他数据。</p>
+<section id="id2">
+<h3>一致性<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h3>
+<p>如果设备声称与此服务一致，所有指示为此服务的强制性功能应以指定的方式支持(过程强制)。这也适用于指定支持的所有可选和有条件的功能。所有的强制功能，可选的和有条件的功能，都需要作为蓝牙认证计划的一部分进行验证。</p>
+</section>
+<section id="id3">
+<h3>服务依赖<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>此服务不依赖于任何其他服务。</p>
+</section>
+<section id="id4">
+<h3>蓝牙规范发布兼容性<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<p>此规范兼容任何蓝牙核心规范[1]，包括通用属性配置文件（GATT）规范和低功耗蓝牙控制器规范。</p>
+</section>
+<section id="gatt">
+<h3>GATT子规程要求<a class="headerlink" href="#gatt" title="此标题的永久链接"></a></h3>
+<p>本节中的要求代表心率传感器（服务器）的最低要求。若客户端和服务器都支持，也可以使用其他 GATT 子规程。</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>GATT 子规程</th>
+<th>要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>写特性值</td>
+<td>C.1</td>
+</tr>
+<tr>
+<td>通知</td>
+<td>M</td>
+</tr>
+<tr>
+<td>写特性描述符</td>
+<td>M</td>
+</tr>
+<tr>
+<td>读特性描述符</td>
+<td>M</td>
+</tr>
+</tbody>
+</table><p>表 1.1：GATT 子规程要求</p>
+<p>C.1：如果支持“心率控制点”特性，则必须提供，否则不包括在此服务中。</p>
+</section>
+<section id="id5">
+<h3>传输依赖<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
+<p>这项服务应通过 LE 方式进行。</p>
+</section>
+<section id="id6">
+<h3>错误码<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h3>
+<p>此服务定义了以下“属性协议应用程序”错误代码：</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>名称</th>
+<th>错误码</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>控制点不支持</td>
+<td>0x80</td>
+<td>控制点的值不支持</td>
+</tr>
+</tbody>
+</table></section>
+<section id="id7">
+<h3>字节传输顺序<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h3>
+<p>此服务使用的所有特性都应以最低有效字节在前的方式传输（即小端模式），[2]中的特性定义规定了最低有效字节。</p>
+</section>
+</section>
+<section id="id8">
+<h2><span class="section-number">3.2. </span>服务声明<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h2>
+<p>心率服务需要被实例化为《主要服务》。</p>
+<p>此服务 UUID 应设置为《心率服务》，分配给《心率服务》的 UUID 在 [2] 中定义了。</p>
+</section>
+<section id="id9">
+<h2><span class="section-number">3.3. </span>服务特性<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h2>
+<p>心率服务提供了以下特性。除非另有说明，否则此服务仅允许每个特性的一个实例。</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>特性名</th>
+<th>要求</th>
+<th>强制属性</th>
+<th>可选属性</th>
+<th>安全权限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>心率测量</td>
+<td>M</td>
+<td>通知</td>
+<td></td>
+<td>无</td>
+</tr>
+<tr>
+<td>心率测量客户端特性配置描述符</td>
+<td>M</td>
+<td>读，写</td>
+<td></td>
+<td>无</td>
+</tr>
+<tr>
+<td>身体传感器位置</td>
+<td>O</td>
+<td>读</td>
+<td></td>
+<td>无</td>
+</tr>
+<tr>
+<td>心率测量点</td>
+<td>C.1</td>
+<td>写</td>
+<td></td>
+<td>无</td>
+</tr>
+</tbody>
+</table><p>表 3.1：心率服务特性</p>
+<p>C.1：如果支持消耗能量的特性则是强制的，否则将被排除。</p>
+<p>注意：</p>
+<ul class="simple">
+<li><p>安全权限为 None 意味着此服务不会强加任何要求。</p></li>
+<li><p>未列出为强制或可选的属性将被排除在外。</p></li>
+</ul>
+<section id="id10">
+<h3>心率测量<a class="headerlink" href="#id10" title="此标题的永久链接"></a></h3>
+<p>心率测量特性用于发送心率测量结果。特性中包括一个 Flags 字段（用于显示可选字段和受支持特性的存在）、一个心率测量值字段，以及一个能量消耗字段和一个 RR间隔字段（取决于 Flags 字段的内容）。RR 间隔字段表示心电图波形中连续两个R波之间的时间（见图3.1）。</p>
+<p><img alt="图3.1 心电图波形和RR间隔" src="../../_images/image-20201103133954701.png" /></p>
+<p>RR 间隔字段的长度可变，对于一个 23 字节的 ATT_MTU，可能包含 0 个或最多 8 个或 9 个 RR 间隔字段，具体取决于心率测量值的格式以及能量消耗字段是否存在。</p>
+<section id="id11">
+<h4>特性行为<a class="headerlink" href="#id11" title="此标题的永久链接"></a></h4>
+<p>当客户端特性配置描述符被配置为通知且心率测量可用时，应该在连接中通知此特性。</p>
+<p>心率测量特性包含时间敏感数据，因此适用于第 3.4 节定义的时间敏感数据和数据存储要求。</p>
+<section id="flags">
+<h5>Flags 字段<a class="headerlink" href="#flags" title="此标题的永久链接"></a></h5>
+<p>Flags 字段应包括在心率测量特性中。</p>
+<p>标志字段中的保留供将来使用（RFU）位应设置为 0 。</p>
+<p>在以下小节中定义标志字段的位。</p>
+<section id="id12">
+<h6>心率值格式位<a class="headerlink" href="#id12" title="此标题的永久链接"></a></h6>
+<p>心率值格式位（Flags 字段的0位）表示心率测量值字段的数据格式是 UINT8 还是 UINT16 。</p>
+<p>当以 UINT8 格式发送心率值格式时，心率值格式位应设置为 0。以 UINT16 格式发送心率值格式时，心率值格式位应设置为 1。</p>
+<p>连接期间，心率值格式位的值可能会更改。</p>
+</section>
+<section id="id13">
+<h6>传感器接触状态位<a class="headerlink" href="#id13" title="此标题的永久链接"></a></h6>
+<p>传感器接触状态位（Flags 字段的第 1 位和第 2 位）指示是否支持传感器接触特性，如果支持，则指示是否检测到皮肤接触。</p>
+<p>如果服务器支持传感器接触特性，则传感器接触支持位（Flags 字段的第 2 位）应设置为 1。如果服务器不支持传感器接触特性，则传感器接触支持位应设置为 0。</p>
+<p>在连接时，传感器触点支持位的值是静态的，而此时传感器接触状态位的值可能会改变。</p>
+<p>如果支持传感器接触特性，并且如果设备检测到与皮肤没有接触或接触不良，则传感器接触状态位（标志字段的位 1）应设置为 0，否则设置为 1。</p>
+</section>
+<section id="id14">
+<h6>能量消耗状态位<a class="headerlink" href="#id14" title="此标题的永久链接"></a></h6>
+<p>能量消耗状态位（标志字段的第 3 位）指示心率测量特征中是否存在能量消耗字段。</p>
+<p>如果不存在能量消耗字段，则能量消耗状态位应设置为 0 。如果存在能量消耗字段，则能量消耗状态位应设置为 1 。</p>
+<p>在连接期间，能量消耗状态位的值可能会改变。</p>
+</section>
+<section id="rr">
+<h6>RR 间隔位<a class="headerlink" href="#rr" title="此标题的永久链接"></a></h6>
+<p>RR 间隔位表示在心率测量特性中是否存在 RR 间隔值。</p>
+<p>如果 RR 间隔值不存在，那么应该将 RR 间隔位设置为 0 。如果存在一个或多个 RR 间隔值，则 RR 间隔位应设置为 1 。</p>
+<p>在连接期间，RR 间隔位的值可能会改变。</p>
+</section>
+</section>
+<section id="id15">
+<h5>心率测量值字段<a class="headerlink" href="#id15" title="此标题的永久链接"></a></h5>
+<p>心率测量特性中应包括心率测量值字段。</p>
+<p>虽然测量大多数人类心率的应用程序仅需要支持 255bpm 或更少，但特殊应用程序（例如测量动物心率）可能需要支持更高的 bpm 值。</p>
+<p>如果心率测量值小于或等于 255bpm，则应使用 UINT8 格式以节省电量。 如果心率测量值超过 255bpm，则应使用 UINT16 格式。</p>
+<p>关于心率值格式更改的其他要求，请参见 3.1.1.1.1 。</p>
+</section>
+<section id="id16">
+<h5>能量消耗字段<a class="headerlink" href="#id16" title="此标题的永久链接"></a></h5>
+<p>能量消耗字段表示自上次重置以来累积的能量消耗，以千焦耳为单位。</p>
+<p>如果服务器支持能量消耗计算，则能量消耗字段可以包含在心率测量特性中。</p>
+<p>如果能量消耗计算被使用，它通常以相同的间隔每10次测量一次包含在心率测量特征中。</p>
+<p>有关能量消耗状态位的信息，请参见3.1.1.1.3。</p>
+<p>由于能源消耗值是 UINT16 类型数据，因此可以表示的最高值为 65535 千克焦耳。 如果达到最大值 65535 千克焦耳（0xFFFF），则字段值应保持为 0xFFFF，以便使客户端知道需要重置能源消耗字段。 有关重置此字段值的要求，请参见第 3.3.1 节。</p>
+</section>
+<section id="id17">
+<h5>RR 间隔字段<a class="headerlink" href="#id17" title="此标题的永久链接"></a></h5>
+<p>如果设备支持RR间隔测量，则RR间隔字段可能包含在心率测量特性中。</p>
+<p>如果心率测量特性中存在 RR 间隔值，则服务器应将标志字段的第 4 位（ RR 间隔位）设置为 1，并在心率测量特性中包括一个或多个 RR 间隔值。 否则，不应包括 RR 间隔值，并且标志字段的比特 4 应设置为 0。</p>
+<p>对于 23 个字节的 ATT_MTU 并将心率测量值格式设置为 UINT8 ，如果存在能量消耗，则可以通知的 RR 间隔值的最大数量为 8，不存在能源消耗其最大数量是9。</p>
+<p>对于 23 个字节的 ATT_MTU 并将心率测量值格式设置为 UINT16 ，在通知心率测量特征时，单个“心率测量”特性中可包含的 RR 间隔值的最大数量为 7，如果不存在能源消耗，则可以通知的 RR 间隔值的最大数量为 8。</p>
+<p>如果自上次通知以来测得的 RR 间隔值多于一个心率测量特性，则剩余的 RR 间隔值应包括在下一个可用的心率测量特性中。</p>
+<p>如果心率传感器的内部缓冲区中没有可用空间，则它可能会丢弃最早的 RR 间隔值。</p>
+</section>
+<section id="id18">
+<h5>传输间隔<a class="headerlink" href="#id18" title="此标题的永久链接"></a></h5>
+<p>在典型的应用程序中，心率测量特性大约每秒通知一次，并包括心率测量值字段，还包括 RR 间隔值（如果支持）。如果支持能量消耗字段，通常包括在心率测量特性中，大约每 10 秒中传输一次。这些间隔值可能不同，由服务器决定，客户端不能配置。</p>
+</section>
+</section>
+<section id="id19">
+<h4>特性描述符<a class="headerlink" href="#id19" title="此标题的永久链接"></a></h4>
+<section id="id20">
+<h5>客户端特性配置描述符<a class="headerlink" href="#id20" title="此标题的永久链接"></a></h5>
+<p>心率测量特性应包括客户特性配置描述符</p>
+</section>
+</section>
+</section>
+<section id="id21">
+<h3>身体传感器位置<a class="headerlink" href="#id21" title="此标题的永久链接"></a></h3>
+<p>设备的身体传感器位置特性用于描述设备测量心率时的预期位置。</p>
+<p>在连接时，身体传感器位置特性的值是静态的。</p>
+<section id="id22">
+<h4>特性行为<a class="headerlink" href="#id22" title="此标题的永久链接"></a></h4>
+<p>读取时，身体传感器位置特性返回传感器位置值。</p>
+</section>
+</section>
+<section id="id23">
+<h3>心率测量点<a class="headerlink" href="#id23" title="此标题的永久链接"></a></h3>
+<p>心率控制点特性用于使客户端将控制点写入服务器以控制行为。</p>
+<p>如果服务器支持能源消耗功能，则必须对此特性提供支持。</p>
+<section id="id24">
+<h4>特性行为<a class="headerlink" href="#id24" title="此标题的永久链接"></a></h4>
+<p>心率控制点特性在写入时设置控制点值。</p>
+<p>如果客户端尝试向服务器不支持的心率控制点特征写入值，则服务器应发送错误响应，并将错误代码设置为“不支持控制点”。</p>
+<p>如果服务器支持，当将 0x01 的值写入心率控制点特征（重置能量消耗）时，服务器应该重新开始从 0 开始的能量消耗的积累。</p>
+</section>
+</section>
+<section id="id25">
+<h3>对时间敏感数据的要求<a class="headerlink" href="#id25" title="此标题的永久链接"></a></h3>
+<p>心率测量特征包含对时间敏感的数据，因此被认为是对时间敏感的特性，因此需要满足以下要求：</p>
+<p>由于此服务不提供时间戳来识别数据的测量时间（年龄），因此如果未建立连接或未成功将通知发送给客户端（例如，链路丢失），则应丢弃心率测量特性。</p>
+</section>
+</section>
+<section id="id26">
+<h2><span class="section-number">3.4. </span>缩略语表<a class="headerlink" href="#id26" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>缩略语</th>
+<th>Meaning</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BR/EDR</td>
+<td>Basic Rate / Enhanced Data Rate</td>
+<td>基本速率/增强型数据速率</td>
+</tr>
+<tr>
+<td>ECG</td>
+<td>Electrocardiogram</td>
+<td>心电图</td>
+</tr>
+<tr>
+<td>GAP</td>
+<td>Generic Access Profile</td>
+<td>通用访问协议</td>
+</tr>
+<tr>
+<td>GATT</td>
+<td>Generic Attribute Profile</td>
+<td>通用属性协议</td>
+</tr>
+<tr>
+<td>LE</td>
+<td>Low Energy</td>
+<td>低功耗</td>
+</tr>
+<tr>
+<td>RFU</td>
+<td>Reserved for Future Use</td>
+<td>保留为将来使用</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>Universally Unique Identifier</td>
+<td>通用唯一识别码</td>
+</tr>
+</tbody>
+</table></section>
+<section id="id27">
+<h2><span class="section-number">3.5. </span>参考文献<a class="headerlink" href="#id27" title="此标题的永久链接"></a></h2>
+<p>[1] Bluetooth Core Specification v4.0</p>
+<p>[2] Characteristic and Descriptor descriptions are accessible via the <a class="reference external" href="http://www.bluetooth.org/Technical/AssignedNumbers/home.htm">Bluetooth SIG Assigned Numbers</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../02_device_infomation_profile/device_infomation_profile.html" class="btn btn-neutral float-left" title="2. DIS (设备信息服务)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../../nordic/index.html" class="btn btn-neutral float-right" title="Nordic 篇" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

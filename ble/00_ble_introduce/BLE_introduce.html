@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. 蓝牙基本知识介绍 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="2. BLE 广播和扫描" href="../01_ble_adv/ble_adv_scan_all.html" />
+    <link rel="prev" title="BLE STACK篇" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">BLE STACK篇</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. 蓝牙基本知识介绍</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">1.1. 蓝牙基本框架图：</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ble">BLE 基本框架</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ble-rf">BLE RF 信道分布</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">ble 跳频</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">1.2. BLE 角色</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#broadcaster-role">Broadcaster role</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#observer-role">Observer role</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#peripheral-role">Peripheral role</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#central-role">Central role</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mesh">1.3. Mesh</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">未讲内容：</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ble-baseband">ble baseband跳频</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ble-gatt-profile">ble GATT profile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ble-gap-profile-le">ble GAP profile（LE)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ble-adv">ble adv广播</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ble-profile-hogp-hids">ble profile（hogp）hids</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ble-profile-ancs">ble profile （ancs)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../01_ble_adv/ble_adv_scan_all.html">2. BLE 广播和扫描</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_ble_gatt/GATT.html">3. GATT &amp; ATT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_ble_smp/SMP.html">4. SMP（BLE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_ble%E5%AE%89%E5%85%A8/%E8%B5%84%E6%96%99.html">5. BLE 配对机制</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">BLE STACK篇</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">1. </span>蓝牙基本知识介绍</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/ble/00_ble_introduce/BLE_introduce.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">1. </span>蓝牙基本知识介绍<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h1>
+<p>​        说到蓝牙就离不开蓝牙协议栈 core spec，我们基本上平时说的蓝牙4.0就是根据这个spec的版本号来的，比如下图版本为5.2，就是代表蓝牙标准5.2版本。这个spec里面规定了所有的蓝牙协议栈和RF的行为。包括上层和下层的。熟读这本spec，基本协议栈和底层control就知道如何来写了。</p>
+<p><img alt="../../_images/core_spec.jpg" src="../../_images/core_spec.jpg" /></p>
+<p>主要要知道以下内容：</p>
+<p>V2: 这个是BR/EDR经典蓝牙的RF特性</p>
+<p>V3: 这个是HOST 协议栈中所有的行为</p>
+<p>V4: 这个是HOST 和control之间的通信行为</p>
+<p>V6: 这个是所有LE蓝牙的RF特性以及</p>
+<section id="id2">
+<h2><span class="section-number">1.1. </span>蓝牙基本框架图：<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p><img alt="../../_images/kuangjia.jpg" src="../../_images/kuangjia.jpg" /></p>
+<p>这个就是蓝牙中所有的模块，红色标注的地方就是BLE相关的模块</p>
+<p>那我们详细的拿出这些模块介绍ble</p>
+<section id="ble">
+<h3>BLE 基本框架<a class="headerlink" href="#ble" title="此标题的永久链接"></a></h3>
+<p><img alt="图片" src="../../_images/struct.jpg" /></p>
+<p>框架介绍完了，就简单介绍下BLE 的RF 情况。</p>
+</section>
+<section id="ble-rf">
+<h3>BLE RF 信道分布<a class="headerlink" href="#ble-rf" title="此标题的永久链接"></a></h3>
+<p>我们都知道蓝牙是用的2.4G的带宽，WIFI。</p>
+<p><img alt="图片" src="../../_images/channel.jpg" /></p>
+<p>BLE一共有40个信道0~39</p>
+<p>广播信道分为37 38 39</p>
+<p>但是从图中可以看到，37 38 39并不是顺序分布的，其实这个广播信道的选择和WIFI的信道有一定的联系：</p>
+<p><img alt="图片" src="../../_images/wifi_channel.jpg" /></p>
+</section>
+<section id="id3">
+<h3>ble 跳频<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>BLE 跳频我就不展开讲了，主要就是两个蓝牙设备连上之后，会不停的在37个频道上跳来跳去，所以BLE相对于WIFI有比较好的抗干扰性。当然如果wifi实在太多，把所有信道占了，也会干扰到BLE</p>
+</section>
+</section>
+<section id="id4">
+<h2><span class="section-number">1.2. </span>BLE 角色<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h2>
+<p>LE根据常用的场景分为以下4种角色</p>
+<section id="broadcaster-role">
+<h3>Broadcaster role<a class="headerlink" href="#broadcaster-role" title="此标题的永久链接"></a></h3>
+<p>只负责打各种广播</p>
+<p>可以说只能发广播数据</p>
+<ul class="simple">
+<li><p>beacon</p></li>
+</ul>
+</section>
+<section id="observer-role">
+<h3>Observer role<a class="headerlink" href="#observer-role" title="此标题的永久链接"></a></h3>
+<p>负责接收各种广播</p>
+<p>可以说只能接收广播数据</p>
+</section>
+<section id="peripheral-role">
+<h3>Peripheral role<a class="headerlink" href="#peripheral-role" title="此标题的永久链接"></a></h3>
+<p>这个角色就是接收连接的设备。通常是作为slave的，基本都是slave</p>
+<p>通常会先发起广播让对端发现自己，然后对端来连接自己。</p>
+<p>可以收发数据。</p>
+</section>
+<section id="central-role">
+<h3>Central role<a class="headerlink" href="#central-role" title="此标题的永久链接"></a></h3>
+<p>通常是发起连接的设备，通常需要scan到设备的广播，之后和peripheral进行连接。</p>
+<p>这个就是常说的主机方式。我们通常手机就是作为Central去连接各种le设备。</p>
+<p>这4个角色我想说的是，对于固定的硬件，并不区分这些角色。之所以定义这些角色，主要为了区分不同的应用场景，某些固定的设备和协议栈通常都可以作为central和peripheral，或者其他角色，也可以各种不同的操作。也可以即当主机，又当从机。</p>
+</section>
+</section>
+<section id="mesh">
+<h2><span class="section-number">1.3. </span>Mesh<a class="headerlink" href="#mesh" title="此标题的永久链接"></a></h2>
+<p>Mesh常用的PB-ADV是Broadcaster 和Observer的结合体，只工作在37,38,39</p>
+<p>所以理论上，支持BLE的设备，都可以支持MESH，不需要修改硬件。</p>
+<p>所以Mesh只需要两个BLE的接口，发广播，收广播。</p>
+<p>但是，Mesh里面定义了很多model，所以Mesh 协议栈都相对来说比较大。而且要处理好发广播和收广播这两个接口的实时性，就是需要很准确。这里我就不展开了。</p>
+<p>整体框架可以这么理解：</p>
+<p><img alt="图片" src="../../_images/struct2.jpg" /></p>
+<section id="id5">
+<h3>未讲内容：<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
+</section>
+<section id="ble-baseband">
+<h3>ble baseband跳频<a class="headerlink" href="#ble-baseband" title="此标题的永久链接"></a></h3>
+</section>
+<section id="ble-gatt-profile">
+<h3>ble GATT profile<a class="headerlink" href="#ble-gatt-profile" title="此标题的永久链接"></a></h3>
+</section>
+<section id="ble-gap-profile-le">
+<h3>ble GAP profile（LE)<a class="headerlink" href="#ble-gap-profile-le" title="此标题的永久链接"></a></h3>
+</section>
+<section id="ble-adv">
+<h3>ble adv广播<a class="headerlink" href="#ble-adv" title="此标题的永久链接"></a></h3>
+</section>
+<section id="ble-profile-hogp-hids">
+<h3>ble profile（hogp）hids<a class="headerlink" href="#ble-profile-hogp-hids" title="此标题的永久链接"></a></h3>
+</section>
+<section id="ble-profile-ancs">
+<h3>ble profile （ancs)<a class="headerlink" href="#ble-profile-ancs" title="此标题的永久链接"></a></h3>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../index.html" class="btn btn-neutral float-left" title="BLE STACK篇" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../01_ble_adv/ble_adv_scan_all.html" class="btn btn-neutral float-right" title="2. BLE 广播和扫描" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

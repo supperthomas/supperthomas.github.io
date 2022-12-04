@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8. 玩转doxygen 之RT-THREAD &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="9. LVGL 学习小计 –（一） 应用层" href="../10_lvgl/lvgl_app.html" />
+    <link rel="prev" title="7. ARM-MPU 详解" href="../08_MPU/01_MPU.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">MASTER:supperthomas</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/01_intruduce.html">2. BLE 相关资料</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_mbed/01_mbed_quick_syart.html">3. mbed OS  quick start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_AI/01_intruduce.html">4. 深度学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_embeded_debug/jlink.html">5. 嵌入式调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_mcuboot/mcuboot.html">6. MCUBOOT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_MPU/01_MPU.html">7. ARM-MPU 详解</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8. 玩转doxygen 之RT-THREAD</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">8.1. 文章目标</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rt-threaddoxygen">8.2. 如何在RT-THREAD上生成doxygen</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">下载代码和软件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#html">生成html文档</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">打开html文档</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">展现效果</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#doxygen">8.3. Doxygen 如何写</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#vscode">vscode 插件安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">doxygen文件生成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">doxygen配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">doxygen写的时候一些建议</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../10_lvgl/lvgl_app.html">9. LVGL 学习小计 –（一） 应用层</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">MASTER:supperthomas</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">8. </span>玩转doxygen 之RT-THREAD</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/00_supperthomas/09_doxygen/doxygen.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="doxygen-rt-thread">
+<h1><span class="section-number">8. </span>玩转doxygen 之RT-THREAD<a class="headerlink" href="#doxygen-rt-thread" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">8.1. </span>文章目标<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>经常会看到小伙伴们遇到怎么写函数注释头疼，以及如何生成漂亮的代码注释文档头疼。据我了解，目前C语言中的代码注释规则有且只有一种比较常用，就是doxygen。所以掌握doxygen，对于我们写出漂亮的注释，至关重要。本文就教大家如何写doxygen，以及在RT-THREAD上如何整理出漂亮的API说明文档。</p>
+</section>
+<section id="rt-threaddoxygen">
+<h2><span class="section-number">8.2. </span>如何在RT-THREAD上生成doxygen<a class="headerlink" href="#rt-threaddoxygen" title="此标题的永久链接"></a></h2>
+<p>先教大家怎么操作，最近正好我整理了一下，发现RT-THREAD上面的doxygen</p>
+<p>https://github.com/RT-Thread/rt-thread/tree/master/documentation/doxygen</p>
+<p>生成不了文档，有些路径已经变掉了。所以帮大家修复了一下。</p>
+<p>https://github.com/RT-Thread/rt-thread/pull/6217</p>
+<p>现在大家只要下载最新的代码2022.8.4号之后的代码就可以了。</p>
+<section id="id2">
+<h3>下载代码和软件<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>首先将rt-thread的源码https://github.com/RT-Thread/rt-thread/  下下来，可以用下面的命令</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@git</span><span class="o">.</span><span class="n">zhlh6</span><span class="o">.</span><span class="n">cn</span><span class="p">:</span><span class="n">RT</span><span class="o">-</span><span class="n">Thread</span><span class="o">/</span><span class="n">rt</span><span class="o">-</span><span class="n">thread</span><span class="o">.</span><span class="n">git</span> <span class="o">--</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>下载doxygen的软件（在doxygen文件夹中的readme.md）https://doxygen.nl/index.html</p></li>
+</ul>
+<p>下载step安装包就行doxygen-1.9.4-setup.exe</p>
+<p><img alt="image-20220804210141421" src="../../_images/image-20220804210141421.png" /></p>
+<ul class="simple">
+<li><p>安装doxygen，安装的时候没有什么需要注意的，直接下一步下一步就可以了。</p></li>
+</ul>
+</section>
+<section id="html">
+<h3>生成html文档<a class="headerlink" href="#html" title="此标题的永久链接"></a></h3>
+<p>我们打开刚才安装的软件<code class="docutils literal notranslate"><span class="pre">Doxywizard</span></code></p>
+<p>在菜单<code class="docutils literal notranslate"><span class="pre">File</span></code>中<code class="docutils literal notranslate"><span class="pre">Open</span></code> 打开刚才下的RT-THREAD中的如下文件<code class="docutils literal notranslate"><span class="pre">rt-thread/documentation/doxygen/Doxyfile</span></code></p>
+<p>然后直接运行<code class="docutils literal notranslate"><span class="pre">run</span></code> 就可以了，所有操作完成。</p>
+<p><img alt="image-20220804210459204" src="../../_images/image-20220804210459204.png" /></p>
+<p>如果想看中文，也可以根据下面的设置来选择中文</p>
+<p><img alt="image-20220804220734037" src="../../_images/image-20220804220734037.png" /></p>
+</section>
+<section id="id3">
+<h3>打开html文档<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>找到生成的<code class="docutils literal notranslate"><span class="pre">html</span></code>文件夹打开<code class="docutils literal notranslate"><span class="pre">index.html</span></code>文件就可以了</p>
+<p><img alt="image-20220804211156160" src="../../_images/image-20220804211156160.png" /></p>
+</section>
+<section id="id4">
+<h3>展现效果<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<p>接下来我们就可以看到效果图了，可以看到很多src目录下面大家写的一些注释</p>
+<p><img alt="image-20220804212613745" src="../../_images/image-20220804212613745.png" /></p>
+<p><img alt="image-20220804211628512" src="../../_images/image-20220804211628512.png" /></p>
+<p>上面基本就是RT-THREAD的doxygen的使用方法了。是不是很简单，很方便？</p>
+<p>下面简单介绍下如何自己写doxygen。</p>
+</section>
+</section>
+<section id="doxygen">
+<h2><span class="section-number">8.3. </span>Doxygen 如何写<a class="headerlink" href="#doxygen" title="此标题的永久链接"></a></h2>
+<section id="vscode">
+<h3>vscode 插件安装<a class="headerlink" href="#vscode" title="此标题的永久链接"></a></h3>
+<p>我们先讲讲doxygen怎么写。传统方法直接用文本编辑器来写，这个我这边就不多介绍了。这边我们用一个工具来帮助我们来写常用的doxygen。打开vscode， 安装插件doxygen</p>
+<p><img alt="image-20220804214758615" src="../../_images/image-20220804214758615.png" /></p>
+<p>这个插件一共有两种操作</p>
+<ul class="simple">
+<li><p>在源码文件中头部输入·<code class="docutils literal notranslate"><span class="pre">/**</span></code>  ，然后直接按回车键，你可以看到自动生成的注释了。</p></li>
+</ul>
+<p><img alt="../../_images/file.gif" src="../../_images/file.gif" /></p>
+<ul class="simple">
+<li><p>在写好的函数的上面输入<code class="docutils literal notranslate"><span class="pre">/**</span></code> , 然后也是按回车键，你就看也看到效果了。</p></li>
+</ul>
+<p><img alt="../../_images/func.gif" src="../../_images/func.gif" /></p>
+</section>
+<section id="id5">
+<h3>doxygen文件生成<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
+<p>只要打开Doxygen工具，选择source 文件夹，之后点击<code class="docutils literal notranslate"><span class="pre">run</span></code> 就可以了</p>
+<p><img alt="image-20220804221636908" src="../../_images/image-20220804221636908.png" /></p>
+</section>
+<section id="id6">
+<h3>doxygen配置<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h3>
+<p>doxygen的配置其实有很多很多，这边我就举几个常用的配置。</p>
+<p>下面的配置可以生成左侧的树状图，方便查看。其他的配置不一一介绍了。</p>
+<p>想了解的可以参考链接</p>
+<p>https://mp.weixin.qq.com/s/HA352TEBELNJ9pgCTMkWIg</p>
+<p><img alt="image-20220804222104439" src="../../_images/image-20220804222104439.png" /></p>
+</section>
+<section id="id7">
+<h3>doxygen写的时候一些建议<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h3>
+<section id="id8">
+<h4>问题一： doxygen的函数注释写在头文件中还是源文件中？<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h4>
+<p>这个因不同公司角色而已。如果你的代码是作为lib的话。.c是不开放给客户的，这个时候，写在.h中比较好。</p>
+<p>如果你是做开源的，源文件可以开放出来，这个时候，放在.c里面比较好。总之，只要放一个地方就行，其他地方不需要按照doxygen来写。</p>
+</section>
+<section id="id9">
+<h4>问题二:<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h4>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../08_MPU/01_MPU.html" class="btn btn-neutral float-left" title="7. ARM-MPU 详解" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../10_lvgl/lvgl_app.html" class="btn btn-neutral float-right" title="9. LVGL 学习小计 –（一） 应用层" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

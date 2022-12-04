@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2. CubeMX生成BLE应用(二) &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="3. GATT Service 定义总结" href="../03_heart_rate_att_gatt/01_intruduce.html" />
+    <link rel="prev" title="1. 简单自我介绍" href="../01_introduce/01_intruduce.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">WB55:Jackistang</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. CubeMX生成BLE应用(二)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ble">2.1. 1 BLE 服务介绍</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dis">1.1 DIS 服务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hrs">1.2 HRS心率服务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#p2p">1.3 P2P 服务</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">2.2. 2 代码对比</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stm32cubemonitor-rf">2.3. 3 STM32CubeMonitor-RF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03_heart_rate_att_gatt/01_intruduce.html">3. GATT Service 定义总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_mbedos_advertising/readme.html">4. BLE_Advertising</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_mbedos_example_ble_led/readme.html">5. mbed-os LEDDemo 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_mbedos_gatt_client/GattClient.html">6. mbed os GattClient 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/DigitalOut.html">7. DigitalOut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/InterruptIn.html">8. InterruptIn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/Callback.html">9. Callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Virtualbox%20%E5%AE%89%E8%A3%85%20Ubuntu%2020.04.html">10. VirtualBox 安装 Ubuntu 20.04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html">11. Zephyr 环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20ESP32%20%E7%AF%87.html">12. Zephyr 环境搭建 - ESP32 篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20Bluetooth%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20QEMU%20%E7%AF%87.html">13. Zephyr - Bluetooth 环境搭建 - QEMU 篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20Shell.html">14. Zephyr - Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20BLE%20%E5%88%9D%E5%A7%8B%E5%8C%96.html">15. BLE 协议栈初始化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20BLE%20%E5%B9%BF%E6%92%AD.html">16. Zephyr - BLE 广播</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20BLE%20%E6%89%AB%E6%8F%8F.html">17. Zephyr - BLE 扫描</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09_esp32/problem.html">18. 掉坑汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_rtthread/workqueue.html">19. RT-Thread workqueue 详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_rtthread/jerryscript.html">20. Jerryscript 简介</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">WB55:Jackistang</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2. </span>CubeMX生成BLE应用(二)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/02_Jackistang/02_introduce/01_intruduce.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cubemxble">
+<h1><span class="section-number">2. </span>CubeMX生成BLE应用(二)<a class="headerlink" href="#cubemxble" title="此标题的永久链接"></a></h1>
+<p>使用 CubeMX 5.6.0 创建的 BLE 应用代码文件格式如下图所示，我们需要修改 BLE 的相关代码，以下主要介绍如何添加 BLE 的服务和相关应用，在后续的 CubeMX 版本中，SMPS，IPCC 和 RTC 这些配置代码都会自动生成。</p>
+<p><img alt="../../_images/image-20201009201323722.png" src="../../_images/image-20201009201323722.png" /></p>
+<section id="ble">
+<h2><span class="section-number">2.1. </span>1 BLE 服务介绍<a class="headerlink" href="#ble" title="此标题的永久链接"></a></h2>
+<section id="dis">
+<h3>1.1 DIS 服务<a class="headerlink" href="#dis" title="此标题的永久链接"></a></h3>
+<p>DIS 服务是设备的信息服务，用于让对方设备去发现服务端设备的一些基本信息，比如设备的厂商名，设备名以及版本号等。与 DIS 服务相关的有 <code class="docutils literal notranslate"><span class="pre">ble_conf.h</span></code> 和 <code class="docutils literal notranslate"><span class="pre">dis_app.c</span></code>这两个文件。</p>
+<p><img alt="../../_images/image-20201009201805386.png" src="../../_images/image-20201009201805386.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">ble_conf.h</span></code>定义了下面这些配置项，用户可以根据实际情况修改，默认只打开了设备厂商名。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cm">/******************************************************************************</span>
+<span class="cm"> * Device Information Service (DIS)</span>
+<span class="cm"> ******************************************************************************/</span><span class="w"></span>
+<span class="cm">/**&lt; Options: Supported(1) or Not Supported(0) */</span><span class="w"></span>
+<span class="cp">#define BLE_CFG_DIS_MANUFACTURER_NAME_STRING                                   1</span>
+<span class="cp">#define BLE_CFG_DIS_MODEL_NUMBER_STRING                                        0</span>
+<span class="cp">#define BLE_CFG_DIS_SERIAL_NUMBER_STRING                                       0</span>
+<span class="cp">#define BLE_CFG_DIS_HARDWARE_REVISION_STRING                                   0</span>
+<span class="cp">#define BLE_CFG_DIS_FIRMWARE_REVISION_STRING                                   0</span>
+<span class="cp">#define BLE_CFG_DIS_SOFTWARE_REVISION_STRING                                   0</span>
+<span class="cp">#define BLE_CFG_DIS_SYSTEM_ID                                                  0</span>
+<span class="cp">#define BLE_CFG_DIS_IEEE_CERTIFICATION                                         0</span>
+<span class="cp">#define BLE_CFG_DIS_PNP_ID                                                     0</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">dis_app.c</span></code>文件里的<code class="docutils literal notranslate"><span class="pre">DISAPP_Init()</span></code>用户可以根据<code class="docutils literal notranslate"><span class="pre">ble_conf.h</span></code>里定义配置项初始化设备的一些特性值，使用 <code class="docutils literal notranslate"><span class="pre">DIS_UpdateChar()</span></code>来将特性值更新到服务端里。这样客户端来读取设备的信息时就是读取的我们自己设定的设备信息。</p>
+<p>以下仅截取了一部分 demo 工程的代码，可以看出是使用宏开关来控制更新哪些特性值。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">DISAPP_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN DISAPP_Init */</span><span class="w"></span>
+<span class="w">  </span><span class="n">DIS_Data_t</span><span class="w"> </span><span class="n">dis_information_data</span><span class="p">;</span><span class="w"></span>
+
+<span class="cp">#if ((BLE_CFG_DIS_MANUFACTURER_NAME_STRING != 0) || (CFG_MENU_DEVICE_INFORMATION != 0))</span>
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Update MANUFACTURER NAME Information</span>
+<span class="cm">   *</span>
+<span class="cm">   * @param UUID</span>
+<span class="cm">   * @param pPData</span>
+<span class="cm">   * @return</span>
+<span class="cm">   */</span><span class="w"></span>
+<span class="w">  </span><span class="n">dis_information_data</span><span class="p">.</span><span class="n">pPayload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">DISAPP_MANUFACTURER_NAME</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">dis_information_data</span><span class="p">.</span><span class="n">Length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">DISAPP_MANUFACTURER_NAME</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">DIS_UpdateChar</span><span class="p">(</span><span class="n">MANUFACTURER_NAME_UUID</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">dis_information_data</span><span class="p">);</span><span class="w"></span>
+<span class="cp">#endif</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="p">......</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">dis_app.h</span></code>里面存储了实际的特性值。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#define DISAPP_MANUFACTURER_NAME              &quot;STM&quot;</span>
+<span class="cp">#define DISAPP_MODEL_NUMBER                   &quot;4502-1.0&quot;</span>
+<span class="cp">#define DISAPP_SERIAL_NUMBER                  &quot;1.0&quot;</span>
+<span class="cp">#define DISAPP_HARDWARE_REVISION_NUMBER       &quot;1.0&quot;</span>
+<span class="cp">#define DISAPP_FIRMWARE_REVISION_NUMBER       &quot;1.0&quot;</span>
+<span class="cp">#define DISAPP_SOFTWARE_REVISION_NUMBER       &quot;1.0&quot;</span>
+<span class="cp">#define DISAPP_OUI                            0x123456</span>
+<span class="cp">#define DISAPP_MANUFACTURER_ID                0x9ABCDE</span>
+</pre></div>
+</div>
+</section>
+<section id="hrs">
+<h3>1.2 HRS心率服务<a class="headerlink" href="#hrs" title="此标题的永久链接"></a></h3>
+<p>HRS 服务是 ST 提供的心率测量服务框架，用于快速开发模型。与 HRS 服务相关的有 <code class="docutils literal notranslate"><span class="pre">ble_conf.h</span></code> 和 <code class="docutils literal notranslate"><span class="pre">hrs_app.c</span></code> 这两个文件。</p>
+<p><img alt="../../_images/image-20201009203408518.png" src="../../_images/image-20201009203408518.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">ble_conf.h</span></code>里 HRS 服务的配置选项可以根据需要进行配置。有传感器的位置选项，扩展信息选项以及 RR 值选项。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cm">/******************************************************************************</span>
+<span class="cm"> * Heart Rate Service (HRS)</span>
+<span class="cm"> ******************************************************************************/</span><span class="w"></span>
+<span class="cm">/**&lt; BODY SENSOR LOCATION CHARACTERISTIC */</span><span class="w"></span>
+<span class="cp">#define BLE_CFG_HRS_BODY_SENSOR_LOCATION_CHAR               1</span>
+<span class="cm">/**&lt; ENERGY EXTENDED INFO FLAG */</span><span class="w"></span>
+<span class="cp">#define BLE_CFG_HRS_ENERGY_EXPENDED_INFO_FLAG               1</span>
+<span class="cm">/**&lt; Max number of RR interval values - Shall not be greater than 9 */</span><span class="w"></span>
+<span class="cp">#define BLE_CFG_HRS_ENERGY_RR_INTERVAL_FLAG                 1</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">hrs_app.c</span></code>里需要修改 <code class="docutils literal notranslate"><span class="pre">HRSAPP_Init()</span></code>，<code class="docutils literal notranslate"><span class="pre">HRSAPP_Measurement()</span></code>，<code class="docutils literal notranslate"><span class="pre">HRS_Notification()</span></code>这三个函数代码。</p>
+<p>用户在 <code class="docutils literal notranslate"><span class="pre">hrs_app.c</span></code>的<code class="docutils literal notranslate"><span class="pre">HRSAPP_Init()</span></code>里使用<code class="docutils literal notranslate"><span class="pre">HRS_UpdateChar()</span></code>更新特性值到服务端。在初始化的末尾，一般使用<code class="docutils literal notranslate"><span class="pre">HW_TS_Create()</span></code>创建一个重复定时的 Timer ，通过这个 Timer 来测量心率值并通知给客户端。这个 Timer 每次溢出时会调用用户实现的 <code class="docutils literal notranslate"><span class="pre">HRSAPP_Measurement()</span></code>，因此需要在该函数里实现整个心率测量，并把测量结果通知给客户端。代码如下：</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">HRSAPP_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">UTIL_SEQ_RegTask</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CFG_TASK_MEAS_REQ_ID</span><span class="p">,</span><span class="w"> </span><span class="n">UTIL_SEQ_RFU</span><span class="p">,</span><span class="w"> </span><span class="n">HRSAPP_Measurement</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN HRSAPP_Init */</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Set Body Sensor Location</span>
+<span class="cm">   */</span><span class="w"></span>
+<span class="w">  </span><span class="n">HRSAPP_Context</span><span class="p">.</span><span class="n">ResetEnergyExpended</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">HRSAPP_Context</span><span class="p">.</span><span class="n">BodySensorLocationChar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HRS_BODY_SENSOR_LOCATION_HAND</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">HRS_UpdateChar</span><span class="p">(</span><span class="n">SENSOR_LOCATION_UUID</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">HRSAPP_Context</span><span class="p">.</span><span class="n">BodySensorLocationChar</span><span class="p">);</span><span class="w"></span>
+
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Set Flags for measurement value</span>
+<span class="cm">   */</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">HRSAPP_Context</span><span class="p">.</span><span class="n">MeasurementvalueChar</span><span class="p">.</span><span class="n">Flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">HRS_HRM_VALUE_FORMAT_UINT16</span><span class="w">      </span><span class="o">|</span><span class="w"> </span>
+<span class="w">                                                  </span><span class="n">HRS_HRM_SENSOR_CONTACTS_PRESENT</span><span class="w">   </span><span class="o">|</span><span class="w"> </span>
+<span class="w">                                                  </span><span class="n">HRS_HRM_SENSOR_CONTACTS_SUPPORTED</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                                  </span><span class="n">HRS_HRM_ENERGY_EXPENDED_PRESENT</span><span class="w">  </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                                  </span><span class="n">HRS_HRM_RR_INTERVAL_PRESENT</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="cp">#if (BLE_CFG_HRS_ENERGY_EXPENDED_INFO_FLAG != 0)</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">HRSAPP_Context</span><span class="p">.</span><span class="n">MeasurementvalueChar</span><span class="p">.</span><span class="n">Flags</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">HRS_HRM_ENERGY_EXPENDED_PRESENT</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">HRSAPP_Context</span><span class="p">.</span><span class="n">MeasurementvalueChar</span><span class="p">.</span><span class="n">EnergyExpended</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="cp">#endif</span>
+<span class="w">  </span>
+<span class="cp">#if (BLE_CFG_HRS_ENERGY_RR_INTERVAL_FLAG != 0)</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">HRSAPP_Context</span><span class="p">.</span><span class="n">MeasurementvalueChar</span><span class="p">.</span><span class="n">Flags</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">HRS_HRM_RR_INTERVAL_PRESENT</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">HRSAPP_Context</span><span class="p">.</span><span class="n">MeasurementvalueChar</span><span class="p">.</span><span class="n">NbreOfValidRRIntervalValues</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BLE_CFG_HRS_ENERGY_RR_INTERVAL_FLAG</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">BLE_CFG_HRS_ENERGY_RR_INTERVAL_FLAG</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">HRSAPP_Context</span><span class="p">.</span><span class="n">MeasurementvalueChar</span><span class="p">.</span><span class="n">aRRIntervalValues</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1024</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="cp">#endif</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Create timer for Heart Rate Measurement</span>
+<span class="cm">   */</span><span class="w"></span>
+<span class="w">  </span><span class="n">HW_TS_Create</span><span class="p">(</span><span class="n">CFG_TIM_PROC_ID_ISR</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="p">(</span><span class="n">HRSAPP_Context</span><span class="p">.</span><span class="n">TimerMeasurement_Id</span><span class="p">),</span><span class="w"> </span><span class="n">hw_ts_Repeated</span><span class="p">,</span><span class="w"> </span><span class="n">HrMeas</span><span class="p">);</span><span class="w"></span>
+
+<span class="cm">/* USER CODE END HRSAPP_Init */</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">HRS_Notification()</span></code>一般在客户端打开关闭服务端的一些通知时调用（OTA暂未考虑），比如打开心率测量通知。</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">HRS_Notification</span><span class="p">(</span><span class="n">HRS_App_Notification_evt_t</span><span class="w"> </span><span class="o">*</span><span class="n">pNotification</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN HRS_Notification_1 */</span><span class="w"></span>
+
+<span class="cm">/* USER CODE END HRS_Notification_1 */</span><span class="w"></span>
+<span class="w">  </span><span class="k">switch</span><span class="p">(</span><span class="n">pNotification</span><span class="o">-&gt;</span><span class="n">HRS_Evt_Opcode</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN HRS_Notification_HRS_Evt_Opcode */</span><span class="w"></span>
+
+<span class="cm">/* USER CODE END HRS_Notification_HRS_Evt_Opcode */</span><span class="w"> </span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">HRS_NOTIFICATION_ENABLED</span><span class="p">:</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN HRS_NOTIFICATION_ENABLED */</span><span class="w"></span>
+<span class="w">      </span><span class="cm">/**</span>
+<span class="cm">       * It could be the enable notification is received twice without the disable notification in between</span>
+<span class="cm">       */</span><span class="w"></span>
+<span class="w">      </span><span class="n">HW_TS_Stop</span><span class="p">(</span><span class="n">HRSAPP_Context</span><span class="p">.</span><span class="n">TimerMeasurement_Id</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">HW_TS_Start</span><span class="p">(</span><span class="n">HRSAPP_Context</span><span class="p">.</span><span class="n">TimerMeasurement_Id</span><span class="p">,</span><span class="w"> </span><span class="n">HRSAPP_MEASUREMENT_INTERVAL</span><span class="p">);</span><span class="w"></span>
+<span class="cm">/* USER CODE END HRS_NOTIFICATION_ENABLED */</span><span class="w"></span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">HRS_NOTIFICATION_DISABLED</span><span class="p">:</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN HRS_NOTIFICATION_DISABLED */</span><span class="w"></span>
+<span class="w">      </span><span class="n">HW_TS_Stop</span><span class="p">(</span><span class="n">HRSAPP_Context</span><span class="p">.</span><span class="n">TimerMeasurement_Id</span><span class="p">);</span><span class="w"></span>
+<span class="cm">/* USER CODE END HRS_NOTIFICATION_DISABLED */</span><span class="w"></span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w"> </span>
+<span class="w">   </span><span class="k">default</span><span class="o">:</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN HRS_Notification_Default */</span><span class="w"></span>
+
+<span class="cm">/* USER CODE END HRS_Notification_Default */</span><span class="w"></span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN HRS_Notification_2 */</span><span class="w"></span>
+
+<span class="cm">/* USER CODE END HRS_Notification_2 */</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="p2p">
+<h3>1.3 P2P 服务<a class="headerlink" href="#p2p" title="此标题的永久链接"></a></h3>
+<p>P2P 服务是 ST 的自定义服务，实现了一个较为简单的功能，通过客户端可以控制服务端 LED 灯的状态，也可以通过服务端控制客户端 LED 灯的状态。</p>
+<p><img alt="../../_images/image-20201009205419291.png" src="../../_images/image-20201009205419291.png" /></p>
+<p>用户需要实现<code class="docutils literal notranslate"><span class="pre">P2PS_APP_Init()</span></code>，<code class="docutils literal notranslate"><span class="pre">P2PS_STM_App_Notification()</span></code>和<code class="docutils literal notranslate"><span class="pre">P2PS_Send_Notification()</span></code>这三个函数。</p>
+<p><code class="docutils literal notranslate"><span class="pre">P2PS_APP_Init()</span></code>需要完成以下功能：</p>
+<ul class="simple">
+<li><p>定义一个 Task，当一个 Button 被按下时，响应这个按下事件，并通知客户端，即调用<code class="docutils literal notranslate"><span class="pre">P2PS_Send_Notification()</span></code>。</p></li>
+<li><p>初始化 LED 灯的状态。</p></li>
+<li><p>初始化 P2PServer 上下文的状态。</p></li>
+</ul>
+<p>代码如下：</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">P2PS_APP_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN P2PS_APP_Init */</span><span class="w"></span>
+<span class="w">  </span><span class="n">UTIL_SEQ_RegTask</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CFG_TASK_SW1_BUTTON_PUSHED_ID</span><span class="p">,</span><span class="w"> </span><span class="n">UTIL_SEQ_RFU</span><span class="p">,</span><span class="w"> </span><span class="n">P2PS_Send_Notification</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Initialize LedButton Service</span>
+<span class="cm">   */</span><span class="w"></span>
+<span class="w">  </span><span class="n">P2P_Server_App_Context</span><span class="p">.</span><span class="n">Notification_Status</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span>
+<span class="w">  </span><span class="n">P2PS_APP_LED_BUTTON_context_Init</span><span class="p">();</span><span class="w"></span>
+<span class="cm">/* USER CODE END P2PS_APP_Init */</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">P2PS_STM_App_Notification()</span></code>用于实现客户端控制服务端的 LED 灯的状态。在属性被修改时会被调用。代码如下：</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">P2PS_APP_Notification</span><span class="p">(</span><span class="n">P2PS_APP_ConnHandle_Not_evt_t</span><span class="w"> </span><span class="o">*</span><span class="n">pNotification</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN P2PS_APP_Notification_1 */</span><span class="w"></span>
+
+<span class="cm">/* USER CODE END P2PS_APP_Notification_1 */</span><span class="w"></span>
+<span class="w">  </span><span class="k">switch</span><span class="p">(</span><span class="n">pNotification</span><span class="o">-&gt;</span><span class="n">P2P_Evt_Opcode</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN P2PS_APP_Notification_P2P_Evt_Opcode */</span><span class="w"></span>
+
+<span class="cm">/* USER CODE END P2PS_APP_Notification_P2P_Evt_Opcode */</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">PEER_CONN_HANDLE_EVT</span><span class="w"> </span><span class="p">:</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN PEER_CONN_HANDLE_EVT */</span><span class="w"></span>
+<span class="w">          </span>
+<span class="cm">/* USER CODE END PEER_CONN_HANDLE_EVT */</span><span class="w"></span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">PEER_DISCON_HANDLE_EVT</span><span class="w"> </span><span class="p">:</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN PEER_DISCON_HANDLE_EVT */</span><span class="w"></span>
+<span class="w">       </span><span class="n">P2PS_APP_LED_BUTTON_context_Init</span><span class="p">();</span><span class="w">       </span>
+<span class="cm">/* USER CODE END PEER_DISCON_HANDLE_EVT */</span><span class="w"></span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">default</span><span class="o">:</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN P2PS_APP_Notification_default */</span><span class="w"></span>
+
+<span class="cm">/* USER CODE END P2PS_APP_Notification_default */</span><span class="w"></span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="cm">/* USER CODE BEGIN P2PS_APP_Notification_2 */</span><span class="w"></span>
+
+<span class="cm">/* USER CODE END P2PS_APP_Notification_2 */</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>在 <code class="docutils literal notranslate"><span class="pre">main.c</span></code>里面需要处理</p>
+<ul class="simple">
+<li><p>Button 中断，需要在 Button 中断里回调 <code class="docutils literal notranslate"><span class="pre">P2PS_APP_SW1_Button_Action()</span></code>函数。</p></li>
+<li><p>启动调度器，在 While(1) 中调用 <code class="docutils literal notranslate"><span class="pre">UTIL_SEQ_Run(UTIL_SEQ_DEFAULT)</span></code>。</p></li>
+</ul>
+</section>
+</section>
+<section id="id1">
+<h2><span class="section-number">2.2. </span>2 代码对比<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>可以用 CubeMX 自动生成的代码和 WB 软件包的 demo 工程里的代码相比较，来完成相应工程的配置编写。</p>
+<p>STM32CubeMX 的软件包一般在 <strong>C:\Users&lt;用户名&gt;\STM32Cube\Repository</strong> 里面。</p>
+<p><img alt="../../_images/image-20201009211737879.png" src="../../_images/image-20201009211737879.png" /></p>
+</section>
+<section id="stm32cubemonitor-rf">
+<h2><span class="section-number">2.3. </span>3 STM32CubeMonitor-RF<a class="headerlink" href="#stm32cubemonitor-rf" title="此标题的永久链接"></a></h2>
+<p>可以利用 STM32CubeMonitor-RF 来观察 nucleo 板的 DIS 服务，HRS 服务和 P2P 服务的现象。</p>
+<p><img alt="../../_images/image-20201009214457772.png" src="../../_images/image-20201009214457772.png" /></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../01_introduce/01_intruduce.html" class="btn btn-neutral float-left" title="1. 简单自我介绍" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../03_heart_rate_att_gatt/01_intruduce.html" class="btn btn-neutral float-right" title="3. GATT Service 定义总结" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

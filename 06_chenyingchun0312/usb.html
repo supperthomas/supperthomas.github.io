@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6. USB &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/translations.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="7. I2S总线介绍" href="i2s.html" />
+    <link rel="prev" title="5. STM32L496 USB CDC适配" href="stm32l496.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">NORDIC:chenyingchun0312</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_posix_dfs/rt_thread_posix_dfs.html">2. POSIX 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="elf_introduce.html">3. 程序员的自我修养</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nrf52832_rtthread_dlmodule.html">4. nRF52832 RT-Thread dmodule适配</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stm32l496.html">5. STM32L496 USB CDC适配</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. USB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">6.1. 目标</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">6.2. USB 简介</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#usb-host">USB Host</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#usb-device">USB Device</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">6.3. USB 应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">6.4. USB 硬件介绍</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">标准接口</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">硬件接口</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">6.5. USB 拓扑结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">6.6. 协议核心术语</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">6.7. USB 抓包器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">6.8. USB抓包分析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">6.9. USB 资料查找</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id12">官方网站</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">搜索文档</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">6.10. USB 协议栈介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rt-thread-usb-stack">6.11. RT-Thread usb stack</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id15">简介</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stm32l496-usb-cdc">STM32L496 USB CDC适配</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">详细介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rt-thread">rt-thread协议栈思维脑图</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ep0-setup">6.12. EP0 SETUP 阶段</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id25">协议文档描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id26">协议结构体描述</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ep0-data">6.13. EP0 DATA阶段</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#data-in">DATA IN 阶段</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-out">DATA OUT 阶段</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#status">6.14. STATUS 阶段</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#out-status">OUT STATUS阶段</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#in-status">6.15. IN STATUS 阶段</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#epx">6.16. EPx数据传输</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sof">6.17. SOF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reset">6.18. RESET</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id31">6.19. 参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="i2s.html">7. I2S总线介绍</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">NORDIC:chenyingchun0312</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">6. </span>USB</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/06_chenyingchun0312/usb.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="usb">
+<h1><span class="section-number">6. </span>USB<a class="headerlink" href="#usb" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">6.1. </span>目标<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>学习完本文内容，你对以下内容会有一个大概的了解：</p>
+<ul class="simple">
+<li><p>USB的基础知识</p></li>
+<li><p>USB相关资料可以到哪里找</p></li>
+<li><p>RT-Thread USB协议栈的实现介绍</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2><span class="section-number">6.2. </span>USB 简介<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p>USB (Universal Serial Bus) 是一种支持热插拔的通用串行总线。它使用差分信号来传输数据，在USB 1.0和USB 1.1版本中，只支持 1.5Mbps 的低速（low-speed）模式和 12Mbps 的全速（full-speed）模式，在 USB 2.0 中，又加入了480Mbps 的高速（high-speed）模式，USB 3.0(super speed)，传输速率最大5Gbps。</p>
+<section id="usb-host">
+<h3>USB Host<a class="headerlink" href="#usb-host" title="此标题的永久链接"></a></h3>
+<p>任何USB系统中只有一个主机。 主机系统的USB接口被称为主机控制器。 主机控制器可以以硬件，固件或软件的组合来实现。 根集线器集成在主机系统内以提供一个或多个连接点。</p>
+</section>
+<section id="usb-device">
+<h3>USB Device<a class="headerlink" href="#usb-device" title="此标题的永久链接"></a></h3>
+<p>USB Device 可以分为 USB Hub 和 USB Function。</p>
+<ol class="simple">
+<li><p>USB Hub 提供了一种低成本、低复杂度的USB接口扩展方法。Hub的上行端口面向HOST，下行端口面向设备（Hub 或功能设备）。在下行端口上，Hub 提供了设备连接检测和设备移除检测的能力，并给各下行端口供电。Hub 可以单独使能各下行端口。不同端口可以工作在不同的速度等级（高速/全速/低速）。</p></li>
+<li><p>USB Function 能够通过总线传输或接收数据或控制信息的设备，在 USB2.0 标准中，别称为 Class。</p></li>
+</ol>
+</section>
+</section>
+<section id="id3">
+<h2><span class="section-number">6.3. </span>USB 应用<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h2>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291106060.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291106060.png" /></p>
+</section>
+<section id="id4">
+<h2><span class="section-number">6.4. </span>USB 硬件介绍<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h2>
+<section id="id5">
+<h3>标准接口<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
+<p>标准接口分为PC端和Device端</p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291120188.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291120188.png" /></p>
+</section>
+<section id="id6">
+<h3>硬件接口<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h3>
+<p>一般情况下，USB接口有DP，DM 两个差分传输线，但是其实还有一个ID线。有些MCU的USB模块既支持做USB设备又支持做USB主机，此时可以通过ID线接高低电平来区分，当做USB设备时，ID接高，当做USB主机时，ID接低。</p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291134836.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291134836.png" /></p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291134201.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291134201.png" /></p>
+</section>
+</section>
+<section id="id7">
+<h2><span class="section-number">6.5. </span>USB 拓扑结构<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h2>
+<ul class="simple">
+<li><p>USB总线基于分层的星状拓扑结构</p></li>
+<li><p>以HUB为中心，连接周围的设备</p></li>
+<li><p>总线上最多可连接127个设备，HUB串联数量最多5个</p></li>
+</ul>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291142195.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291142195.png" /></p>
+</section>
+<section id="id8">
+<h2><span class="section-number">6.6. </span>协议核心术语<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h2>
+<p>要想理解USB协议栈，必须理解一些术语，这样我们在看USB协议栈的时候，才能理解代码的流程含义。</p>
+<ul class="simple">
+<li><p>USB 传输（transfer）</p></li>
+<li><p>USB 事务 （transaction）</p></li>
+<li><p>USB 包 （package）</p></li>
+<li><p>配置</p></li>
+<li><p>接口</p></li>
+<li><p>端点 （Endpoint）</p></li>
+<li><p>管道</p></li>
+</ul>
+</section>
+<section id="id9">
+<h2><span class="section-number">6.7. </span>USB 抓包器<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h2>
+<p>要想理解USB协议，我们最好能有一个USB抓包器，结合协议文档，以及抓包器的解析，来理解协议。USB抓包工具分为纯软件的和硬件的两种。纯软件USB抓包工具需要在系统能正确枚举USB设备的前提下才能让内核的钩子函数捕捉到数据，而后者在USB不正常时也能捕捉到链路数据（令牌包等），属于更底层的抓包方式。</p>
+<p>关于软件抓包器，因为我没有实际用过，大家自行百度尝试，比如<a class="reference external" href="https://blog.csdn.net/litao31415/article/details/103925094">开源硬件USB抓包及协议分析工具分享</a>。如图是我使用的硬件抓包器。</p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291242990.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291242990.png" /></p>
+</section>
+<section id="id10">
+<h2><span class="section-number">6.8. </span>USB抓包分析<a class="headerlink" href="#id10" title="此标题的永久链接"></a></h2>
+<p>所有的USB设备，在插入时，首先进行USB枚举过程。枚举过程其实就是控制传输过程，控制传输是所有的USB必须有的过程。下面我们以获取设备描述符举例，整体截图如下。</p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400123.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400123.png" /></p>
+<ul class="simple">
+<li><p>在一个transfer中，一般会有3个transaction，一个transaction中，一般会有3个packet。</p></li>
+</ul>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400012.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400012.png" /></p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400162.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400162.png" /></p>
+<img src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400907.png" alt="image-20210722150818691"  /><p>HOST某次数据交互分析</p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400099.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400099.png" /></p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400474.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400474.png" /></p>
+</section>
+<section id="id11">
+<h2><span class="section-number">6.9. </span>USB 资料查找<a class="headerlink" href="#id11" title="此标题的永久链接"></a></h2>
+<section id="id12">
+<h3>官方网站<a class="headerlink" href="#id12" title="此标题的永久链接"></a></h3>
+<p><a class="reference external" href="https://www.usb.org/">www.usb.org</a></p>
+</section>
+<section id="id13">
+<h3>搜索文档<a class="headerlink" href="#id13" title="此标题的永久链接"></a></h3>
+<p>https://www.usb.org/documents</p>
+<p>比如查找USB2.0相关文档，可以输入usb 2.0</p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400306.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400306.png" /></p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400966.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108301400966.png" /></p>
+</section>
+</section>
+<section id="id14">
+<h2><span class="section-number">6.10. </span>USB 协议栈介绍<a class="headerlink" href="#id14" title="此标题的永久链接"></a></h2>
+<p>一些相对有名的开源USB协议栈有：</p>
+<ul>
+<li><p><a class="reference external" href="https://github.com/xtoolbox/TeenyUSB">TeenyUSB</a></p>
+<p>TeenyUSB是一个用于STM32芯片的轻量级USB协议栈。这个项目最开始主要目的是为了解决芯片代码空间不足的问题。用CubeMX生成的代码体积比较大，而选用的芯片资源又十分有限，因此就有了实现一个轻量级USB的想法。</p>
+</li>
+<li><p><a class="reference external" href="https://github.com/hathach/tinyusb">tinyusb</a></p>
+<p>全静态内存分配，不支持多设备，不支持同一设备上使用多个同类型接口，暂时不支持STM32主机模式。</p>
+</li>
+<li><p><a class="reference external" href="https://github.com/azure-rtos/usbx">usbx</a></p>
+<p>A high-performance USB host, device, and on-the-go (OTG) embedded stack, Azure RTOS USBX is fully integrated with Azure RTOS ThreadX and available for all Azure RTOS ThreadX–supported processors. Like Azure RTOS ThreadX, Azure RTOS USBX is designed to have a small footprint and high performance, making it ideal for deeply embedded applications that require an interface with USB devices.</p>
+</li>
+<li><p>RT-Thread usb stack</p></li>
+<li><p>其他。。。</p></li>
+</ul>
+</section>
+<section id="rt-thread-usb-stack">
+<h2><span class="section-number">6.11. </span>RT-Thread usb stack<a class="headerlink" href="#rt-thread-usb-stack" title="此标题的永久链接"></a></h2>
+<section id="id15">
+<h3>简介<a class="headerlink" href="#id15" title="此标题的永久链接"></a></h3>
+<p>RT-Thread USB协议栈支持USB HOST和USB Device，协议栈位置在<code class="docutils literal notranslate"><span class="pre">components\drivers\usb</span></code></p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291322849.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291322849.png" /></p>
+</section>
+<section id="stm32l496-usb-cdc">
+<h3>STM32L496 USB CDC适配<a class="headerlink" href="#stm32l496-usb-cdc" title="此标题的永久链接"></a></h3>
+<p><a class="reference external" href="https://club.rt-thread.org/ask/article/2959.html">STM32L496 USB CDC适配</a></p>
+</section>
+<section id="id16">
+<h3>详细介绍<a class="headerlink" href="#id16" title="此标题的永久链接"></a></h3>
+<section id="id17">
+<h4>USB Device 核心代码<a class="headerlink" href="#id17" title="此标题的永久链接"></a></h4>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291334452.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291334452.png" /></p>
+</section>
+<section id="id18">
+<h4>USB Device 设备类代码<a class="headerlink" href="#id18" title="此标题的永久链接"></a></h4>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291334812.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291334812.png" /></p>
+</section>
+<section id="id19">
+<h4>USB HOST 核心代码<a class="headerlink" href="#id19" title="此标题的永久链接"></a></h4>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291335725.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291335725.png" /></p>
+</section>
+<section id="id20">
+<h4>USB HOST 支持的设备类<a class="headerlink" href="#id20" title="此标题的永久链接"></a></h4>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291339119.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291339119.png" /></p>
+</section>
+<section id="id21">
+<h4>USB 驱动代码<a class="headerlink" href="#id21" title="此标题的永久链接"></a></h4>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291339100.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291339100.png" /></p>
+</section>
+<section id="id22">
+<h4>USB 驱动移植<a class="headerlink" href="#id22" title="此标题的永久链接"></a></h4>
+<p>需要实现的ops如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">static</span> <span class="n">struct</span> <span class="n">udcd_ops</span> <span class="n">_udc_ops</span> <span class="o">=</span>
+<span class="p">{</span>
+    <span class="n">_set_address</span><span class="p">,</span>		<span class="o">//</span> <span class="n">设置设备地址</span>
+    <span class="n">_set_config</span><span class="p">,</span>		<span class="o">//</span> 
+    <span class="n">_ep_set_stall</span><span class="p">,</span>		<span class="o">//</span> <span class="n">给USB</span> <span class="n">HOST回复STALL命令</span>
+    <span class="n">_ep_clear_stall</span><span class="p">,</span>	<span class="o">//</span> <span class="n">清除设备的STALL状态</span>
+    <span class="n">_ep_enable</span><span class="p">,</span>			<span class="o">//</span> <span class="n">使能ep端口</span>
+    <span class="n">_ep_disable</span><span class="p">,</span>
+    <span class="n">_ep_read_prepare</span><span class="p">,</span>	<span class="o">//</span> <span class="n">读取endpoint数据</span>
+    <span class="n">_ep_read</span><span class="p">,</span>
+    <span class="n">_ep_write</span><span class="p">,</span>			<span class="o">//</span> <span class="n">向USB</span> <span class="n">HOST发送数据</span>
+    <span class="n">_ep0_send_status</span><span class="p">,</span>	<span class="o">//</span> <span class="n">Status</span> <span class="n">stage发送状态</span>
+    <span class="n">_suspend</span><span class="p">,</span>
+    <span class="n">_wakeup</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="rt-thread">
+<h3>rt-thread协议栈思维脑图<a class="headerlink" href="#rt-thread" title="此标题的永久链接"></a></h3>
+<section id="id23">
+<h4>枚举+数据输入输出<a class="headerlink" href="#id23" title="此标题的永久链接"></a></h4>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404171.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404171.png" /></p>
+</section>
+<section id="id24">
+<h4>设备类注册<a class="headerlink" href="#id24" title="此标题的永久链接"></a></h4>
+<p><img alt="image-20210802142636619" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404177.png" /></p>
+</section>
+</section>
+</section>
+<section id="ep0-setup">
+<h2><span class="section-number">6.12. </span>EP0 SETUP 阶段<a class="headerlink" href="#ep0-setup" title="此标题的永久链接"></a></h2>
+<section id="id25">
+<h3>协议文档描述<a class="headerlink" href="#id25" title="此标题的永久链接"></a></h3>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404926.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404926.png" /></p>
+</section>
+<section id="id26">
+<h3>协议结构体描述<a class="headerlink" href="#id26" title="此标题的永久链接"></a></h3>
+<section id="setup">
+<h4>setup包的封装<a class="headerlink" href="#setup" title="此标题的永久链接"></a></h4>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404698.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404698.png" /></p>
+</section>
+<section id="id27">
+<h4>setup包的解析<a class="headerlink" href="#id27" title="此标题的永久链接"></a></h4>
+<section id="request-type">
+<h5>request_type<a class="headerlink" href="#request-type" title="此标题的永久链接"></a></h5>
+<section id="request-type-direction-d7">
+<h6>request_type.Direction (D7)<a class="headerlink" href="#request-type-direction-d7" title="此标题的永久链接"></a></h6>
+<p>Direction字段表示请求的方向，D7为1表示的是IN包（DEVICE-&gt;HOST，device给host发送数据），D7为0表示OUT包（HOST-&gt;DEVICE，即host给device发送数据）。</p>
+<p>Direction字段，一定程度上受setup包中的第二个字节，即bRequest字段的限制。比如当bRequest为<code class="docutils literal notranslate"><span class="pre">USB_REQ_GET_STATUS</span></code>时，Direction字段必然需要为1，即IN包，如果不为IN包，只能说明USBHOST组包时出错了（USB传输过程中如果出错，USB硬件CRC校验失败后，不会将接收到的数据向上传递，即应用层根本不会收到setup包数据），当bRequest为<code class="docutils literal notranslate"><span class="pre">USB_REQ_SET_FEATURE</span></code>时，Direction字段必须为0，即OUT包。</p>
+<p>request_type.Direction字段和bRrequest字段通常可以联合起来，校验USBHOST发送过来的数据包是否合法，但是通常认为USBHOST组包发送错误的概率不大，因此，rt-thread中并没有很多联合校验的功能代码。查看代码，只看到了在获取描述符时，加了这样的校验逻辑，（其实按照协议完整性，很多地方需要加上这一校验逻辑）如下所示</p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404705.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404705.png" /></p>
+</section>
+<section id="request-type-type-d6-d5">
+<h6>request_type.Type（D6~D5）<a class="headerlink" href="#request-type-type-d6-d5" title="此标题的永久链接"></a></h6>
+<p>Type字段表示请求类型： 标准请求，类请求，厂商请求三种</p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404073.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404073.png" /></p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404290.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404290.png" /></p>
+</section>
+<section id="request-type-recipient-d4-d0">
+<h6>request_type.Recipient (D4~D0)<a class="headerlink" href="#request-type-recipient-d4-d0" title="此标题的永久链接"></a></h6>
+<ul class="simple">
+<li><p>详细内容请查看文档《USB3.0spec中文译本.pdf》第9.4章节</p></li>
+<li><p>Recipient字段，表示HOST该次请求的设定的接受者，可以是： 设备，接口，端点，未定义</p></li>
+<li><p>不同的接受者，setup包中wValue，wIndex等含义也不一样。比如当接受者是端点时，wIndex的低字节表示希望获取哪个端点的信息</p></li>
+<li><p>不同接收者，对相同的bRequest请求，设备的回复的数据含义是不一样的，表示指定接受者的当前状态</p></li>
+<li><p>当接受者是端点时：CLEAR_FEATURE，GET_STATUS，SET_FEATURE这三个请求需要处理（bmRequestType.Recipient为00010）</p></li>
+<li><p>当接受者是接口时：CLEAR_FEATURE，GET_STATUS，SET_FEATURE这三个请求需要处理（bmRequestType.Recipient为00001）</p></li>
+</ul>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404914.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404914.png" /></p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404691.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404691.png" /></p>
+<p>​	<img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404473.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404473.png" /></p>
+</section>
+</section>
+<section id="brequest">
+<h5>bRequest<a class="headerlink" href="#brequest" title="此标题的永久链接"></a></h5>
+<p>不同的请求类型（request_type.Typez字段：标准请求，设备类请求，厂商请求），bRequest可表示的值也不一样</p>
+<section id="id28">
+<h6>标准设备请求<a class="headerlink" href="#id28" title="此标题的永久链接"></a></h6>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404729.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404729.png" /></p>
+</section>
+<section id="id29">
+<h6>设备类请求<a class="headerlink" href="#id29" title="此标题的永久链接"></a></h6>
+<ul>
+<li><p>audio mic，audio_speaker 设备</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define USB_REQ_GET_INTERFACE           0x0A</span>
+<span class="cp">#define USB_REQ_SET_INTERFACE           0x0B</span>
+</pre></div>
+</div>
+</li>
+<li><p>CDC 设备</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#define CDC_SET_LINE_CODING             0x20</span>
+<span class="cp">#define CDC_GET_LINE_CODING             0x21</span>
+<span class="cp">#define CDC_SET_CONTROL_LINE_STATE      0x22</span>
+<span class="p">....</span><span class="n">其他并不常用</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+<li><p>HID 设备</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define USB_REQ_GET_DESCRIPTOR      0x06	// 设备类中也可能有标准设备类的一些请求</span>
+<span class="c1">#define USB_HID_REQ_GET_REPORT      0x01</span>
+<span class="c1">#define USB_HID_REQ_GET_IDLE        0x02</span>
+<span class="c1">#define USB_HID_REQ_GET_PROTOCOL    0x03</span>
+<span class="c1">#define USB_HID_REQ_SET_REPORT      0x09</span>
+<span class="c1">#define USB_HID_REQ_SET_IDLE        0x0a</span>
+<span class="c1">#define USB_HID_REQ_SET_PROTOCOL    0x0b</span>
+</pre></div>
+</div>
+</li>
+<li><p>STORAGE 存储类设备</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define USBREQ_GET_MAX_LUN              0xfe</span>
+<span class="cp">#define USBREQ_MASS_STORAGE_RESET       0xff</span>
+</pre></div>
+</div>
+</li>
+<li><p>其他，暂不一一列举</p></li>
+</ul>
+</section>
+<section id="id30">
+<h6>厂商设备请求<a class="headerlink" href="#id30" title="此标题的永久链接"></a></h6>
+<p>目前，从rt-thread usb驱动代码看，bRequest字段需要是字母<code class="docutils literal notranslate"><span class="pre">A</span></code></p>
+</section>
+</section>
+</section>
+</section>
+</section>
+<section id="ep0-data">
+<h2><span class="section-number">6.13. </span>EP0 DATA阶段<a class="headerlink" href="#ep0-data" title="此标题的永久链接"></a></h2>
+<p>如果在SETPUP阶段，请求包的方向为IN方向，即DEVICE-&gt;HOST，那么接下来的阶段则为DATA IN阶段，最后是OUT STATUS阶段，反之，如果请求包方向为OUT方向，即HOST-&gt;DEVICE，那么接下来的阶段则为DATA OUT阶段，最后为IN STATUS阶段。</p>
+<section id="data-in">
+<h3>DATA IN 阶段<a class="headerlink" href="#data-in" title="此标题的永久链接"></a></h3>
+<p>HOST发送了IN方向请求，DEVICE给HOST回复请求的阶段，称之为DATA IN阶段，一般就是解析了请求后，调用<code class="docutils literal notranslate"><span class="pre">rt_usbd_ep0_write</span></code>给PC回复数据。</p>
+</section>
+<section id="data-out">
+<h3>DATA OUT 阶段<a class="headerlink" href="#data-out" title="此标题的永久链接"></a></h3>
+<p>HOST发送了OUT方向的请求，且OUT的数据内容不存在于SETUP packet中，需要额外使用EP0发送DATA packet，那么就必须有一个DATA OUT阶段，一般调用<code class="docutils literal notranslate"><span class="pre">rt_usbd_ep0_out_handler</span></code>函数进行EP0数据的OUT。</p>
+<p>注意一下，一般情况下，一个Transfer中有3个Transtraction，但是，如果HOST发送了OUT方向数据请求，且OUT数据的内容存在于setup的8个字节命令中，那么，第二个阶段的DATA OUT阶段就不存在了，只有IN STATUS阶段，典型的比如set address请求。</p>
+<p><img alt="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404647.png" src="https://gitee.com/chenyingchun0312/article-images/raw/master/Typora02/202108291404647.png" /></p>
+</section>
+</section>
+<section id="status">
+<h2><span class="section-number">6.14. </span>STATUS 阶段<a class="headerlink" href="#status" title="此标题的永久链接"></a></h2>
+<p>所有PC的请求，都有一个status stage，用来作为最后一个确认的transaction</p>
+<section id="out-status">
+<h3>OUT STATUS阶段<a class="headerlink" href="#out-status" title="此标题的永久链接"></a></h3>
+<p>当第二个transtracion为 IN data 阶段，那么这个status阶段就是out status阶段</p>
+</section>
+</section>
+<section id="in-status">
+<h2><span class="section-number">6.15. </span>IN STATUS 阶段<a class="headerlink" href="#in-status" title="此标题的永久链接"></a></h2>
+<p>当第二个transtracion为 OUT data 阶段，那么这个status阶段就是in status阶段</p>
+</section>
+<section id="epx">
+<h2><span class="section-number">6.16. </span>EPx数据传输<a class="headerlink" href="#epx" title="此标题的永久链接"></a></h2>
+<p>枚举阶段使用的是EP0端口进行枚举的，当枚举完成后，需要进行数据的传输，则需要使用到EP1，EP2等，当收到<code class="docutils literal notranslate"><span class="pre">USB_MSG_DATA_NOTIFY</span></code>消息时，进行数据的输入输出。</p>
+</section>
+<section id="sof">
+<h2><span class="section-number">6.17. </span>SOF<a class="headerlink" href="#sof" title="此标题的永久链接"></a></h2>
+<p>收到HOST的SOF包请求</p>
+</section>
+<section id="reset">
+<h2><span class="section-number">6.18. </span>RESET<a class="headerlink" href="#reset" title="此标题的永久链接"></a></h2>
+<p>当device复位时，执行</p>
+</section>
+<section id="id31">
+<h2><span class="section-number">6.19. </span>参考资料<a class="headerlink" href="#id31" title="此标题的永久链接"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://gitee.com/chenyingchun0312/usb-doc">《USB3.0spec中文译本.pdf》</a></p></li>
+<li><p><a class="reference external" href="https://gitee.com/chenyingchun0312/usb-doc">《USB3.0官方协议规格书(英文版).pdf》</a></p></li>
+<li><p>《rtthread-studio-usb-device.md》</p></li>
+<li><p>《an0046-rtthread-driver-usbh.md》</p></li>
+<li><p><a class="reference external" href="https://gitee.com/chenyingchun0312/usb-doc"><strong>《USB培训_Part1_协议.pdf》</strong></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="stm32l496.html" class="btn btn-neutral float-left" title="5. STM32L496 USB CDC适配" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="i2s.html" class="btn btn-neutral float-right" title="7. I2S总线介绍" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>13. 如何用docker来学习rtthread-qemu &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="14. LLSYNC" href="../05_llsync/01_llsync_Environment.html" />
+    <link rel="prev" title="12. rt-thread 移植BSP驱动 uart篇" href="../03_bsp_porting/04_rtthread_bsp_porting_uart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">RTTHRED: RT-Thread</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. RTTHREAD贡献TODO目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/02_RTTHREAD_introduce.html">2. RT-THREAD —-国产开源之光</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/01_software_package.html">3. RTTHREAD软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/02_software_introduce.html">4. RTTHREAD软件包目录自分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/03_sensor_list.html">5. RT-Thread 传感器软件包归类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/04_rtthread_auto_update.html">6. RTTHREAD 软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/05_rtthread_bsp_board.html">7. RTTHREAD BSP board支持目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/06_rtthread_softpackage_build_guide.html">8. 软件包制作小计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/01_rtthread_bsp_porting.html">9. RTTHREAD移植新的BSP开发板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/02_rtthread_bsp_porting_gpio.html">10. RTTHREAD移植BSP驱动 GPIO篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/03_rtthread_bsp_porting_spi.html">11. RTTHREAD移植BSP驱动 SPI篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/04_rtthread_bsp_porting_uart.html">12. rt-thread 移植BSP驱动 uart篇</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13. 如何用docker来学习rtthread-qemu</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">13.1. 背景介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">13.2. 实验步骤</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">实验环境</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">拉取镜像</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qemu">qemu编译</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">qemu 运行</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">13.3. 总结</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../05_llsync/01_llsync_Environment.html">14. LLSYNC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_llsync/02_llsync_struct_code.html">15. LLSYNC 移植指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_simular/01_keil_simulator.html">16. 如何在keil中STM32L496 跑simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_onchip/01_on_chip_file.html">17. STM32如何将文件放到内部flash里面</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">RTTHRED: RT-Thread</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">13. </span>如何用docker来学习rtthread-qemu</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/RTTHREAD/04_docker/01_docker_images.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dockerrtthread-qemu">
+<h1><span class="section-number">13. </span>如何用docker来学习rtthread-qemu<a class="headerlink" href="#dockerrtthread-qemu" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">13.1. </span>背景介绍<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>相信有一些小伙伴对于搭环境来说是一件痛苦的事情，经常会遇到各种奇怪的问题</p>
+<p>虽然文档中心对于快速上手rtthread已经讲的非常详细了：</p>
+<p>有以下方法，我来总结一下</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.rt-thread.org/document/site/#/rt-thread-version/rt-thread-standard/tutorial/quick-start/stm32f103-simulator/stm32f103-simulator">Keil 模拟器 STM32F103 上手指南</a></p></li>
+<li><p><a class="reference external" href="https://www.rt-thread.org/document/site/#/rt-thread-version/rt-thread-standard/tutorial/quick-start/iot_board/quick-start?id=rt-thread-%E6%BD%98%E5%A4%9A%E6%8B%89-stm32l475-%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97">RT-Thread 潘多拉 STM32L475 上手指南</a></p></li>
+<li><p><a class="reference external" href="https://www.rt-thread.org/document/site/#/rt-thread-version/rt-thread-standard/application-note/setup/qemu/windows/an0006-qemu-windows?id=%E5%9C%A8-window-%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8-qemu-%E8%BF%90%E8%A1%8C-rt-thread">在 Window 平台使用 QEMU 运行 RT-Thread</a></p></li>
+<li><p><a class="reference external" href="https://www.rt-thread.org/document/site/#/rt-thread-version/rt-thread-standard/application-note/setup/qemu/ubuntu/an0005-qemu-ubuntu?id=%E5%9C%A8-ubuntu-%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91-rt-thread">在 Ubuntu 平台开发 RT-Thread</a></p></li>
+</ul>
+<p>这篇文章主要介绍如何用docker来运行rtthread</p>
+<p>使用docker有以下优势，</p>
+<ul class="simple">
+<li><p>一键下载</p></li>
+<li><p>对于linux用户或者mac用户友好</p></li>
+<li><p>学习成本低</p></li>
+</ul>
+<p>不过docker也同样有几大劣势：</p>
+<ul class="simple">
+<li><p>网速较慢（需要科学上网）</p></li>
+<li><p>github访问比较麻烦</p></li>
+<li><p>没有图形化界面</p></li>
+</ul>
+<p>这篇文章呢，主要让大家体验以下docker带来的方便，可能实用性不一定很高。不过相信肯定有很多docker大佬，如果对于用docker学习有什么好的意见或者建议，也可以在评论区里面帮忙留言和建议。也帮我解决一些docker的问题。</p>
+<p>我现在觉得主要是以下几个问题：</p>
+<ul class="simple">
+<li><p>docker 镜像下载比较慢</p></li>
+<li><p>Dockerfile里面的代码git clone的git地址现在国内由于访问不了github无法实现自动化。</p></li>
+</ul>
+<p>本篇文章的学习仓库</p>
+<p>github https://github.com/supperthomas/Dockerfiles.git  (欢迎star来交流)</p>
+<p>gitee https://gitee.com/superThomas/Dockerfiles.git</p>
+</section>
+<section id="id2">
+<h2><span class="section-number">13.2. </span>实验步骤<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<section id="id3">
+<h3>实验环境<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>小伙伴们可以在windows和linux或者mac上安装docker</p>
+<p>https://www.docker.com/</p>
+<p>由于有些小伙伴可能本地镜像下载比较慢，这里我找到一个比较方便的快速实验本项目的网址：</p>
+<p>https://labs.play-with-docker.com/</p>
+<p>这个只要注册一个账号即可（可能需要科学上网）</p>
+<p>直接新建一个docker container</p>
+<p><img alt="image-20220325234313296" src="../../_images/image-20220325234313296.png" /></p>
+</section>
+<section id="id4">
+<h3>拉取镜像<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<p>输入命令<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">pull</span> <span class="pre">supperthomas/rtthread</span></code> 这个要稍微等一会，不过这里已经比本地快很多了，因为服务器是在国外</p>
+<p><img alt="image-20220325235226448" src="../../_images/image-20220325235226448.png" /></p>
+<p>然后输入命令<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">supperthomas/rtthread</span></code></p>
+<p><img alt="image-20220325235540520" src="../../_images/image-20220325235540520.png" /></p>
+<p>到这里环境就已经弄好了</p>
+</section>
+<section id="qemu">
+<h3>qemu编译<a class="headerlink" href="#qemu" title="此标题的永久链接"></a></h3>
+<p>接下来就可以根据文档中心的qemu的命令来操作了，输入命令<code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/root/rt-thread/bsp/qemu-vexpress-a9/</span></code></p>
+<p><img alt="image-20220325235656382" src="../../_images/image-20220325235656382.png" /></p>
+<p>执行命令<code class="docutils literal notranslate"><span class="pre">scons</span></code></p>
+<p><img alt="image-20220325235756293" src="../../_images/image-20220325235756293.png" /></p>
+</section>
+<section id="id5">
+<h3>qemu 运行<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
+<p>输入命令<code class="docutils literal notranslate"><span class="pre">./qemu-nographic.sh</span></code></p>
+<p>然后就可以看到hello world</p>
+<p><img alt="image-20220325235947580" src="../../_images/image-20220325235947580.png" /></p>
+</section>
+</section>
+<section id="id6">
+<h2><span class="section-number">13.3. </span>总结<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h2>
+<p>下面我提供几个我做的几个小一点的镜像，给需要的小伙伴pull</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docker pull supperthomas/rtthread_mini:latest 这个没有gcc(非常小适合DIY)，没有arm-gcc(这个比较大)
+docker pull supperthomas/rtthread_mini:v3 这个加了arm-gcc环境变量，无rtthread源码。（适合STM32 等arm-gcc环境）
+docker pull supperthomas/rtthread_mini:v4 这个有gcc，加了rtthread源码自动下载。
+docker pull supperthomas/rtthread_mini:v5 这个加了gcc，加了rtthread 源码，如果需要更新需要git pull
+docker pull supperthomas/rtthread_mini:v6 这个在v5基础上加了qemu-system-arm 可以运行qemu
+</pre></div>
+</div>
+<p>虽然看起来这篇文章比较简单，这也是我尝试了很多种复杂方法之后，总结出来的最简单的方法，希望大家感兴趣能够尝试一下，如果有什么好的建议也可以提一下。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../03_bsp_porting/04_rtthread_bsp_porting_uart.html" class="btn btn-neutral float-left" title="12. rt-thread 移植BSP驱动 uart篇" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../05_llsync/01_llsync_Environment.html" class="btn btn-neutral float-right" title="14. LLSYNC" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5. BLE 配对机制 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="BLE PROFILE篇" href="../../ble_profile/index.html" />
+    <link rel="prev" title="4. SMP（BLE)" href="../03_ble_smp/SMP.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">BLE STACK篇</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../00_ble_introduce/BLE_introduce.html">1. 蓝牙基本知识介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_ble_adv/ble_adv_scan_all.html">2. BLE 广播和扫描</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_ble_gatt/GATT.html">3. GATT &amp; ATT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_ble_smp/SMP.html">4. SMP（BLE)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5. BLE 配对机制</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">5.1. 密码学基础</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smp">5.2. SMP</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">配对特性交换</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tk">TK 交换方式</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">5.3. 配对业务总结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">BLE STACK篇</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">5. </span>BLE 配对机制</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/ble/04_ble安全/资料.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ble">
+<h1><span class="section-number">5. </span>BLE 配对机制<a class="headerlink" href="#ble" title="此标题的永久链接"></a></h1>
+<p>BLE 的配对过程是在 Master 和 Slave 建立连接之后由 Master 发起的，Slave 负责响应，但 Slave 也可以主动请求 Master 发起配对过程。</p>
+<p>配对的最终目的是产生一个对称密钥，这样 Master 和 Slave 之间传递的消息就能够<strong>加密、认证</strong>，从而防止<strong>监听</strong>、<strong>篡改</strong>和<strong>中间人攻击</strong>。</p>
+<section id="id1">
+<h2><span class="section-number">5.1. </span>密码学基础<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>需要了解对称密钥，DH(diffile-hellman)密钥交换算法，ECDH(椭圆曲线diffile-hellman)密钥交换算法，消息认证码，认证加密 CCM 。</p>
+<p>学习：<a class="reference external" href="https://blog.csdn.net/weixin_42583147/article/details/93175701">BLE安全机制从入门到放弃</a> 。</p>
+</section>
+<section id="smp">
+<h2><span class="section-number">5.2. </span>SMP<a class="headerlink" href="#smp" title="此标题的永久链接"></a></h2>
+<section id="id2">
+<h3>配对特性交换<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h3>
+<p>学习：<a class="reference external" href="https://www.bluetooth.com/blog/bluetooth-pairing-part-1-pairing-feature-exchange/">Bluetooth Pairing Part 1 – Pairing Feature Exchange</a> 。</p>
+</section>
+<section id="tk">
+<h3>TK 交换方式<a class="headerlink" href="#tk" title="此标题的永久链接"></a></h3>
+<p>TK(Temporary Key) 是临时密钥，由 Master 和 Slave 相互协商得到，共有 4 种：</p>
+<ul class="simple">
+<li><p><strong>Just Works</strong></p></li>
+<li><p><strong>Passkey</strong></p></li>
+<li><p><strong>Out-of-Band(OOB)</strong></p></li>
+<li><p><strong>Numeric Comparison</strong></p></li>
+</ul>
+<p>学习：<a class="reference external" href="https://www.bluetooth.com/blog/bluetooth-pairing-part-2-key-generation-methods/">Bluetooth Pairing Part 2 Key Generation Methods</a> 。</p>
+<section id="just-works">
+<h4>Just Works<a class="headerlink" href="#just-works" title="此标题的永久链接"></a></h4>
+<p>在此模式下，TK 为固定值 0000，此时的配对没有任何安全性可言，仅仅能够工作。</p>
+</section>
+<section id="passkey">
+<h4>Passkey<a class="headerlink" href="#passkey" title="此标题的永久链接"></a></h4>
+<p>Passkey：通常为手动输入一串 TK 数字，这样 Central 和 Peripheral 就能够拥有相同的 TK 了，可以一端显示另一端输入，也可以两端同时输入。</p>
+<p>学习：<a class="reference external" href="https://www.bluetooth.com/blog/bluetooth-pairing-passkey-entry/">Bluetooth Pairing Part 3 – Low Energy Legacy Pairing Passkey Entry</a> 。</p>
+<p><img alt="https://i.loli.net/2021/03/14/uJUZodDFSycNHXL.png" src="https://i.loli.net/2021/03/14/uJUZodDFSycNHXL.png" /></p>
+</section>
+<section id="out-of-band-oob">
+<h4>Out-of-Band(OOB)<a class="headerlink" href="#out-of-band-oob" title="此标题的永久链接"></a></h4>
+<p>OOB：Out-of-Band，翻译过来就是带外，使用非 BLE 技术传输配对信息，例如 NFC、QRCode 。</p>
+<p>学习：<a class="reference external" href="https://www.bluetooth.com/blog/bluetooth-pairing-part-5-legacy-pairing-out-of-band/">Bluetooth Pairing Part 5: Legacy Pairing – Out of Band</a> 。</p>
+</section>
+<section id="numeric-comparison">
+<h4>Numeric Comparison<a class="headerlink" href="#numeric-comparison" title="此标题的永久链接"></a></h4>
+<p>Numeric Comparison：Central 和 Peripheral 通过 DCEH  密钥配送技术得到保证机密性，然后两端同时输出配对码，等待使用者确认配对码是否匹配。</p>
+<p>学习：<a class="reference external" href="https://www.bluetooth.com/blog/bluetooth-pairing-part-4/?utm_campaign=developer&amp;utm_source=internal&amp;utm_medium=blog&amp;utm_content=bluetooth-pairing-part-3-low-energy-legacy-pairing-passkey-entry">Bluetooth Pairing Part 4: Bluetooth Low Energy Secure Connections – Numeric Comparison</a> 。</p>
+<p><img alt="https://i.loli.net/2021/03/14/Z3VXv4e6Y9PtTBf.png" src="https://i.loli.net/2021/03/14/Z3VXv4e6Y9PtTBf.png" /></p>
+</section>
+</section>
+</section>
+<section id="id3">
+<h2><span class="section-number">5.3. </span>配对业务总结<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h2>
+<p><img alt="https://i.loli.net/2021/03/14/f4GvdaUztITgH56.png" src="https://i.loli.net/2021/03/14/f4GvdaUztITgH56.png" /></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../03_ble_smp/SMP.html" class="btn btn-neutral float-left" title="4. SMP（BLE)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../../ble_profile/index.html" class="btn btn-neutral float-right" title="BLE PROFILE篇" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

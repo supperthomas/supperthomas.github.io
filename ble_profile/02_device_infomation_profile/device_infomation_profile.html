@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2. DIS (设备信息服务) &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="3. HRS（心率服务）" href="../03_heart_rate_profile/heart_tate_profile.html" />
+    <link rel="prev" title="1. BAS (电池服务规格书)" href="../01_battery_service_profile/battery_service.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">BLE PROFILE篇</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_battery_service_profile/battery_service.html">1. BAS (电池服务规格书)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. DIS (设备信息服务)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">2.1. 1 介绍</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.1一致性</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.2服务的依赖</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">1.3蓝牙规范发布兼容性</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.4关贸总协定分程序要求</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">1.5运输依赖关系</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">1.6错误代码</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">2.2. 2 服务声明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">2.3. 3 服务特性</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id10">3.1厂家名称字符串</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">3.2型号字符串</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">3.3序列号字符串</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">3.4硬件版本字符串</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">3.5固件版本字符串</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id20">3.6软件版本字符串</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id">3.7系统ID</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ieee-11073-20601">3.8 IEEE 11073-20601法规认证数据列表</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id23">3.8.1行为特征</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pnp-id">3.9 PnP ID</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sdp">2.4. 4 SDP的互操作性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id29">2.5. 5 首字母缩写和缩写</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id30">2.6. 6 引用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03_heart_rate_profile/heart_tate_profile.html">3. HRS（心率服务）</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">BLE PROFILE篇</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2. </span>DIS (设备信息服务)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/ble_profile/02_device_infomation_profile/device_infomation_profile.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dis">
+<h1><span class="section-number">2. </span>DIS (设备信息服务)<a class="headerlink" href="#dis" title="此标题的永久链接"></a></h1>
+<p><strong>摘要</strong>：
+此服务公开制造商和/或供应商关于设备的信息。</p>
+<section id="id1">
+<h2><span class="section-number">2.1. </span>1 介绍<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>设备信息服务公开制造商和/或供应商关于设备的信息。</p>
+<section id="id2">
+<h3>1.1一致性<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h3>
+<p>如果设备声称与此服务一致，所有指示为此服务的强制性功能应以指定的方式支持(过程强制)。这也适用于指定支持的所有可选和有条件的功能。所有的强制功能，可选的和有条件的功能，都需要作为蓝牙认证计划的一部分进行验证。</p>
+</section>
+<section id="id3">
+<h3>1.2服务的依赖<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>此服务不依赖于任何其他服务。</p>
+</section>
+<section id="id4">
+<h3>1.3蓝牙规范发布兼容性<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<p>此服务兼容任何蓝牙核心规范主机[1]，包括通用属性配置文件(GATT)。</p>
+</section>
+<section id="id5">
+<h3>1.4关贸总协定分程序要求<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
+<p>本服务没有任何关贸总协定的分程序要求。</p>
+</section>
+<section id="id6">
+<h3>1.5运输依赖关系<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h3>
+<p>这项服务可以使用关贸总协定通过LE, BR/EDR，或HS运输。</p>
+</section>
+<section id="id7">
+<h3>1.6错误代码<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h3>
+<p>此服务没有定义任何应用程序错误代码。</p>
+</section>
+</section>
+<section id="id8">
+<h2><span class="section-number">2.2. </span>2 服务声明<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h2>
+<p>设备信息服务应该被实例化为«主要服务»。
+设备信息服务只能在设备上公开一个实例。
+服务UUID应该设置为«设备信息»。分配给«Device Information»的UUID值在[1]中定义。</p>
+</section>
+<section id="id9">
+<h2><span class="section-number">2.3. </span>3 服务特性<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h2>
+<p>设备信息服务可以公开下表中所示的一个或多个特征。有可能下列特征都不包括在内。除非另有规定，每一特征只能有一个实例。</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>特征名称</th>
+<th>特征限定符</th>
+<th>强制性的属性</th>
+<th>可选属性</th>
+<th>安全权限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>厂家名称</td>
+<td>可选</td>
+<td>读</td>
+<td></td>
+<td>没有</td>
+</tr>
+<tr>
+<td>型号</td>
+<td>可选</td>
+<td>读</td>
+<td></td>
+<td>没有</td>
+</tr>
+<tr>
+<td>序列号</td>
+<td>可选</td>
+<td>读</td>
+<td></td>
+<td>没有</td>
+</tr>
+<tr>
+<td>硬件版本</td>
+<td>可选</td>
+<td>读</td>
+<td></td>
+<td>没有</td>
+</tr>
+<tr>
+<td>固件版本</td>
+<td>可选</td>
+<td>读</td>
+<td></td>
+<td>没有</td>
+</tr>
+<tr>
+<td>软件版本</td>
+<td>可选</td>
+<td>读</td>
+<td></td>
+<td>没有</td>
+</tr>
+<tr>
+<td>系统ID</td>
+<td>可选</td>
+<td>读</td>
+<td></td>
+<td>没有</td>
+</tr>
+<tr>
+<td>认证数据列表</td>
+<td>可选</td>
+<td>读</td>
+<td></td>
+<td>没有</td>
+</tr>
+<tr>
+<td>即插即用ID</td>
+<td>可选</td>
+<td>读</td>
+<td></td>
+<td>没有</td>
+</tr>
+</tbody>
+</table><p><strong>注:</strong></p>
+<ul class="simple">
+<li><p><strong>安全权限的“没有”意味着这项服务不强加任何要求。</strong></p></li>
+<li><p><strong>属性不列为强制或可选的被排除在外。</strong></p></li>
+</ul>
+<section id="id10">
+<h3>3.1厂家名称字符串<a class="headerlink" href="#id10" title="此标题的永久链接"></a></h3>
+<p>制造商名称字符串特性应表示该设备的制造商名称。</p>
+<section id="id11">
+<h4>3.1.1行为特征<a class="headerlink" href="#id11" title="此标题的永久链接"></a></h4>
+<p>当使用GATT特征值读取过程读取时，制造商名称字符串特征返回其值。</p>
+</section>
+</section>
+<section id="id12">
+<h3>3.2型号字符串<a class="headerlink" href="#id12" title="此标题的永久链接"></a></h3>
+<p>型号串特征应代表由设备供应商分配的型号。</p>
+<section id="id13">
+<h4>3.2.1行为特征<a class="headerlink" href="#id13" title="此标题的永久链接"></a></h4>
+<p>当使用GATT特征值读取过程读取时，型号字符串特征返回其值。</p>
+</section>
+</section>
+<section id="id14">
+<h3>3.3序列号字符串<a class="headerlink" href="#id14" title="此标题的永久链接"></a></h3>
+<p>序列号字符串特征应表示该设备的特定实例的序列号。</p>
+<section id="id15">
+<h4>3.3.1行为特征<a class="headerlink" href="#id15" title="此标题的永久链接"></a></h4>
+<p>当使用GATT特征值读取过程读取时，序列号字符串特征返回其值。</p>
+</section>
+</section>
+<section id="id16">
+<h3>3.4硬件版本字符串<a class="headerlink" href="#id16" title="此标题的永久链接"></a></h3>
+<p>硬件版本字符串特性应表示设备内硬件的硬件版本。</p>
+<section id="id17">
+<h4>3.4.1行为特征<a class="headerlink" href="#id17" title="此标题的永久链接"></a></h4>
+<p>硬件修改字符串特征值在使用GATT特征值读取过程读取时返回其值。</p>
+</section>
+</section>
+<section id="id18">
+<h3>3.5固件版本字符串<a class="headerlink" href="#id18" title="此标题的永久链接"></a></h3>
+<p>固件版本字符串特征应表示设备内固件的固件版本。</p>
+<section id="id19">
+<h4>3.5.1行为特征<a class="headerlink" href="#id19" title="此标题的永久链接"></a></h4>
+<p>固件修订字符串特征在使用GATT特征值读取过程读取时返回其值。</p>
+</section>
+</section>
+<section id="id20">
+<h3>3.6软件版本字符串<a class="headerlink" href="#id20" title="此标题的永久链接"></a></h3>
+<p>软件版本字符串特性应表示设备内软件的软件版本。</p>
+<section id="id21">
+<h4>3.6.1行为特征<a class="headerlink" href="#id21" title="此标题的永久链接"></a></h4>
+<p>使用GATT特征值读取程序读取时，软件版本字符串特征值返回其值。</p>
+</section>
+</section>
+<section id="id">
+<h3>3.7系统ID<a class="headerlink" href="#id" title="此标题的永久链接"></a></h3>
+<p>系统ID特征应表示一个结构，该结构包含一个组织上唯一的标识符(OUI)，后跟一个制造商定义的标识符，并且对产品的每个单独实例都是唯一的。</p>
+<section id="id22">
+<h4>3.7.1行为特征<a class="headerlink" href="#id22" title="此标题的永久链接"></a></h4>
+<p>当使用GATT特征值读取过程读取时，系统ID特征值返回其值。</p>
+</section>
+</section>
+<section id="ieee-11073-20601">
+<h3>3.8 IEEE 11073-20601法规认证数据列表<a class="headerlink" href="#ieee-11073-20601" title="此标题的永久链接"></a></h3>
+<p>IEEE 11073-20601法规认证数据列表特性应在IEEE 11073-20601定义的列表中表示该产品的法规和认证信息[3]。</p>
+</section>
+<section id="id23">
+<h3>3.8.1行为特征<a class="headerlink" href="#id23" title="此标题的永久链接"></a></h3>
+<p>当使用GATT特征值读取过程读取时，IEEE 11073-20601法规认证数据列表特征值返回其值。</p>
+</section>
+<section id="pnp-id">
+<h3>3.9 PnP ID<a class="headerlink" href="#pnp-id" title="此标题的永久链接"></a></h3>
+<p>PnP_ID特征是一组值，用于创建对该设备唯一的设备ID值。特征中包括供应商ID源字段、供应商ID字段、产品ID字段和产品版本字段。这些值使用数字来标识给定类型/模型/版本的所有设备。</p>
+<section id="id24">
+<h4>3.9.1行为特征<a class="headerlink" href="#id24" title="此标题的永久链接"></a></h4>
+<p>当使用GATT特征值读取过程读取时，PnP_ID特征值返回它的值。</p>
+<section id="id25">
+<h5>3.9.1.1供应商ID源字段<a class="headerlink" href="#id25" title="此标题的永久链接"></a></h5>
+<p>Vendor ID源字段指定哪个组织分配了Vendor ID字段值中使用的值。
+下表定义了可能的值。</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>数据</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x01</td>
+<td>蓝牙SIG分配的设备ID供应商ID值从分配的号码文件[2]</td>
+</tr>
+<tr>
+<td>0x02</td>
+<td>USB实现者论坛指定的供应商ID值</td>
+</tr>
+<tr>
+<td>0x00，0x03-0xFF</td>
+<td>保留</td>
+</tr>
+</tbody>
+</table></section>
+<section id="id26">
+<h5>3.9.1.2供应商ID字段<a class="headerlink" href="#id26" title="此标题的永久链接"></a></h5>
+<p>Vendor ID字段用于唯一标识设备的供应商。此字段与供应商ID源字段一起使用，后者确定哪个组织分配了供应商ID字段值。
+注意:蓝牙特殊兴趣组分配设备ID供应商ID, USB实现者论坛分配供应商ID，其中任何一个都可以用于供应商ID字段值。设备提供者应该从USB实现者论坛获取供应商ID，或者从蓝牙团体获取公司标识符。</p>
+</section>
+<section id="id27">
+<h5>3.9.1.3产品ID字段<a class="headerlink" href="#id27" title="此标题的永久链接"></a></h5>
+<p>产品ID字段用于区分由供应商ID字段标识的供应商生产的不同产品。
+供应商自己管理产品ID字段值。</p>
+</section>
+<section id="id28">
+<h5>3.9.1.4产品版本字段<a class="headerlink" href="#id28" title="此标题的永久链接"></a></h5>
+<p>Product Version字段是一个数字表达式，标识设备发布号(二进制编码的十进制)。这是一个由供应商分配的值，它定义了由供应商ID和产品ID字段标识的产品版本。这个领域的目的是区分具有相同供应商id和产品id的产品版本。对于版本JJ.M，字段值是0xJJMN。N (JJ -主版本号，M -副版本号，N -副版本号);例如，版本2.1.3用值0x0213表示，版本2.0.0用值0x0200表示。当对设备进行向上兼容更改时，建议增加副版本号。如果对设备进行了不兼容的更改，建议增加主版本号。为了修正错误，增加了子子版本。
+供应商自己管理产品版本字段值。</p>
+</section>
+</section>
+</section>
+</section>
+<section id="sdp">
+<h2><span class="section-number">2.4. </span>4 SDP的互操作性<a class="headerlink" href="#sdp" title="此标题的永久链接"></a></h2>
+<p>如果这个服务是通过BR/EDR公开的，那么它应该有以下SDP记录。</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>项目</th>
+<th>定义</th>
+<th>类型</th>
+<th>数据</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>服务类型ID列表</td>
+<td></td>
+<td></td>
+<td></td>
+<td>M</td>
+</tr>
+<tr>
+<td>服务类型#0</td>
+<td></td>
+<td>UUID</td>
+<td>设备信息</td>
+<td>M</td>
+</tr>
+<tr>
+<td>协议描述符列表</td>
+<td></td>
+<td></td>
+<td></td>
+<td>M</td>
+</tr>
+<tr>
+<td>协议描述符#0</td>
+<td></td>
+<td>UUID</td>
+<td>L2CAP</td>
+<td>M</td>
+</tr>
+<tr>
+<td>协议描述符#0参数#0</td>
+<td>PSM</td>
+<td>Uint16</td>
+<td>PSM = ATT</td>
+<td>M</td>
+</tr>
+<tr>
+<td>协议描述符#1</td>
+<td></td>
+<td>UUID</td>
+<td>ATT</td>
+<td>M</td>
+</tr>
+<tr>
+<td>协议描述符#1参数#0</td>
+<td>GATT Start Handle</td>
+<td>Uint16</td>
+<td></td>
+<td>M</td>
+</tr>
+<tr>
+<td>协议描述符#1参数#1</td>
+<td>GATT End Handle</td>
+<td>Uint16</td>
+<td></td>
+<td>M</td>
+</tr>
+<tr>
+<td>浏览组列表</td>
+<td></td>
+<td></td>
+<td>公众浏览根*</td>
+<td>M</td>
+</tr>
+</tbody>
+</table></section>
+<section id="id29">
+<h2><span class="section-number">2.5. </span>5 首字母缩写和缩写<a class="headerlink" href="#id29" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>缩写</th>
+<th>原文</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ATT</td>
+<td>Attribute Protocol</td>
+<td>属性的协议</td>
+</tr>
+<tr>
+<td>BR/EDR</td>
+<td>Basic Rate / Enhanced Data Rate</td>
+<td>基本速率/增强数据速率</td>
+</tr>
+<tr>
+<td>GAP</td>
+<td>Generic Access Profile</td>
+<td>通用访问配置文件</td>
+</tr>
+<tr>
+<td>GATT</td>
+<td>Generic Attribute Profile</td>
+<td>通用属性配置文件</td>
+</tr>
+<tr>
+<td>HS</td>
+<td>High Speed</td>
+<td>高速</td>
+</tr>
+<tr>
+<td>LE</td>
+<td>Low Energy</td>
+<td>低功耗</td>
+</tr>
+<tr>
+<td>OUI</td>
+<td>Organizationally Unique Identifier</td>
+<td>组织唯一标识符</td>
+</tr>
+<tr>
+<td>PnP</td>
+<td>Plug and Play</td>
+<td>即插即用</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>Universally Unique Identifier</td>
+<td>全局惟一标识符</td>
+</tr>
+</tbody>
+</table></section>
+<section id="id30">
+<h2><span class="section-number">2.6. </span>6 引用<a class="headerlink" href="#id30" title="此标题的永久链接"></a></h2>
+<p>[1]蓝牙核心规范v4.0
+[2]特征描述可通过蓝牙SIG分配号码。
+[3]IEEE Std 11073-20601™- 2008 Health Informatics。个人健康设备通信。应用配置文件。优化的交换协议。版本1.0或更高</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../01_battery_service_profile/battery_service.html" class="btn btn-neutral float-left" title="1. BAS (电池服务规格书)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../03_heart_rate_profile/heart_tate_profile.html" class="btn btn-neutral float-right" title="3. HRS（心率服务）" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7. ARM-MPU 详解 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="8. 玩转doxygen 之RT-THREAD" href="../09_doxygen/doxygen.html" />
+    <link rel="prev" title="6. MCUBOOT" href="../07_mcuboot/mcuboot.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">MASTER:supperthomas</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/01_intruduce.html">2. BLE 相关资料</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_mbed/01_mbed_quick_syart.html">3. mbed OS  quick start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_AI/01_intruduce.html">4. 深度学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_embeded_debug/jlink.html">5. 嵌入式调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_mcuboot/mcuboot.html">6. MCUBOOT</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">7. ARM-MPU 详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">7.1. 简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">7.2. 原理讲解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mpu">7.3. MPU 寄存器模组</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mpu-typer">MPU_TYPER</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mpu-ctrl">MPU_CTRL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mpu-rnr-mpu-rbar">MPU_RNR 和 MPU_RBAR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mpu-rasr">MPU_RASR</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mpu-smple">7.4. MPU Smple</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">7.5. 参考文档：</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../09_doxygen/doxygen.html">8. 玩转doxygen 之RT-THREAD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_lvgl/lvgl_app.html">9. LVGL 学习小计 –（一） 应用层</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">MASTER:supperthomas</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">7. </span>ARM-MPU 详解</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/00_supperthomas/08_MPU/01_MPU.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="arm-mpu">
+<h1><span class="section-number">7. </span>ARM-MPU 详解<a class="headerlink" href="#arm-mpu" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">7.1. </span>简介<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>​      MPU(Memory Protection Unit) 内存保护单元。 本文主要讲 armv7-m 架构 架构下的 MPU。在 armv7-m 架构下，Cortex-M3 和 Cortex-M4 处理器对 MPU 都是选配的，不是必须的。</p>
+<p>​      MPU 是一个可以编程的 device 设备，可以用来定义内存空间的属性，比如特权指令和非特权指令以及 cache 是否可访问。armv7-m 通常支持 8 个 region。一个 region 就代表一段连续的区域。</p>
+<p>​     MPU 可以让嵌入式系统更加健壮，以及保护一些加密区域，可以用来防止黑客攻击。</p>
+<p>​     MPU 有以下能力可以增加系统的健壮性：</p>
+<ul class="simple">
+<li><p>可以阻止用户去破坏操作系统需要使用的数据</p></li>
+<li><p>可以防止一个任务去非法访问其他任务的数据，将任务完全隔离开</p></li>
+<li><p>可以把关键数据区设为只读，从而不被破坏</p></li>
+<li><p>检测其他意外访问，比如，堆栈溢出，数组越界等。</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2><span class="section-number">7.2. </span>原理讲解<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p>​       通常 MPU 功能这个是由操作系统提供的服务。在嵌入式调试的时候，我们经常会遇到 hardfault，这个时候一般情况可能是某个指针指到未知的地方，然后对该地址进行修改赋值，会触发 hardfault。MPU 的功能其实和这个功能基本类似。</p>
+<p>​       首先理解以下两点，基本上可以大概理解 MPU：</p>
+<ol class="simple">
+<li><p>MPU 可以定义某些特定的地址区域的属性，这个属性可以定义成很多类型，比如定义成非特权状态下不可以赋值</p></li>
+<li><p>如果非特权指针不小心访问到这个地址区域并且尝试给该区域赋值修改，这个时候会触发 MemManage fault 或者 hardfault 中断，代表你的程序不被允许修改该区域。</p></li>
+</ol>
+<p>MPU 本质上就是为了保护某一段地址区域不被不被允许的状态访问。</p>
+<p>比如，一些 OS 一些特殊的变量，用户线程是不被允许访问和修改的，这个时候如果你启用了 MPU，并且保护了这些变量，那用户即使知道这里的实际的物理地址，也是不被允许访问和修改的。</p>
+</section>
+<section id="mpu">
+<h2><span class="section-number">7.3. </span>MPU 寄存器模组<a class="headerlink" href="#mpu" title="此标题的永久链接"></a></h2>
+<p>MPU 主要有以下寄存器</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>名称</th>
+<th>地址偏移</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MPU 类型寄存器 TYPER</td>
+<td>0xE000ED90</td>
+</tr>
+<tr>
+<td>MPU 控制寄存器 CTRL</td>
+<td>0xE000ED94</td>
+</tr>
+<tr>
+<td>MPU region 号寄存器 RNR</td>
+<td>0xE000ED98</td>
+</tr>
+<tr>
+<td>MPU region 基地址寄存器     RBAR</td>
+<td>0xE000ED9C</td>
+</tr>
+<tr>
+<td>MPU region 属性寄存器</td>
+<td>0xE000EDA0</td>
+</tr>
+</tbody>
+</table><section id="mpu-typer">
+<h3>MPU_TYPER<a class="headerlink" href="#mpu-typer" title="此标题的永久链接"></a></h3>
+<p>MPU 类型寄存器主要表示这个 MCU 有几个 region</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>bit 位</th>
+<th>名称</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15:8</td>
+<td>DREGION</td>
+<td>R</td>
+<td>MPU 支持的 data region 数量  通常为 0x08</td>
+</tr>
+<tr>
+<td>0</td>
+<td>SEPARATE</td>
+<td>R</td>
+<td>分割标志，没有用，默认为 0</td>
+</tr>
+</tbody>
+</table></section>
+<section id="mpu-ctrl">
+<h3>MPU_CTRL<a class="headerlink" href="#mpu-ctrl" title="此标题的永久链接"></a></h3>
+<p>MPU 控制寄存器主要使能 MPU 等控制</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>bit 位</th>
+<th>名称</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>PRIVDEFENA</td>
+<td>R/W</td>
+<td>是否为特权级打开缺省存储器映射</td>
+</tr>
+<tr>
+<td>1</td>
+<td>HFNMIENA</td>
+<td>R/W</td>
+<td>1: 在 hardfault 和 NMI 中默认使能 MPU，反之不使能</td>
+</tr>
+<tr>
+<td>0</td>
+<td>ENABLE</td>
+<td>R/W</td>
+<td>置 1，使能 MPU</td>
+</tr>
+</tbody>
+</table><p>PRIVDEFENA 这个 bit 参考一张图</p>
+<p>如果 PRIVDEFENA=1 ，特权模式下打开背景 region。</p>
+<p>如果 PRIVDEFENA = 0， 不打开背景 region。背景 region 如下图所示，就是 region 没有定义到的地方。</p>
+<p><img alt="image-20210822233929926" src="../../_images/region.png" /></p>
+</section>
+<section id="mpu-rnr-mpu-rbar">
+<h3>MPU_RNR 和 MPU_RBAR<a class="headerlink" href="#mpu-rnr-mpu-rbar" title="此标题的永久链接"></a></h3>
+<p>MPU region 号寄存器 (MPU_RNR) 和 MPU 基址寄存器 (MPURBAR)  通常成对使用</p>
+<p>MPU_RNR</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>bit 位</th>
+<th>名称</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7:0</td>
+<td>region</td>
+<td>R/W</td>
+<td>选择下一个需要配置的 region, 因为通常只有 8 个 region，所以 2:0 位有效</td>
+</tr>
+</tbody>
+</table><p>MPU_RBAR</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>bit 位</th>
+<th>名称</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>31:N</td>
+<td>ADDR</td>
+<td>R/W</td>
+<td>REGION 的基地址。N&gt;4</td>
+</tr>
+<tr>
+<td>4</td>
+<td>VALID</td>
+<td>R/W</td>
+<td>决定是否理会写入 REGION 字段的值</td>
+</tr>
+<tr>
+<td>3:0</td>
+<td>ENABLE</td>
+<td>R/W</td>
+<td>MPU region 字段，valid=1 有效，valid=0 无效</td>
+</tr>
+</tbody>
+</table><p>从寄存器定义可以看出 region 的基地址最小单位为 64KB。所以你的基地址必须是像 0x10000， 0x20000 这样的地址才是合法的地址。这里主要定义 region 的起始地址。</p>
+</section>
+<section id="mpu-rasr">
+<h3>MPU_RASR<a class="headerlink" href="#mpu-rasr" title="此标题的永久链接"></a></h3>
+<p>RASR 是 region 的属性和容量寄存器
+| bit 位 | 名称       | 类型 | 描述                                                  |
+| —– | ———- | —- | —————————————————– |
+| 31:29 | 预留       | -    | -                                                     |
+| 28    | XN         | R/W  |                                                       |
+| 26:24 | AP         | R/W  | ** 访问许可属性 **                                      |
+| 21:19 | TEX        | R/W  | 类型拓展                                              |
+| 18    | S          | R/W  | 是否可共享 （1= 可共享，0 = 不可共享）                  |
+| 17    | C          | R/W  | 是否缓存（1 = 可缓存， 0 = 不可缓存）                   |
+| 16    | B          | R/W  | buffable（可否缓冲）                                  |
+| 15:8  | SRD        | R/W  | 子 region 除能，每个 bit 代表子 region 是否需要除能         |
+| 5:1   | REGIONSIZE | R/W  | region 容量。 容量值为 1&lt;&lt;(REGIONSIZE+1) 最小为 32 字节 |
+| 0     | SZENABLE   | R/W  | 1 = 使能此 region  0= 除能此 region                       |</p>
+<p>REGIONSIZE 的值参考下图</p>
+<p><img alt="image-20210823230728523" src="../../_images/REGIONSIZE.png" /></p>
+<p>AP(访问许可) 如下表所示</p>
+<p><img alt="image-20210823230912596" src="../../_images/AP.png" /></p>
+<p>RASR 寄存器中有个 SRD “子 region” 的概念。通常 8 个 region 可能不是很够，所以允许每个 REGION 再次细分更小的模块。但是子 region 必须是 8 等分的，每一份是一个子 region，而且子 region 的属性和父 region 必须是相同的. 每个子 region 可以单独的除能，SRD 中每一个 bit 代表一个 region 是否被除能。例如 SRD.3 = 0 ， 则 3 号子 region 被除能。能被子 region 拆分的最小也要有 256 个字节（因为 region 大小最小为 32BYTE). 如果 128 就不能再分了。</p>
+<p>其他属性的使用可以参考具体的架构文档。</p>
+</section>
+</section>
+<section id="mpu-smple">
+<h2><span class="section-number">7.4. </span>MPU Smple<a class="headerlink" href="#mpu-smple" title="此标题的永久链接"></a></h2>
+<p>下面是 MPU 对应的 sample，这个测试是在 armv7 架构下的。这边我使用的是开发板 L496ZG-NUCLEO 开发板</p>
+<p>其余的只要有 ARM MPU 的，都可以通过下面代码进行测试</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;mpu_armv7.h&quot;</span>
+<span class="c1">#define ARRAY_ADDRESS_START    (0x20002000UL)</span>
+<span class="c1">#define ARRAY_SIZE             ARM_MPU_REGION_SIZE_32B</span>
+<span class="c1">#define ARRAY_REGION_NUMBER    0</span>
+<span class="c1">#define REGION_PERMISSION      ARM_MPU_AP_RO</span>
+<span class="n">uint8_t</span> <span class="n">PrivilegedReadOnlyArray</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span> <span class="n">__attribute__</span><span class="p">((</span><span class="n">at</span><span class="p">(</span><span class="n">ARRAY_ADDRESS_START</span><span class="p">)));</span>
+
+<span class="n">void</span> <span class="n">mpu_sample</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">uint32_t</span> <span class="n">rbar</span><span class="p">;</span>
+    <span class="n">uint32_t</span> <span class="n">rasr</span><span class="p">;</span>
+    <span class="n">ARM_MPU_Disable</span><span class="p">();</span>
+    <span class="n">rbar</span> <span class="o">=</span> <span class="n">ARM_MPU_RBAR</span><span class="p">(</span><span class="n">ARRAY_REGION_NUMBER</span><span class="p">,</span> <span class="n">ARRAY_ADDRESS_START</span><span class="p">);</span>
+    <span class="n">rasr</span> <span class="o">=</span> <span class="n">ARM_MPU_RASR</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ARM_MPU_AP_RO</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ARRAY_SIZE</span><span class="p">);</span>
+    <span class="n">ARM_MPU_SetRegion</span><span class="p">(</span><span class="n">rbar</span><span class="p">,</span> <span class="n">rasr</span><span class="p">);</span>
+    <span class="n">ARM_MPU_Enable</span><span class="p">(</span><span class="n">MPU_CTRL_PRIVDEFENA_Msk</span><span class="p">);</span>
+    <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">PrivilegedReadOnlyArray</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="n">PrivilegedReadOnlyArray</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;e&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">void</span> <span class="n">MemManage_Handler</span><span class="p">(</span><span class="n">void</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">uint32_t</span> <span class="n">lrValue</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">uint32_t</span> <span class="n">cfsr</span> <span class="o">=</span> <span class="n">SCB</span><span class="o">-&gt;</span><span class="n">CFSR</span><span class="p">;</span>
+
+  <span class="n">rt_kprintf</span><span class="p">(</span><span class="s2">&quot;MemManage_Handler:</span><span class="se">\n</span><span class="s2">&quot;</span>
+           <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">control 0x</span><span class="si">%x</span><span class="se">\n</span><span class="s2">&quot;</span>
+           <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">mmfar 0x</span><span class="si">%x</span><span class="se">\n</span><span class="s2">&quot;</span>
+           <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">LR 0x</span><span class="si">%x</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+           <span class="n">__get_CONTROL</span><span class="p">(),</span> <span class="n">SCB</span><span class="o">-&gt;</span><span class="n">MMFAR</span><span class="p">,</span> <span class="n">lrValue</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">cfsr</span> <span class="o">&amp;</span> <span class="n">SCB_CFSR_MMARVALID_Msk</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">rt_kprintf</span><span class="p">(</span><span class="s2">&quot;Attempt to access address</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">cfsr</span> <span class="o">&amp;</span> <span class="n">SCB_CFSR_DACCVIOL_Msk</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">rt_kprintf</span><span class="p">(</span><span class="s2">&quot;Operation not permitted</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">cfsr</span> <span class="o">&amp;</span> <span class="n">SCB_CFSR_IACCVIOL_Msk</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">rt_kprintf</span><span class="p">(</span><span class="s2">&quot;Non-executable region</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">cfsr</span> <span class="o">&amp;</span> <span class="n">SCB_CFSR_MSTKERR_Msk</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">rt_kprintf</span><span class="p">(</span><span class="s2">&quot;Stacking error</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="o">/*</span> <span class="n">Disable</span> <span class="n">MPU</span> <span class="ow">and</span> <span class="n">restart</span> <span class="n">instruction</span> <span class="o">*/</span>
+  <span class="n">ARM_MPU_Disable</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>执行了 mpu_sample() 之后，你就会发现 MCU 进入了 MemManage_Handler 中断，并且可以恢复。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">7.5. </span>参考文档：<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h2>
+<p>[1] ARM cortex-M3 权威指南</p>
+<p>[2] <a class="reference external" href="https://developer.arm.com/documentation/100166/0001">Arm® Cortex®-M4 Processor Technical Reference Manual</a></p>
+<p>[3] <a class="reference external" href="https://developer.arm.com/documentation/ddi0403/ee">ARMv7-M Architecture Reference Manual</a></p>
+<p>[4] <a class="reference external" href="https://developer.arm.com/documentation/ddi0553/bo">Armv8-M Architecture Reference Manual</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../07_mcuboot/mcuboot.html" class="btn btn-neutral float-left" title="6. MCUBOOT" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../09_doxygen/doxygen.html" class="btn btn-neutral float-right" title="8. 玩转doxygen 之RT-THREAD" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6. Linux下搭建 RT-Thread 开发环境 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="7. vscode配合keil开发" href="../07/vscode.html" />
+    <link rel="prev" title="5. STM32WB环境搭建" href="../05/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">WB55:dozingfiretruck</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/%E5%AF%BC%E8%AF%BB.html">2. 导读</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03/STM32WB%E7%AE%80%E4%BB%8B.html">3. STM32WB简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04/%E8%BD%AF%E4%BB%B6%E7%AE%80%E4%BB%8B.html">4. 软件介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html">5. STM32WB环境搭建</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. Linux下搭建 RT-Thread 开发环境</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">6.1. 前言</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">6.2. 开发前环境准备</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">相关安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">配置使用编译器</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">6.3. 工程配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">6.4. 编译工程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">6.5. 编译成功</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../07/vscode.html">7. vscode配合keil开发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08/wb55_sample.html">8. wb55_sample演示</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">WB55:dozingfiretruck</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">6. </span>Linux下搭建 RT-Thread 开发环境</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/04_dozingfiretruck/06/Linux.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="linux-rt-thread">
+<h1><span class="section-number">6. </span>Linux下搭建 RT-Thread 开发环境<a class="headerlink" href="#linux-rt-thread" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">6.1. </span>前言<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>相信许多人做单片机开发选择windows是因为方便，易操作，使用keil等IDE，但是做Linux的嵌入式开发，如果用Windows安装交叉编译器编译太耗时，所以许多人同时选择使用Linux下开发，那Linux下如何开发RT-Thread呢？下面我将大致说一下环境的基础搭建。</p>
+</section>
+<section id="id2">
+<h2><span class="section-number">6.2. </span>开发前环境准备<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<section id="id3">
+<h3>相关安装<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>大家都知道Windows下安装软件下载.exe执行安装，Linux下有rpm包安装方式，deb包安装方式，tar.gz源代码包安装方式，tar.bz2源代码包安装方式，apt方式安装方式（安装deb包），此处我们使用apt方式简单快捷。</p>
+<p><strong>注意：</strong></p>
+<p><strong>apt-get是debian，ubuntu发行版的包管理工具，与红帽中的yum工具非常类似。</strong></p>
+<p><strong>apt-get命令一般需要<a class="reference external" href="http://baike.baidu.com/view/3967294.htm">root权限</a>执行，所以一般跟着sudo命令例sudo apt-get xxxx</strong></p>
+<p>安装git</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt install git 
+</pre></div>
+</div>
+<p>安装编译器</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt install gcc-arm-none-eabi 
+
+sudo apt install binutils-arm-none-eabi
+</pre></div>
+</div>
+<p>安装 scons</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt install scons
+</pre></div>
+</div>
+<p>安装 ncurses 库</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt install libncurses5-dev
+</pre></div>
+</div>
+<p>克隆 RT-Thread 源码</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/RT-Thread/rt-thread.git
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>配置使用编译器<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<p>下载源码后进入你开发版目录修改rtconfig.py 文件中的 <code class="docutils literal notranslate"><span class="pre">EXEC_PATH</span></code>来配置编译器</p>
+<p><img alt="rtconfig_old" src="../../_images/rtconfig_old.png" /></p>
+<p>修改为</p>
+<p><img alt="rtconfig_new" src="../../_images/rtconfig_new.png" /></p>
+<p>至此准备工作结束。</p>
+</section>
+</section>
+<section id="id5">
+<h2><span class="section-number">6.3. </span>工程配置<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h2>
+<p>接下来在使用开发版的根目录下启动终端，输入如下命令来启动配置界面。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>scons --menuconfig
+</pre></div>
+</div>
+<p><img alt="rt-thread_configuration" src="../../_images/rt-thread_configuration.png" /></p>
+<p>是不是熟悉的画面回来了？</p>
+<p><strong>注意：</strong></p>
+<p><strong>Linux下的配置工具和uboot等配置工具操作一样，返回需按两下ESC</strong></p>
+<p>如果第一次使用该命令将会安装及初始化env工具，在home目录下面生成“.env”文件夹，此文件夹为隐藏文件夹，</p>
+<p>env.sh 文件是用于配置环境变量的脚本，执行如下命令使环境变量生效。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ~/.env/env.sh
+</pre></div>
+</div>
+<p>如果您已经选择了在线软件包，就可以使用如下命令将软件包下载到 BSP 目录下的 packages 目录。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pkgs --update
+</pre></div>
+</div>
+<p>如果是第一次安装会失败，如下</p>
+<p><img alt="pkgs_error" src="../../_images/pkgs_error.png" /></p>
+<p>这是因为我们没有安装Python-第三方库requests</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt-get install python-requests
+</pre></div>
+</div>
+<p>之后再运行</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pkgs --update
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2><span class="section-number">6.4. </span>编译工程<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h2>
+<p>执行</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>scons
+</pre></div>
+</div>
+<p><img alt="scons" src="../../_images/scons.png" /></p>
+</section>
+<section id="id7">
+<h2><span class="section-number">6.5. </span>编译成功<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h2>
+<p><strong>Linux下强烈推荐使用 Vscode 作为代码编辑器（Windows下也推荐，Mac下也推荐，宇宙第一编辑器，哈哈哈）</strong></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../05/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html" class="btn btn-neutral float-left" title="5. STM32WB环境搭建" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../07/vscode.html" class="btn btn-neutral float-right" title="7. vscode配合keil开发" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

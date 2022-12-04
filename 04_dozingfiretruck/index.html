@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WB55:dozingfiretruck &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/translations.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="1. 简单自我介绍" href="01_introduce/01_intruduce.html" />
+    <link rel="prev" title="8. RT-Thread 软件包制作及发布流程" href="../03_xupenghu/08_rt-thread_packages/08_rt-thread_packages.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">WB55:dozingfiretruck</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_introduce/%E5%AF%BC%E8%AF%BB.html">2. 导读</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03/STM32WB%E7%AE%80%E4%BB%8B.html">3. STM32WB简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04/%E8%BD%AF%E4%BB%B6%E7%AE%80%E4%BB%8B.html">4. 软件介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html">5. STM32WB环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06/Linux.html">6. Linux下搭建 RT-Thread 开发环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07/vscode.html">7. vscode配合keil开发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08/wb55_sample.html">8. wb55_sample演示</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">WB55:dozingfiretruck</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/04_dozingfiretruck/index.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="wb55-dozingfiretruck">
+<h1>WB55:dozingfiretruck<a class="headerlink" href="#wb55-dozingfiretruck" title="此标题的永久链接"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01_introduce/01_intruduce.html">1. 简单自我介绍</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_introduce/01_intruduce.html#introduce">1.1. 1. introduce</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02_introduce/%E5%AF%BC%E8%AF%BB.html">2. 导读</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_introduce/%E5%AF%BC%E8%AF%BB.html#id2">2.1. 课程面向对象和结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_introduce/%E5%AF%BC%E8%AF%BB.html#stm32wb">2.2. 如何查找STM32WB相关资料</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03/STM32WB%E7%AE%80%E4%BB%8B.html">3. STM32WB简介</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03/STM32WB%E7%AE%80%E4%BB%8B.html#id1">3.1. 架构和外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03/STM32WB%E7%AE%80%E4%BB%8B.html#id5">3.2. 连接能力</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03/STM32WB%E7%AE%80%E4%BB%8B.html#id9">3.3. 安全和低功耗</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03/STM32WB%E7%AE%80%E4%BB%8B.html#id13">3.4. 生态</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04/%E8%BD%AF%E4%BB%B6%E7%AE%80%E4%BB%8B.html">4. 软件介绍</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04/%E8%BD%AF%E4%BB%B6%E7%AE%80%E4%BB%8B.html#wb">4.1. WB软件包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04/%E8%BD%AF%E4%BB%B6%E7%AE%80%E4%BB%8B.html#id5">4.2. 调度器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04/%E8%BD%AF%E4%BB%B6%E7%AE%80%E4%BB%8B.html#id6">4.3. 低功耗管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04/%E8%BD%AF%E4%BB%B6%E7%AE%80%E4%BB%8B.html#id7">4.4. 定时器管理</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html">5. STM32WB环境搭建</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html#id1">5.1. 软件安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html#id2">5.2. 二进制文件下载</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html#id3">5.3. 固件验证</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06/Linux.html">6. Linux下搭建 RT-Thread 开发环境</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06/Linux.html#id1">6.1. 前言</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06/Linux.html#id2">6.2. 开发前环境准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06/Linux.html#id5">6.3. 工程配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06/Linux.html#id6">6.4. 编译工程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06/Linux.html#id7">6.5. 编译成功</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07/vscode.html">7. vscode配合keil开发</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07/vscode.html#id1">7.1. 前言</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07/vscode.html#id2">7.2. 准备工作</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08/wb55_sample.html">8. wb55_sample演示</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08/wb55_sample.html#id1">8.1. 前言</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08/wb55_sample.html#ble-beacon">8.2. BLE_Beacon演示</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08/wb55_sample.html#ble-bloodpressure">8.3. BLE_BloodPressure演示</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08/wb55_sample.html#ble-healththermometer">8.4. BLE_HealthThermometer演示</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08/wb55_sample.html#ble-heartrate">8.5. BLE_HeartRate演示</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08/wb55_sample.html#ble-ota">8.6. BLE_Ota演示</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../03_xupenghu/08_rt-thread_packages/08_rt-thread_packages.html" class="btn btn-neutral float-left" title="8. RT-Thread 软件包制作及发布流程" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="01_introduce/01_intruduce.html" class="btn btn-neutral float-right" title="1. 简单自我介绍" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

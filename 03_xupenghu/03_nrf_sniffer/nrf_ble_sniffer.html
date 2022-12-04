@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. 使用NRF52xx sniffer抓取BLE包 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="4. 使用Android手机抓取蓝牙HCI包" href="../04_btsnoop_hci/android_hci.html" />
+    <link rel="prev" title="2. STM32WB 硬件介绍" href="../02_introduce/STM32WB%E7%A1%AC%E4%BB%B6%E4%BB%8B%E7%BB%8D.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">WB55:xupenghu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/STM32WB%E7%A1%AC%E4%BB%B6%E4%BB%8B%E7%BB%8D.html">2. STM32WB 硬件介绍</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. 使用NRF52xx sniffer抓取BLE包</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">3.1. 准备知识</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">为什么需要抓包</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">软硬件准备</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">3.2. 固件烧录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">3.3. 软件安装</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#wireshark">wireshark安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python">python安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sniffer">sniffer安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wiresharkprofile">在wireshark中添加抓包的profile</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#nrf">3.4. 运行nRF抓包工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">3.5. 基础使用指南</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ble">使能BLE数据包着色</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">3.6. 常见问题及解决方法</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id9">python 软件包下载失败</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wiresharknrf-sniffer-for-bluetooth-le">wireshark找不到nRF sniffer for Bluetooth LE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04_btsnoop_hci/android_hci.html">4. 使用Android手机抓取蓝牙HCI包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_art-pi_ble_netin/art-pi_net_connect_with_ble.html">5. ART-PI开发板蓝牙配网流程分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_stm32wb55_ble_start/stm32wb55_ble_start.html">6. STM32WB55 蓝牙协议栈运行流程解析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_stm32wb55_ble_ibeacon/stm32wb55_ble_ibeacon.html">7. stm32wb55 基于rtt的ble sample制作过程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_rt-thread_packages/08_rt-thread_packages.html">8. RT-Thread 软件包制作及发布流程</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">WB55:xupenghu</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3. </span>使用NRF52xx sniffer抓取BLE包</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/03_xupenghu/03_nrf_sniffer/nrf_ble_sniffer.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="nrf52xx-snifferble">
+<h1><span class="section-number">3. </span>使用NRF52xx sniffer抓取BLE包<a class="headerlink" href="#nrf52xx-snifferble" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">3.1. </span>准备知识<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<section id="id2">
+<h3>为什么需要抓包<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h3>
+<p>抓取BLE数据包就和我们做程序开发中打印log功能是一样的，我们可以方便快捷的获取程序运行状态以及出错后定位bug位置，无线通讯过程中的数据包都是通过电磁波以空气为介质进行传播的。所以，我们抓取空气中的数据包，对BLE开发来说，完全是0感知，不会有传统程序开发过程中log打印的太多影响程序的运行效率这样的顾虑。</p>
+</section>
+<section id="id3">
+<h3>软硬件准备<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>NRF52832/52840硬件一个</p></li>
+<li><p><a class="reference external" href="https://www.wireshark.org/download.html">wireshark</a></p></li>
+<li><p><a class="reference external" href="https://www.python.org/download/releases/2.7/">python </a></p></li>
+<li><p><a class="reference external" href="https://infocenter.nordicsemi.com/index.jsp?topic=%252Fcom.nordic.infocenter.sdk5.v14.1.0%252Fnrf52810_user_guide.html">sniffer</a></p></li>
+</ul>
+</section>
+</section>
+<section id="id4">
+<h2><span class="section-number">3.2. </span>固件烧录<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h2>
+<p>准备nRF52xx的开发板一块，找到sniffer里面的hex文件夹，选取合适的固件烧录到nrf52xx开发板内，烧录方式同烧录其他程序一样，可以使用jlink或者<a class="reference external" href="https://www.nordicsemi.com/Software-and-Tools/Development-Tools/nRFgo-Studio/Download">nRFgo-Studio</a>
+<img alt="../../_images/1.png" src="../../_images/1.png" /></p>
+</section>
+<section id="id5">
+<h2><span class="section-number">3.3. </span>软件安装<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h2>
+<section id="wireshark">
+<h3>wireshark安装<a class="headerlink" href="#wireshark" title="此标题的永久链接"></a></h3>
+<p>wireshark是一款免费的并且功能强大的支持多协议的分析软件， 它的作用是把相应的协议数据包解析显示出来。点击<a class="reference external" href="https://www.wireshark.org/download.html">这里</a>获取下载地址，安装一路点击下一步即可完成，没有啥特别需要注意的地方。</p>
+</section>
+<section id="python">
+<h3>python安装<a class="headerlink" href="#python" title="此标题的永久链接"></a></h3>
+<p>安装python是为了安装pyserial，因为sniffer插件是通过pyserial来获取底层物理串口的数据。python版本可以是2.7也可以是最新的3.x，我系统中装了其他环境必须要用python2.7,所以就以python2.7为例来说明。</p>
+<p>去<a class="reference external" href="https://www.python.org/download/releases/2.7/">官网</a>获取python的安装包，然后一路next即可安装完成，安装完毕后配置系统环境变量，在Path里新建变量，如下图所示。</p>
+<p><img alt="../../_images/2.png" src="../../_images/2.png" />
+然后调出命令行验证是否安装成功。</p>
+<p><img alt="../../_images/3.png" src="../../_images/3.png" /></p>
+</section>
+<section id="sniffer">
+<h3>sniffer安装<a class="headerlink" href="#sniffer" title="此标题的永久链接"></a></h3>
+<p>sniffer是Nordic公司专门为nrf52xx系列蓝牙产品为wireshark编写的一个插件，只有改插件正确的安装，wireshark才能正常调用它并分析抓包数据。</p>
+<p>在<a class="reference external" href="https://infocenter.nordicsemi.com/index.jsp?topic=%252Fcom.nordic.infocenter.sdk5.v14.1.0%252Fnrf52810_user_guide.html">官网</a>找到sniffer安装包，里面包含了wireshark的sniffer插件还有nrf52xx的抓包固件，如下图所示。</p>
+<p><img alt="../../_images/4.png" src="../../_images/4.png" /></p>
+<ul class="simple">
+<li><p>doc文件夹放的是一些说明文档和api参考手册，可以不看，影响不大。</p></li>
+<li><p>extcap文件夹里面是wireshark插件。</p></li>
+<li><p>hex文件夹里面是针对不同的nrf52xx芯片的抓包固件。</p></li>
+<li><p>profile是用来解析BLE数据包的。</p></li>
+</ul>
+<section id="id6">
+<h4>安装python需要的相关软件<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h4>
+<ul class="simple">
+<li><p>打开命令行，定位到<code class="docutils literal notranslate"><span class="pre">..\nrf_sniffer_for_bluetooth_le_3.0.0_129d2b3\extcap\</span></code></p></li>
+<li><p>键入 <code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code> ，安装python需要依赖的软件，主要是安装pyserial。</p></li>
+<li><p>完成后关闭命令行</p></li>
+</ul>
+</section>
+<section id="sniffer-capture-toolwireshark">
+<h4>把sniffer capture tool文件拷贝到wireshark的外部插件文件夹<a class="headerlink" href="#sniffer-capture-toolwireshark" title="此标题的永久链接"></a></h4>
+<ul class="simple">
+<li><p>运行wireshark</p></li>
+<li><p>单击帮助-&gt;关于wireshark-&gt;文件夹
+<img alt="../../_images/5.png" src="../../_images/5.png" /></p></li>
+<li><p>把<code class="docutils literal notranslate"><span class="pre">..\nrf_sniffer_for_bluetooth_le_3.0.0_129d2b3\extcap\</span></code>下的所有文件拷贝到这个文件夹内</p></li>
+</ul>
+</section>
+<section id="nrf-sniffer">
+<h4>确认nRF sniffer可以正常运行<a class="headerlink" href="#nrf-sniffer" title="此标题的永久链接"></a></h4>
+<ul class="simple">
+<li><p>打开命令行，定位到刚才拷贝的那个文件夹下</p></li>
+<li><p>输入<code class="docutils literal notranslate"><span class="pre">nrf_sniffer_ble.bat</span> <span class="pre">--extcap-interfaces</span></code> ，如果弹出下面的界面，则表示正常运行。
+<img alt="../../_images/8.png" src="../../_images/8.png" />
+如果弹出其他错误，请确认python环境是否安装正确，以及pyserial是否安装成功。</p></li>
+</ul>
+</section>
+<section id="wiresharknrf-sniffer-capture-tool">
+<h4>在wireshark中使能nRF sniffer capture tool<a class="headerlink" href="#wiresharknrf-sniffer-capture-tool" title="此标题的永久链接"></a></h4>
+<ul class="simple">
+<li><p>打开wireshark</p></li>
+<li><p>单击捕获-&gt;刷新接口列表 完成刷新
+<img alt="../../_images/9.png" src="../../_images/9.png" /></p></li>
+<li><p>使能sniffer接口，然后就能看到nRF sniffer出现在下面的列表中了
+<img alt="../../_images/101.png" src="../../_images/101.png" /></p></li>
+</ul>
+</section>
+</section>
+<section id="wiresharkprofile">
+<h3>在wireshark中添加抓包的profile<a class="headerlink" href="#wiresharkprofile" title="此标题的永久链接"></a></h3>
+<p>如果不添加这个profile，wireshark抓到的数据包将不会解析成BLE数据包的格式，这给分析带来无尽的痛苦。</p>
+<p>－单击　帮助－＞关于wireshark -&gt;文件夹
+<img alt="../../_images/11.png" src="../../_images/11.png" /></p>
+<ul class="simple">
+<li><p>双击个人配置，弹出文件夹，将<code class="docutils literal notranslate"><span class="pre">Profile_nRF_Sniffer_Bluetooth_LE</span></code>文件夹拷贝到该路径下的<code class="docutils literal notranslate"><span class="pre">profiles</span></code>文件里。</p></li>
+</ul>
+<p><img alt="../../_images/12.png" src="../../_images/12.png" /></p>
+<ul class="simple">
+<li><p>拷贝完成的路径如下图所示。
+<img alt="../../_images/13.png" src="../../_images/13.png" /></p></li>
+<li><p>点击 编辑-&gt;configuration Profiles
+<img alt="../../_images/14.png" src="../../_images/14.png" /></p></li>
+<li><p>选中 <code class="docutils literal notranslate"><span class="pre">Profile_nRF_Sniffer_Bluetooth_LE</span></code> 点击ok
+<img alt="../../_images/15.png" src="../../_images/15.png" /></p></li>
+</ul>
+</section>
+</section>
+<section id="nrf">
+<h2><span class="section-number">3.4. </span>运行nRF抓包工具<a class="headerlink" href="#nrf" title="此标题的永久链接"></a></h2>
+<p>把刚才烧录好的nrf52xx dangle插入电脑usb口，然后把需要抓取包的手机和蓝牙外设放到dangle附近，运行wireshark。
+<img alt="../../_images/16.png" src="../../_images/16.png" />
+双击选择nRF Sniffer for Bluetooth LE COM18就可以抓包了。 不过请注意， 不同的电脑显示的COM口不一样， 只要是前面显示nRF Sniffer for Bluetooth LE就没问题。
+<img alt="../../_images/17.png" src="../../_images/17.png" /></p>
+</section>
+<section id="id7">
+<h2><span class="section-number">3.5. </span>基础使用指南<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h2>
+<p>如果前面的配置都正确的话，现在应该可以抓到包了，基本的抓包界面如下图所示：
+<img alt="../../_images/18.png" src="../../_images/18.png" /></p>
+<ul class="simple">
+<li><p>Hardware interface</p>
+<ul>
+<li><p>显示当前可以用的所有设备， 假如USB口有一个抓包工具则显示一个COM口号； 如果有多个，则显示多个COM口号。</p></li>
+</ul>
+</li>
+<li><p>Device list</p>
+<ul>
+<li><p>如果你选择”All advertising devices ”， 则显示周围所有在广播的蓝牙设备； 如果下拉选择指定设备， 则只显示从该设备抓取的数据。 如果在抓包过程中重新下拉选择另外的设备， 则当前的数据会丢失。</p></li>
+</ul>
+</li>
+<li><p>Passkey and OOB key</p>
+<ul>
+<li><p>在某些连接加密的应用， 连接 的时候需要输passkey或者OOB key,在这个位置输入后， 然后点回车。</p></li>
+</ul>
+</li>
+<li><p>Advertising hop sequence</p>
+<ul>
+<li><p>在默认情况下， 抓包工具按先37信道， 再38信道， 最后39信道的顺序抓广播包。 如果用户不按这个顺序抓， 则在这里修改即可。 修改完成后请记得按回车键。</p></li>
+</ul>
+</li>
+<li><p>RSSI filter</p>
+<ul>
+<li><p>根据信号强度过滤。 可以直接在过滤器栏里面输入rssi &gt;=xxx来进行过滤。 如果被抓到的包大于等于XX这个信号强度， 则显示出来； 如果小于这个强度， 则不显示。</p></li>
+</ul>
+</li>
+</ul>
+<section id="ble">
+<h3>使能BLE数据包着色<a class="headerlink" href="#ble" title="此标题的永久链接"></a></h3>
+<p>使能BLE数据包着色，分析协议更方便，具体设置如下：
+<img alt="../../_images/19.png" src="../../_images/19.png" />
+<img alt="../../_images/20.png" src="../../_images/20.png" /></p>
+<p>更具体的<a class="reference external" href="https://www.cnblogs.com/unrulife/p/10818259.html">使用技巧</a>，请参阅这位大佬写的blog。</p>
+</section>
+</section>
+<section id="id8">
+<h2><span class="section-number">3.6. </span>常见问题及解决方法<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h2>
+<section id="id9">
+<h3>python 软件包下载失败<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>换pip源为清华源</p></li>
+<li><p>增加timeout时间</p></li>
+<li><p>翻墙</p></li>
+</ul>
+</section>
+<section id="wiresharknrf-sniffer-for-bluetooth-le">
+<h3>wireshark找不到nRF sniffer for Bluetooth LE<a class="headerlink" href="#wiresharknrf-sniffer-for-bluetooth-le" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>查看设备管理器COM口是否存在，没有则拔插dangle或者重新安装串口驱动</p></li>
+<li><p>抓包固件是否烧录正确</p></li>
+<li><p>重启wireshark</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../02_introduce/STM32WB%E7%A1%AC%E4%BB%B6%E4%BB%8B%E7%BB%8D.html" class="btn btn-neutral float-left" title="2. STM32WB 硬件介绍" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../04_btsnoop_hci/android_hci.html" class="btn btn-neutral float-right" title="4. 使用Android手机抓取蓝牙HCI包" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

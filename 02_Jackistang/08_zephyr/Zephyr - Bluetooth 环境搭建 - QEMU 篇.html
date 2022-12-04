@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>13. Zephyr - Bluetooth 环境搭建 - QEMU 篇 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="14. Zephyr - Shell" href="Zephyr%20-%20Shell.html" />
+    <link rel="prev" title="12. Zephyr 环境搭建 - ESP32 篇" href="Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20ESP32%20%E7%AF%87.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">WB55:Jackistang</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/01_intruduce.html">2. CubeMX生成BLE应用(二)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_heart_rate_att_gatt/01_intruduce.html">3. GATT Service 定义总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_mbedos_advertising/readme.html">4. BLE_Advertising</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_mbedos_example_ble_led/readme.html">5. mbed-os LEDDemo 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_mbedos_gatt_client/GattClient.html">6. mbed os GattClient 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/DigitalOut.html">7. DigitalOut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/InterruptIn.html">8. InterruptIn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/Callback.html">9. Callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Virtualbox%20%E5%AE%89%E8%A3%85%20Ubuntu%2020.04.html">10. VirtualBox 安装 Ubuntu 20.04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html">11. Zephyr 环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20ESP32%20%E7%AF%87.html">12. Zephyr 环境搭建 - ESP32 篇</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13. Zephyr - Bluetooth 环境搭建 - QEMU 篇</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">13.1. 前置条件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">13.2. 环境搭建</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">版本确认</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bluez">安装 BlueZ 工具</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">开启 BlueZ 实验性特点</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">13.3. 例程运行</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#btproxy">btproxy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">例程编译运行</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#native-posix">native_posix 运行</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">13.4. 常见问题</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#err-bt-hci-core-hci-driver-open-failed-16">err: bt_hci_core: HCI driver open failed (-16)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20-%20Shell.html">14. Zephyr - Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20-%20BLE%20%E5%88%9D%E5%A7%8B%E5%8C%96.html">15. BLE 协议栈初始化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20-%20BLE%20%E5%B9%BF%E6%92%AD.html">16. Zephyr - BLE 广播</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Zephyr%20-%20BLE%20%E6%89%AB%E6%8F%8F.html">17. Zephyr - BLE 扫描</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09_esp32/problem.html">18. 掉坑汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_rtthread/workqueue.html">19. RT-Thread workqueue 详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_rtthread/jerryscript.html">20. Jerryscript 简介</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">WB55:Jackistang</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">13. </span>Zephyr - Bluetooth 环境搭建 - QEMU 篇</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/02_Jackistang/08_zephyr/Zephyr - Bluetooth 环境搭建 - QEMU 篇.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="zephyr-bluetooth-qemu">
+<h1><span class="section-number">13. </span>Zephyr - Bluetooth 环境搭建 - QEMU 篇<a class="headerlink" href="#zephyr-bluetooth-qemu" title="此标题的永久链接"></a></h1>
+<p>本篇文章最终的目标是在 Ubuntu 20.04 上使用 QEMU 来运行 Zephyr 的 Bluetooth 例程。</p>
+<section id="id1">
+<h2><span class="section-number">13.1. </span>前置条件<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<ul class="simple">
+<li><p>Ubuntu 20.04</p></li>
+<li><p>[Zephry 环境](./Zephyr 环境搭建)</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2><span class="section-number">13.2. </span>环境搭建<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p>Zephyr 官方提供了 4 种蓝牙运行的硬件方式：</p>
+<ol class="simple">
+<li><p>Embedded</p></li>
+<li><p>QEMU with an external Controller</p></li>
+<li><p>Native POSIX with an external Controller</p></li>
+<li><p>Simulated nRF52 with BabbleSim</p></li>
+</ol>
+<p>我们这里搭建的是第二种，运用 QEMU 模拟器来操作外部蓝牙控制器（一般是电脑自带的）。环境搭建好后第三种模式也能直接使用。</p>
+<section id="id3">
+<h3>版本确认<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>在 Linux 系统里，最常用的是 BlueZ 蓝牙协议栈，搭建环境前确保 Ubuntu 20.04 的 Linux 内核版本和 BlueZ 版本满足要求：</p>
+<ul class="simple">
+<li><p>Linux Kernel 4.10+</p></li>
+<li><p>BlueZ 4.45+</p></li>
+</ul>
+<p>可用下述命令查看：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>jackis@jackis-zephyr:~$ uname -a
+Linux jackis-zephyr <span class="m">5</span>.8.0-40-generic <span class="c1">#45~20.04.1-Ubuntu SMP Fri Jan 15 11:35:04 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux</span>
+
+jackis@jackis-zephyr:~$ dpkg -s bluez <span class="p">|</span>grep ^Version
+Version: <span class="m">5</span>.53-0ubuntu3
+</pre></div>
+</div>
+</section>
+<section id="bluez">
+<h3>安装 BlueZ 工具<a class="headerlink" href="#bluez" title="此标题的永久链接"></a></h3>
+<p>一般 Linux 系统自带安装了 BlueZ，但可能版本不对，或者工具不齐全，因此最好手动安装一下。</p>
+<p>首先安装依赖：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt install automake libtool libelf-dev elfutils libdw-dev libjson-c-dev libical-dev libreadline-dev
+</pre></div>
+</div>
+<p>添加 Mesh 支持和嵌入式 Linux 支持的 ell 文件，注意 ell 需要与 bluez 在同一个目录下（git clone 时间大约为 3 分钟）。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>git clone git://git.kernel.org/pub/scm/libs/ell/ell.git
+
+    .
+        |--- ell
+        |    |--- ell
+        |    `--- unit
+        `--- bluez
+             |--- src
+             `--- tools
+</pre></div>
+</div>
+<p>然后使用下述命令更新协议栈版本或获取所有工具：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com.cnpmjs.org/bluez/bluez.git
+<span class="nb">cd</span> bluez
+./bootstrap-configure --disable-android --disable-midi
+make
+</pre></div>
+</div>
+<p>这样就能看到工具 <code class="docutils literal notranslate"><span class="pre">btattach</span></code>，<code class="docutils literal notranslate"><span class="pre">btmgt</span></code> 和 <code class="docutils literal notranslate"><span class="pre">btproxy</span></code> 在 <code class="docutils literal notranslate"><span class="pre">tools/</span></code> 目录下，<code class="docutils literal notranslate"><span class="pre">btmon</span></code> 在 <code class="docutils literal notranslate"><span class="pre">monitor/</span></code> 目录下。</p>
+</section>
+<section id="id4">
+<h3>开启 BlueZ 实验性特点<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<p>这是为了访问最新的蓝牙功能。</p>
+<p>打开 <code class="docutils literal notranslate"><span class="pre">/lib/systemd/system/bluetooth.service</span></code> 文件，然后在里面找到</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">bluetooth</span><span class="o">/</span><span class="n">bluetoothd</span>
+</pre></div>
+</div>
+<p>这一行，修改成如下形式</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">bluetooth</span><span class="o">/</span><span class="n">bluetoothd</span> <span class="o">-</span><span class="n">E</span>
+</pre></div>
+</div>
+<p>然后重新加载并重启这个守护进程</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo systemctl daemon-reload
+sudo systemctl restart bluetooth
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2><span class="section-number">13.3. </span>例程运行<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h2>
+<p>Zephyr QEMU 能够访问主机的蓝牙控制器，是因为用 <code class="docutils literal notranslate"><span class="pre">btproxy</span></code> 这个工具创建了一个用户态可以访问的 socket，并将蓝牙控制器与该 socket 绑定，这样 QEMU 与该 socket 通信即可控制主机的蓝牙控制器。</p>
+<section id="btproxy">
+<h3>btproxy<a class="headerlink" href="#btproxy" title="此标题的永久链接"></a></h3>
+<p>开启一个终端，</p>
+<p>关闭主机的蓝牙控制器</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">stop</span> <span class="n">bluetooth</span>
+</pre></div>
+</div>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">btproxy</span></code> 工具打开并监听 UNIX socket，</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">bluez</span>
+<span class="n">sudo</span> <span class="n">tools</span><span class="o">/</span><span class="n">btproxy</span> <span class="o">-</span><span class="n">u</span> <span class="o">-</span><span class="n">i</span> <span class="mi">0</span>
+ <span class="o">-&gt;</span> <span class="n">Listening</span> <span class="n">on</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">bt</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">bredrsudo</span> 
+</pre></div>
+</div>
+<p>其中 <code class="docutils literal notranslate"><span class="pre">-i</span> <span class="pre">0</span></code> 表示使用 hci0，可能需要根据实际情况更换，可以 <code class="docutils literal notranslate"><span class="pre">hciconfig</span></code> 查看：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>jackis@jackis-zephyr:~$ hciconfig
+hci0:	Type: Primary  Bus: USB
+	BD Address: 58:A0:23:B6:A4:80  ACL MTU: 1021:4  SCO MTU: 96:6
+	UP RUNNING 
+	RX bytes:2614 acl:0 sco:0 events:123 errors:0
+	TX bytes:1548 acl:0 sco:0 commands:133 errors:2
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>例程编译运行<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h3>
+<p>以 beacon 例程为例。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>west build -b qemu_x86 samples/bluetooth/beacon
+west build -t run
+</pre></div>
+</div>
+<p>现象如下：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>jackis@jackis-zephyr:~/zephyrproject/zephyr/$ west build -t run
+-- west build: running target run
+<span class="o">[</span><span class="m">0</span>/1<span class="o">]</span> To <span class="nb">exit</span> from QEMU enter: <span class="s1">&#39;CTRL+a, x&#39;</span><span class="o">[</span>QEMU<span class="o">]</span> CPU: qemu32,+nx,+pae
+SeaBIOS <span class="o">(</span>version rel-1.12.1-0-ga5cab58-dirty-20200625_115407-9426dddc0a1f-zephyr
+<span class="o">)</span>
+Booting from ROM..*** Booting Zephyr OS build zephyr-v2.4.0-8-g9c30e7946974  ***
+Starting Beacon Demo
+Bluetooth initialized
+Beacon started
+<span class="o">[</span><span class="m">00</span>:00:00.420,000<span class="o">]</span> &lt;inf&gt; bt_hci_core: Identity: <span class="m">58</span>:a0:23:b6:a4:80 <span class="o">(</span>public<span class="o">)</span>
+<span class="o">[</span><span class="m">00</span>:00:00.420,000<span class="o">]</span> &lt;inf&gt; bt_hci_core: HCI: version <span class="m">5</span>.0 <span class="o">(</span>0x09<span class="o">)</span> revision 0x0100, manufacturer 0x0002
+<span class="o">[</span><span class="m">00</span>:00:00.420,000<span class="o">]</span> &lt;inf&gt; bt_hci_core: LMP: version <span class="m">5</span>.0 <span class="o">(</span>0x09<span class="o">)</span> subver 0x0100
+</pre></div>
+</div>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">CTRL+a,</span> <span class="pre">x</span></code> 即可退出 QEMU 。</p>
+</section>
+<section id="native-posix">
+<h3>native_posix 运行<a class="headerlink" href="#native-posix" title="此标题的永久链接"></a></h3>
+<p>创建 <code class="docutils literal notranslate"><span class="pre">/tmp/bt-server-bredrsudo</span></code> socket 后，</p>
+<p>编译运行代码</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>west build -b native_posix samples/bluetooth/beacon
+sudo ./build/zephyr/zephyr.exe --bt-dev<span class="o">=</span>hci0
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2><span class="section-number">13.4. </span>常见问题<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h2>
+<section id="err-bt-hci-core-hci-driver-open-failed-16">
+<h3>err: bt_hci_core: HCI driver open failed (-16)<a class="headerlink" href="#err-bt-hci-core-hci-driver-open-failed-16" title="此标题的永久链接"></a></h3>
+<p>这种情况是我们程序退出异常，导致 HCI 驱动打开后没有正常关闭，目前的解决办法是将虚拟机的 BLE 设备还给物理机，然后再次导入虚拟机。</p>
+<hr class="docutils" />
+<p>参考：</p>
+<p><a class="reference external" href="https://docs.zephyrproject.org/latest/samples/bluetooth/bluetooth.html">Samples and Demos - Bluetooth samples</a></p>
+<p><a class="reference external" href="https://docs.zephyrproject.org/latest/guides/bluetooth/bluetooth-tools.html#">User and Developer Guides - Bluetooth - Bluetooth tools</a></p>
+<p><a class="reference external" href="https://blog.csdn.net/tonyfield2015/article/details/79668445">Debian 9.3 编译 Bluez 5.49</a></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20ESP32%20%E7%AF%87.html" class="btn btn-neutral float-left" title="12. Zephyr 环境搭建 - ESP32 篇" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="Zephyr%20-%20Shell.html" class="btn btn-neutral float-right" title="14. Zephyr - Shell" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

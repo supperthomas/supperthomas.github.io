@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4. RTTHREAD软件包目录自分类 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="5. RT-Thread 传感器软件包归类" href="03_sensor_list.html" />
+    <link rel="prev" title="3. RTTHREAD软件包目录" href="01_software_package.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">RTTHRED: RT-Thread</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. RTTHREAD贡献TODO目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/02_RTTHREAD_introduce.html">2. RT-THREAD —-国产开源之光</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_software_package.html">3. RTTHREAD软件包目录</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4. RTTHREAD软件包目录自分类</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ai">4.1. AI 相关的软件包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#log">4.2. log相关的软件包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">4.3. 文件系统软件包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui">4.4. GUI 引擎软件包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">4.5. 好玩的没有依赖的软件包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">4.6. </a></li>
+<li class="toctree-l3"><a class="reference internal" href="#led-button">4.7. LED BUTTON 软件包</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_sensor_list.html">5. RT-Thread 传感器软件包归类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_rtthread_auto_update.html">6. RTTHREAD 软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_rtthread_bsp_board.html">7. RTTHREAD BSP board支持目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_rtthread_softpackage_build_guide.html">8. 软件包制作小计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/01_rtthread_bsp_porting.html">9. RTTHREAD移植新的BSP开发板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/02_rtthread_bsp_porting_gpio.html">10. RTTHREAD移植BSP驱动 GPIO篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/03_rtthread_bsp_porting_spi.html">11. RTTHREAD移植BSP驱动 SPI篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/04_rtthread_bsp_porting_uart.html">12. rt-thread 移植BSP驱动 uart篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_docker/01_docker_images.html">13. 如何用docker来学习rtthread-qemu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_llsync/01_llsync_Environment.html">14. LLSYNC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_llsync/02_llsync_struct_code.html">15. LLSYNC 移植指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_simular/01_keil_simulator.html">16. 如何在keil中STM32L496 跑simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_onchip/01_on_chip_file.html">17. STM32如何将文件放到内部flash里面</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">RTTHRED: RT-Thread</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4. </span>RTTHREAD软件包目录自分类</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/RTTHREAD/02_softpackage_list/02_software_introduce.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="rtthread">
+<h1><span class="section-number">4. </span>RTTHREAD软件包目录自分类<a class="headerlink" href="#rtthread" title="此标题的永久链接"></a></h1>
+<p>这边统计下RTTHREAD软件包的各项内容</p>
+<section id="ai">
+<h2><span class="section-number">4.1. </span>AI 相关的软件包<a class="headerlink" href="#ai" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>包名</th>
+<th>技术标签</th>
+<th>依赖平台</th>
+<th>备注</th>
+<th>分类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/QingChuanWS/TensorflowLiteMicro">TensorflowLiteMicro</a></td>
+<td>AI</td>
+<td>ART-Pi</td>
+<td>用于rt-thread操作系统的轻量级深度学习端侧推理框架Tensorflow Lite软件包。"</td>
+<td>太大</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/rt-libann">rt-libann</a></td>
+<td>AI</td>
+<td>ANY</td>
+<td>轻量级 ANN 库，可以训练，保存和导入模型</td>
+<td>需要文件系统</td>
+</tr>
+<tr>
+<td><a href="https://github.com/majianjia/nnom">nnom</a></td>
+<td>AI</td>
+<td></td>
+<td>NNoM是一个专门为了神经网络在 MCU 上运行的框架</td>
+<td>没有sample</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/onnx-backend">onnx-backend</a></td>
+<td>AI</td>
+<td><strong><em>*</em></strong><strong><em>*</em></strong><strong>*</strong>*</td>
+<td>开源神经网络模型 onnx 后端，支持几乎所有主流机器学习模型</td>
+<td>有个简单的可以学一下</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/rt-onnx-parser">rt-onnx-parser</a></td>
+<td>AI</td>
+<td></td>
+<td>开源神经网络模型 onnx 解析库</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></section>
+<section id="log">
+<h2><span class="section-number">4.2. </span>log相关的软件包<a class="headerlink" href="#log" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>包名</th>
+<th>技术标签</th>
+<th>依赖平台</th>
+<th>备注</th>
+<th>分类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/armink-rtt-pkgs/EasyLogger">EasyLogger</a></td>
+<td>LOG</td>
+<td></td>
+<td>一款超轻量级(ROM&lt;1.6K, RAM&lt;0.3k)、高性能的 C/C++ 日志库</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/logmgr">logmgr</a></td>
+<td>LOG</td>
+<td></td>
+<td>logmgr: 日志管理系统功能支持</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/armink-rtt-pkgs/ulog_easyflash">ulog_easyflash</a></td>
+<td>LOG</td>
+<td>ALL</td>
+<td>基于 EasyFlash 的 ulog 插件</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/ulog_file">ulog_file</a></td>
+<td>LOG</td>
+<td></td>
+<td>ulog_file: 基于文件系统的 ulog 后端插件。</td>
+<td></td>
+</tr>
+</tbody>
+</table></section>
+<section id="id1">
+<h2><span class="section-number">4.3. </span>文件系统软件包<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>包名</th>
+<th>技术标签</th>
+<th>依赖平台</th>
+<th>备注</th>
+<th>分类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/geniusgogo/littlefs">littlefs</a></td>
+<td>littlefs</td>
+<td></td>
+<td>为微控制器设计的一个小型的且掉电安全的文件系统</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/Michael0066/lwext4">lwext4</a></td>
+<td>FLASH</td>
+<td>ALL</td>
+<td>Flash 抽象层的实现，负责管理 Flash 设备和 Flash 分区</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/fal">fal</a></td>
+<td>**</td>
+<td>u8g2</td>
+<td>U8g2 不同种类单色屏驱动在 RT-Thread 移植库</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/majianjia/ramdisk">ramdisk</a></td>
+<td>文件系统</td>
+<td>RAM</td>
+<td>ramdisk除了能被文件系统格式化，还能当一般的块设备来存储数据。</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/heyuanjie87/yaffs2_rtt_port">yaffs2_rtt_port</a></td>
+<td>文件系统</td>
+<td>yaffs</td>
+<td>yaffs2 移植到RT-Thread</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></section>
+<section id="gui">
+<h2><span class="section-number">4.4. </span>GUI 引擎软件包<a class="headerlink" href="#gui" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>包名</th>
+<th>技术标签</th>
+<th>依赖平台</th>
+<th>备注</th>
+<th>分类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/loogg/STemWin">STemWin</a></td>
+<td>STemWin,gui</td>
+<td>ST</td>
+<td>STemWin在RT-Thread上的移植</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/guoweilkd/lkdGui">lkdGui</a></td>
+<td>GUI</td>
+<td></td>
+<td>lkdGui是一款为单色显示屏制作的图形化界面，用于设计简单漂亮的图形界面。</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/wuhanstudio/rt-u8g2">rt-u8g2</a></td>
+<td>**</td>
+<td>u8g2</td>
+<td>U8g2 不同种类单色屏驱动在 RT-Thread 移植库</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/liu2guang/LittlevGL2RTT">LittlevGL2RTT</a></td>
+<td>GUI</td>
+<td>LITTVGL</td>
+<td>Littlevgl 是基于 RT-Thread 的图形库软件包</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/cairo">cairo</a></td>
+<td>GUI</td>
+<td>LCD</td>
+<td>适用于多平台的 2D 图形软件包</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/RT-Thread-packages/persimmon">persimmon</a></td>
+<td>UI</td>
+<td>柿饼</td>
+<td>RT-Thread 的柿饼 UI</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://gitee.com/Ghazi_gq/nes">nes</a></td>
+<td>GAME</td>
+<td>GUI</td>
+<td>nes模拟器c库</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></section>
+<section id="id2">
+<h2><span class="section-number">4.5. </span>好玩的没有依赖的软件包<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>包名</th>
+<th>技术标签</th>
+<th>依赖</th>
+<th>备注</th>
+<th>验证情况</th>
+<th>分类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/wuhanstudio/vt100">vt100</a></td>
+<td>MSH</td>
+<td></td>
+<td>串口终端绘图库，可以在 msh 下画图</td>
+<td>已验证</td>
+<td>misc</td>
+</tr>
+<tr>
+<td>games</td>
+<td>GAME</td>
+<td>ANY</td>
+<td><a href="https://github.com/mysterywolf/c2048">c2048</a>    、<a href="https://github.com/volatile-static/rtt_tetris">俄罗斯方块</a>  、<a href="https://github.com/mysterywolf/snake">贪吃蛇</a>、 <a href="https://github.com/mysterywolf/threes">threes</a></td>
+<td></td>
+<td>misc</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></section>
+<section id="id3">
+<h2><span class="section-number">4.6. </span><a class="headerlink" href="#id3" title="此标题的永久链接"></a></h2>
+</section>
+<section id="led-button">
+<h2><span class="section-number">4.7. </span>LED BUTTON 软件包<a class="headerlink" href="#led-button" title="此标题的永久链接"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="01_software_package.html" class="btn btn-neutral float-left" title="3. RTTHREAD软件包目录" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="03_sensor_list.html" class="btn btn-neutral float-right" title="5. RT-Thread 传感器软件包归类" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

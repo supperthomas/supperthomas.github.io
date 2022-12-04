@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5. mbed-os LEDDemo 介绍 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="6. mbed os GattClient 介绍" href="../07_mbedos_gatt_client/GattClient.html" />
+    <link rel="prev" title="4. BLE_Advertising" href="../04_mbedos_advertising/readme.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">WB55:Jackistang</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_introduce/01_intruduce.html">2. CubeMX生成BLE应用(二)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_heart_rate_att_gatt/01_intruduce.html">3. GATT Service 定义总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_mbedos_advertising/readme.html">4. BLE_Advertising</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5. mbed-os LEDDemo 介绍</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mbed-os-gatt-service">5.1. mbed-os如何定义一个 GATT Service</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gattcharacteristic">GattCharacteristic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gattservice">GattService</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#leddemo">5.2. LEDDemo 介绍</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">异步通知</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">广播数据</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">使用示例</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">5.3. 抓包分析</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../07_mbedos_gatt_client/GattClient.html">6. mbed os GattClient 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/DigitalOut.html">7. DigitalOut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/InterruptIn.html">8. InterruptIn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_mbedos/Callback.html">9. Callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Virtualbox%20%E5%AE%89%E8%A3%85%20Ubuntu%2020.04.html">10. VirtualBox 安装 Ubuntu 20.04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html">11. Zephyr 环境搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20ESP32%20%E7%AF%87.html">12. Zephyr 环境搭建 - ESP32 篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20Bluetooth%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20QEMU%20%E7%AF%87.html">13. Zephyr - Bluetooth 环境搭建 - QEMU 篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20Shell.html">14. Zephyr - Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20BLE%20%E5%88%9D%E5%A7%8B%E5%8C%96.html">15. BLE 协议栈初始化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20BLE%20%E5%B9%BF%E6%92%AD.html">16. Zephyr - BLE 广播</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08_zephyr/Zephyr%20-%20BLE%20%E6%89%AB%E6%8F%8F.html">17. Zephyr - BLE 扫描</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09_esp32/problem.html">18. 掉坑汇总</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_rtthread/workqueue.html">19. RT-Thread workqueue 详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_rtthread/jerryscript.html">20. Jerryscript 简介</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">WB55:Jackistang</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">5. </span>mbed-os LEDDemo 介绍</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/02_Jackistang/05_mbedos_example_ble_led/readme.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mbed-os-leddemo">
+<h1><span class="section-number">5. </span>mbed-os LEDDemo 介绍<a class="headerlink" href="#mbed-os-leddemo" title="此标题的永久链接"></a></h1>
+<p>这个工程可以在线上编译器里找到，mbed-os 的官方例程里没有这个。</p>
+<section id="mbed-os-gatt-service">
+<h2><span class="section-number">5.1. </span>mbed-os如何定义一个 GATT Service<a class="headerlink" href="#mbed-os-gatt-service" title="此标题的永久链接"></a></h2>
+<p>根据对 GATT 的理解，一个 GATT Service 包含多个 Characteristic ，Service 和 Characteristic 都有自己的 UUID 来标识，如下图所示：</p>
+<p><img alt="../../_images/image-20201203224720869.png" src="../../_images/image-20201203224720869.png" /></p>
+<section id="gattcharacteristic">
+<h3>GattCharacteristic<a class="headerlink" href="#gattcharacteristic" title="此标题的永久链接"></a></h3>
+<p>在 mbed-os 里 <code class="docutils literal notranslate"><span class="pre">GattCharacteristic</span></code> 类用来表示 Characteristic 。</p>
+<p>为了方便使用，mbed-os 根据对 Characteristic 的读/写属性提供了几个更方便使用的类：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ReadOnlyGattCharacteristic</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WriteOnlyGattCharacteristic</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ReadWriteGattCharacteristic</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WriteOnlyArrayGattCharacteristic</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ReadOnlyArrayGattCharacteristic</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ReadWriteArrayGattCharacteristic</span></code></p></li>
+</ul>
+<p>TODO: 解释带 “Array” 的 Characteristic 。</p>
+<p>这些类都是模板类，可以很方便地实现任意类型的 Characteristic Value 值。</p>
+<section id="ledservice">
+<h4>LEDService<a class="headerlink" href="#ledservice" title="此标题的永久链接"></a></h4>
+<p>以 mbed-os-example-ble-LED 例程里实现的 LEDService 为例。</p>
+<p>先从 Characteristic 介绍：</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">LEDService</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">	</span><span class="k">const</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">LED_STATE_CHARACTERISTIC_UUID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xA001</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">......</span><span class="w"></span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">ReadWriteGattCharacteristic</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ledState</span><span class="p">;</span><span class="w"> </span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<p>LEDService 定义了一个 <code class="docutils literal notranslate"><span class="pre">ReadWriteGattCharacteristic&lt;bool&gt;</span></code> 类型的 Characteristic <code class="docutils literal notranslate"><span class="pre">ledState</span></code>，<code class="docutils literal notranslate"><span class="pre">ledState</span></code> 可读可写。 true 表示灯亮状态，false 表示灯灭状态， UUID 自定义为 0xA001 。</p>
+</section>
+</section>
+<section id="gattservice">
+<h3>GattService<a class="headerlink" href="#gattservice" title="此标题的永久链接"></a></h3>
+<p>接下来看看这个 demo 里如何定义一个 GATT Service 。</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">LEDService</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">LED_SERVICE_UUID</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="mh">0xA000</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">LED_STATE_CHARACTERISTIC_UUID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xA001</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">LEDService</span><span class="p">(</span><span class="n">BLEDevice</span><span class="w"> </span><span class="o">&amp;</span><span class="n">_ble</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">initialValueForLEDCharacteristic</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"></span>
+<span class="w">        </span><span class="n">ble</span><span class="p">(</span><span class="n">_ble</span><span class="p">),</span><span class="w"> </span><span class="n">ledState</span><span class="p">(</span><span class="n">LED_STATE_CHARACTERISTIC_UUID</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">initialValueForLEDCharacteristic</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">GattCharacteristic</span><span class="w"> </span><span class="o">*</span><span class="n">charTable</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="o">&amp;</span><span class="n">ledState</span><span class="p">};</span><span class="w"></span>
+<span class="w">        </span><span class="n">GattService</span><span class="w">         </span><span class="nf">ledService</span><span class="p">(</span><span class="n">LED_SERVICE_UUID</span><span class="p">,</span><span class="w"> </span><span class="n">charTable</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">charTable</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">GattCharacteristic</span><span class="w"> </span><span class="o">*</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">ble</span><span class="p">.</span><span class="n">gattServer</span><span class="p">().</span><span class="n">addService</span><span class="p">(</span><span class="n">ledService</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">GattAttribute</span><span class="o">::</span><span class="n">Handle_t</span><span class="w"> </span><span class="n">getValueHandle</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ledState</span><span class="p">.</span><span class="n">getValueHandle</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">BLEDevice</span><span class="w">                         </span><span class="o">&amp;</span><span class="n">ble</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">ReadWriteGattCharacteristic</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ledState</span><span class="p">;</span><span class="w"> </span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<p>在 LEDService 的构造函数初始化列表里，得到了传入的 BLE 协议栈实例的引用，并且根据 Characteristic 的 UUID 和初始状态值构造了 <code class="docutils literal notranslate"><span class="pre">ledState</span></code> 。</p>
+<p>此处的 <code class="docutils literal notranslate"><span class="pre">BLEDevice</span></code> 是为了兼容较老版本的协议栈，新版本协议栈不建议使用，直接使用 <code class="docutils literal notranslate"><span class="pre">BLE</span></code> 即可。官方解释如下：</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * @deprecated This type alias is retained for the sake of compatibility with</span>
+<span class="cm"> * older code. This will be dropped at some point.</span>
+<span class="cm"> */</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">BLE</span><span class="w"> </span><span class="n">BLEDevice</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>第 9，10 行构建了一张 GattCharacteristic 的表，并且用这张表和 UUID 构建了 GATT Service <code class="docutils literal notranslate"><span class="pre">ledService</span></code>，之后就调用接口 <code class="docutils literal notranslate"><span class="pre">addService()</span></code> 将 <code class="docutils literal notranslate"><span class="pre">ledService</span></code> 作为一个 Service 加入了协议栈。</p>
+<p>注意，<code class="docutils literal notranslate"><span class="pre">addService()</span></code> 会为 Service 里的所有 attributes 统一分配 Handle 句柄，因此我们编写程序时想要获得一个 attribute 的句柄，只能调用协议栈提供的接口。就比如获取 <code class="docutils literal notranslate"><span class="pre">ledState</span></code> Characteristic Value 的 Handle 句柄，就只能调用 <code class="docutils literal notranslate"><span class="pre">ledState.getValueHandle();</span></code> 来获得，返回类型是 <code class="docutils literal notranslate"><span class="pre">GattAttribute::Handle_t</span></code> 。</p>
+</section>
+</section>
+<section id="leddemo">
+<h2><span class="section-number">5.2. </span>LEDDemo 介绍<a class="headerlink" href="#leddemo" title="此标题的永久链接"></a></h2>
+<section id="id1">
+<h3>异步通知<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h3>
+<p>LEDDemo 里也有打广播的流程，这里就不详细介绍了，mbed-os BLE_Advertising 这篇文章里把流程介绍的很详细。</p>
+<p>我们来看看 LEDDemo 作为一个 BLE Server 与单纯的打广播有什么不同的地方。</p>
+<p>首先在 BLE 协议栈初始化完成后的回调函数里：</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/** Callback triggered when the ble initialization process has finished */</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">on_init_complete</span><span class="p">(</span><span class="n">BLE</span><span class="o">::</span><span class="n">InitializationCompleteCallbackContext</span><span class="w"> </span><span class="o">*</span><span class="n">params</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">......</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">_led_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LEDService</span><span class="p">(</span><span class="n">_ble</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">_ble</span><span class="p">.</span><span class="n">gattServer</span><span class="p">().</span><span class="n">onDataWritten</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">LEDDemo</span><span class="o">::</span><span class="n">on_data_written</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="p">......</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>在这里多了创建 <code class="docutils literal notranslate"><span class="pre">_led_service</span></code> 这个 BLE Service 的步骤，并且调用了 <code class="docutils literal notranslate"><span class="pre">_ble.gattServer().onDataWritten()</span></code> 这个接口，设置了 client 和 server 建立连接后，client 向 server 写数据这个事件的回调函数，在这个回调函数里实现了 LED 灯的亮灭，也就是所谓的蓝牙点灯。</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">     * This callback allows the LEDService to receive updates to the ledState Characteristic.</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param[in] params Information about the characterisitc being updated.</span>
+<span class="cm">     */</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">on_data_written</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">GattWriteCallbackParams</span><span class="w"> </span><span class="o">*</span><span class="n">params</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">params</span><span class="o">-&gt;</span><span class="n">handle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">_led_service</span><span class="o">-&gt;</span><span class="n">getValueHandle</span><span class="p">())</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">params</span><span class="o">-&gt;</span><span class="n">len</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">_actuated_led</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="n">params</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>mbed-os BLE 协议栈还定义了其他类似的事件接口：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">onDataSent</span></code>：注册一个事件回调函数，当 server 发送一个 characteristic value 更新值给 client 时回调该函数。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">onDataWriten</span></code>：注册一个事件回调函数，当 client 写了一个 server 的 attribute 之后回调该函数。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">onDataRead</span></code>：注册一个事件回调函数，当 client 读取了一个 server 的 attribute 之后回调该函数。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">onUpdatesEnabled</span></code>：注册一个事件回调函数，当 client 订阅某个 characteristic 的更新值时回调该函数。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">onUpdatesDisabled</span></code>：注册一个事件回调函数，当 client 取消订阅某个 characteristic 的更新值时回调该函数。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">onConfimationReceived</span></code>：注册一个事件回调函数，当 client 确认收到了一个 characteristic value 的通知时回调该函数（也就是收到 ATT_HANDLE_VALUE_CFM  这个包的时候）。</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>广播数据<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h3>
+<p>首先设置广播参数：</p>
+<ul class="simple">
+<li><p>广播类型：可连接，不定向</p></li>
+<li><p>广播间隔：1000 ms</p></li>
+</ul>
+<p>然后设置了广播数据：</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Length</th>
+<th>AD Type</th>
+<th>AD Data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>0x01 - «Flags»</td>
+<td><code>BREDR_NOT_SUPPORTED|LE_GENERAL_DISCOVERABLE</code></td>
+</tr>
+<tr>
+<td></td>
+<td>0x03 - «16-bit Service Class UUIDs»</td>
+<td>0xA000</td>
+</tr>
+<tr>
+<td></td>
+<td>0x09 - «Device Name»</td>
+<td>"LED"</td>
+</tr>
+</tbody>
+</table></section>
+<section id="id3">
+<h3>使用示例<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<p>WB55 上电后，手机端 nRF Connect 可以看到 LED 设备发送的广播消息，点击 CONNECT ，如下图：</p>
+<p><img alt="../../_images/image-20201204183543883.png" src="../../_images/image-20201204183543883.png" /></p>
+<p>选择 CLIENT，Unknown Service，可以看见这个 Service 的 UUID 为 0xA001，其 value 的属性为可读可写，与我们上面的代码是一样的。点击右边向上的箭头，</p>
+<p><img alt="../../_images/image-20201204183625257.png" src="../../_images/image-20201204183625257.png" /></p>
+<p>会弹出来一个对话框，在这里输入 01，点击发送即给 WB55 发送了一条写命令，值为 0x01，此时会看见 LED2 灯亮。</p>
+<p><img alt="../../_images/image-20201204183705537.png" src="../../_images/image-20201204183705537.png" /></p>
+<p>若发送 0x00 ，则 LED 灯灭。</p>
+<p><img alt="../../_images/image-20201204183726622.png" src="../../_images/image-20201204183726622.png" /></p>
+</section>
+</section>
+<section id="id4">
+<h2><span class="section-number">5.3. </span>抓包分析<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h2>
+<p>TODO</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../04_mbedos_advertising/readme.html" class="btn btn-neutral float-left" title="4. BLE_Advertising" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../07_mbedos_gatt_client/GattClient.html" class="btn btn-neutral float-right" title="6. mbed os GattClient 介绍" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

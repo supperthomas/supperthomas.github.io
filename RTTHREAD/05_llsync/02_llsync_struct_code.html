@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>15. LLSYNC 移植指南 &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="16. 如何在keil中STM32L496 跑simulator" href="../06_simular/01_keil_simulator.html" />
+    <link rel="prev" title="14. LLSYNC" href="01_llsync_Environment.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">RTTHRED: RT-Thread</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. RTTHREAD贡献TODO目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/02_RTTHREAD_introduce.html">2. RT-THREAD —-国产开源之光</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/01_software_package.html">3. RTTHREAD软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/02_software_introduce.html">4. RTTHREAD软件包目录自分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/03_sensor_list.html">5. RT-Thread 传感器软件包归类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/04_rtthread_auto_update.html">6. RTTHREAD 软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/05_rtthread_bsp_board.html">7. RTTHREAD BSP board支持目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/06_rtthread_softpackage_build_guide.html">8. 软件包制作小计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/01_rtthread_bsp_porting.html">9. RTTHREAD移植新的BSP开发板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/02_rtthread_bsp_porting_gpio.html">10. RTTHREAD移植BSP驱动 GPIO篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/03_rtthread_bsp_porting_spi.html">11. RTTHREAD移植BSP驱动 SPI篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/04_rtthread_bsp_porting_uart.html">12. rt-thread 移植BSP驱动 uart篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_docker/01_docker_images.html">13. 如何用docker来学习rtthread-qemu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_llsync_Environment.html">14. LLSYNC</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">15. LLSYNC 移植指南</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">15.1. 文档概要</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">15.2. 框架</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">15.3. 移植</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#flash">flash操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timer">TIMER 操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gatt-service">GATT service</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ble">BLE 广播</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">15.4. 小总结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">15.5. 遇到的坑</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../06_simular/01_keil_simulator.html">16. 如何在keil中STM32L496 跑simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_onchip/01_on_chip_file.html">17. STM32如何将文件放到内部flash里面</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">RTTHRED: RT-Thread</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">15. </span>LLSYNC 移植指南</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/RTTHREAD/05_llsync/02_llsync_struct_code.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="llsync">
+<h1><span class="section-number">15. </span>LLSYNC 移植指南<a class="headerlink" href="#llsync" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">15.1. </span>文档概要<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<p>这篇文章主要介绍llsync SDK的移植到其他协议栈需要理解的部分。属于移植到其他协议栈或者其他芯片的时候，需要做的前期的预习准备工作。理解本文，基本上可以知道新的协议栈如何移植。</p>
+</section>
+<section id="id2">
+<h2><span class="section-number">15.2. </span>框架<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p>如果想要移植llsync的话，就要先了解它最简单的小灯是如何进行操作开关的。</p>
+<p>参考文档<a class="reference external" href="https://github.com/TencentCloud/tencentcloud-iot-explorer-ble-sdk-embedded/blob/master/docs/LLSync%20SDK%E6%A0%87%E5%87%86%E8%93%9D%E7%89%99%E5%8A%9F%E8%83%BD%E6%8E%A5%E5%85%A5%E6%8C%87%E5%BC%95.md">LLSync SDK标准蓝牙功能接入指引</a></p>
+<p>上面文档过于官方，我简单根据我的经验记录下我移植的步骤吧，当然首先要先把上面文档详细的看一遍。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">15.3. </span>移植<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h2>
+<p>从文档qcloud-iot-ble-nrf52832\hal\里面的几个文件，可以看到基本的控制API接口</p>
+<p><strong>ble_qiot_ble_device.c</strong> ： 这个文件主要是以下内容： 产品的三元组信息，flash层套用API，ble timer API接口、ble开关广播、底层硬件控制</p>
+<p><strong>flash_storage.c</strong>： 这个全部都是FLASH层调用的底层API，用于保存配对信息</p>
+<p><strong>nrf52832_xxaa_service.c</strong>：这个文件主要完成GATT service的添加，上层会通过调用函数ble_services_add来添加service，以及处理callback。</p>
+<p>现在我们来总结下，具体的要实现的函数和所在文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nrf52832_xxaa_service</span><span class="o">.</span><span class="n">c</span><span class="p">:</span>
+
+<span class="n">void</span>            <span class="n">ble_services_add</span><span class="p">(</span><span class="n">const</span> <span class="n">qiot_service_init_s</span> <span class="o">*</span><span class="n">p_service</span><span class="p">);</span>
+
+<span class="n">flash_storage</span><span class="o">.</span><span class="n">c</span><span class="p">:</span>
+<span class="n">void</span> <span class="n">fstorage_init</span><span class="p">(</span><span class="n">void</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">fstorage_read</span><span class="p">(</span><span class="n">uint32_t</span> <span class="n">addr</span><span class="p">,</span> <span class="n">uint32_t</span> <span class="n">read_len</span><span class="p">,</span> <span class="n">void</span> <span class="o">*</span><span class="n">p_data</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">fstorage_write</span><span class="p">(</span><span class="n">uint32_t</span> <span class="n">addr</span><span class="p">,</span> <span class="n">uint32_t</span> <span class="n">write_len</span><span class="p">,</span> <span class="n">void</span> <span class="n">const</span> <span class="o">*</span><span class="n">p_data</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">fstorage_erase</span><span class="p">(</span><span class="n">uint32_t</span> <span class="n">addr</span><span class="p">);</span>
+
+<span class="n">ble_qiot_ble_device</span><span class="o">.</span><span class="n">c</span>
+<span class="n">ble_qiot_ret_status_t</span> <span class="n">ble_advertising_start</span><span class="p">(</span><span class="n">adv_info_s</span> <span class="o">*</span><span class="n">adv</span><span class="p">);</span>
+<span class="n">ble_qiot_ret_status_t</span> <span class="n">ble_advertising_stop</span><span class="p">(</span><span class="n">void</span><span class="p">);</span>
+
+</pre></div>
+</div>
+<p>首先我们整理下一共有多少个小任务，这边我把顺序也列了一下：</p>
+<ul class="simple">
+<li><p>flash操作</p></li>
+<li><p>timer 操作</p></li>
+<li><p>GATT service table 调整成一样的</p></li>
+<li><p>adv 广播要调整成一样的（腾讯连连小程序对广播进行过滤了）</p></li>
+<li><p>数据交互引导到sdk里面数据解析</p></li>
+<li><p>开发板notify数据的接口要对上</p></li>
+<li><p>硬件操作的接口要对上</p></li>
+</ul>
+<p>细分这么多的小任务。基本上也是我移植整个APP的步骤。</p>
+<section id="flash">
+<h3>flash操作<a class="headerlink" href="#flash" title="此标题的永久链接"></a></h3>
+<p>首次对于flash操作，其实可以先放一放的。flash操作主要需要保存上次的配对状态，所以理论上flash保存可以暂时先不用care，这样也可以不用担心每次上电之后要解除配对了。</p>
+<p>我们可以 先用下面的代码进行替换：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">fstorage_init</span><span class="p">(</span><span class="n">void</span><span class="p">)</span>
+<span class="p">{</span>
+    
+<span class="p">}</span>
+<span class="nb">int</span> <span class="n">fstorage_read</span><span class="p">(</span><span class="n">uint32_t</span> <span class="n">addr</span><span class="p">,</span> <span class="n">uint32_t</span> <span class="n">read_len</span><span class="p">,</span> <span class="n">void</span> <span class="o">*</span><span class="n">p_data</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="k">return</span> <span class="n">read_len</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">int</span> <span class="n">fstorage_erase</span><span class="p">(</span><span class="n">uint32_t</span> <span class="n">addr</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">int</span> <span class="n">fstorage_write</span><span class="p">(</span><span class="n">uint32_t</span> <span class="n">addr</span><span class="p">,</span> <span class="n">uint32_t</span> <span class="n">write_len</span><span class="p">,</span> <span class="n">void</span> <span class="n">const</span> <span class="o">*</span><span class="n">p_data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">write_len</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>为了验证这段代码是否ok，我们把这段代码放到nrf52832的example上，测试发现，连连看小程序可以连上，并且每次重启，都可以直接再次进行绑定。证明这一段代码是可行的。所以flash这一段在移植的时候，可以先写成如上的代码模式，这种模式最快能够达到example的样子，后续如果要做产品的话，这里需要和flash或者文件系统对接，因为产品的话，需要实时保留绑定信息。</p>
+</section>
+<section id="timer">
+<h3>TIMER 操作<a class="headerlink" href="#timer" title="此标题的永久链接"></a></h3>
+<p>一开始，我以为timer是SDK内部使用的，但是仔细研究了下代码，发现timer并不是SDK用的，只是APP用的，而且偶尔使用，检查了下LED亮灯程序，TIMER只是提供给APP层用的服务，SDK里面并没有调用，所以这边timer我保留为空，在example里面测试，发现timer为空，也是可以控制LED灯开关的。所以这部分porting可以放到后面</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ble_timer_t</span> <span class="n">ble_timer_create</span><span class="p">(</span><span class="n">uint8_t</span> <span class="nb">type</span><span class="p">,</span> <span class="n">ble_timer_cb</span> <span class="n">timeout_handle</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">ble_qiot_ret_status_t</span> <span class="n">ble_timer_start</span><span class="p">(</span><span class="n">ble_timer_t</span> <span class="n">timer_id</span><span class="p">,</span> <span class="n">uint32_t</span> <span class="n">period</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">ble_qiot_ret_status_t</span> <span class="n">ble_timer_stop</span><span class="p">(</span><span class="n">ble_timer_t</span> <span class="n">timer_id</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">ble_qiot_ret_status_t</span> <span class="n">ble_timer_delete</span><span class="p">(</span><span class="n">ble_timer_t</span> <span class="n">timer_id</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">//</span> <span class="n">do</span> <span class="n">nothing</span>
+    <span class="k">return</span> <span class="n">BLE_QIOT_RS_OK</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>可以用上面的代码进行暂时留空。</p>
+</section>
+<section id="gatt-service">
+<h3>GATT service<a class="headerlink" href="#gatt-service" title="此标题的永久链接"></a></h3>
+<p>第二步就是需要将BLE中的GATT的service 改成腾讯要求的那样，改完之后，可以用nrf connect 工具来检验一下，两边是否相同</p>
+<p>首先我们先用example连上之后，看下example里面的GATT是怎样的</p>
+<p><img alt="image-20220313204954400" src="../../_images/image-20220313204954400.png" /></p>
+<p>通过阅读llsync 的协议，我们了解到GATT service 是如何排列的，如下图所示：</p>
+<p><img alt="image-20220313205441297" src="../../_images/image-20220313205441297.png" /></p>
+<p>这边可能有点疑问，怎么UUID是0xFFE0，到nrf connect 之后就是一长串乱七八糟的数字呢？</p>
+<p>这边就要科普一下蓝牙uuid的spec了。UUID可以认为是全球统一码，通常为了描述方便，我们一般采用16bit也就是2个BYTE来定义一些蓝牙常用的UUID。蓝牙官方有定义一个标准的蓝牙UUID base，如果使用蓝牙官方定义的UUID,比如电池电量等，具体的可以参考<a class="reference external" href="https://www.bluetooth.com/specifications/assigned-numbers">asigned nummber</a> 。如果是蓝牙官方定义的16bit，我们通常采用的交互就可以直接使用16bit。但是也可以遇见16bit的spec对于全球这么多的蓝牙类型，只有65535个，没法达到全球唯一码，所以为了区分开来，通常厂商会自定义一些128bit的UUID。这样冲突的可能性比较小。所以LLSYNC自定义了128bit的UUID</p>
+<p>LLSync Bluetooth Base UUID为 00000000-65d0-4e20-b56a-e493541ba4e2。</p>
+<p>按照BLE协议，16 Bits UUID和128 Bits UUID转换关系为</p>
+<p>128 Bits value = 16 Bits value * 2^96 + BluetoothBaseUUID</p>
+<p>即 0000xxxx-65d0-4e20-b56a-e493541ba4e2 中的 xxxx 替换为16 Bits UUID，例如 Service 16 BitsUUID FFE0 转换为128 Bits 的UUID 为 0000ffe0-65d0-4e20-b56a-e493541ba4e2，Characteristic的UUID的转换类似。</p>
+<p>这样我们就可以将上面的图片对应起来了。</p>
+<p>GATT service 主要对应函数<code class="docutils literal notranslate"><span class="pre">ble_services_add</span></code> 在这个函数里面需要将service 整理好传递给蓝牙协议栈。</p>
+<p>同时要设置好对应的回调函数</p>
+<p>这个函数写好之后，就可以用nrf connect 连上，查看是否ok。在这里移植的时候， 可以先不用管数据如何处理，只要能在之前可以用的example上，用手机连上之后，看到的BLE service是如上图所示的几个service即可。像属性的write read notify也要基本要一模一样即可。</p>
+</section>
+<section id="ble">
+<h3>BLE 广播<a class="headerlink" href="#ble" title="此标题的永久链接"></a></h3>
+<p>首先讲下，为什么要修改BLE广播呢？因为我们的腾讯连连小程序在找设备的时候，会查看广播数据，根据广播数据来对设备进行过滤，找到可以配对的设备才能用腾讯连连小程序进行配对</p>
+<p>广播主要涉及到的函数是，广播开始和广播结束：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ble_qiot_ret_status_t</span> <span class="n">ble_advertising_start</span><span class="p">(</span><span class="n">adv_info_s</span> <span class="o">*</span><span class="n">adv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">ble_qiot_ret_status_t</span> <span class="n">ble_advertising_stop</span><span class="p">(</span><span class="n">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">BLE_QIOT_RS_OK</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>下面我们就要整理广播信息了。根据协议描述</p>
+<p><img alt="image-20220313220131953" src="../../_images/image-20220313220131953.png" /></p>
+<p>广播数据中，有一个16bit的service uuid，还有一个厂商定义的一个标识符一长串数据，里面有MAC地址还有一些product ID等信息，这些信息都是可以通过ble_advertising_start 接口的参数adv来传递下来的。</p>
+<p><img alt="image-20220313221920913" src="../../_images/image-20220313221920913.png" /></p>
+<p>厂商定义的数据有19个字节</p>
+<p>UUID 有2个字节</p>
+<p>FLAG 有1个字节数据</p>
+<p>name 3个字节数据</p>
+<p>根据LTV数据格式，一共有数据3 +21+4 +5= 33个字节</p>
+<p>对于一个熟悉广播包的开发者，都知道，广播包只有31个字节的数据，所以这里的33个字节的数据存在一定的玄机在里面。</p>
+<p>我们通过查看手机的btsnoopy可以看到。</p>
+<p>adv广播包信息如下：</p>
+<p><img alt="image-20220313222643025" src="../../_images/image-20220313222643025.png" /></p>
+<p>实际上还有个scan response的包，存放了UUID的数据</p>
+<p><img alt="image-20220313222716245" src="../../_images/image-20220313222716245.png" /></p>
+<p>这个时候，我们就清楚了，将UUID的service的长度去掉之后，</p>
+<p>整个广播包数据就是29个字节（FLAG 3 +NAME 5 +DATA 21）  29个字节</p>
+<p>所以这里还有个需要注意的坑是。这里的name不能设置过长，通常3个字节就可以了，最多5个字节再大就会31个字节就放不了。</p>
+<p>然后需要在 scan response里面存放UUID的信息。</p>
+</section>
+</section>
+<section id="id4">
+<h2><span class="section-number">15.4. </span>小总结<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h2>
+<p>为了防止文章过长，完成上述的移植，基本任务就完成一大半了，这个时候，可以通过腾讯连连小程序搜索到设备了。下一篇文章会介绍如何通过解析交互数据，了解空中到底传输了几笔包。</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">15.5. </span>遇到的坑<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h2>
+<p>腾讯连连小程序中有一个状态字，就是第一个byte 状态，这个状态具体可以<a class="reference external" href="https://github.com/TencentCloud/tencentcloud-iot-explorer-ble-sdk-embedded/tree/master/docs">参考协议</a>文档中的描述，如果这里的状态不对的话，比如如果处于已经绑定状态的话，腾讯连连也是没办法搜到的。</p>
+<p><img alt="image-20220313220131953" src="../../_images/image-20220313220131953.png" /></p>
+<p>这里稍微卡了一会会。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="01_llsync_Environment.html" class="btn btn-neutral float-left" title="14. LLSYNC" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../06_simular/01_keil_simulator.html" class="btn btn-neutral float-right" title="16. 如何在keil中STM32L496 跑simulator" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

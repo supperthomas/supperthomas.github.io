@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>16. 如何在keil中STM32L496 跑simulator &mdash; bluetoothlover_wiki 0.0.1 文档</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/translations.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="17. STM32如何将文件放到内部flash里面" href="../07_onchip/01_on_chip_file.html" />
+    <link rel="prev" title="15. LLSYNC 移植指南" href="../05_llsync/02_llsync_struct_code.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> bluetoothlover_wiki
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ble/index.html">BLE STACK篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ble_profile/index.html">BLE PROFILE篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nordic/index.html">Nordic 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WB55/index.html">STM32WB55 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">RTTHRED: RT-Thread</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/01_intruduce.html">1. RTTHREAD贡献TODO目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_introduce/02_RTTHREAD_introduce.html">2. RT-THREAD —-国产开源之光</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/01_software_package.html">3. RTTHREAD软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/02_software_introduce.html">4. RTTHREAD软件包目录自分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/03_sensor_list.html">5. RT-Thread 传感器软件包归类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/04_rtthread_auto_update.html">6. RTTHREAD 软件包目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/05_rtthread_bsp_board.html">7. RTTHREAD BSP board支持目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_softpackage_list/06_rtthread_softpackage_build_guide.html">8. 软件包制作小计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/01_rtthread_bsp_porting.html">9. RTTHREAD移植新的BSP开发板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/02_rtthread_bsp_porting_gpio.html">10. RTTHREAD移植BSP驱动 GPIO篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/03_rtthread_bsp_porting_spi.html">11. RTTHREAD移植BSP驱动 SPI篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_bsp_porting/04_rtthread_bsp_porting_uart.html">12. rt-thread 移植BSP驱动 uart篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_docker/01_docker_images.html">13. 如何用docker来学习rtthread-qemu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_llsync/01_llsync_Environment.html">14. LLSYNC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_llsync/02_llsync_struct_code.html">15. LLSYNC 移植指南</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">16. 如何在keil中STM32L496 跑simulator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bsp-stm32-stm32l496zg">16.1. 试一下BSP/STM32/stm32l496zg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simulator">16.2. simulator的优势和劣势</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../07_onchip/01_on_chip_file.html">17. STM32如何将文件放到内部flash里面</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../12_ESP32/index.html">ESP32</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_supperthomas/index.html">MASTER:supperthomas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_Jackistang/index.html">WB55:Jackistang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_xupenghu/index.html">WB55:xupenghu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_luhuadong/index.html">WB55:luhuadong</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../09_answerinthewind/index.html">WB55:answerinthewind</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_ylz0923/index.html">NORDIC:ylz0923</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_guohp1128/index.html">NORDIC:guohp1128</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../10_jiy/index.html">NORDIC:jiy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../11_ForestRain/index.html">NORDIC:ForestRain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bluetoothlover_wiki</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">RTTHRED: RT-Thread</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">16. </span>如何在keil中STM32L496 跑simulator</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/RTTHREAD/06_simular/01_keil_simulator.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="keilstm32l496-simulator">
+<h1><span class="section-number">16. </span>如何在keil中STM32L496 跑simulator<a class="headerlink" href="#keilstm32l496-simulator" title="此标题的永久链接"></a></h1>
+<p>事情还是得从RTTHREAD 官方的文档<a class="reference external" href="https://www.rt-thread.org/document/site/#/rt-thread-version/rt-thread-standard/tutorial/quick-start/stm32f103-simulator/stm32f103-simulator?id=keil-%E6%A8%A1%E6%8B%9F%E5%99%A8-stm32f103-%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97">Keil 模拟器 STM32F103 上手指南</a></p>
+<p>说起，用了很久的KEIL，相信大家很少有人用simulator功能，这个在我接触RTTHREAD之前也是没有用过的，看过官方的文档之后，觉得这个很神奇，不需要开发板就可以跑RT-THREAD。有一些简单的功能，比如一些纯软件的软件包也可以在simulator上面跑，正好STM32L496ZG bsp也是我提交的，是否可以使用simulator来测一下简单的功能呢？</p>
+<section id="bsp-stm32-stm32l496zg">
+<h2><span class="section-number">16.1. </span>试一下BSP/STM32/stm32l496zg<a class="headerlink" href="#bsp-stm32-stm32l496zg" title="此标题的永久链接"></a></h2>
+<p>下载了最新RTTHREAD的master https://github.com/RT-Thread/rt-thread/tree/master/bsp/stm32/stm32l496-st-nucleo 上面的代码，选择simulator功能</p>
+<p><img alt="image-20220411205818020" src="../../_images/image-20220411205818020.png" /></p>
+<p>结果发现，跑着跑着，就报了下面的error</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">***</span> <span class="n">error</span> <span class="mi">65</span><span class="p">:</span> <span class="n">access</span> <span class="n">violation</span> <span class="n">at</span> <span class="mh">0x40021000</span> <span class="p">:</span> <span class="n">no</span> <span class="s1">&#39;write&#39;</span> <span class="n">permission</span>
+</pre></div>
+</div>
+<p>找了好久的资料，发现在<code class="docutils literal notranslate"><span class="pre">initialzation</span> <span class="pre">File</span></code> 那边有一些猫腻，需要在这里添加寄存器的访问权限</p>
+<p>下面我们新建一个ini文件，可以叫KEIL.ini  输入下面的命令，保存下来</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MAP</span> <span class="mh">0x40000000</span><span class="p">,</span><span class="mh">0x40030000</span> <span class="n">read</span> <span class="n">write</span>
+<span class="n">MAP</span> <span class="mh">0x48000000</span><span class="p">,</span><span class="mh">0x50070000</span> <span class="n">read</span> <span class="n">write</span>
+</pre></div>
+</div>
+<p>然后加载进去，同时，<strong>我们要把-MPU去掉，不加载</strong></p>
+<p><img alt="image-20220411211427284" src="../../_images/image-20220411211427284.png" /></p>
+<p>这个时候我们会发现死在了_Error_Handler这个函数里面。尝试把while循环去掉看看。</p>
+<p>再运行一次，发现死在了UART这个函数UART_WaitOnFlagUntilTimeout里面，这个就比较难查了，不过我想了下，可以用我最近开发的软件包<a class="reference external" href="https://github.com/supperthomas/RTTHREAD_SEGGER_TOOL">segger_rtt</a>让SWO代替UART输出，看看正常的thread是否是好的。</p>
+<p><img alt="image-20220411211945265" src="../../_images/image-20220411211945265.png" /></p>
+<p>然后用命令<code class="docutils literal notranslate"><span class="pre">pkgs</span> <span class="pre">--update</span></code>来更新软件包，用<code class="docutils literal notranslate"><span class="pre">scons</span> <span class="pre">--target=mdk5</span></code>来生成keil工程（记得需要将工程配置选用simulator，因为target命令重新覆盖了keil工程）</p>
+<p>我们尝试按照segger_rtt 软件包里面的提示做如下修改将console口改为SWO：</p>
+<p>修改如下所示</p>
+<p><img alt="image-20220411212601620" src="../../_images/image-20220411212601620.png" /></p>
+<p>调试的时候，需要打开SWO监视窗口：</p>
+<p><img alt="image-20220411212657150" src="../../_images/image-20220411212657150.png" /></p>
+<p>之后点击调试按钮<img alt="image-20220411212752639" src="../../_images/image-20220411212752639.png" /></p>
+<p><img alt="image-20220411212747119" src="../../_images/image-20220411212747119.png" /></p>
+<p>运行，就可以发现有如上的界面，这个时候不需要连接开发板，直接可以跑ps等命令。</p>
+<p>我感觉比较神奇，就分享给大家，如果你在STM32L4平台上想用simulator功能的话，可以使用这个文档提供的方法。</p>
+</section>
+<section id="simulator">
+<h2><span class="section-number">16.2. </span>simulator的优势和劣势<a class="headerlink" href="#simulator" title="此标题的永久链接"></a></h2>
+<p>这边我稍微总结下simulator的优势和劣势：</p>
+<p>优势：</p>
+<ul class="simple">
+<li><p>可以不用硬件开发板体验：执行一些简单的操作逻辑。</p></li>
+<li><p>CI 支持： 可以支持支持自动化集成方案，可以测一些基本的软件function，比如一些跑分软件。</p></li>
+<li><p>对硬件没有损害：可以避免出现一些烧板子的奇怪问题</p></li>
+</ul>
+<p>劣势：</p>
+<ul class="simple">
+<li><p>对于一些硬件外设相关的访问，可能会有异常行为，跑RTOS没问题</p></li>
+<li><p>不能模拟一些带有SPI flash或者SDRAM等需要有外设的开发板</p></li>
+</ul>
+<p>公众号</p>
+<p><img alt="https://gitee.com/superThomas/picture/raw/master/images/qrcode_for_gh_fd857fcc56db_430.jpg" src="https://gitee.com/superThomas/picture/raw/master/images/qrcode_for_gh_fd857fcc56db_430.jpg" /></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../05_llsync/02_llsync_struct_code.html" class="btn btn-neutral float-left" title="15. LLSYNC 移植指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../07_onchip/01_on_chip_file.html" class="btn btn-neutral float-right" title="17. STM32如何将文件放到内部flash里面" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2020, apache.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

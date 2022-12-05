@@ -1,365 +1,1218 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="zh-CN" >
+<html lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to BLUETOOTHLOVER_wiki’s documentation! &mdash; bluetoothlover_wiki 0.0.1 文档</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"supperthomas.github.io","root":"/","scheme":"Pisces","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="self">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Thomas">
+<meta property="og:url" content="https://supperthomas.github.io/index.html">
+<meta property="og:site_name" content="Thomas">
+<meta property="og:description" content="self">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Thomas Li">
+<meta property="article:tag" content="embeded stm32 linux ARM IOT">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://supperthomas.github.io/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: true,
+    isPost: false
+  };
+</script>
+
+  <title>Thomas</title>
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/translations.js"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="索引" href="genindex.html" />
-    <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="BLE STACK篇" href="ble/index.html" /> 
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
 </head>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-            <a href="#" class="icon icon-home"> bluetoothlover_wiki
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="搜索文档" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Thomas</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">subtitle</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
-              <p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ble/index.html">BLE STACK篇</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ble_profile/index.html">BLE PROFILE篇</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nordic/index.html">Nordic 篇</a></li>
-<li class="toctree-l1"><a class="reference internal" href="WB55/index.html">STM32WB55 篇</a></li>
-<li class="toctree-l1"><a class="reference internal" href="WIKI_FAQ/index.html">WIKI FAQ 篇</a></li>
-<li class="toctree-l1"><a class="reference internal" href="RTTHREAD/index.html">RTTHRED: RT-Thread</a></li>
-<li class="toctree-l1"><a class="reference internal" href="12_ESP32/index.html">ESP32</a></li>
-<li class="toctree-l1"><a class="reference internal" href="DEBUG/index.html">EMBEDDED DEBUG 篇</a></li>
-<li class="toctree-l1"><a class="reference internal" href="00_supperthomas/index.html">MASTER:supperthomas</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_helloworldzlg/index.html">WB55:helloworldzlg</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_Jackistang/index.html">WB55:Jackistang</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_xupenghu/index.html">WB55:xupenghu</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_dozingfiretruck/index.html">WB55:dozingfiretruck</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_luhuadong/index.html">WB55:luhuadong</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09_answerinthewind/index.html">WB55:answerinthewind</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a></li>
-<li class="toctree-l1"><a class="reference internal" href="07_ylz0923/index.html">NORDIC:ylz0923</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08_guohp1128/index.html">NORDIC:guohp1128</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10_jiy/index.html">NORDIC:jiy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="11_ForestRain/index.html">NORDIC:ForestRain</a></li>
-<li class="toctree-l1"><a class="reference internal" href="13_xiangxistu/index.html">NORDIC:xiangxistu</a></li>
-<li class="toctree-l1"><a class="reference internal" href="14_bobwenstudy/index.html">NORDIC:bobwenstudy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="16_ColeStudy/index.html">NORDIC:ColeStudy</a></li>
-</ul>
 
-        </div>
-      </div>
-    </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">bluetoothlover_wiki</a>
-      </nav>
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="页面导航">
-  <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a></li>
-      <li class="breadcrumb-item active">Welcome to BLUETOOTHLOVER_wiki’s documentation!</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> 查看页面源码</a>
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
       </li>
   </ul>
-  <hr/>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="welcome-to-bluetoothlover-wiki-s-documentation">
-<h1>Welcome to BLUETOOTHLOVER_wiki’s documentation!<a class="headerlink" href="#welcome-to-bluetoothlover-wiki-s-documentation" title="此标题的永久链接"></a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">BLE knowledge:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ble/index.html">BLE STACK篇</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ble/00_ble_introduce/BLE_introduce.html">1. 蓝牙基本知识介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ble/01_ble_adv/ble_adv_scan_all.html">2. BLE 广播和扫描</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ble/02_ble_gatt/GATT.html">3. GATT &amp; ATT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ble/03_ble_smp/SMP.html">4. SMP（BLE)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ble/04_ble%E5%AE%89%E5%85%A8/%E8%B5%84%E6%96%99.html">5. BLE 配对机制</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="ble_profile/index.html">BLE PROFILE篇</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ble_profile/01_battery_service_profile/battery_service.html">1. BAS (电池服务规格书)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ble_profile/02_device_infomation_profile/device_infomation_profile.html">2. DIS (设备信息服务)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ble_profile/03_heart_rate_profile/heart_tate_profile.html">3. HRS（心率服务）</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="nordic/index.html">Nordic 篇</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nordic/01/01_introduce.html">1. Nordic 相关资料</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nordic/01/02_task.html">2. Nordic 相关task</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nordic/FAQ/01_introduce.html">3. Nordic FAQ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nordic/03/ble_app_blinky.html">4. ble_app_blinky 介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nordic/05/ble_uart_app.html">5. ble_app_uart 介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nordic/06_nordic_i2c/nRF5x_I2C.html">6. nRF5x_BSP I2C 移植指南</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="WB55/index.html">STM32WB55 篇</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="WB55/01_environment_build/01_introduce.html">1. WB55社区任务一</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WB55/01_environment_build/02_task.html">2. WB55社区任务二</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WB55/02_BSP_develop/01_introduce.html">3. WB55 相关资料</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WB55/FAQ/01_introduce.html">4. TODO</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="WIKI_FAQ/index.html">WIKI FAQ 篇</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="WIKI_FAQ/01/01_introduce.html">1. WIKI FAQ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WIKI_FAQ/02/01_introduce.html">2. ReadtheDocs从懵逼到入门</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WIKI_FAQ/03/markdown_faq.html">3. Markdown 写作技巧</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WIKI_FAQ/04/wiki_rule.html">4. WIKI  RULE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WIKI_FAQ/05/markdown_flow.html">5. 如何用markdown 画流程图</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WIKI_FAQ/06_git_flow/git_flow.html">6. GIT 技巧总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WIKI_FAQ/07_python_skill/pip_install_china_source.html">7. PIP 如何添加国内源</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WIKI_FAQ/08_uml/plantUML%E5%AE%89%E8%A3%85.html">8. plantUML 安装教程</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WIKI_FAQ/08_uml/plantUML%E7%BB%98%E5%9B%BE%E7%AE%80%E4%BB%8B.html">9. plantUML 绘图简介</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WIKI_FAQ/09_vscode/vscode_debug.html">10. VSCode 调试</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WIKI_FAQ/09_vscode/vscode_faq.html">11. VSCode 小技巧</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WIKI_FAQ/09_vscode/vscode_plugin.html">12. VSCode 常用插件</a></li>
-<li class="toctree-l2"><a class="reference internal" href="WIKI_FAQ/09_vscode/vscode_shortkey.html">13. VSCODE 快捷键</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="RTTHREAD/index.html">RTTHRED: RT-Thread</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/01_introduce/01_intruduce.html">1. RTTHREAD贡献TODO目录</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/01_introduce/02_RTTHREAD_introduce.html">2. RT-THREAD —-国产开源之光</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/02_softpackage_list/01_software_package.html">3. RTTHREAD软件包目录</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/02_softpackage_list/02_software_introduce.html">4. RTTHREAD软件包目录自分类</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/02_softpackage_list/03_sensor_list.html">5. RT-Thread 传感器软件包归类</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/02_softpackage_list/04_rtthread_auto_update.html">6. RTTHREAD 软件包目录</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/02_softpackage_list/05_rtthread_bsp_board.html">7. RTTHREAD BSP board支持目录</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/02_softpackage_list/06_rtthread_softpackage_build_guide.html">8. 软件包制作小计</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/03_bsp_porting/01_rtthread_bsp_porting.html">9. RTTHREAD移植新的BSP开发板</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/03_bsp_porting/02_rtthread_bsp_porting_gpio.html">10. RTTHREAD移植BSP驱动 GPIO篇</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/03_bsp_porting/03_rtthread_bsp_porting_spi.html">11. RTTHREAD移植BSP驱动 SPI篇</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/03_bsp_porting/04_rtthread_bsp_porting_uart.html">12. rt-thread 移植BSP驱动 uart篇</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/04_docker/01_docker_images.html">13. 如何用docker来学习rtthread-qemu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/05_llsync/01_llsync_Environment.html">14. LLSYNC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/05_llsync/02_llsync_struct_code.html">15. LLSYNC 移植指南</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/06_simular/01_keil_simulator.html">16. 如何在keil中STM32L496 跑simulator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="RTTHREAD/07_onchip/01_on_chip_file.html">17. STM32如何将文件放到内部flash里面</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="12_ESP32/index.html">ESP32</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="12_ESP32/01_introduce/01_intruduce.html">1. ESP-IDF 一键式搭建环境</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="DEBUG/index.html">EMBEDDED DEBUG 篇</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="DEBUG/01_SEGGER_RTT/SEGGER_RTT.html">1. SEGGER RTT 简介</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="00_supperthomas/index.html">MASTER:supperthomas</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="00_supperthomas/01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="00_supperthomas/02_introduce/01_intruduce.html">2. BLE 相关资料</a></li>
-<li class="toctree-l2"><a class="reference internal" href="00_supperthomas/03_mbed/01_mbed_quick_syart.html">3. mbed OS  quick start</a></li>
-<li class="toctree-l2"><a class="reference internal" href="00_supperthomas/04_AI/01_intruduce.html">4. 深度学习</a></li>
-<li class="toctree-l2"><a class="reference internal" href="00_supperthomas/06_embeded_debug/jlink.html">5. 嵌入式调试</a></li>
-<li class="toctree-l2"><a class="reference internal" href="00_supperthomas/07_mcuboot/mcuboot.html">6. MCUBOOT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="00_supperthomas/08_MPU/01_MPU.html">7. ARM-MPU 详解</a></li>
-<li class="toctree-l2"><a class="reference internal" href="00_supperthomas/09_doxygen/doxygen.html">8. 玩转doxygen 之RT-THREAD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="00_supperthomas/10_lvgl/lvgl_app.html">9. LVGL 学习小计 –（一） 应用层</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="01_helloworldzlg/index.html">WB55:helloworldzlg</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="01_helloworldzlg/01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_helloworldzlg/02_introduce/01-%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E6%95%B4%E4%BD%93%E6%A1%86%E6%9E%B6.html">2. 蓝牙协议栈整体框架</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_helloworldzlg/02_introduce/02-%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AEGAP%E5%B1%82%E4%BB%8B%E7%BB%8D.html">3. 蓝牙协议GAP层介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_helloworldzlg/02_introduce/03-%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AEATT%E3%80%81GATT%E5%B1%82%E4%BB%8B%E7%BB%8D.html">4. 蓝牙协议ATT、GATT层介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_helloworldzlg/03_introduce/01.mbedOS%E4%BB%8B%E7%BB%8D.html">5. mbedOS介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_helloworldzlg/03_introduce/02.mbedOS%20API%E8%AF%B4%E6%98%8E.html">6. mbedOS API说明</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_helloworldzlg/03_introduce/03.mbedOS%20BLE%E7%9B%B8%E5%85%B3%E7%A4%BA%E4%BE%8B.html">7. mbedOS BLE相关示例</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_helloworldzlg/03_introduce/04.mbedOS%E7%A7%BB%E6%A4%8D%E5%88%B0STM32L4R5ZI%E5%BC%80%E5%8F%91%E6%9D%BF.html">8. mbedOS移植到STM32L4R5ZI开发板</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_helloworldzlg/03_introduce/05.mbedOS%E7%A7%BB%E6%A4%8D%E5%88%B0ART-PI%E5%BC%80%E5%8F%91%E6%9D%BF.html">9. mbedOS移植到ART-PI开发板</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_helloworldzlg/03_introduce/06.mbedOS%20BLE%E4%BE%8B%E7%A8%8BSTM32WB55%E5%BC%80%E5%8F%91%E6%9D%BF%E5%AE%9E%E8%B7%B5.html">10. mbedOS BLE例程STM32WB55开发板实践</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_helloworldzlg/03_introduce/07.mbedOS%20Cordio%E5%8D%8F%E8%AE%AE%E6%A0%88%E4%BB%8B%E7%BB%8D.html">11. mbedOS Cordio协议栈介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_helloworldzlg/03_introduce/08.mbedOS%E4%BE%8B%E7%A8%8Bmbed-os-example-blinky%E8%A7%A3%E8%AF%BB.html">12. mbedOS例程mbed-os-example-blinky解读</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_helloworldzlg/03_introduce/99.mbedOS%E4%BC%98%E5%8C%96%E4%BB%A3%E7%A0%81%E5%90%8C%E6%AD%A5%E9%80%9F%E5%BA%A6%E7%9A%84%E5%87%A0%E4%B8%AA%E5%B0%8F%E6%8A%80%E5%B7%A7.html">13. mbedOS优化代码同步速度的小技巧</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="02_Jackistang/index.html">WB55:Jackistang</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/02_introduce/01_intruduce.html">2. CubeMX生成BLE应用(二)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/03_heart_rate_att_gatt/01_intruduce.html">3. GATT Service 定义总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/04_mbedos_advertising/readme.html">4. BLE_Advertising</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/05_mbedos_example_ble_led/readme.html">5. mbed-os LEDDemo 介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/07_mbedos_gatt_client/GattClient.html">6. mbed os GattClient 介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/06_mbedos/DigitalOut.html">7. DigitalOut</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/06_mbedos/InterruptIn.html">8. InterruptIn</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/06_mbedos/Callback.html">9. Callback</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/08_zephyr/Virtualbox%20%E5%AE%89%E8%A3%85%20Ubuntu%2020.04.html">10. VirtualBox 安装 Ubuntu 20.04</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/08_zephyr/Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html">11. Zephyr 环境搭建</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/08_zephyr/Zephyr%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20ESP32%20%E7%AF%87.html">12. Zephyr 环境搭建 - ESP32 篇</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/08_zephyr/Zephyr%20-%20Bluetooth%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%20-%20QEMU%20%E7%AF%87.html">13. Zephyr - Bluetooth 环境搭建 - QEMU 篇</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/08_zephyr/Zephyr%20-%20Shell.html">14. Zephyr - Shell</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/08_zephyr/Zephyr%20-%20BLE%20%E5%88%9D%E5%A7%8B%E5%8C%96.html">15. BLE 协议栈初始化</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/08_zephyr/Zephyr%20-%20BLE%20%E5%B9%BF%E6%92%AD.html">16. Zephyr - BLE 广播</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/08_zephyr/Zephyr%20-%20BLE%20%E6%89%AB%E6%8F%8F.html">17. Zephyr - BLE 扫描</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/09_esp32/problem.html">18. 掉坑汇总</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/10_rtthread/workqueue.html">19. RT-Thread workqueue 详解</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Jackistang/10_rtthread/jerryscript.html">20. Jerryscript 简介</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="03_xupenghu/index.html">WB55:xupenghu</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="03_xupenghu/01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03_xupenghu/02_introduce/STM32WB%E7%A1%AC%E4%BB%B6%E4%BB%8B%E7%BB%8D.html">2. STM32WB 硬件介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03_xupenghu/03_nrf_sniffer/nrf_ble_sniffer.html">3. 使用NRF52xx sniffer抓取BLE包</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03_xupenghu/04_btsnoop_hci/android_hci.html">4. 使用Android手机抓取蓝牙HCI包</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03_xupenghu/05_art-pi_ble_netin/art-pi_net_connect_with_ble.html">5. ART-PI开发板蓝牙配网流程分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03_xupenghu/06_stm32wb55_ble_start/stm32wb55_ble_start.html">6. STM32WB55 蓝牙协议栈运行流程解析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03_xupenghu/07_stm32wb55_ble_ibeacon/stm32wb55_ble_ibeacon.html">7. stm32wb55 基于rtt的ble sample制作过程</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03_xupenghu/08_rt-thread_packages/08_rt-thread_packages.html">8. RT-Thread 软件包制作及发布流程</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="04_dozingfiretruck/index.html">WB55:dozingfiretruck</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="04_dozingfiretruck/01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_dozingfiretruck/02_introduce/%E5%AF%BC%E8%AF%BB.html">2. 导读</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_dozingfiretruck/03/STM32WB%E7%AE%80%E4%BB%8B.html">3. STM32WB简介</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_dozingfiretruck/04/%E8%BD%AF%E4%BB%B6%E7%AE%80%E4%BB%8B.html">4. 软件介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_dozingfiretruck/05/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.html">5. STM32WB环境搭建</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_dozingfiretruck/06/Linux.html">6. Linux下搭建 RT-Thread 开发环境</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_dozingfiretruck/07/vscode.html">7. vscode配合keil开发</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_dozingfiretruck/08/wb55_sample.html">8. wb55_sample演示</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="05_luhuadong/index.html">WB55:luhuadong</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="05_luhuadong/01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="05_luhuadong/STM32WB_Overview.html">2. STM32WB 概览</a></li>
-<li class="toctree-l2"><a class="reference internal" href="05_luhuadong/STM32WB_FUS.html">3. RF协议栈的有线和无线更新</a></li>
-<li class="toctree-l2"><a class="reference internal" href="05_luhuadong/STM32WB_OTA.html">4. 用户应用程序的无线更新</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="09_answerinthewind/index.html">WB55:answerinthewind</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="09_answerinthewind/01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="09_answerinthewind/02/WB55_6.html">2. 【直播回顾】STM32WB，开启”无线”新市场！</a></li>
-<li class="toctree-l2"><a class="reference internal" href="09_answerinthewind/03_zephyr/zephyr_env.html">3. 搭建zephyr开发环境</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="06_chenyingchun0312/index.html">NORDIC:chenyingchun0312</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="06_chenyingchun0312/01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="06_chenyingchun0312/02_posix_dfs/rt_thread_posix_dfs.html">2. POSIX 介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="06_chenyingchun0312/elf_introduce.html">3. 程序员的自我修养</a></li>
-<li class="toctree-l2"><a class="reference internal" href="06_chenyingchun0312/nrf52832_rtthread_dlmodule.html">4. nRF52832 RT-Thread dmodule适配</a></li>
-<li class="toctree-l2"><a class="reference internal" href="06_chenyingchun0312/stm32l496.html">5. STM32L496 USB CDC适配</a></li>
-<li class="toctree-l2"><a class="reference internal" href="06_chenyingchun0312/usb.html">6. USB</a></li>
-<li class="toctree-l2"><a class="reference internal" href="06_chenyingchun0312/i2s.html">7. I2S总线介绍</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="07_ylz0923/index.html">NORDIC:ylz0923</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="07_ylz0923/01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="07_ylz0923/02_introduce/01_intruduce.html">2. Nordic</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="08_guohp1128/index.html">NORDIC:guohp1128</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="08_guohp1128/01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="08_guohp1128/05_bluetooth/Client_and_Server_relationship_in_GATT.html">2. Client and Server relationship in GATT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="08_guohp1128/06_bas/bas%E6%80%BB%E7%BB%93/ble_app_bas.html">3. ble_app_bas总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="08_guohp1128/06_bas/ble_app_sample%E6%80%BB%E7%BB%93/ble_app_sample%E6%80%BB%E7%BB%93.html">4. ble_app_sample总结</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="10_jiy/index.html">NORDIC:jiy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="10_jiy/01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="10_jiy/02_gcc_on_vscode/gcc_on_vscode.html">2. 在VS Code上使用GCC开发嵌入式应用</a></li>
-<li class="toctree-l2"><a class="reference internal" href="10_jiy/03_art-pi_on_macos/art-pi_on_macos.html">3. 在MacOS下编译烧录ART-Pi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="10_jiy/04_bsp_support_dist/bsp_support_dist.html">4. RT-Thread BSP支持dist功能</a></li>
-<li class="toctree-l2"><a class="reference internal" href="10_jiy/05_vscode_hard_fault_debug/vscode_hard_fault_debug.html">5. VS Code中定位HardFault的方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="10_jiy/06_verilog_barrel_shifter/verilog_barrel_shifter.html">6. Verilog实现32位桶形移位器（barrel shifter）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="10_jiy/07_fpga_base/fpga_bash.html">7. FPGA基础知识分享</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="11_ForestRain/index.html">NORDIC:ForestRain</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="11_ForestRain/01_introduce/01_intruduce.html">1. 简单自我介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_ForestRain/02_PM/AN01_RT-Thread_PM2.0_STM32L4_LoRaWAN_ClassA_Low_Power.html">2. 1 前言</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_ForestRain/02_PM/AN01_RT-Thread_PM2.0_STM32L4_LoRaWAN_ClassA_Low_Power.html#lorawan-class-a">3. 2 LoRaWAN Class A终端设备的低功耗设计</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_ForestRain/02_PM/AN01_RT-Thread_PM2.0_STM32L4_LoRaWAN_ClassA_Low_Power.html#id6">4. 3 LoRaWAN Class A终端设备的应用示例</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_ForestRain/02_PM/AN01_RT-Thread_PM2.0_STM32L4_LoRaWAN_ClassA_Low_Power.html#id10">5. 4 功耗测试结果</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_ForestRain/02_PM/AN01_RT-Thread_PM2.0_STM32L4_LoRaWAN_ClassA_Low_Power.html#id11">6. 5 参考</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_ForestRain/02_PM/AN02_RT-Thread_PM2.0_nRF52xx_Power_and_Clock.html">7. 1 前言</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_ForestRain/02_PM/AN02_RT-Thread_PM2.0_nRF52xx_Power_and_Clock.html#nrf52">8. 2 nRF52系列的低功耗相关硬件特性</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_ForestRain/02_PM/AN02_RT-Thread_PM2.0_nRF52xx_Power_and_Clock.html#id4">9. 3 硬件电路的相关功耗设计</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_ForestRain/02_PM/AN03_RT-Thread_PM2.0_nRF52xx_PM_Driver.html">10. 1 前言</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_ForestRain/02_PM/AN03_RT-Thread_PM2.0_nRF52xx_PM_Driver.html#rt-thread-pm">11. 2 RT-Thread PM组件简介</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_ForestRain/02_PM/AN03_RT-Thread_PM2.0_nRF52xx_PM_Driver.html#nrf52-pm">12. 3 nRF52系列 PM适配</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_ForestRain/02_PM/AN03_RT-Thread_PM2.0_nRF52xx_PM_Driver.html#id11">13. 4 nRF52系列 PM使用</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_ForestRain/02_PM/AN03_RT-Thread_PM2.0_nRF52xx_PM_Driver.html#id14">14. 5 测试示例</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="13_xiangxistu/index.html">NORDIC:xiangxistu</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="13_xiangxistu/01_introduce/01_introduce.html">1. 简单自我介绍</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="14_bobwenstudy/index.html">NORDIC:bobwenstudy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="14_bobwenstudy/01_introduce/index.html">01_introduce</a></li>
-<li class="toctree-l2"><a class="reference internal" href="14_bobwenstudy/02_zephyr_polling/index.html">02_zephyr_polling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="14_bobwenstudy/03_bluetooth/index.html">03_bluetooth</a></li>
-<li class="toctree-l2"><a class="reference internal" href="14_bobwenstudy/04_markdown/index.html">04_markdown</a></li>
-<li class="toctree-l2"><a class="reference internal" href="14_bobwenstudy/05_compile/index.html">05_compile</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="16_ColeStudy/index.html">NORDIC:ColeStudy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="16_ColeStudy/01_introduce/01_introduce.html">1. 简单自我介绍</a></li>
-</ul>
-</li>
-</ul>
+<div id="search-result"></div>
+
 </div>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="此标题的永久链接"></a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">索引</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">模块索引</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">搜索页面</span></a></p></li>
-</ul>
-</section>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
-        <a href="ble/index.html" class="btn btn-neutral float-right" title="BLE STACK篇" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://supperthomas.github.io/posts/3349906663/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Thomas Li">
+      <meta itemprop="description" content="self">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Thomas">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/3349906663/" class="post-title-link" itemprop="url">03-29[RTT][ENV][PACKAGE]如何制作软件包</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-29 10:39:00" itemprop="dateCreated datePublished" datetime="2020-03-29T10:39:00+00:00">2020-03-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-05 02:40:03" itemprop="dateModified" datetime="2020-06-05T02:40:03+00:00">2020-06-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RTOS/" itemprop="url" rel="index"><span itemprop="name">RTOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-官方资料"><a href="#1-官方资料" class="headerlink" title="1.官方资料"></a>1.官方资料</h2><p>首先看下官方文档：</p>
+<blockquote>
+<blockquote>
+<p><a href="https://www.rt-thread.org/document/site/development-guide/package/package/" target="_blank" rel="noopener">https://www.rt-thread.org/document/site/development-guide/package/package/</a></p>
+</blockquote>
+</blockquote>
+<ol start="2">
+<li>再看下官方视频：</li>
+</ol>
+<blockquote>
+<blockquote>
+<p><a href="https://www.bilibili.com/video/av79943543?p=1" target="_blank" rel="noopener">https://www.bilibili.com/video/av79943543?p=1</a></p>
+</blockquote>
+</blockquote>
+<hr>
+<p>看完这个，基本上差不多会知道如何做一个软件包了。</p>
+<p><img src="/image/2020_03_29_01_0.png" alt="upload successful"></p>
+<p>pkgs –wizard<br>新版本会让你输入github地址<br>操作完成之后。</p>
+<p>会生成一个文件夹，两个文件</p>
+<p><img src="/image/2020_03_29_01_1.png" alt="filename already exists, renamed"></p>
+<h4 id="Kconfig"><a href="#Kconfig" class="headerlink" title="Kconfig"></a>Kconfig</h4><p>这个主要和平时操作menuconfig中的选项相关</p>
+<h4 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h4><p>这个主要跟你这个软件包的git地址相关。</p>
+<p>简单来说软件包这就算做好了。<br>至于里面内容需要分几个东西来讲：<br>分别是<br><code>pkgs</code><br><code>menuconfig</code><br><code>scons</code></p>
+<h3 id="1-pkgs"><a href="#1-pkgs" class="headerlink" title="1.pkgs"></a>1.pkgs</h3><p>这个工具是专门管理软件包的。<br>有以下几个常用命令：</p>
+<h4 id="pkgs-update"><a href="#pkgs-update" class="headerlink" title="pkgs --update"></a><code>pkgs --update</code></h4><p>这个负责升级，其实本质上就是git clone，从git上下载代码；<br>可以看下package.json文件：</p>
+<p><img src="/image/2020_03_29_01_2.png" alt="filename already exists, renamed"><br>这张图应该很清晰了。<br>就是你的每个版本对应的git 地址填对了<br>你的<code>pkgs --update</code> 的时候，更新就会从这个git地址下载你的package包的文件（如果某个package被选中的话）。</p>
+<h4 id="pkgs-upgrade"><a href="#pkgs-upgrade" class="headerlink" title="pkgs --upgrade"></a><code>pkgs --upgrade</code></h4><p>这个用的比较少，</p>
+<p><img src="/image/2020_03_29_01_3.png" alt="filename already exists, renamed"></p>
+<p>从两个地址，</p>
+<p><code>package:
+https://github.com/RT-Thread/packages</code></p>
+<p>这个下载到哪里了呢？<br>我们打开env目录：</p>
+<p><code>env_released_1.2.0\env\packages\packages</code></p>
+<p>就是这里，其实本质上，就是更新packages的目录</p>
+<p><code>env:
+https://github.com/RT-Thread/env</code></p>
+<p>本质上也是从git上下载，只是路径不一样。</p>
+<p>这个稍微找一会也能找到：</p>
+<p><code>env_released_1.2.0\env\tools\scripts</code></p>
+<p>大家可以打开github和文件夹目录比较下，<br>应该都是相同的。</p>
+<p><img src="/image/2020_03_29_01_4.png" alt="filename already exists, renamed"></p>
+<p><img src="/image/2020_03_29_01_5.png" alt="filename already exists, renamed"></p>
+<h3 id="2-menuconfig"><a href="#2-menuconfig" class="headerlink" title="2. menuconfig"></a>2. menuconfig</h3><p>这个是linux里面常用的配置界面，嵌入式RTOS能用上menuconfig的,我只见过RTT这样用过，其他的还么见过：</p>
+<p><img src="/image/2020_03_29_01_7.png" alt="filename already exists, renamed"></p>
+<p>不知道有没有人稍微了解下这几行命令是如何来显示的。</p>
+<p>其实就是目录下面的<code>Kconfig</code> 文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">mainmenu &quot;RT-Thread Configuration&quot;</span><br><span class="line"></span><br><span class="line">config BSP_DIR</span><br><span class="line">    string</span><br><span class="line">    option env&#x3D;&quot;BSP_ROOT&quot;</span><br><span class="line">    default &quot;.&quot;</span><br><span class="line"></span><br><span class="line">config RTT_DIR</span><br><span class="line">    string</span><br><span class="line">    option env&#x3D;&quot;RTT_ROOT&quot;</span><br><span class="line">    default &quot;..&#x2F;..&#x2F;..&quot;</span><br><span class="line"></span><br><span class="line">config PKGS_DIR</span><br><span class="line">    string</span><br><span class="line">    option env&#x3D;&quot;PKGS_ROOT&quot;</span><br><span class="line">    default &quot;packages&quot;</span><br><span class="line"> </span><br><span class="line">source &quot;$RTT_DIR&#x2F;Kconfig&quot;</span><br><span class="line">source &quot;$PKGS_DIR&#x2F;Kconfig&quot;</span><br><span class="line">source &quot;..&#x2F;libraries&#x2F;Kconfig&quot;</span><br><span class="line">source &quot;board&#x2F;Kconfig&quot;</span><br></pre></td></tr></table></figure>
+
+<p>其实这个里面内容比较多，就不展开了，我们现在要做的是软件包，可以选择在某个package中menuconfig。<br>比如你可以进到目录<code>env_released_1.2.0\env\packages\packages\peripherals\sensors\dht11</code></p>
+<p>menuconfig一下：</p>
+<p><img src="/image/2020_03_29_01_8.png" alt="filename already exists, renamed"></p>
+<p>看到这个应该能明白大概意思了。<br>bool类型，只能选y(yes) 和n（no）<br>后面跟的是显示的内容</p>
+<p>menuconfig代表是一个menu配置 后面跟的是<code>PKG_USING_DHT11</code><br>这个是什么呢？这个其实和下一讲的scons相关，<br>你可以暂且认为这个就代表这个选项的一个变量，就是敲<code>y</code>之后，这个变量值PKG_USING_DHT11就变成y了（可以理解成bool类型中的true）。</p>
+<p>子菜单：</p>
+<p><img src="/image/2020_03_29_01_9.png" alt="filename already exists, renamed"></p>
+<p>仔细想下刚才的操作，是不是只能点y之后才能进入到子菜单。<br>其实就是前面有个</p>
+<p><code>if PKG_USING_DHT11</code><br>判断<br>后面<br>Kconfig语法可以看：</p>
+<blockquote>
+<blockquote>
+<p><a href="https://www.jianshu.com/p/aba588d380c2" target="_blank" rel="noopener">kconfig语法整理</a></p>
+</blockquote>
+</blockquote>
+<p>基本上会Kconfig语法，你就知道menuconfig该怎么改了，唯一要记住的是刚才那个变量。</p>
+<p>配置完之后，系统都会保存到.config文件：<br>这个是最重要的，前面无论你怎么配置，最后都影响的是.config文件。<br>你也可以直接改.config文件。</p>
+<p><img src="/image/2020_03_29_01_10.png" alt="filename already exists, renamed"></p>
+<p>这里你可以看到配置改了，所以有时候，编译linux内核的时候，只要.config文件就可以编译成功了，就是这个道理。<br>保存之后，<br>我们用命令pkgs –update，就会看到package中会多出来一个文件，就是你的软件包。</p>
+<p>//小测问：<br>github 我们国内clone的时候，都很慢，为啥env下载的时候很快？</p>
+<h3 id="3-scons"><a href="#3-scons" class="headerlink" title="3.scons"></a>3.scons</h3><p>在做软件包前面基本已经差不多了。接下来讲的scons，其实是和编译相关的，你可以理解为，scons就是make， scons里面的<code>SConscript</code> <code>SConstruct</code>就是里面的makefile文件，你软件包需要写好写对Scons的脚本，才能编译进去，或者生成的project生成进去。</p>
+<p>这个时候就看官方文档：</p>
+<p><a href="https://www.rt-thread.org/document/site/programming-manual/scons/scons/" target="_blank" rel="noopener">Scons 构建工具</a></p>
+<p>官方文档已经很详细很详细了。学完，你就会用你自己的软件包。</p>
+<p>理解这些，基本上你应该知道自己接下来该怎么做了：<br>基本思路是这样的：</p>
+<ol>
+<li>先做一个软件包，把名字起好，对应到相应的目录，比如tools。</li>
+<li>github上搞一个仓库（gitee也可以，只要路径填对即可），将你的软件包中要放的.c .h等代码放入到git上。</li>
+<li>将github地址放到你的package.json中</li>
+<li>把这个软件包放到env中package对应的目录中，（暂时）</li>
+<li>这个时候你在你的bsp里面敲menuconfig，会发现，你的软件包并没有出现在目录中。</li>
+<li>根据Kconfig语法，知道是在你的tools目录下面也有个Kconfig，需要把目录加进去。</li>
+<li>menuconfig里面配置选好，pkgs –update</li>
+<li>这个时候，检查你的包里面的东西的完整性就好。</li>
+<li>根据scons语法和Kconfig语法，写你的软件包中的scons语法，如果是配置的话，要放到env中的package   Kconfig修改。</li>
+<li>基本上把你的目录提交到官方的package收入即可。</li>
+</ol>
+<p>`</p>
+
+      
     </div>
 
-  <hr/>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
 
-  <div role="contentinfo">
-    <p>&#169; 版权所有 2020, apache.</p>
-  </div>
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://supperthomas.github.io/posts/3349866602/">
 
-  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
-    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
-   
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Thomas Li">
+      <meta itemprop="description" content="self">
+    </span>
 
-</footer>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Thomas">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/3349866602/" class="post-title-link" itemprop="url">03-14 [github][快速clone代码]代码优化神器</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-14 10:58:35" itemprop="dateCreated datePublished" datetime="2020-03-14T10:58:35+00:00">2020-03-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-05 02:40:03" itemprop="dateModified" datetime="2020-06-05T02:40:03+00:00">2020-06-05</time>
+              </span>
+
+          
+
         </div>
-      </div>
-    </section>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li>用gitee下载</li>
+</ol>
+<p><img src="/images/pasted-15.png" alt="filename already exists, renamed"></p>
+<p>选择github地址，之后，就可以用gitee 下载源码，<br>之后改下remote用下面的命令，或者直接修改.git/config里面的文件</p>
+<p>　1.git remote 不带参数，列出已经存在的远程分支</p>
+<p>　2.git remote -v 列出详细信息，在每一个名字后面列出其远程url，此时， -v 选项(译注:此为 –verbose 的简写,取首字母),显示对应的克隆地址。</p>
+<p>  3.git remote add url   添加一个远程仓库</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://supperthomas.github.io/posts/4088415410/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Thomas Li">
+      <meta itemprop="description" content="self">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Thomas">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/4088415410/" class="post-title-link" itemprop="url">2020-03-08 如何用ssr科学上网</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-08 17:41:01" itemprop="dateCreated datePublished" datetime="2020-03-08T17:41:01+00:00">2020-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-05 02:40:03" itemprop="dateModified" datetime="2020-06-05T02:40:03+00:00">2020-06-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="打开exe可执行文件"><a href="#打开exe可执行文件" class="headerlink" title="打开exe可执行文件"></a>打开exe可执行文件</h2><p><img src="/images/pasted-12.png" alt="filename already exists, renamed"></p>
+<h2 id="双击右下角小飞机"><a href="#双击右下角小飞机" class="headerlink" title="双击右下角小飞机"></a>双击右下角小飞机</h2><p><img src="/images/pasted-13.png" alt="filename already exists, renamed"></p>
+<h2 id="根据配置填写"><a href="#根据配置填写" class="headerlink" title="根据配置填写"></a>根据配置填写</h2><p><img src="/images/pasted-14.png" alt="filename already exists, renamed"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://supperthomas.github.io/posts/1480581709/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Thomas Li">
+      <meta itemprop="description" content="self">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Thomas">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/1480581709/" class="post-title-link" itemprop="url">vultra</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-08 17:34:49" itemprop="dateCreated datePublished" datetime="2020-03-08T17:34:49+00:00">2020-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-05 02:40:03" itemprop="dateModified" datetime="2020-06-05T02:40:03+00:00">2020-06-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>wget <a href="https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/ssr.sh" target="_blank" rel="noopener">https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/ssr.sh</a></p>
+<p><a href="http://test-ipv6.com/" target="_blank" rel="noopener">http://test-ipv6.com/</a> </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://supperthomas.github.io/posts/2563783190/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Thomas Li">
+      <meta itemprop="description" content="self">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Thomas">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/2563783190/" class="post-title-link" itemprop="url">CubeMx default config [CUBEMX]</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-07 19:51:00" itemprop="dateCreated datePublished" datetime="2020-03-07T19:51:00+00:00">2020-03-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-05 02:40:03" itemprop="dateModified" datetime="2020-06-05T02:40:03+00:00">2020-06-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>安装目录下修改</p>
+<p>STMicroelectronics\STM32Cube\STM32CubeMX\db\plugins\boardmanager\boards</p>
+<p>B43_Nucleo_NUCLEO-L496ZG_STM32L496ZG_Board_AllConfig.ioc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br></pre></td><td class="code"><pre><span class="line">#MicroXplorer Configuration settings - do not modify</span><br><span class="line">File.Version&#x3D;6</span><br><span class="line">GPIO.groupedBy&#x3D;Group By Peripherals</span><br><span class="line">KeepUserPlacement&#x3D;false</span><br><span class="line">LPUART1.BaudRate&#x3D;115200</span><br><span class="line">LPUART1.IPParameters&#x3D;BaudRate,WordLength</span><br><span class="line">LPUART1.WordLength&#x3D;UART_WORDLENGTH_8B</span><br><span class="line">Mcu.Family&#x3D;STM32L4</span><br><span class="line">Mcu.IP0&#x3D;LPUART1</span><br><span class="line">Mcu.IP1&#x3D;NVIC</span><br><span class="line">Mcu.IP2&#x3D;RCC</span><br><span class="line">Mcu.IP3&#x3D;SYS</span><br><span class="line">Mcu.IP4&#x3D;USB_OTG_FS</span><br><span class="line">Mcu.IPNb&#x3D;5</span><br><span class="line">Mcu.Name&#x3D;STM32L496Z(E-G)Tx</span><br><span class="line">Mcu.Package&#x3D;LQFP144</span><br><span class="line">Mcu.Pin0&#x3D;PC13</span><br><span class="line">Mcu.Pin1&#x3D;PC14-OSC32_IN (PC14)</span><br><span class="line">Mcu.Pin10&#x3D;PA9</span><br><span class="line">Mcu.Pin11&#x3D;PA10</span><br><span class="line">Mcu.Pin12&#x3D;PA11</span><br><span class="line">Mcu.Pin13&#x3D;PA12</span><br><span class="line">Mcu.Pin14&#x3D;PA13 (JTMS&#x2F;SWDIO)</span><br><span class="line">Mcu.Pin15&#x3D;PA14 (JTCK&#x2F;SWCLK)</span><br><span class="line">Mcu.Pin16&#x3D;PB3 (JTDO&#x2F;TRACESWO)</span><br><span class="line">Mcu.Pin17&#x3D;PB7</span><br><span class="line">Mcu.Pin18&#x3D;VP_SYS_VS_tim1</span><br><span class="line">Mcu.Pin2&#x3D;PC15-OSC32_OUT (PC15)</span><br><span class="line">Mcu.Pin3&#x3D;PH1-OSC_OUT (PH1)</span><br><span class="line">Mcu.Pin4&#x3D;PB14</span><br><span class="line">Mcu.Pin5&#x3D;PG5</span><br><span class="line">Mcu.Pin6&#x3D;PG6</span><br><span class="line">Mcu.Pin7&#x3D;PG7</span><br><span class="line">Mcu.Pin8&#x3D;PG8</span><br><span class="line">Mcu.Pin9&#x3D;PA8</span><br><span class="line">Mcu.PinsNb&#x3D;19</span><br><span class="line">Mcu.ThirdPartyNb&#x3D;0</span><br><span class="line">Mcu.UserConstants&#x3D;</span><br><span class="line">Mcu.UserName&#x3D;STM32L496ZGTx</span><br><span class="line">MxCube.Version&#x3D;5.5.0</span><br><span class="line">MxDb.Version&#x3D;DB.5.0.50</span><br><span class="line">NVIC.BusFault_IRQn&#x3D;true\:0\:0\:false\:false\:true\:true\:false</span><br><span class="line">NVIC.DebugMonitor_IRQn&#x3D;true\:0\:0\:false\:false\:true\:true\:false</span><br><span class="line">NVIC.ForceEnableDMAVector&#x3D;true</span><br><span class="line">NVIC.HardFault_IRQn&#x3D;true\:0\:0\:false\:false\:true\:true\:false</span><br><span class="line">NVIC.MemoryManagement_IRQn&#x3D;true\:0\:0\:false\:false\:true\:true\:false</span><br><span class="line">NVIC.NonMaskableInt_IRQn&#x3D;true\:0\:0\:false\:false\:true\:true\:false</span><br><span class="line">NVIC.PendSV_IRQn&#x3D;true\:0\:0\:false\:false\:true\:true\:false</span><br><span class="line">NVIC.PriorityGroup&#x3D;NVIC_PRIORITYGROUP_4</span><br><span class="line">NVIC.SVCall_IRQn&#x3D;true\:0\:0\:false\:false\:true\:true\:false</span><br><span class="line">NVIC.SysTick_IRQn&#x3D;true\:0\:0\:false\:false\:true\:true\:true</span><br><span class="line">NVIC.TIM1_UP_TIM16_IRQn&#x3D;true\:0\:0\:false\:false\:true\:false\:true</span><br><span class="line">NVIC.TimeBase&#x3D;TIM1_UP_TIM16_IRQn</span><br><span class="line">NVIC.TimeBaseIP&#x3D;TIM1</span><br><span class="line">NVIC.UsageFault_IRQn&#x3D;true\:0\:0\:false\:false\:true\:true\:false</span><br><span class="line">PA10.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PA10.GPIO_Label&#x3D;USB_ID</span><br><span class="line">PA10.Locked&#x3D;true</span><br><span class="line">PA10.Signal&#x3D;USB_OTG_FS_ID</span><br><span class="line">PA11.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PA11.GPIO_Label&#x3D;USB_DM</span><br><span class="line">PA11.Locked&#x3D;true</span><br><span class="line">PA11.Mode&#x3D;Device_Only</span><br><span class="line">PA11.Signal&#x3D;USB_OTG_FS_DM</span><br><span class="line">PA12.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PA12.GPIO_Label&#x3D;USB_DP</span><br><span class="line">PA12.Locked&#x3D;true</span><br><span class="line">PA12.Mode&#x3D;Device_Only</span><br><span class="line">PA12.Signal&#x3D;USB_OTG_FS_DP</span><br><span class="line">PA13\ (JTMS&#x2F;SWDIO).GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PA13\ (JTMS&#x2F;SWDIO).GPIO_Label&#x3D;TMS</span><br><span class="line">PA13\ (JTMS&#x2F;SWDIO).Locked&#x3D;true</span><br><span class="line">PA13\ (JTMS&#x2F;SWDIO).Mode&#x3D;Trace_Asynchronous_SW</span><br><span class="line">PA13\ (JTMS&#x2F;SWDIO).Signal&#x3D;SYS_JTMS-SWDIO</span><br><span class="line">PA14\ (JTCK&#x2F;SWCLK).GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PA14\ (JTCK&#x2F;SWCLK).GPIO_Label&#x3D;TCK</span><br><span class="line">PA14\ (JTCK&#x2F;SWCLK).Locked&#x3D;true</span><br><span class="line">PA14\ (JTCK&#x2F;SWCLK).Mode&#x3D;Trace_Asynchronous_SW</span><br><span class="line">PA14\ (JTCK&#x2F;SWCLK).Signal&#x3D;SYS_JTCK-SWCLK</span><br><span class="line">PA8.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PA8.GPIO_Label&#x3D;USB_SOF [TP1]</span><br><span class="line">PA8.Locked&#x3D;true</span><br><span class="line">PA8.Mode&#x3D;Activate_SOF_FS</span><br><span class="line">PA8.Signal&#x3D;USB_OTG_FS_SOF</span><br><span class="line">PA9.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PA9.GPIO_Label&#x3D;USB_VBUS</span><br><span class="line">PA9.Locked&#x3D;true</span><br><span class="line">PA9.Mode&#x3D;Activate_VBUS</span><br><span class="line">PA9.Signal&#x3D;USB_OTG_FS_VBUS</span><br><span class="line">PB14.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PB14.GPIO_Label&#x3D;LD3 [Red]</span><br><span class="line">PB14.Locked&#x3D;true</span><br><span class="line">PB14.Signal&#x3D;GPIO_Output</span><br><span class="line">PB3\ (JTDO&#x2F;TRACESWO).GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PB3\ (JTDO&#x2F;TRACESWO).GPIO_Label&#x3D;SWO</span><br><span class="line">PB3\ (JTDO&#x2F;TRACESWO).Locked&#x3D;true</span><br><span class="line">PB3\ (JTDO&#x2F;TRACESWO).Mode&#x3D;Trace_Asynchronous_SW</span><br><span class="line">PB3\ (JTDO&#x2F;TRACESWO).Signal&#x3D;SYS_JTDO-SWO</span><br><span class="line">PB7.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PB7.GPIO_Label&#x3D;LD2 [Blue]</span><br><span class="line">PB7.Locked&#x3D;true</span><br><span class="line">PB7.Signal&#x3D;GPIO_Output</span><br><span class="line">PC13.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PC13.GPIO_Label&#x3D;B1</span><br><span class="line">PC13.Locked&#x3D;true</span><br><span class="line">PC13.Signal&#x3D;GPXTI13</span><br><span class="line">PC14-OSC32_IN\ (PC14).Locked&#x3D;true</span><br><span class="line">PC14-OSC32_IN\ (PC14).Mode&#x3D;LSE-External-Oscillator</span><br><span class="line">PC14-OSC32_IN\ (PC14).Signal&#x3D;RCC_OSC32_IN</span><br><span class="line">PC15-OSC32_OUT\ (PC15).Locked&#x3D;true</span><br><span class="line">PC15-OSC32_OUT\ (PC15).Mode&#x3D;LSE-External-Oscillator</span><br><span class="line">PC15-OSC32_OUT\ (PC15).Signal&#x3D;RCC_OSC32_OUT</span><br><span class="line">PCC.Checker&#x3D;true</span><br><span class="line">PCC.Line&#x3D;STM32L4x6</span><br><span class="line">PCC.MCU&#x3D;STM32L496Z(E-G)Tx</span><br><span class="line">PCC.PartNumber&#x3D;STM32L496ZGTx</span><br><span class="line">PCC.Seq0&#x3D;0</span><br><span class="line">PCC.Series&#x3D;STM32L4</span><br><span class="line">PCC.Temperature&#x3D;25</span><br><span class="line">PCC.Vdd&#x3D;3.0</span><br><span class="line">PG5.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PG5.GPIO_Label&#x3D;USB_OverCurrent [STMPS2151STR_FAULT]</span><br><span class="line">PG5.Locked&#x3D;true</span><br><span class="line">PG5.Signal&#x3D;GPIO_Input</span><br><span class="line">PG6.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PG6.GPIO_Label&#x3D;USB_PowerSwitchOn [STMPS2151STR_EN]</span><br><span class="line">PG6.Locked&#x3D;true</span><br><span class="line">PG6.Signal&#x3D;GPIO_Output</span><br><span class="line">PG7.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PG7.GPIO_Label&#x3D;STLK_RX [STM32F103CBT6_PA3]</span><br><span class="line">PG7.Locked&#x3D;true</span><br><span class="line">PG7.Mode&#x3D;Asynchronous</span><br><span class="line">PG7.Signal&#x3D;LPUART1_TX</span><br><span class="line">PG8.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PG8.GPIO_Label&#x3D;STLK_TX [STM32F103CBT6_PA2]</span><br><span class="line">PG8.Locked&#x3D;true</span><br><span class="line">PG8.Mode&#x3D;Asynchronous</span><br><span class="line">PG8.Signal&#x3D;LPUART1_RX</span><br><span class="line">PH1-OSC_OUT\ (PH1).Locked&#x3D;true</span><br><span class="line">PH1-OSC_OUT\ (PH1).Signal&#x3D;RCC_OSC_OUT</span><br><span class="line">PinOutPanel.RotationAngle&#x3D;0</span><br><span class="line">ProjectManager.AskForMigrate&#x3D;true</span><br><span class="line">ProjectManager.BackupPrevious&#x3D;false</span><br><span class="line">ProjectManager.CompilerOptimize&#x3D;6</span><br><span class="line">ProjectManager.ComputerToolchain&#x3D;false</span><br><span class="line">ProjectManager.CoupleFile&#x3D;true</span><br><span class="line">ProjectManager.CustomerFirmwarePackage&#x3D;</span><br><span class="line">ProjectManager.DefaultFWLocation&#x3D;true</span><br><span class="line">ProjectManager.DeletePrevious&#x3D;true</span><br><span class="line">ProjectManager.DeviceId&#x3D;STM32L496ZGTx</span><br><span class="line">ProjectManager.FirmwarePackage&#x3D;STM32Cube FW_L4 V1.15.0</span><br><span class="line">ProjectManager.FreePins&#x3D;false</span><br><span class="line">ProjectManager.HalAssertFull&#x3D;false</span><br><span class="line">ProjectManager.HeapSize&#x3D;0x1000</span><br><span class="line">ProjectManager.KeepUserCode&#x3D;true</span><br><span class="line">ProjectManager.LastFirmware&#x3D;true</span><br><span class="line">ProjectManager.LibraryCopy&#x3D;1</span><br><span class="line">ProjectManager.MainLocation&#x3D;Src</span><br><span class="line">ProjectManager.NoMain&#x3D;false</span><br><span class="line">ProjectManager.PreviousToolchain&#x3D;</span><br><span class="line">ProjectManager.ProjectBuild&#x3D;false</span><br><span class="line">ProjectManager.ProjectFileName&#x3D;B43_Nucleo_NUCLEO-L496ZG_STM32L496ZG_Board_AllConfig.ioc</span><br><span class="line">ProjectManager.ProjectName&#x3D;B43_Nucleo_NUCLEO-L496ZG_STM32L496ZG_Board_AllConfig</span><br><span class="line">ProjectManager.StackSize&#x3D;0x1000</span><br><span class="line">ProjectManager.TargetToolchain&#x3D;MDK-ARM V5</span><br><span class="line">ProjectManager.ToolChainLocation&#x3D;</span><br><span class="line">ProjectManager.UnderRoot&#x3D;false</span><br><span class="line">ProjectManager.functionlistsort&#x3D;1-MX_GPIO_Init-GPIO-false-HAL-true,2-SystemClock_Config-RCC-false-HAL-false,3-MX_LPUART1_UART_Init-LPUART1-false-HAL-true,4-MX_USB_OTG_FS_PCD_Init-USB_OTG_FS-false-HAL-true</span><br><span class="line">RCC.48MHZClocksFreq_Value&#x3D;24000000</span><br><span class="line">RCC.ADC12outputFreq_Value&#x3D;72000000</span><br><span class="line">RCC.ADC34outputFreq_Value&#x3D;72000000</span><br><span class="line">RCC.ADCFreq_Value&#x3D;48000000</span><br><span class="line">RCC.AHBFreq_Value&#x3D;80000000</span><br><span class="line">RCC.APB1CLKDivider&#x3D;RCC_HCLK_DIV2</span><br><span class="line">RCC.APB1Freq_Value&#x3D;40000000</span><br><span class="line">RCC.APB1TimFreq_Value&#x3D;80000000</span><br><span class="line">RCC.APB2Freq_Value&#x3D;80000000</span><br><span class="line">RCC.APB2TimFreq_Value&#x3D;80000000</span><br><span class="line">RCC.CortexFreq_Value&#x3D;80000000</span><br><span class="line">RCC.DFSDM2Freq_Value&#x3D;16000000</span><br><span class="line">RCC.DFSDMAudioFreq_Value&#x3D;96000000</span><br><span class="line">RCC.DFSDMFreq_Value&#x3D;40000000</span><br><span class="line">RCC.EthernetFreq_Value&#x3D;8000000</span><br><span class="line">RCC.FCLKCortexFreq_Value&#x3D;80000000</span><br><span class="line">RCC.FMPI2C1Freq_Value&#x3D;8000000</span><br><span class="line">RCC.FamilyName&#x3D;M</span><br><span class="line">RCC.HCLKFreq_Value&#x3D;80000000</span><br><span class="line">RCC.HSE_VALUE&#x3D;8000000</span><br><span class="line">RCC.HSI48_VALUE&#x3D;48000000</span><br><span class="line">RCC.HSI_VALUE&#x3D;16000000</span><br><span class="line">RCC.I2C1Freq_Value&#x3D;40000000</span><br><span class="line">RCC.I2C2Freq_Value&#x3D;40000000</span><br><span class="line">RCC.I2C3Freq_Value&#x3D;40000000</span><br><span class="line">RCC.I2C4Freq_Value&#x3D;40000000</span><br><span class="line">RCC.I2S1Freq_Value&#x3D;96000000</span><br><span class="line">RCC.I2S2Freq_Value&#x3D;96000000</span><br><span class="line">RCC.I2SClocksFreq_Value&#x3D;48000000</span><br><span class="line">RCC.IPParameters&#x3D;48MHZClocksFreq_Value,ADC12outputFreq_Value,ADC34outputFreq_Value,ADCFreq_Value,AHBFreq_Value,APB1CLKDivider,APB1Freq_Value,APB1TimFreq_Value,APB2Freq_Value,APB2TimFreq_Value,CortexFreq_Value,DFSDM2Freq_Value,DFSDMAudioFreq_Value,DFSDMFreq_Value,EthernetFreq_Value,FCLKCortexFreq_Value,FMPI2C1Freq_Value,FamilyName,HCLKFreq_Value,HSE_VALUE,HSI48_VALUE,HSI_VALUE,I2C1Freq_Value,I2C2Freq_Value,I2C3Freq_Value,I2C4Freq_Value,I2S1Freq_Value,I2S2Freq_Value,I2SClocksFreq_Value,LPTIM1Freq_Value,LPTIM2Freq_Value,LPTimerFreq_Value,LPUART1Freq_Value,LSCOPinFreq_Value,LSI_VALUE,MCO1PinFreq_Value,MCO2PinFreq_Value,MCOFreq_Value,MSI_VALUE,PLLCLKFreq_Value,PLLI2SPCLKFreq_Value,PLLI2SQCLKFreq_Value,PLLI2SQoutputFreq_Value,PLLI2SRCLKFreq_Value,PLLI2SoutputFreq_Value,PLLMCOFreq_Value,PLLMUL,PLLN,PLLPoutputFreq_Value,PLLQCLKFreq_Value,PLLQoutputFreq_Value,PLLRCLKFreq_Value,PLLRoutputFreq_Value,PLLSAI1N,PLLSAI1PoutputFreq_Value,PLLSAI1QoutputFreq_Value,PLLSAI1RoutputFreq_Value,PLLSAI2PoutputFreq_Value,PLLSAI2RoutputFreq_Value,PRESCALERUSB,PWRFreq_Value,RNGFreq_Value,RTCFreq_Value,RTCHSEDivFreq_Value,SAI1AFreq_Value,SAI1BFreq_Value,SAI1Freq_Value,SAI2Freq_Value,SDIOFreq_Value,SDMMCFreq_Value,SWPMI1Freq_Value,SYSCLKFreq_VALUE,SYSCLKSource,SYSCLKSourceVirtual,TIM15Freq_Value,TIM16Freq_Value,TIM17Freq_Value,TIM1Freq_Value,TIM20Freq_Value,TIM2Freq_Value,TIM3Freq_Value,TIM8Freq_Value,UART4Freq_Value,UART5Freq_Value,USART1Freq_Value,USART2Freq_Value,USART3Freq_Value,USBFreq_Value,VCOI2SInputFreq_Value,VCOI2SOutputFreq_Value,VCOInputFreq_Value,VCOInputMFreq_Value,VCOOutput2Freq_Value,VCOOutputFreq_Value,VCOSAI1OutputFreq_Value,VCOSAI2OutputFreq_Value,VcooutputI2S,WatchDogFreq_Value</span><br><span class="line">RCC.LPTIM1Freq_Value&#x3D;40000000</span><br><span class="line">RCC.LPTIM2Freq_Value&#x3D;40000000</span><br><span class="line">RCC.LPTimerFreq_Value&#x3D;8000000</span><br><span class="line">RCC.LPUART1Freq_Value&#x3D;40000000</span><br><span class="line">RCC.LSCOPinFreq_Value&#x3D;32000</span><br><span class="line">RCC.LSI_VALUE&#x3D;32000</span><br><span class="line">RCC.MCO1PinFreq_Value&#x3D;80000000</span><br><span class="line">RCC.MCO2PinFreq_Value&#x3D;16000000</span><br><span class="line">RCC.MCOFreq_Value&#x3D;72000000</span><br><span class="line">RCC.MSI_VALUE&#x3D;4000000</span><br><span class="line">RCC.PLLCLKFreq_Value&#x3D;96000000</span><br><span class="line">RCC.PLLI2SPCLKFreq_Value&#x3D;48000000</span><br><span class="line">RCC.PLLI2SQCLKFreq_Value&#x3D;96000000</span><br><span class="line">RCC.PLLI2SQoutputFreq_Value&#x3D;96000000</span><br><span class="line">RCC.PLLI2SRCLKFreq_Value&#x3D;96000000</span><br><span class="line">RCC.PLLI2SoutputFreq_Value&#x3D;48000000</span><br><span class="line">RCC.PLLMCOFreq_Value&#x3D;72000000</span><br><span class="line">RCC.PLLMUL&#x3D;RCC_PLL_MUL9</span><br><span class="line">RCC.PLLN&#x3D;40</span><br><span class="line">RCC.PLLPoutputFreq_Value&#x3D;80000000</span><br><span class="line">RCC.PLLQCLKFreq_Value&#x3D;96000000</span><br><span class="line">RCC.PLLQoutputFreq_Value&#x3D;80000000</span><br><span class="line">RCC.PLLRCLKFreq_Value&#x3D;80000000</span><br><span class="line">RCC.PLLRoutputFreq_Value&#x3D;96000000</span><br><span class="line">RCC.PLLSAI1N&#x3D;24</span><br><span class="line">RCC.PLLSAI1PoutputFreq_Value&#x3D;48000000</span><br><span class="line">RCC.PLLSAI1QoutputFreq_Value&#x3D;48000000</span><br><span class="line">RCC.PLLSAI1RoutputFreq_Value&#x3D;48000000</span><br><span class="line">RCC.PLLSAI2PoutputFreq_Value&#x3D;16000000</span><br><span class="line">RCC.PLLSAI2RoutputFreq_Value&#x3D;16000000</span><br><span class="line">RCC.PRESCALERUSB&#x3D;RCC_USBCLKSOURCE_PLL_DIV1_5</span><br><span class="line">RCC.PWRFreq_Value&#x3D;80000000</span><br><span class="line">RCC.RNGFreq_Value&#x3D;48000000</span><br><span class="line">RCC.RTCFreq_Value&#x3D;32000</span><br><span class="line">RCC.RTCHSEDivFreq_Value&#x3D;4000000</span><br><span class="line">RCC.SAI1AFreq_Value&#x3D;16000000</span><br><span class="line">RCC.SAI1BFreq_Value&#x3D;16000000</span><br><span class="line">RCC.SAI1Freq_Value&#x3D;48000000</span><br><span class="line">RCC.SAI2Freq_Value&#x3D;48000000</span><br><span class="line">RCC.SDIOFreq_Value&#x3D;96000000</span><br><span class="line">RCC.SDMMCFreq_Value&#x3D;48000000</span><br><span class="line">RCC.SWPMI1Freq_Value&#x3D;40000000</span><br><span class="line">RCC.SYSCLKFreq_VALUE&#x3D;80000000</span><br><span class="line">RCC.SYSCLKSource&#x3D;RCC_SYSCLKSOURCE_PLLCLK</span><br><span class="line">RCC.SYSCLKSourceVirtual&#x3D;RCC_SYSCLKSOURCE_PLLCLK</span><br><span class="line">RCC.TIM15Freq_Value&#x3D;72000000</span><br><span class="line">RCC.TIM16Freq_Value&#x3D;72000000</span><br><span class="line">RCC.TIM17Freq_Value&#x3D;72000000</span><br><span class="line">RCC.TIM1Freq_Value&#x3D;72000000</span><br><span class="line">RCC.TIM20Freq_Value&#x3D;72000000</span><br><span class="line">RCC.TIM2Freq_Value&#x3D;72000000</span><br><span class="line">RCC.TIM3Freq_Value&#x3D;72000000</span><br><span class="line">RCC.TIM8Freq_Value&#x3D;72000000</span><br><span class="line">RCC.UART4Freq_Value&#x3D;40000000</span><br><span class="line">RCC.UART5Freq_Value&#x3D;40000000</span><br><span class="line">RCC.USART1Freq_Value&#x3D;80000000</span><br><span class="line">RCC.USART2Freq_Value&#x3D;40000000</span><br><span class="line">RCC.USART3Freq_Value&#x3D;40000000</span><br><span class="line">RCC.USBFreq_Value&#x3D;48000000</span><br><span class="line">RCC.VCOI2SInputFreq_Value&#x3D;1000000</span><br><span class="line">RCC.VCOI2SOutputFreq_Value&#x3D;192000000</span><br><span class="line">RCC.VCOInputFreq_Value&#x3D;4000000</span><br><span class="line">RCC.VCOInputMFreq_Value&#x3D;500000</span><br><span class="line">RCC.VCOOutput2Freq_Value&#x3D;8000000</span><br><span class="line">RCC.VCOOutputFreq_Value&#x3D;160000000</span><br><span class="line">RCC.VCOSAI1OutputFreq_Value&#x3D;96000000</span><br><span class="line">RCC.VCOSAI2OutputFreq_Value&#x3D;32000000</span><br><span class="line">RCC.VcooutputI2S&#x3D;48000000</span><br><span class="line">RCC.WatchDogFreq_Value&#x3D;32000</span><br><span class="line">SH.GPXTI13.0&#x3D;GPIO_EXTI13</span><br><span class="line">SH.GPXTI13.ConfNb&#x3D;1</span><br><span class="line">USB_OTG_FS.IPParameters&#x3D;VirtualMode</span><br><span class="line">USB_OTG_FS.VirtualMode&#x3D;Device_Only</span><br><span class="line">VP_SYS_VS_tim1.Mode&#x3D;TIM1</span><br><span class="line">VP_SYS_VS_tim1.Signal&#x3D;SYS_VS_tim1</span><br><span class="line">board&#x3D;NUCLEO-L496ZG</span><br><span class="line">boardIOC&#x3D;true</span><br></pre></td></tr></table></figure>
+<p>H743:<br>G73_Nucleo_NUCLEO-H743ZI2_STM32H743ZIT_Board_AllConfig_sample.ioc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br></pre></td><td class="code"><pre><span class="line">#MicroXplorer Configuration settings - do not modify</span><br><span class="line">ETH.IPParameters&#x3D;MediaInterface</span><br><span class="line">ETH.MediaInterface&#x3D;HAL_ETH_RMII_MODE</span><br><span class="line">File.Version&#x3D;6</span><br><span class="line">GPIO.groupedBy&#x3D;Group By Peripherals</span><br><span class="line">KeepUserPlacement&#x3D;false</span><br><span class="line">Mcu.Family&#x3D;STM32H7</span><br><span class="line">Mcu.IP0&#x3D;CORTEX_M7</span><br><span class="line">Mcu.IP1&#x3D;ETH</span><br><span class="line">Mcu.IP2&#x3D;NVIC</span><br><span class="line">Mcu.IP3&#x3D;RCC</span><br><span class="line">Mcu.IP4&#x3D;SYS</span><br><span class="line">Mcu.IP5&#x3D;USART3</span><br><span class="line">Mcu.IP6&#x3D;USB_OTG_FS</span><br><span class="line">Mcu.IPNb&#x3D;7</span><br><span class="line">Mcu.Name&#x3D;STM32H743ZITx</span><br><span class="line">Mcu.Package&#x3D;LQFP144</span><br><span class="line">Mcu.Pin0&#x3D;PC13</span><br><span class="line">Mcu.Pin1&#x3D;PC14-OSC32_IN (OSC32_IN)</span><br><span class="line">Mcu.Pin10&#x3D;PC5</span><br><span class="line">Mcu.Pin11&#x3D;PB0</span><br><span class="line">Mcu.Pin12&#x3D;PB13</span><br><span class="line">Mcu.Pin13&#x3D;PB14</span><br><span class="line">Mcu.Pin14&#x3D;PD8</span><br><span class="line">Mcu.Pin15&#x3D;PD9</span><br><span class="line">Mcu.Pin16&#x3D;PD10</span><br><span class="line">Mcu.Pin17&#x3D;PG7</span><br><span class="line">Mcu.Pin18&#x3D;PA8</span><br><span class="line">Mcu.Pin19&#x3D;PA9</span><br><span class="line">Mcu.Pin2&#x3D;PC15-OSC32_OUT (OSC32_OUT)</span><br><span class="line">Mcu.Pin20&#x3D;PA11</span><br><span class="line">Mcu.Pin21&#x3D;PA12</span><br><span class="line">Mcu.Pin22&#x3D;PG11</span><br><span class="line">Mcu.Pin23&#x3D;PG13</span><br><span class="line">Mcu.Pin24&#x3D;PE1</span><br><span class="line">Mcu.Pin25&#x3D;VP_SYS_VS_tim1</span><br><span class="line">Mcu.Pin3&#x3D;PH0-OSC_IN (PH0)</span><br><span class="line">Mcu.Pin4&#x3D;PH1-OSC_OUT (PH1)</span><br><span class="line">Mcu.Pin5&#x3D;PC1</span><br><span class="line">Mcu.Pin6&#x3D;PA1</span><br><span class="line">Mcu.Pin7&#x3D;PA2</span><br><span class="line">Mcu.Pin8&#x3D;PA7</span><br><span class="line">Mcu.Pin9&#x3D;PC4</span><br><span class="line">Mcu.PinsNb&#x3D;26</span><br><span class="line">Mcu.ThirdPartyNb&#x3D;0</span><br><span class="line">Mcu.UserConstants&#x3D;</span><br><span class="line">Mcu.UserName&#x3D;STM32H743ZITx</span><br><span class="line">MxCube.Version&#x3D;5.5.0</span><br><span class="line">MxDb.Version&#x3D;DB.5.0.50</span><br><span class="line">NVIC.BusFault_IRQn&#x3D;true\:0\:0\:false\:false\:true\:false\:false</span><br><span class="line">NVIC.DebugMonitor_IRQn&#x3D;true\:0\:0\:false\:false\:true\:false\:false</span><br><span class="line">NVIC.ForceEnableDMAVector&#x3D;true</span><br><span class="line">NVIC.HardFault_IRQn&#x3D;true\:0\:0\:false\:false\:true\:false\:false</span><br><span class="line">NVIC.MemoryManagement_IRQn&#x3D;true\:0\:0\:false\:false\:true\:false\:false</span><br><span class="line">NVIC.NonMaskableInt_IRQn&#x3D;true\:0\:0\:false\:false\:true\:false\:false</span><br><span class="line">NVIC.PendSV_IRQn&#x3D;true\:0\:0\:false\:false\:true\:false\:false</span><br><span class="line">NVIC.PriorityGroup&#x3D;NVIC_PRIORITYGROUP_4</span><br><span class="line">NVIC.SVCall_IRQn&#x3D;true\:0\:0\:false\:false\:true\:false\:false</span><br><span class="line">NVIC.SysTick_IRQn&#x3D;true\:0\:0\:false\:false\:true\:false\:true</span><br><span class="line">NVIC.TIM1_UP_IRQn&#x3D;true\:0\:0\:false\:false\:true\:false\:true</span><br><span class="line">NVIC.TimeBase&#x3D;TIM1_UP_IRQn</span><br><span class="line">NVIC.TimeBaseIP&#x3D;TIM1</span><br><span class="line">NVIC.UsageFault_IRQn&#x3D;true\:0\:0\:false\:false\:true\:false\:false</span><br><span class="line">PA1.Locked&#x3D;true</span><br><span class="line">PA1.Mode&#x3D;RMII</span><br><span class="line">PA1.Signal&#x3D;ETH_REF_CLK</span><br><span class="line">PA11.Locked&#x3D;true</span><br><span class="line">PA11.Mode&#x3D;Device_Only</span><br><span class="line">PA11.Signal&#x3D;USB_OTG_FS_DM</span><br><span class="line">PA12.Locked&#x3D;true</span><br><span class="line">PA12.Mode&#x3D;Device_Only</span><br><span class="line">PA12.Signal&#x3D;USB_OTG_FS_DP</span><br><span class="line">PA2.Locked&#x3D;true</span><br><span class="line">PA2.Mode&#x3D;RMII</span><br><span class="line">PA2.Signal&#x3D;ETH_MDIO</span><br><span class="line">PA7.Locked&#x3D;true</span><br><span class="line">PA7.Mode&#x3D;RMII</span><br><span class="line">PA7.Signal&#x3D;ETH_CRS_DV</span><br><span class="line">PA8.Locked&#x3D;true</span><br><span class="line">PA8.Mode&#x3D;Activate_SOF_FS</span><br><span class="line">PA8.Signal&#x3D;USB_OTG_FS_SOF</span><br><span class="line">PA9.Locked&#x3D;true</span><br><span class="line">PA9.Mode&#x3D;Activate_VBUS</span><br><span class="line">PA9.Signal&#x3D;USB_OTG_FS_VBUS</span><br><span class="line">PB0.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PB0.GPIO_Label&#x3D;LD1 [Green Led]</span><br><span class="line">PB0.Locked&#x3D;true</span><br><span class="line">PB0.Signal&#x3D;GPIO_Output</span><br><span class="line">PB13.Locked&#x3D;true</span><br><span class="line">PB13.Mode&#x3D;RMII</span><br><span class="line">PB13.Signal&#x3D;ETH_TXD1</span><br><span class="line">PB14.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PB14.GPIO_Label&#x3D;LD3 [Red Led]</span><br><span class="line">PB14.Locked&#x3D;true</span><br><span class="line">PB14.Signal&#x3D;GPIO_Output</span><br><span class="line">PC1.Locked&#x3D;true</span><br><span class="line">PC1.Mode&#x3D;RMII</span><br><span class="line">PC1.Signal&#x3D;ETH_MDC</span><br><span class="line">PC13.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PC13.GPIO_Label&#x3D;B1 [Blue PushButton]</span><br><span class="line">PC13.Locked&#x3D;true</span><br><span class="line">PC13.Signal&#x3D;GPIO_Input</span><br><span class="line">PC14-OSC32_IN\ (OSC32_IN).Locked&#x3D;true</span><br><span class="line">PC14-OSC32_IN\ (OSC32_IN).Mode&#x3D;LSE-External-Oscillator</span><br><span class="line">PC14-OSC32_IN\ (OSC32_IN).Signal&#x3D;RCC_OSC32_IN</span><br><span class="line">PC15-OSC32_OUT\ (OSC32_OUT).Locked&#x3D;true</span><br><span class="line">PC15-OSC32_OUT\ (OSC32_OUT).Mode&#x3D;LSE-External-Oscillator</span><br><span class="line">PC15-OSC32_OUT\ (OSC32_OUT).Signal&#x3D;RCC_OSC32_OUT</span><br><span class="line">PC4.Locked&#x3D;true</span><br><span class="line">PC4.Mode&#x3D;RMII</span><br><span class="line">PC4.Signal&#x3D;ETH_RXD0</span><br><span class="line">PC5.Locked&#x3D;true</span><br><span class="line">PC5.Mode&#x3D;RMII</span><br><span class="line">PC5.Signal&#x3D;ETH_RXD1</span><br><span class="line">PCC.Checker&#x3D;true</span><br><span class="line">PCC.Line&#x3D;STM32H743&#x2F;753</span><br><span class="line">PCC.MCU&#x3D;STM32H743ZITx</span><br><span class="line">PCC.PartNumber&#x3D;STM32H743ZITx</span><br><span class="line">PCC.Seq0&#x3D;0</span><br><span class="line">PCC.Series&#x3D;STM32H7</span><br><span class="line">PCC.Temperature&#x3D;25</span><br><span class="line">PCC.Vdd&#x3D;3.0</span><br><span class="line">PD10.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PD10.GPIO_Label&#x3D;USB_OTG_FS_PWR_EN</span><br><span class="line">PD10.Locked&#x3D;true</span><br><span class="line">PD10.Signal&#x3D;GPIO_Output</span><br><span class="line">PD8.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PD8.GPIO_Label&#x3D;STLINK_RX</span><br><span class="line">PD8.Locked&#x3D;true</span><br><span class="line">PD8.Mode&#x3D;Asynchronous</span><br><span class="line">PD8.Signal&#x3D;USART3_TX</span><br><span class="line">PD9.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PD9.GPIO_Label&#x3D;STLINK_TX</span><br><span class="line">PD9.Locked&#x3D;true</span><br><span class="line">PD9.Mode&#x3D;Asynchronous</span><br><span class="line">PD9.Signal&#x3D;USART3_RX</span><br><span class="line">PE1.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PE1.GPIO_Label&#x3D;LD2 [Yellow Led]</span><br><span class="line">PE1.Locked&#x3D;true</span><br><span class="line">PE1.Signal&#x3D;GPIO_Output</span><br><span class="line">PG11.Locked&#x3D;true</span><br><span class="line">PG11.Mode&#x3D;RMII</span><br><span class="line">PG11.Signal&#x3D;ETH_TX_EN</span><br><span class="line">PG13.Locked&#x3D;true</span><br><span class="line">PG13.Mode&#x3D;RMII</span><br><span class="line">PG13.Signal&#x3D;ETH_TXD0</span><br><span class="line">PG7.GPIOParameters&#x3D;GPIO_Label</span><br><span class="line">PG7.GPIO_Label&#x3D;USB_OTG_FS_OVCR</span><br><span class="line">PG7.Locked&#x3D;true</span><br><span class="line">PG7.Signal&#x3D;GPXTI7</span><br><span class="line">PH0-OSC_IN\ (PH0).Locked&#x3D;true</span><br><span class="line">PH0-OSC_IN\ (PH0).Mode&#x3D;HSE-External-Clock-Source</span><br><span class="line">PH0-OSC_IN\ (PH0).Signal&#x3D;RCC_OSC_IN</span><br><span class="line">PH1-OSC_OUT\ (PH1).Locked&#x3D;true</span><br><span class="line">PH1-OSC_OUT\ (PH1).Mode&#x3D;HSE-External-Clock-Source</span><br><span class="line">PH1-OSC_OUT\ (PH1).Signal&#x3D;RCC_OSC_OUT</span><br><span class="line">PinOutPanel.RotationAngle&#x3D;0</span><br><span class="line">ProjectManager.AskForMigrate&#x3D;true</span><br><span class="line">ProjectManager.BackupPrevious&#x3D;false</span><br><span class="line">ProjectManager.CompilerOptimize&#x3D;6</span><br><span class="line">ProjectManager.ComputerToolchain&#x3D;false</span><br><span class="line">ProjectManager.CoupleFile&#x3D;true</span><br><span class="line">ProjectManager.CustomerFirmwarePackage&#x3D;</span><br><span class="line">ProjectManager.DefaultFWLocation&#x3D;true</span><br><span class="line">ProjectManager.DeletePrevious&#x3D;true</span><br><span class="line">ProjectManager.DeviceId&#x3D;STM32H743ZITx</span><br><span class="line">ProjectManager.FirmwarePackage&#x3D;STM32Cube FW_H7 V1.6.0</span><br><span class="line">ProjectManager.FreePins&#x3D;false</span><br><span class="line">ProjectManager.HalAssertFull&#x3D;false</span><br><span class="line">ProjectManager.HeapSize&#x3D;0x1000</span><br><span class="line">ProjectManager.KeepUserCode&#x3D;true</span><br><span class="line">ProjectManager.LastFirmware&#x3D;true</span><br><span class="line">ProjectManager.LibraryCopy&#x3D;1</span><br><span class="line">ProjectManager.MainLocation&#x3D;Src</span><br><span class="line">ProjectManager.NoMain&#x3D;false</span><br><span class="line">ProjectManager.PreviousToolchain&#x3D;</span><br><span class="line">ProjectManager.ProjectBuild&#x3D;false</span><br><span class="line">ProjectManager.ProjectFileName&#x3D;G73_Nucleo_NUCLEO-H743ZI2_STM32H743ZIT_Board_AllConfig_sample.ioc</span><br><span class="line">ProjectManager.ProjectName&#x3D;G73_Nucleo_NUCLEO-H743ZI2_STM32H743ZIT_Board_AllConfig_sample</span><br><span class="line">ProjectManager.StackSize&#x3D;0x1000</span><br><span class="line">ProjectManager.TargetToolchain&#x3D;MDK-ARM V5</span><br><span class="line">ProjectManager.ToolChainLocation&#x3D;</span><br><span class="line">ProjectManager.UnderRoot&#x3D;false</span><br><span class="line">ProjectManager.functionlistsort&#x3D;1-MX_GPIO_Init-GPIO-false-HAL-true,2-SystemClock_Config-RCC-false-HAL-false,3-MX_CORTEX_M7_Init-CORTEX_M7-false-HAL-true,4-MX_ETH_Init-ETH-false-HAL-true,5-MX_USART3_UART_Init-USART3-false-HAL-true,6-MX_USB_OTG_FS_PCD_Init-USB_OTG_FS-false-HAL-true</span><br><span class="line">RCC.ADCFreq_Value&#x3D;16125000</span><br><span class="line">RCC.AHB12Freq_Value&#x3D;240000000</span><br><span class="line">RCC.AHB4Freq_Value&#x3D;240000000</span><br><span class="line">RCC.APB1Freq_Value&#x3D;120000000</span><br><span class="line">RCC.APB2Freq_Value&#x3D;120000000</span><br><span class="line">RCC.APB3Freq_Value&#x3D;120000000</span><br><span class="line">RCC.APB4Freq_Value&#x3D;120000000</span><br><span class="line">RCC.AXIClockFreq_Value&#x3D;240000000</span><br><span class="line">RCC.CECFreq_Value&#x3D;32000</span><br><span class="line">RCC.CKPERFreq_Value&#x3D;64000000</span><br><span class="line">RCC.CortexFreq_Value&#x3D;480000000</span><br><span class="line">RCC.CpuClockFreq_Value&#x3D;480000000</span><br><span class="line">RCC.D1CPREFreq_Value&#x3D;480000000</span><br><span class="line">RCC.D1PPRE&#x3D;RCC_APB3_DIV2</span><br><span class="line">RCC.D2PPRE1&#x3D;RCC_APB1_DIV2</span><br><span class="line">RCC.D2PPRE2&#x3D;RCC_APB2_DIV2</span><br><span class="line">RCC.D3PPRE&#x3D;RCC_APB4_DIV2</span><br><span class="line">RCC.DFSDMACLkFreq_Value&#x3D;48000000</span><br><span class="line">RCC.DFSDMFreq_Value&#x3D;120000000</span><br><span class="line">RCC.DIVM1&#x3D;1</span><br><span class="line">RCC.DIVN1&#x3D;120</span><br><span class="line">RCC.DIVP1Freq_Value&#x3D;480000000</span><br><span class="line">RCC.DIVP2Freq_Value&#x3D;16125000</span><br><span class="line">RCC.DIVP3Freq_Value&#x3D;16125000</span><br><span class="line">RCC.DIVQ1&#x3D;20</span><br><span class="line">RCC.DIVQ1Freq_Value&#x3D;48000000</span><br><span class="line">RCC.DIVQ2Freq_Value&#x3D;16125000</span><br><span class="line">RCC.DIVQ3Freq_Value&#x3D;16125000</span><br><span class="line">RCC.DIVR1Freq_Value&#x3D;480000000</span><br><span class="line">RCC.DIVR2Freq_Value&#x3D;16125000</span><br><span class="line">RCC.DIVR3Freq_Value&#x3D;16125000</span><br><span class="line">RCC.FDCANFreq_Value&#x3D;48000000</span><br><span class="line">RCC.FMCFreq_Value&#x3D;240000000</span><br><span class="line">RCC.FamilyName&#x3D;M</span><br><span class="line">RCC.HCLK3ClockFreq_Value&#x3D;240000000</span><br><span class="line">RCC.HCLKFreq_Value&#x3D;240000000</span><br><span class="line">RCC.HPRE&#x3D;RCC_HCLK_DIV2</span><br><span class="line">RCC.HRTIMFreq_Value&#x3D;240000000</span><br><span class="line">RCC.HSE_VALUE&#x3D;8000000</span><br><span class="line">RCC.I2C123Freq_Value&#x3D;120000000</span><br><span class="line">RCC.I2C4Freq_Value&#x3D;120000000</span><br><span class="line">RCC.IPParameters&#x3D;ADCFreq_Value,AHB12Freq_Value,AHB4Freq_Value,APB1Freq_Value,APB2Freq_Value,APB3Freq_Value,APB4Freq_Value,AXIClockFreq_Value,CECFreq_Value,CKPERFreq_Value,CortexFreq_Value,CpuClockFreq_Value,D1CPREFreq_Value,D1PPRE,D2PPRE1,D2PPRE2,D3PPRE,DFSDMACLkFreq_Value,DFSDMFreq_Value,DIVM1,DIVN1,DIVP1Freq_Value,DIVP2Freq_Value,DIVP3Freq_Value,DIVQ1,DIVQ1Freq_Value,DIVQ2Freq_Value,DIVQ3Freq_Value,DIVR1Freq_Value,DIVR2Freq_Value,DIVR3Freq_Value,FDCANFreq_Value,FMCFreq_Value,FamilyName,HCLK3ClockFreq_Value,HCLKFreq_Value,HPRE,HRTIMFreq_Value,HSE_VALUE,I2C123Freq_Value,I2C4Freq_Value,LPTIM1Freq_Value,LPTIM2Freq_Value,LPTIM345Freq_Value,LPUART1Freq_Value,LTDCFreq_Value,MCO1PinFreq_Value,MCO2PinFreq_Value,PLL2FRACN,PLL3FRACN,PLLFRACN,QSPIFreq_Value,RNGFreq_Value,RTCFreq_Value,SAI1Freq_Value,SAI23Freq_Value,SAI4AFreq_Value,SAI4BFreq_Value,SDMMCFreq_Value,SPDIFRXFreq_Value,SPI123Freq_Value,SPI45Freq_Value,SPI6Freq_Value,SWPMI1Freq_Value,SYSCLKFreq_VALUE,SYSCLKSource,Tim1OutputFreq_Value,Tim2OutputFreq_Value,TraceFreq_Value,USART16Freq_Value,USART234578Freq_Value,USBFreq_Value,VCO1OutputFreq_Value,VCO2OutputFreq_Value,VCO3OutputFreq_Value,VCOInput1Freq_Value,VCOInput2Freq_Value,VCOInput3Freq_Value</span><br><span class="line">RCC.LPTIM1Freq_Value&#x3D;120000000</span><br><span class="line">RCC.LPTIM2Freq_Value&#x3D;120000000</span><br><span class="line">RCC.LPTIM345Freq_Value&#x3D;120000000</span><br><span class="line">RCC.LPUART1Freq_Value&#x3D;120000000</span><br><span class="line">RCC.LTDCFreq_Value&#x3D;16125000</span><br><span class="line">RCC.MCO1PinFreq_Value&#x3D;64000000</span><br><span class="line">RCC.MCO2PinFreq_Value&#x3D;480000000</span><br><span class="line">RCC.PLL2FRACN&#x3D;0</span><br><span class="line">RCC.PLL3FRACN&#x3D;0</span><br><span class="line">RCC.PLLFRACN&#x3D;0</span><br><span class="line">RCC.QSPIFreq_Value&#x3D;240000000</span><br><span class="line">RCC.RNGFreq_Value&#x3D;48000000</span><br><span class="line">RCC.RTCFreq_Value&#x3D;32000</span><br><span class="line">RCC.SAI1Freq_Value&#x3D;48000000</span><br><span class="line">RCC.SAI23Freq_Value&#x3D;48000000</span><br><span class="line">RCC.SAI4AFreq_Value&#x3D;48000000</span><br><span class="line">RCC.SAI4BFreq_Value&#x3D;48000000</span><br><span class="line">RCC.SDMMCFreq_Value&#x3D;48000000</span><br><span class="line">RCC.SPDIFRXFreq_Value&#x3D;48000000</span><br><span class="line">RCC.SPI123Freq_Value&#x3D;48000000</span><br><span class="line">RCC.SPI45Freq_Value&#x3D;120000000</span><br><span class="line">RCC.SPI6Freq_Value&#x3D;120000000</span><br><span class="line">RCC.SWPMI1Freq_Value&#x3D;120000000</span><br><span class="line">RCC.SYSCLKFreq_VALUE&#x3D;480000000</span><br><span class="line">RCC.SYSCLKSource&#x3D;RCC_SYSCLKSOURCE_PLLCLK</span><br><span class="line">RCC.Tim1OutputFreq_Value&#x3D;240000000</span><br><span class="line">RCC.Tim2OutputFreq_Value&#x3D;240000000</span><br><span class="line">RCC.TraceFreq_Value&#x3D;64000000</span><br><span class="line">RCC.USART16Freq_Value&#x3D;120000000</span><br><span class="line">RCC.USART234578Freq_Value&#x3D;120000000</span><br><span class="line">RCC.USBFreq_Value&#x3D;48000000</span><br><span class="line">RCC.VCO1OutputFreq_Value&#x3D;960000000</span><br><span class="line">RCC.VCO2OutputFreq_Value&#x3D;32250000</span><br><span class="line">RCC.VCO3OutputFreq_Value&#x3D;32250000</span><br><span class="line">RCC.VCOInput1Freq_Value&#x3D;8000000</span><br><span class="line">RCC.VCOInput2Freq_Value&#x3D;250000</span><br><span class="line">RCC.VCOInput3Freq_Value&#x3D;250000</span><br><span class="line">SH.GPXTI7.0&#x3D;GPIO_EXTI7</span><br><span class="line">SH.GPXTI7.ConfNb&#x3D;1</span><br><span class="line">USART3.IPParameters&#x3D;VirtualMode-Asynchronous</span><br><span class="line">USART3.VirtualMode-Asynchronous&#x3D;VM_ASYNC</span><br><span class="line">USB_OTG_FS.IPParameters&#x3D;VirtualMode</span><br><span class="line">USB_OTG_FS.VirtualMode&#x3D;Device_Only</span><br><span class="line">VP_SYS_VS_tim1.Mode&#x3D;TIM1</span><br><span class="line">VP_SYS_VS_tim1.Signal&#x3D;SYS_VS_tim1</span><br><span class="line">board&#x3D;NUCLEO-H743ZI2</span><br><span class="line">boardIOC&#x3D;true</span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://supperthomas.github.io/posts/3209598366/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Thomas Li">
+      <meta itemprop="description" content="self">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Thomas">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/3209598366/" class="post-title-link" itemprop="url">2020-03-07[NUCLEO_L496ZG][RT-THREAD]潘多拉</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-07 17:58:00" itemprop="dateCreated datePublished" datetime="2020-03-07T17:58:00+00:00">2020-03-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-05 02:40:03" itemprop="dateModified" datetime="2020-06-05T02:40:03+00:00">2020-06-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>1.本人有一块NUCLOE L496ZG开发板：<br>2.RT-THREAD 看起来还比较好用，<br>所以记录一下，每次从潘多拉开发板转到NUCLO L496ZG需要多少步骤:</p>
+<h2 id="1-下载-RT-THREAD源码："><a href="#1-下载-RT-THREAD源码：" class="headerlink" title="1. 下载 RT-THREAD源码："></a>1. 下载 RT-THREAD源码：</h2><p>github地址：<a href="https://github.com/RT-Thread/rt-thread.git" target="_blank" rel="noopener">https://github.com/RT-Thread/rt-thread.git</a>  这个权威一些</p>
+<p>gitee 下载地址： <a href="https://gitee.com/rtthread/rt-thread.git" target="_blank" rel="noopener">https://gitee.com/rtthread/rt-thread.git</a> 这个速度快一些</p>
+<h2 id="2-keil-修改"><a href="#2-keil-修改" class="headerlink" title="2.keil 修改"></a>2.keil 修改</h2><p>打开工程：</p>
+<h4 id="替换MCU"><a href="#替换MCU" class="headerlink" title="替换MCU:"></a>替换MCU:</h4><p><img src="/images/pasted-2.png" alt="filename already exists, renamed"></p>
+<h4 id="替换宏定义：-STM32L496xx"><a href="#替换宏定义：-STM32L496xx" class="headerlink" title="替换宏定义： STM32L496xx"></a>替换宏定义： STM32L496xx</h4><p><img src="/images/pasted-3.png" alt="filename already exists, renamed"></p>
+<h4 id="替换board-c中-MCU-RCC时钟"><a href="#替换board-c中-MCU-RCC时钟" class="headerlink" title="替换board.c中 MCU RCC时钟"></a>替换board.c中 MCU RCC时钟</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">void SystemClock_Config(void)</span><br><span class="line">&#123;</span><br><span class="line">  RCC_OscInitTypeDef RCC_OscInitStruct &#x3D; &#123;0&#125;;</span><br><span class="line">  RCC_ClkInitTypeDef RCC_ClkInitStruct &#x3D; &#123;0&#125;;</span><br><span class="line">  RCC_PeriphCLKInitTypeDef PeriphClkInit &#x3D; &#123;0&#125;;</span><br><span class="line"></span><br><span class="line">  &#x2F;** Initializes the CPU, AHB and APB busses clocks </span><br><span class="line">  *&#x2F;</span><br><span class="line">  RCC_OscInitStruct.OscillatorType &#x3D; RCC_OSCILLATORTYPE_MSI;</span><br><span class="line">  RCC_OscInitStruct.MSIState &#x3D; RCC_MSI_ON;</span><br><span class="line">  RCC_OscInitStruct.MSICalibrationValue &#x3D; 0;</span><br><span class="line">  RCC_OscInitStruct.MSIClockRange &#x3D; RCC_MSIRANGE_6;</span><br><span class="line">  RCC_OscInitStruct.PLL.PLLState &#x3D; RCC_PLL_ON;</span><br><span class="line">  RCC_OscInitStruct.PLL.PLLSource &#x3D; RCC_PLLSOURCE_MSI;</span><br><span class="line">  RCC_OscInitStruct.PLL.PLLM &#x3D; 1;</span><br><span class="line">  RCC_OscInitStruct.PLL.PLLN &#x3D; 40;</span><br><span class="line">  RCC_OscInitStruct.PLL.PLLP &#x3D; RCC_PLLP_DIV2;</span><br><span class="line">  RCC_OscInitStruct.PLL.PLLQ &#x3D; RCC_PLLQ_DIV2;</span><br><span class="line">  RCC_OscInitStruct.PLL.PLLR &#x3D; RCC_PLLR_DIV2;</span><br><span class="line">  if (HAL_RCC_OscConfig(&amp;RCC_OscInitStruct) !&#x3D; HAL_OK)</span><br><span class="line">  &#123;</span><br><span class="line">    Error_Handler();</span><br><span class="line">  &#125;</span><br><span class="line">  &#x2F;** Initializes the CPU, AHB and APB busses clocks </span><br><span class="line">  *&#x2F;</span><br><span class="line">  RCC_ClkInitStruct.ClockType &#x3D; RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK</span><br><span class="line">                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;</span><br><span class="line">  RCC_ClkInitStruct.SYSCLKSource &#x3D; RCC_SYSCLKSOURCE_PLLCLK;</span><br><span class="line">  RCC_ClkInitStruct.AHBCLKDivider &#x3D; RCC_SYSCLK_DIV1;</span><br><span class="line">  RCC_ClkInitStruct.APB1CLKDivider &#x3D; RCC_HCLK_DIV1;</span><br><span class="line">  RCC_ClkInitStruct.APB2CLKDivider &#x3D; RCC_HCLK_DIV1;</span><br><span class="line"></span><br><span class="line">  if (HAL_RCC_ClockConfig(&amp;RCC_ClkInitStruct, FLASH_LATENCY_4) !&#x3D; HAL_OK)</span><br><span class="line">  &#123;</span><br><span class="line">    Error_Handler();</span><br><span class="line">  &#125;</span><br><span class="line">  PeriphClkInit.PeriphClockSelection &#x3D; RCC_PERIPHCLK_LPUART1;</span><br><span class="line">  PeriphClkInit.Lpuart1ClockSelection &#x3D; RCC_LPUART1CLKSOURCE_PCLK1;</span><br><span class="line">  if (HAL_RCCEx_PeriphCLKConfig(&amp;PeriphClkInit) !&#x3D; HAL_OK)</span><br><span class="line">  &#123;</span><br><span class="line">    Error_Handler();</span><br><span class="line">  &#125;</span><br><span class="line">  &#x2F;** Configure the main internal regulator output voltage </span><br><span class="line">  *&#x2F;</span><br><span class="line">  if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) !&#x3D; HAL_OK)</span><br><span class="line">  &#123;</span><br><span class="line">    Error_Handler();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改board-h"><a href="#修改board-h" class="headerlink" title="修改board.h"></a>修改board.h</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#define STM32_FLASH_START_ADRESS       ((uint32_t)0x08000000)</span><br><span class="line">#define STM32_FLASH_SIZE               (1024 * 1024)</span><br><span class="line">#define STM32_FLASH_END_ADDRESS        ((uint32_t)(STM32_FLASH_START_ADRESS + STM32_FLASH_SIZE))</span><br><span class="line"></span><br><span class="line">#define STM32_SRAM1_SIZE               (256)</span><br><span class="line">#define STM32_SRAM1_START              (0x20000000)</span><br><span class="line">#define STM32_SRAM1_END                (STM32_SRAM1_START + STM32_SRAM1_SIZE * 1024)</span><br></pre></td></tr></table></figure>
+
+<p>此时应该可以编译通过</p>
+<h2 id="修改env配置："><a href="#修改env配置：" class="headerlink" title="修改env配置："></a>修改env配置：</h2><h5 id="不同IDE需要修改如下几个ld文件"><a href="#不同IDE需要修改如下几个ld文件" class="headerlink" title="不同IDE需要修改如下几个ld文件"></a>不同IDE需要修改如下几个ld文件</h5><p><img src="/images/pasted-5.png" alt="filename already exists, renamed"></p>
+<h5 id="修改方式如下"><a href="#修改方式如下" class="headerlink" title="修改方式如下"></a>修改方式如下</h5><p><img src="/images/pasted-4.png" alt="filename already exists, renamed"></p>
+<p>L496ZG flash是1M ， RAM是320K但是是由256加上一块128K flash地址(我们暂时还用不到它，先不管他)</p>
+<p>0x10000000 + 0x10000</p>
+<p><img src="/images/pasted-6.png" alt="filename already exists, renamed"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">LR_IROM1 0x08000000 0x00100000  &#123;    ; load region size_region</span><br><span class="line">  ER_IROM1 0x08000000 0x00100000  &#123;  ; load address &#x3D; execution address</span><br><span class="line">   *.o (RESET, +First)</span><br><span class="line">   *(InRoot$$Sections)</span><br><span class="line">   .ANY (+RO)</span><br><span class="line">  &#125;</span><br><span class="line">  RW_IRAM1 0x20000000 0x00040000  &#123;  ; RW data</span><br><span class="line">   .ANY (+RW +ZI)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改Kconfig"><a href="#修改Kconfig" class="headerlink" title="修改Kconfig"></a>修改Kconfig</h2><p>这个还是需要修改的，每次scons menuconfig配置都需要修改。</p>
+<p>SConscript<br>这个文件中：<br>修改如下：</p>
+<p><img src="/images/pasted-8.png" alt="filename already exists, renamed"></p>
+<h2 id="修改template-模板："><a href="#修改template-模板：" class="headerlink" title="修改template 模板："></a>修改template 模板：</h2><p>这一步其实就是scons需要根据这个模板生成工程</p>
+<h3 id="重新生成工程"><a href="#重新生成工程" class="headerlink" title="重新生成工程"></a>重新生成工程</h3><p>重新生成工程需要使用 env 工具。</p>
+<h4 id="重新生成-rtconfig-h-文件"><a href="#重新生成-rtconfig-h-文件" class="headerlink" title="重新生成 rtconfig.h 文件"></a>重新生成 rtconfig.h 文件</h4><p>在 env 界面输入命令 menuconfig 对工程进行配置，并生成新的 rtconfig.h 文件。如下图所示：</p>
+<p><img src="/images/pasted-9.png" alt="filename already exists, renamed"></p>
+<p>主要要修改console 为lpuart1 </p>
+<p><img src="/images/pasted-10.png" alt="filename already exists, renamed"></p>
+<h3 id="修改-Kconfig-选项"><a href="#修改-Kconfig-选项" class="headerlink" title="修改 Kconfig 选项"></a>修改 Kconfig 选项</h3><p>在本小节中修改 <code>board/Kconfig</code> 文件的内容有如下两点：</p>
+<ul>
+<li>芯片型号和系列</li>
+<li>BSP 上的外设支持选项</li>
+</ul>
+<p>芯片型号和系列的修改如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>宏定义</th>
+<th>意义</th>
+<th>格式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SOC_STM32F103RB</td>
+<td>芯片型号</td>
+<td>SOC_STM32xxx</td>
+</tr>
+<tr>
+<td>SOC_SERIES_STM32F1</td>
+<td>芯片系列</td>
+<td>SOC_SERIES_STM32xx</td>
+</tr>
+</tbody></table>
+<p>关于 BSP 上的外设支持选项，一个初次提交的 BSP 仅仅需要支持 GPIO 驱动和串口驱动即可，因此在配置选项中只需保留这两个驱动配置项，如下图所示：</p>
+<p><img src="/images/pasted-11.png" alt="filename already exists, renamed"></p>
+<h3 id="生成工程"><a href="#生成工程" class="headerlink" title="生成工程"></a>生成工程</h3><p>使用 env 工具输入命令 scons –target=mdk5 重新生成工程</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://supperthomas.github.io/posts/2608896508/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Thomas Li">
+      <meta itemprop="description" content="self">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Thomas">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/2608896508/" class="post-title-link" itemprop="url">2020-03-07 [PC][小技巧]如何从UEFI进入BIOS</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-07 10:12:51" itemprop="dateCreated datePublished" datetime="2020-03-07T10:12:51+00:00">2020-03-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-05 02:40:03" itemprop="dateModified" datetime="2020-06-05T02:40:03+00:00">2020-06-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li>按住shift按键</li>
+<li>点击重启按钮</li>
+<li>选择疑难解答</li>
+<li>选择高级选项</li>
+<li>更改UEFI设置</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://supperthomas.github.io/posts/1610777667/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Thomas Li">
+      <meta itemprop="description" content="self">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Thomas">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/1610777667/" class="post-title-link" itemprop="url">2020-03-05 DEBUG</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-05 22:39:00" itemprop="dateCreated datePublished" datetime="2020-03-05T22:39:00+00:00">2020-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-05 02:40:03" itemprop="dateModified" datetime="2020-06-05T02:40:03+00:00">2020-06-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/COMMON/" itemprop="url" rel="index"><span itemprop="name">COMMON</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>经常在调试的时候会遇到需要debug系统的，<br>下面写一些 debug需要的c语言，可以参考</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#define USE_DEBUG</span><br><span class="line">#ifdef USE_DEBUG</span><br><span class="line">#define DEBUG_LINE() printf(&quot;[%s:%s] line&#x3D;%d\r\n&quot;,__FILE__, __func__, __LINE__)</span><br><span class="line">#define DEBUG_ERR(fmt, args...) printf(&quot;\033[46;31m[%s:%d]\033[0m &quot;#fmt&quot; errno&#x3D;%d, %m\r\n&quot;, __func__, __LINE__, ##args, errno, errno)</span><br><span class="line">#define DEBUG_INFO(fmt, args...) printf(&quot;\033[33m[%s:%d]\033[0m &quot;#fmt&quot;\r\n&quot;, __func__, __LINE__, ##args)</span><br><span class="line">#else</span><br><span class="line">#define DEBUG_LINE()</span><br><span class="line">#define DEBUG_ERR(fmt, ...)</span><br><span class="line">#define DEBUG_INFO(fmt, ...)</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://supperthomas.github.io/posts/4161733060/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Thomas Li">
+      <meta itemprop="description" content="self">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Thomas">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/4161733060/" class="post-title-link" itemprop="url">2020-03-05 阿里云</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-05 22:37:17" itemprop="dateCreated datePublished" datetime="2020-03-05T22:37:17+00:00">2020-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-05 02:40:03" itemprop="dateModified" datetime="2020-06-05T02:40:03+00:00">2020-06-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>今天在阿里云上写代码，比较舒服，几年一下</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://supperthomas.github.io/posts/4278564287/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Thomas Li">
+      <meta itemprop="description" content="self">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Thomas">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/4278564287/" class="post-title-link" itemprop="url">第一篇博客</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-03 22:16:45" itemprop="dateCreated datePublished" datetime="2020-03-03T22:16:45+00:00">2020-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-05 02:40:03" itemprop="dateModified" datetime="2020-06-05T02:40:03+00:00">2020-06-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="写在最上面"><a href="#写在最上面" class="headerlink" title="写在最上面"></a>写在最上面</h2><p>生命如此短暂，留点东西在世上也挺好，让世人记住我。</p>
+<p>也记录下自己的点点滴滴，之前都记录在有道云笔记上面的。</p>
+<p>这次放到博客上。</p>
+<p>我只是众多爱好嵌入式爱好者一小撮爱好分享的人。</p>
+<p>个人tag：</p>
+<p>编程语言： C ， python， c#</p>
+<p>嵌入式平台：<br>STM32 NUCLEO: STM32L496ZG, STM32H743ZI2 ,STM32F410RB,STM32F303,<br>STM8S: STM8S-DISCOVERY</p>
+<p>ESP: ESP8266, ESP32, ESP32-A1S<br>linux: raspi 3B, i.mx6ull， 全志荔枝派</p>
+<p>传感器：<br>继电器、人体红外、温湿度、超声波、光感、气味感应器、电机、</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Thomas Li</p>
+  <div class="site-description" itemprop="description">self</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Thomas Li</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
 
 </body>
 </html>
